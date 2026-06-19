@@ -1,0 +1,951 @@
+{
+  "meta": {
+    "source": "https://www.questionpro.com/help/",
+    "description": "QuestionPro Full Knowledge Base",
+    "scraped_at": "2026-06-17T12:18:38.772Z",
+    "total_articles": 53,
+    "total_words": 12596,
+    "products": [
+      "Surveys",
+      "Communities",
+      "Workforce",
+      "CX",
+      "Audience",
+      "LivePolls",
+      "UX",
+      "BI"
+    ],
+    "product": "UX"
+  },
+  "articles": [
+    {
+      "id": "ux/creating-a-study",
+      "product": "UX",
+      "title": "Creating a Study",
+      "summary": "Learn how to create, manage, and organize studies in QuestionPro UX. Understand the hierarchy of studies, quests, and tasks for your research.",
+      "url": "https://www.questionpro.com/help/ux/creating-a-study.html",
+      "scraped_at": "2026-06-17T12:09:41.419Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Studies in QuestionPro UX"
+        }
+      ],
+      "steps": [],
+      "content": "Studies in QuestionPro UX What is a Study in QuestionPro UX? A Study is the highest level of organization in QuestionPro UX. It serves as a container for your research agenda, allowing you to group multiple Quests together. Each Quest, in turn, consists of specific tasks or questions designed to capture user insights. This hierarchy ensures that complex research projects remain structured and easy to manage for both the researcher and the participant. Where do I find my Studies? To access your research projects, navigate to the Qualitative Research section in the left sidebar and select Studies. You can organize these into specific Folders to maintain a clean workspace. Once inside a folder, you will see a list of all existing studies, their participant count, status, and modification history. How do I create a new study? To create a new study, click the + New Study button within your selected folder. A modal will appear where you can enter the following: Study name: Give your study a clear, identifiable title. Description: Provide context or internal notes about the research objectives. Click Save to initialize the study and begin adding content. How do I Copy, Move, or Delete a study? Management actions for studies are performed directly from the Studies list view. When you hover over a specific study row, three action icons will appear on the far right: Copy Study: Click the Copy icon to create a duplicate of the study. Move Study: Click the Folder icon to transfer the study to a different folder. Delete Study: Click the Trash icon to permanently remove the study and its associated data. Note: These actions are exclusively available via these hover icons and are not found within the study configuration settings.",
+      "word_count": 289
+    },
+    {
+      "id": "ux/quests",
+      "product": "UX",
+      "title": "Quests",
+      "summary": "Learn how to create and manage Quests in QuestionPro UX. Understand the difference between Standard and Diary quests, and how to configure disclosure and scheduling.",
+      "url": "https://www.questionpro.com/help/ux/quests.html",
+      "scraped_at": "2026-06-17T12:09:45.612Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Managing Quests"
+        }
+      ],
+      "steps": [],
+      "content": "Managing Quests What are Quests? A Quest is a structured set of tasks or questions designed to capture specific user insights within a study. Quests allow researchers to organize their research into digestible segments for participants. What types of Quests can I create? When you click + New Quest, you can choose between two types: Standard Quest: A one-time quest where participants engage in a structured sequence of tasks designed to explore specific insights and perspectives. Diary Quest: A recurring quest where participants complete a series of tasks, either at predefined intervals or on an as-needed basis. How do I add a Banner, Logo, and Title? You can customize the visual identity of each quest by hovering over the banner region: Title: Simply click on the title area in the banner to edit the quest name. Add Logo: Hover over the top-left region of the banner and click the Add Logo button to upload your brand icon. Change Cover: Hover over the top-right region of the banner and click Change cover to upload a custom background image. Suggested Dimensions: For optimal display, it is recommended to use a wide aspect ratio for the cover (approximately 1920x400 pixels) and a square, high-resolution file for the logo. What is Progressive Quest Disclosure? The Progressive quest disclosure toggle ensures that quests are revealed one at a time in the order you've defined. Each quest becomes visible to the participant only after the previous quest is completed. How do I set start and end dates for Quests? You can manage quest availability through the Quest settings panel: Start at & Due at: Define the window of activity; a quest remains active if the current date is between these two values. These can be edited later as needed. Stop accepting responses after due date: Enable this toggle to prevent further submissions once the deadline passes. Hide quests from participants after due date: This option hides the quest from view entirely. This is only enabled if you first choose to stop accepting responses. How do I Copy, Duplicate, or Delete a Quest? Click the three-dot menu icon on any individual Quest card to access the following management actions: Duplicate: Creates an identical copy of the quest within the same study. Copy to: Allows you to clone the quest into a different study. Delete: Permanently removes the quest and all associated data.",
+      "word_count": 395
+    },
+    {
+      "id": "ux/access-and-control",
+      "product": "UX",
+      "title": "Access and control",
+      "summary": "Learn about Admin management in QuestionPro UX. Understand how to add team members and define permissions for Admin, Moderator, and Observer roles.",
+      "url": "https://www.questionpro.com/help/ux/access-and-control.html",
+      "scraped_at": "2026-06-17T12:09:49.797Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Admin Management and Roles"
+        }
+      ],
+      "steps": [],
+      "content": "Admin Management and Roles Where do I find Admin Management settings? To manage your research team, open your study and navigate to the Admin section located at the bottom of the left-hand sidebar. This dashboard allows you to invite team members and configure study-wide observer permissions. How do I add a new team member? Within the Admin management dashboard, click the + Add admin user button. A modal will appear requiring the following information: Email: Enter the email address of the team member you wish to invite. Role: Select a role from the dropdown menu (Administrator, Moderator, or Observer) to define their level of access. Once the details are entered, click Add to grant them access to the study. What are the differences between roles? QuestionPro UX uses role-based access control to ensure study security and workflow efficiency. The table below outlines the specific permissions for each role: Feature Administrator Moderator Observer Workspace & Quest Setup Full Access No Access No Access Participant Management & Panel Full Access No Access No Access Moderation & Analytics Full Access Full Access View Only Media Library & Reports Full Access Full Access View Only Messages Full Access Full Access Conditional* Admin & System Logs Full Access No Access No Access *Observers can view and send participant messages only if the specific permission toggle is enabled in the Admin settings. What do the Admin configuration toggles do? On the right side of the Admin dashboard, you will find global settings that influence how Observers interact with the study data: Participants' messages visible to observers: When enabled, this allows team members with the Observer role to both read and send messages to participants. Quote saving for observers: This toggle allows Observers to highlight and save specific participant quotes within the \"My Quotes\" section for qualitative analysis. These settings are useful for keeping stakeholders informed and engaged without granting them full management privileges.",
+      "word_count": 317
+    },
+    {
+      "id": "ux/study-previews",
+      "product": "UX",
+      "title": "Study previews and study states",
+      "summary": "Learn how to use Preview mode to experience your study as a participant and manage Draft and Published study states in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/study-previews.html",
+      "scraped_at": "2026-06-17T12:09:53.994Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Preview and Study States"
+        }
+      ],
+      "steps": [],
+      "content": "Preview and Study States How do I preview my study? To experience the study exactly as it will appear to your participants, click the Preview (eye) icon located in the top-right corner of the study dashboard. Preview mode allows you to navigate through the interface, view the study description, and interact with the quest list. This ensures that the branding, introductory video, and quest ordering are correctly configured before you go live. In this view, quests are organized into Active and Closed tabs, reflecting the scheduling settings you have defined. What is the difference between Draft and Published states? Every research project in QuestionPro UX exists in one of two states, which can be toggled via the dropdown menu in the top-right corner: Draft: This is the initial setup phase. While in Draft mode, you can edit all quest content and structure. Published: This state makes the study live and accessible to external respondents. What actions are restricted in Draft mode? Certain core management features are disabled while a study is in the Draft state to prevent incomplete data collection: Participant Recruitment: You cannot add or invite new participants until the study is Published. Panel Invitations: Inviting panelists from your existing database is also disabled in Draft mode. Note on Reverting to Draft: If you publish a study and add participants who are still in New or Pending status, you can revert the study to Draft. However, once reverted, those participants will be unable to sign in or open the study page via their links. Studies with Active participants who have already started responding cannot be moved back to Draft.",
+      "word_count": 270
+    },
+    {
+      "id": "ux/Folder-management",
+      "product": "UX",
+      "title": "Folder management",
+      "summary": "Learn how to manage folders for both synchronous methods and asynchronous studies in QuestionPro UX. Understand the differences in deletion behavior and how to use the recycle bin.",
+      "url": "https://www.questionpro.com/help/ux/Folder-management.html",
+      "scraped_at": "2026-06-17T12:09:58.182Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Folder Management"
+        }
+      ],
+      "steps": [],
+      "content": "Folder Management How are folders structured in QuestionPro UX? QuestionPro UX provides a two-level organizational structure designed to separate research methodologies. Folders are managed independently depending on whether you are conducting Synchronous Methods (Usability Tests, Focus Groups, and Interviews) or Asynchronous Studies. How do folders work for Synchronous Methods? Each synchronous methodology—including Interviews, Focus Groups, and Usability Tests—features its own dedicated folder management system. For example, within the Usability Tests dashboard, you can create folders to categorize your projects. Methods can exist independently in a general list or be grouped into folders. Deletion Behavior: If a folder containing synchronous methods is deleted, the individual projects themselves are not removed. Instead, they are automatically moved back to the general \"All tests\" list for that specific methodology, ensuring no research data is lost during reorganization. How do folders work for Asynchronous Studies? Asynchronous studies are managed within a centralized Folders dashboard. This level of organization is more structured; every study is typically housed within a specific folder environment to maintain research integrity. Deletion and Recycle Bin: Unlike synchronous methods, if you delete a folder in the studies section, the folder and all studies contained within it are moved to the Recycle bin. From the Recycle bin, you have the option to: Restore: Recover the folder and its studies back to your active workspace. Empty Recycle Bin: Permanently delete all items. Note that this action is final and cannot be undone.",
+      "word_count": 238
+    },
+    {
+      "id": "ux/Test-status",
+      "product": "UX",
+      "title": "Test status",
+      "summary": "Learn about the different statuses for usability tests, interviews, and focus groups in QuestionPro UX, including All tests, Ordered, and Drafts.",
+      "url": "https://www.questionpro.com/help/ux/Test-status.html",
+      "scraped_at": "2026-06-17T12:10:02.372Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Understanding Test and Session Statuses"
+        }
+      ],
+      "steps": [],
+      "content": "Understanding Test and Session Statuses What do the different statuses mean for my research? In QuestionPro UX, your usability tests, focus groups, and interviews are categorized into three primary statuses to help you organize and track your research workflow. These statuses are visible on your dashboard and allow for quick filtering of your projects. What is the \"All tests\" category? The All tests view is a comprehensive list that displays every project you have created—whether it is a usability test, an interview, or a focus group—regardless of its current state. This is your primary dashboard for a high-level overview of your entire research history and current workload. What does the \"Ordered\" status indicate? A project moves to the Ordered status once you have finalized the setup and successfully placed an order for participants or launched the session. Projects in this category are active research initiatives where data collection is either imminent or currently underway. Active: Indicates a session that is currently live or ready for moderators and observers to join. Participant Tracking: For automated recruitment, this status shows the progress of participant fulfillment, such as \"1/4 testers\". What is the \"Drafts\" status? The Drafts status contains usability tests, interviews, or focus groups that are still in the configuration phase and have not yet been launched or ordered. This allows you to save your progress as you define your audience, script, and tasks without committing budget or notifying participants. Projects marked as Not ordered yet stay in this category until you complete the checkout process.",
+      "word_count": 254
+    },
+    {
+      "id": "ux/Tester-faqs",
+      "product": "UX",
+      "title": "Tester FAQs",
+      "summary": "Frequently asked questions for participants using the QuestionPro UX platform. Learn about technical requirements, recording tips, and the testing process.",
+      "url": "https://www.questionpro.com/help/ux/Tester-faqs.html",
+      "scraped_at": "2026-06-17T12:10:06.540Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Tester FAQ (Frequently Asked Questions)"
+        }
+      ],
+      "steps": [],
+      "content": "Tester FAQ (Frequently Asked Questions) What is QuestionPro UX testing? QuestionPro UX is a platform used by companies to see and hear how real people interact with their websites, apps, and prototypes. As a tester, you will record your screen and your voice while performing specific tasks, providing \"think-aloud\" feedback to help designers improve the user experience. What equipment do I need to be a tester? To participate in research studies, you will need the following: A Computer or Mobile Device: Tests can be performed on Windows, Mac, iPhone, or Android depending on the study requirements. A Stable Internet Connection: High-speed internet is required to upload video recordings. A Working Microphone: Your voice feedback is a critical part of the test results. QuestionPro UX Software: You may be asked to install a browser extension (for desktop) or a mobile app (for smartphone tests). How do I provide a good quality test? The most valuable tests are those where the researcher can clearly understand your thought process. Follow these tips: Think Aloud: Constantly narrate what you are looking at, what you are trying to do, and any frustrations or delights you experience. Find a Quiet Space: Ensure there is no background noise or music that might drown out your voice. Follow Instructions: Read each task carefully. Do not skip ahead or rush through the process. Be Honest: Researchers are looking for real feedback. Do not worry about hurting anyone's feelings; if something is confusing, say so. Is my privacy protected? Yes. QuestionPro UX only records your screen and your audio during the active test session. You will always see a clear indicator when recording is live. We recommend closing any personal tabs, windows, or sensitive documents before you begin your recording. Some studies may request \"Face Recording\" to capture emotional reactions. This is always optional and will be clearly disclosed before you start the test. What if I encounter a technical issue during a test? If the website you are testing crashes or your internet drops, try to refresh the page. If the issue persists, you can use the \"Report an Issue\" button within the recorder. Please note that if a recording is not successfully uploaded, the researcher may not be able to compensate you for that session. How and when am I paid for tests? Compensation varies by study and is managed by the organization or panel provider that invited you to the test. Generally, tests are reviewed for quality within a few business days. Once a session is approved as a \"qualified\" completion, payment is processed according to the specific terms of the panel you joined.",
+      "word_count": 437
+    },
+    {
+      "id": "ux/participants-management",
+      "product": "UX",
+      "title": "Participants management",
+      "summary": "Learn how to manage and recruit participants in QuestionPro UX. Understand recruitment methods, participant states, and invitation settings for automated workflows.",
+      "url": "https://www.questionpro.com/help/ux/participants-management.html",
+      "scraped_at": "2026-06-17T12:10:10.720Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Participant Management"
+        }
+      ],
+      "steps": [],
+      "content": "Participant Management Where do I access the Participants section? To manage the respondents for your research, navigate to the Management section in the left-hand sidebar of your study and select Participants. This dashboard is your central hub for recruiting new users and tracking their progress through the study lifecycle. How can I recruit new participants? Click the Add participants button to view the four available recruitment methods: Recruit from panel: Select qualified members from your existing research panel who meet your study criteria. Import from file: Upload a .xlsx or .csv file. To avoid errors, ensure columns are in this specific order: First name, Last name, and Email. Add manually: Enter individual participant details and assign specific Segments to categorize them immediately. Invite via link: Copy a unique recruitment link that can be shared via email, social media, or any preferred communication channel. What are the different participant states? Participants move through four distinct states based on their engagement and your verification: New: Details have been added, but the user hasn't signed up yet. You can forward a Sign up link or Sign up reminder to these users. Pending: The user has signed up but is waiting for moderator approval. Accepted: Verified participants who are officially part of the study. Only users in this state can be forwarded Login links to access quests. Rejected: Users deemed unsuitable for the research objectives. Moderators can manually move users between the Pending, Accepted, and Rejected states using the Mark as action bar. How do I configure Invitation and Automation settings? Click on Invitation settings in the top right of the participants' dashboard to customize the recruitment experience: Custom Messaging: Under the Invitation message and Acceptance message tabs, you can edit the exact text participants see during the sign-up and login process. Accept Quota: Set a cap on the number of participants allowed in the study. Once this number is reached, no further participants will be accepted. Auto-accept: Enable this toggle to automatically move participants from \"Pending\" to \"Accepted\" immediately upon signing up. This removes the need for manual verification and lets respondents start quests right away.",
+      "word_count": 353
+    },
+    {
+      "id": "ux/Messages",
+      "product": "UX",
+      "title": "Messages",
+      "summary": "Learn how to use the inbuilt messaging system in QuestionPro UX to facilitate direct communication between participants and researchers.",
+      "url": "https://www.questionpro.com/help/ux/Messages.html",
+      "scraped_at": "2026-06-17T12:10:14.893Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Messages System"
+        }
+      ],
+      "steps": [],
+      "content": "Messages System What is the Messages system? The Messages system is an integrated communication tool that allows participants and researchers to exchange direct messages within the QuestionPro UX platform. This facilitates real-time support, clarifies research tasks, and maintains engagement throughout the study. How do participants access and use messages? Participants can access their inbox through the Messages icon in their sidebar. From the participant interface, they can: View Conversations: See a list of active chat threads on the left-hand panel. Send New Messages: Click the New message button to initiate a conversation with the study moderators. How do moderators manage incoming messages? Researchers can monitor and respond to participant inquiries through a centralized dashboard. The interface includes several key indicators: Message List: View all incoming threads, which display the sender's name, the time of the last message, and a New badge for unread content. Chat Threading: Selecting a message opens the full conversation history on the right, clearly distinguishing between participant responses and moderator replies. Attachments: Moderators and participants can use the paperclip icon to attach files to their messages. Delete: Individual messages can be removed using the trash icon within the thread. How do I start a message with a specific participant? To start a new thread, click New message. A search field will appear in the For: section, allowing you to select from several options: All participants: Send a broadcast message to the entire study group. Moderators: Communicate internally with other researchers on the project. Individual Selection: Search for and select a specific participant by name to start a private one-on-one conversation.",
+      "word_count": 264
+    },
+    {
+      "id": "ux/Testing-with-Your-Own-Users",
+      "product": "UX",
+      "title": "Testing with Your Own Users",
+      "summary": "Learn how to use QuestionPro UX to conduct usability tests, focus groups and interviews with your own participants using custom links.",
+      "url": "https://www.questionpro.com/help/ux/Testing-with-Your-Own-Users.html",
+      "scraped_at": "2026-06-17T12:10:19.000Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Testing with Your Own Users"
+        }
+      ],
+      "steps": [],
+      "content": "Testing with Your Own Users Can I use my own participants for testing? Yes. While QuestionPro UX offers a curated panel, you can also recruit your own customers or employees. This is ideal for testing internal tools or specialized software where specific user knowledge is required. When setting up your test, select My own participants in the recruitment step. The system will generate a unique link that you can share via email or any other platform. These participants are not charged panel credits, but may use \"external invite\" slots depending on your plan.",
+      "word_count": 93
+    },
+    {
+      "id": "ux/Organization-and-members",
+      "product": "UX",
+      "title": "Organization and members",
+      "summary": "Learn how to manage your organization and team members for synchronous methods in QuestionPro UX. Understand member roles, invitations, and global feature settings.",
+      "url": "https://www.questionpro.com/help/ux/Organization-and-members.html",
+      "scraped_at": "2026-06-17T12:10:23.582Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Organization Management"
+        }
+      ],
+      "steps": [
+        "Click the Add members button on the organization dashboard.",
+        "Enter your colleague's work email address in the provided field.",
+        "Click Send invite. The user will receive an invitation to join the organization."
+      ],
+      "content": "Organization Management How do I manage my Organization and Members? The My organization dashboard is the central hub for team collaboration within synchronous methods. Here, the Plan Admin can manage the organization name and view the full list of members. The Members table displays the following details for each user: Name and Email: The identifying details of the team member. Member status: Shows if a user is a Plan admin, Accepted, or has been Invited. Tests created: A count of the synchronous methods initiated by that specific user. Action: Admins can access individual Settings for a member or Remove them from the organization entirely. How do I invite new members to the organization? With an Enterprise Plan, you can add an unlimited number of sub-accounts without additional fees. To add a colleague: Click the Add members button on the organization dashboard. Enter your colleague's work email address in the provided field. Click Send invite. The user will receive an invitation to join the organization. What are the available Feature Settings? Admins can configure global behaviors for all synchronous methods within the organization to ensure consistency and efficiency: Sharing settings: Enable the toggle to Automatically share all tests with all organization members, fostering transparency across the team. Global NDA: Upload a standardized Non-Disclosure Agreement (NDA) file that all members can quickly add to their specific tests. Sprint view: Toggle this ON to automatically segment test orders by sprint when viewing results. Video annotations: Configure defaults for video playback, such as auto-pausing when adding new annotations or adding automatic end times. AI analysis: Enable the toggle to automatically run AI analysis on all results for unmoderated user tests.",
+      "word_count": 276
+    },
+    {
+      "id": "ux/Billing-and-account",
+      "product": "UX",
+      "title": "Billing and account",
+      "summary": "Manage your QuestionPro UX personal profile, time zone settings, billing methods, and transaction history for synchronous research methods.",
+      "url": "https://www.questionpro.com/help/ux/Billing-and-account.html",
+      "scraped_at": "2026-06-17T12:10:28.079Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Billing and Profile Management"
+        }
+      ],
+      "steps": [],
+      "content": "Billing and Profile Management How do I update my personal profile and time zone? Your profile contains the core administrative details for your account. To access these settings, click on the My profile icon in the bottom-left navigation bar. Information: You can view your account email and edit your name, phone number, and company name. Time Zone: It is important to set your correct local time zone to ensure all test schedules and \"Last modified\" timestamps are accurate to your location. How do I manage my payment methods? The Billing section allows you to manage how you pay for your research credits and licenses. Payment Profiles: Click + Add a new card to securely save a credit card to your account for future purchases. Transaction History: This table provides a complete audit trail of your purchases, including the Item (e.g., Enterprise license), Description, Quantity, and the total Amount billed. Invoices and Receipts: You can download individual invoices or receipts for your records by clicking the download icon in the respective columns. Where can I view my plan details and seat usage? Scroll to the bottom of the profile page to view your Plan details. This section highlights: Plan Type: Displays your current subscription (e.g., ENTERPRISE Yearly) and allows you to initiate a plan change. Renewal/Cancellation: Displays the date of your next invoice or account expiration. Additional Charges (Seats): View how many seats are currently used within your organization. Under Enterprise plans, you typically have access to unlimited seats at no additional charge.",
+      "word_count": 252
+    },
+    {
+      "id": "ux/Multi-member-login",
+      "product": "UX",
+      "title": "Multi member login",
+      "summary": "Manage team access in QuestionPro UX with multi-member login. Add colleagues to your organization to collaborate on research projects.",
+      "url": "https://www.questionpro.com/help/ux/Multi-member-login.html",
+      "scraped_at": "2026-06-17T12:10:32.243Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Multi-Member Login"
+        }
+      ],
+      "steps": [],
+      "content": "Multi-Member Login How does multi-member login work? QuestionPro UX supports collaborative research by allowing multiple team members to access the same organization. Each member has their own unique login credentials, ensuring security and accountability. Administrators can invite new members via the My Organization dashboard. Once invited, colleagues can view shared tests, moderate sessions, and analyze results depending on the permissions assigned to them.",
+      "word_count": 63
+    },
+    {
+      "id": "ux/Collaboration-tests",
+      "product": "UX",
+      "title": "Collaboration across tests",
+      "summary": "Learn how to collaborate with team members across different research methodologies in QuestionPro UX. Understand how to add collaborators to folders, individual methods, and active sessions.",
+      "url": "https://www.questionpro.com/help/ux/Collaboration-tests.html",
+      "scraped_at": "2026-06-17T12:10:36.702Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Collaborating on Research Projects"
+        }
+      ],
+      "steps": [],
+      "content": "Collaborating on Research Projects How does collaboration work in QuestionPro UX? Collaboration allows multiple team members to work together on research projects. By adding collaborators, you can grant colleagues access to view data, manage participants, or moderate live sessions depending on your specific needs. How do I collaborate on an entire Folder? For large projects involving multiple studies or methods, you can add collaborators at the folder level. This ensures that any team member added to the folder automatically gains access to all research projects contained within it. To add a collaborator to a folder, navigate to your Folders list, click the options menu (three dots) on the desired folder, and select Collaborators. From here, you can search for team members by email and invite them to the folder workspace. How do I add collaborators to a specific Methodology? If you only want to share a single Usability Test, Focus Group, or Interview, you can manage collaborators from the methodology dashboard. From the Dashboard: Locate the specific method in your list, click the three-dot options menu, and select Collaborators. From within the Method: While viewing the configuration or results of a specific methodology, click the Collaborators icon or link in the top-right header area. Search for the colleague you wish to add and save your changes. They will now see this specific methodology in their own dashboard. How do team members collaborate during live sessions? For live methodologies like Interviews and Focus Groups, collaborators can join as Observers. This allows them to watch the live session, take notes, and communicate with the moderator through backchannel messaging without being visible to the participants. Collaborators added to the project can join these calls directly by clicking Observe from the dashboard once the session has been launched by the moderator.",
+      "word_count": 297
+    },
+    {
+      "id": "ux/NDA-how-to",
+      "product": "UX",
+      "title": "NDA: How to",
+      "summary": "Learn how to add a Non-Disclosure Agreement (NDA) to your usability tests, interviews, or focus groups in QuestionPro UX to protect your research data.",
+      "url": "https://www.questionpro.com/help/ux/NDA-how-to.html",
+      "scraped_at": "2026-06-17T12:10:41.263Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Adding an NDA to Your Test"
+        }
+      ],
+      "steps": [
+        "Scroll to the bottom of the Audience configuration page to find the NDA section.",
+        "Check the box labeled \"Make testers commit to a non-disclosure agreement before taking this test.\"",
+        "Click the Click to upload button to upload your specific legal document from your computer."
+      ],
+      "content": "Adding an NDA to Your Test How do I protect my research with an NDA? To ensure that participants keep your prototypes, concepts, and discussions confidential, you can require them to sign a Non-Disclosure Agreement (NDA) before they can begin the research session. This is particularly useful when testing unreleased products or sensitive internal materials. Where do I add the NDA during test setup? The option to add an NDA is located in Step 2: Audience of the configuration process for usability tests, focus groups, and interviews. This step appears after you have defined your recruitment source and demographic filters. To enable this feature: Scroll to the bottom of the Audience configuration page to find the NDA section. Check the box labeled \"Make testers commit to a non-disclosure agreement before taking this test.\" Click the Click to upload button to upload your specific legal document from your computer. Once uploaded, every participant recruited for this project will be presented with your agreement. They must digitally \"accept\" the terms before the system allows them to proceed to the test scenario or enter the live call room. Can I use a standard NDA for all my tests? If your organization uses a standardized legal document, your Plan Admin can upload a Global NDA within the Organization Settings. This allows you to quickly select the pre-approved file during Step 2 without needing to upload it manually for every new project.",
+      "word_count": 237
+    },
+    {
+      "id": "ux/buying-credits",
+      "product": "UX",
+      "title": "Buying credits",
+      "summary": "Learn how to purchase research credits in QuestionPro UX to fulfill your usability tests, focus groups, and interviews with panel participants.",
+      "url": "https://www.questionpro.com/help/ux/buying-credits.html",
+      "scraped_at": "2026-06-17T12:10:45.401Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Purchasing Research Credits"
+        }
+      ],
+      "steps": [
+        "Enter the First name and Last name as they appear on the credit card.",
+        "Provide the Credit card number, Expiration date (MM/YY), and the 3-digit Verification code (CVC) from the back of the card.",
+        "Click Complete purchase to process the transaction."
+      ],
+      "content": "Purchasing Research Credits Where do I go to buy more credits? Research credits are required when you choose to fulfill your study using the QuestionPro UX panel. You can initiate a purchase from several locations within the platform: The Dashboard: On any methodology dashboard (Usability Tests, Focus Groups, or Interviews), click the Buy credits button located in the top-right header area. The Checkout Process: If you are placing an order for a new test and do not have sufficient credits, the system will automatically direct you to the purchase screen. How do I select the number of credits to purchase? Once on the Purchase credits screen, you can define your order volume: Use the \"+\" and \"-\" buttons or type directly into the Credits field to specify the amount you need. The Unit price and Total price will update automatically based on your selection. Note: All credits purchased at today's price will be honored even if there is a future price increase. What information is required for payment? To finalize your transaction, you must complete the Payment details section on the right side of the screen: Enter the First name and Last name as they appear on the credit card. Provide the Credit card number, Expiration date (MM/YY), and the 3-digit Verification code (CVC) from the back of the card. Click Complete purchase to process the transaction. Upon success, the credits will be added to your account balance immediately, and you can proceed with launching your research.",
+      "word_count": 247
+    },
+    {
+      "id": "ux/diary-quests",
+      "product": "UX",
+      "title": "Diary quests",
+      "summary": "Learn how to create, configure, and manage Diary Quests in QuestionPro UX for collecting recurring qualitative insights.",
+      "url": "https://www.questionpro.com/help/ux/diary-quests.html",
+      "scraped_at": "2026-06-17T12:10:49.821Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Diary Quests – QuestionPro UX"
+        }
+      ],
+      "steps": [
+        "Navigate to your study Workspace and click New Quest.",
+        "Select Diary Quest from the quest type options.",
+        "Enter the quest name, start date, and due date.",
+        "Choose your diary setting: unlimited entries or scheduled intervals.",
+        "Click Save to proceed with adding tasks."
+      ],
+      "content": "Diary Quests – QuestionPro UX What are Diary Quests? Diary Quests in QuestionPro UX are a flexible way to collect recurring participant input over a span of days, weeks, or months. These are especially helpful for longitudinal studies where behaviors, reflections, or habits evolve over time. You can choose between two types of Diary Quests: unlimited submissions or scheduled intervals. How do I create a Diary Quest? To create a Diary Quest: Navigate to your study Workspace and click New Quest. Select Diary Quest from the quest type options. Enter the quest name, start date, and due date. Choose your diary setting: unlimited entries or scheduled intervals. Click Save to proceed with adding tasks. What scheduling options are available? If you select \"Responses are collected at scheduled intervals,\" you can choose between: Daily: Repeat tasks every N days (e.g., 2 for alternate days) Weekly: Repeat tasks on specific weekdays (e.g., Monday, Wednesday) Monthly: Repeat tasks on specific dates (e.g., 1st, 10th, 15th) If you select \"Participants can submit an unlimited number of responses,\" participants will be able to respond freely until the due date. What does the participant experience look like? Participants do not see a list of all upcoming tasks or repeat intervals. Instead: Only the task scheduled for \"today\" becomes visible and available to complete Future tasks remain hidden until they are unlocked based on the schedule Participants complete each entry one at a time, in the order released This design supports structured and time-sensitive longitudinal feedback collection. What types of tasks can I include in a Diary Quest? Diary Quests support all task types available in Standard Quests, including: Conversation Fill in the Blank Idea Markup Survey Video Voting Photo Journal How do I view responses to a Diary Quest? You can view responses in two ways: By Task: See all participant entries submitted for a specific diary task By Participant per Task: View how a single participant responded to a single task Currently, there is no view to display all responses from a single participant across multiple tasks in one place. Can I run multiple Diary Quests within a single study? Yes. You can add multiple Diary Quests to the same study, each with different start/end dates and configurations. This allows you to run parallel or staggered longitudinal tasks within a single study environment. When should I use Diary Quests? Use Diary Quests when your research requires: Tracking behavior or feedback over a series of time intervals Collecting in-the-moment reflections during product trials or real-world use Studying participant routines, journaling behavior, or habit formation",
+      "word_count": 428
+    },
+    {
+      "id": "ux/topics",
+      "product": "UX",
+      "title": "Topics",
+      "summary": "Learn how to use Topics in QuestionPro UX to facilitate asynchronous discussions, collect longitudinal qualitative data, and engage with participants in a diary study format.",
+      "url": "https://www.questionpro.com/help/ux/topics.html",
+      "scraped_at": "2026-06-17T12:10:54.006Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Topics & Discussions"
+        }
+      ],
+      "steps": [],
+      "content": "Topics & Discussions What are Topics? Topics is a feature within QuestionPro UX designed for qualitative, longitudinal research such as diary studies. It allows researchers to create open-ended discussion threads where participants can share their experiences, thoughts, and media over time. Unlike structured surveys, Topics facilitate a community-style interaction where participants can respond to prompts and researchers can ask follow-up questions in a threaded format. How do I access and manage Topics? You can find the Topics management area within your project dashboard. From here, you can toggle participant access and control how new content is generated: Participant's access to the forum: Toggle this to open or close the entire discussion area for your participants. New topics by participants: Enable this if you want participants to be able to start their own discussion threads; otherwise, only researchers can initiate topics. How do I create a new Topic? To start a new discussion, click the + New Topic button. You can add a title, a featured image to represent the subject, and a detailed description or set of instructions for the participants. For example, in a \"Your First Coffee of the Day\" topic, you can prompt users to share specific details like the time, location, and how the ritual made them feel. How do participants interact within a Topic? Participants can engage with a topic by posting Comments. The interface supports a rich interaction model: Textual Responses: Participants can write detailed entries about their daily routines or habits. Media Uploads: Users can upload photos, videos, or documents (PDFs) directly into their comments using the attachment icons. Likes: Participants and researchers can \"Like\" comments to acknowledge high-quality contributions. Can I ask follow-up questions to participants? Yes. One of the core strengths of the Topics feature is the ability to conduct Threaded Discussions. Researchers can click Reply on any participant's post to ask for clarification or more detail. Other participants can also join the thread, creating a peer-to-peer learning environment that uncovers deeper insights. What other options are available in the Topics dashboard? The dashboard provides additional tools to guide participants and monitor engagement: Introductory Video: You can upload an introductory video to help participants understand the research context and objectives before they begin. Featured Label: Topics can be marked as \"Featured\" to highlight specific discussions. Engagement Metrics: Icons below the topic title show the number of participants involved and the total number of comments/replies.",
+      "word_count": 402
+    },
+    {
+      "id": "ux/Placing-an-order-for-a-test",
+      "product": "UX",
+      "title": "Placing an order for a test",
+      "summary": "Learn how to create and place orders for Usability Tests, Focus Groups, and Interviews in QuestionPro UX. Understand the multi-step configuration process for moderated and unmoderated research.",
+      "url": "https://www.questionpro.com/help/ux/Placing-an-order-for-a-test.html",
+      "scraped_at": "2026-06-17T12:10:58.200Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Placing an Order for a Test"
+        }
+      ],
+      "steps": [],
+      "content": "Placing an Order for a Test What types of research can I conduct? QuestionPro UX supports four primary research methodologies to capture comprehensive qualitative insights: Usability Tests: Available as both moderated and unmoderated sessions to evaluate digital interfaces. Focus Groups: Group discussions designed to explore collective opinions and behaviors. Interviews: One-on-one sessions for deep-dive individual feedback. Qualitative Studies: Also referred to as Diary Studies, these consist of a study containing multiple Quests, which in turn house specific tasks. How do I set up a Usability Test? Creating a Usability Test involves a 5-step process to define your interface, audience, and tasks: Step 1: Basics Choose your interface (Website, Mobile App, Prototype, or HTML/CSS) and supported device types including Desktop, Android, or iPhone. Here you will also set the URL, language, number of testers, and duration. You may also enable face recording with emotion recognition. Step 2: Audience Select your recruitment source: the QuestionPro UX curated panel, your own participants via custom link, or your own custom panel. You can define strict demographics (Age, Gender, Income, etc.) and add technical or verbal screeners. You may also require testers to sign a Non-Disclosure Agreement (NDA). Step 3: Scenario & Tasks Define the research scenario and choose whether to start with an Impression Test. Add specific tasks, categorizing them by usability or completion requirements. Step 4: Post-test Configure survey questions and psychometric inclusions like the System Usability Questionnaire (SUS) or Net Promoter Score (NPS). You can also enable AI analysis for video summaries or UX Crowd for crowdsourced analysis (available for orders of 10+ testers). Step 5: Review & Checkout Review all configurations and place the order using the appropriate credits based on your requirements. How do I set up Interviews and Focus Groups? Interviews and Focus Groups follow a similar structure but focus on conversational scripts and scheduling: Basics: Define the study name, supported device types (Computer, Android, or iPhone), participant count, and session duration. Script: Add an optional introductory greeting and list the specific topics or questions to be covered during the live session. Post-session: Configure survey questions for participants to complete after the call and set an optional end-of-session redirect URL. Scheduling: Assign moderators and observers. Note that interviews with your own participants do not require a fixed schedule; calls can be hosted as slots are filled. How do I finalize and pay for the test? The final step for all test types is the Review phase. Ensure all demographic filters, screeners, and analysis options are correct. The system will calculate the required credits; once confirmed, you can place the order to begin recruitment or scheduling.",
+      "word_count": 436
+    },
+    {
+      "id": "ux/Virtual-Focus-Groups",
+      "product": "UX",
+      "title": "Virtual Focus Groups",
+      "summary": "Host virtual focus groups in QuestionPro UX to facilitate group discussions and gather collective user feedback.",
+      "url": "https://www.questionpro.com/help/ux/Virtual-Focus-Groups.html",
+      "scraped_at": "2026-06-17T12:11:02.289Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Virtual Focus Groups"
+        }
+      ],
+      "steps": [],
+      "content": "Virtual Focus Groups What are Virtual Focus Groups? Virtual Focus Groups allow you to bring multiple participants into a single moderated session. This methodology is designed to spark discussion and uncover shared attitudes or conflicting opinions about a product, concept, or brand. How do I host a focus group in QuestionPro UX? Select the Focus Group method during test creation. You can set the number of participants and session duration. During the live call, the moderator can manage the queue of speakers, share their screen to show prototypes, and use a script to guide the conversation. All sessions are recorded and can be analyzed using the standard video analysis toolkit.",
+      "word_count": 110
+    },
+    {
+      "id": "ux/Moderated-Usability-Testing",
+      "product": "UX",
+      "title": "Moderated Usability Testing",
+      "summary": "Conduct live, moderated usability testing sessions in QuestionPro UX to interact with participants in real-time.",
+      "url": "https://www.questionpro.com/help/ux/Moderated-Usability-Testing.html",
+      "scraped_at": "2026-06-17T12:11:06.596Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Moderated Usability Testing"
+        }
+      ],
+      "steps": [],
+      "content": "Moderated Usability Testing What is Moderated Usability Testing? Moderated testing involves a live session where a researcher guides a participant through tasks in real-time. This method is ideal for deep-diving into user reasoning and asking follow-up questions that unmoderated tests might miss. What can I expect from a moderated session? In QuestionPro UX, moderated sessions include high-quality video and audio communication, screen sharing, and the ability to take live notes. Moderators can see the participant's face and screen simultaneously, providing full context for their actions. These sessions can be conducted with your own users or participants from the integrated panel.",
+      "word_count": 100
+    },
+    {
+      "id": "ux/Mobile-User-Testing",
+      "product": "UX",
+      "title": "Mobile User Testing",
+      "summary": "Conduct user testing on mobile devices in QuestionPro UX to evaluate apps and mobile websites on iPhone and Android.",
+      "url": "https://www.questionpro.com/help/ux/Mobile-User-Testing.html",
+      "scraped_at": "2026-06-17T12:11:10.784Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Mobile User Testing"
+        }
+      ],
+      "steps": [],
+      "content": "Mobile User Testing Can I test mobile apps and websites? Yes, QuestionPro UX supports robust testing on both iPhone and Android devices. This allows you to evaluate how users interact with your mobile apps or responsive websites in their natural environment. How does mobile testing work? During setup, select Mobile App or Website as the interface and choose the specific device types you want to target. Participants will use their own smartphones to complete the test. The recording will capture their screen, their voice, and optionally their face, providing a complete picture of the mobile user experience.",
+      "word_count": 97
+    },
+    {
+      "id": "ux/Cancelling-an-Order",
+      "product": "UX",
+      "title": "Cancelling an Order",
+      "summary": "Learn how to cancel an active research order in QuestionPro UX and understand the credit refund policy for tests in progress.",
+      "url": "https://www.questionpro.com/help/ux/Cancelling-an-Order.html",
+      "scraped_at": "2026-06-17T12:11:15.078Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Cancelling an Order"
+        }
+      ],
+      "steps": [],
+      "content": "Cancelling an Order How do I cancel an active test order? If you need to stop data collection for a usability test, interview, or focus group that has already been launched, you can do so from the project summary page. Navigate to the specific test and locate the Order in Progress section. Click the Cancel order button. A confirmation modal will appear to verify the action. Will I receive a credit refund upon cancellation? When an order is cancelled, any unfulfilled participant slots are typically credited back to your account. However, please note that the system cannot credit you for any tests that have already started or complete during the cancellation process. Once you click Confirm, the recruitment for that specific order will cease immediately.",
+      "word_count": 125
+    },
+    {
+      "id": "ux/Previewing-and-Desktop-Testing",
+      "product": "UX",
+      "title": "Previewing and Desktop Testing",
+      "summary": "Understand how to use the Preview Test feature and configure research for Desktop and Computer platforms in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/Previewing-and-Desktop-Testing.html",
+      "scraped_at": "2026-06-17T12:11:19.822Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Preview and Desktop Platform Testing"
+        }
+      ],
+      "steps": [],
+      "content": "Preview and Desktop Platform Testing What is the Preview Test feature? Before launching your study to live participants, it is highly recommended to use the Preview test link found on the test summary page. This allows you to walk through the participant experience, view the instructions, and ensure the URL or prototype loads correctly without consuming any credits.",
+      "word_count": 58
+    },
+    {
+      "id": "ux/End-of-Test-Redirect",
+      "product": "UX",
+      "title": "End-of-Test Redirect",
+      "summary": "Learn how to set up an automatic redirect link to send participants to a specific URL after completing a test in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/End-of-Test-Redirect.html",
+      "scraped_at": "2026-06-17T12:11:24.007Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Automatic Redirect Settings"
+        }
+      ],
+      "steps": [],
+      "content": "Automatic Redirect Settings How do I redirect participants after they finish a test? You can automatically send participants to a specific website, such as your home page, a thank-you page, or an external survey, once they complete their tasks and the wrap-up survey. This setting is found in the Post-test (Step 4) configuration screen. Check the box labeled \"Add a redirect link to show testers when they finish.\" You can then enter the Link text (the button label the participant sees) and the Link URL where they will be sent upon clicking.",
+      "word_count": 92
+    },
+    {
+      "id": "ux/Custom-Participant-Screening",
+      "product": "UX",
+      "title": "Custom Participant Screening",
+      "summary": "Use custom screeners to filter participants in QuestionPro UX, including technical, verbal, and survey-based screening questions.",
+      "url": "https://www.questionpro.com/help/ux/Custom-Participant-Screening.html",
+      "scraped_at": "2026-06-17T12:11:28.113Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Custom Participant Screening"
+        }
+      ],
+      "steps": [],
+      "content": "Custom Participant Screening How do I ensure I get the right participants for my study? Beyond standard demographics, QuestionPro UX allows you to implement custom screeners in Step 2: Audience. These act as a gatekeeper to ensure only qualified individuals can participate in your research. What types of screeners are available? Technical Screener: Filters participants based on their hardware or software, such as specific OS versions or browser types. Verbal Response Screener: Requires participants to record a short audio clip before starting. This helps you evaluate their communication skills and ensures they have a working microphone. Screener Survey Questions: Create multiple-choice questions where you define \"accept\" or \"reject\" criteria. If a participant provides an answer that you have marked for rejection, they are immediately disqualified from the test and do not consume a credit.",
+      "word_count": 134
+    },
+    {
+      "id": "ux/Notifications-and-reminders",
+      "product": "UX",
+      "title": "Notifications and Reminders",
+      "summary": "Set up automated email reminders and updates for participants, moderators, and administrators in your QuestionPro UX study using scheduled notifications.",
+      "url": "https://www.questionpro.com/help/ux/Notifications-and-reminders.html",
+      "scraped_at": "2026-06-17T12:11:32.274Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Quest Notifications – QuestionPro UX"
+        }
+      ],
+      "steps": [],
+      "content": "Quest Notifications – QuestionPro UX How can I send automated reminders for my quest? You can set up automated email notifications to send reminders and updates to specific user groups in your study. These scheduled messages help you communicate with participants, moderators, administrators, and observers at key moments throughout your research without manual intervention. Configure personalized message content, select recipient categories, schedule delivery timing relative to your study milestones, and track all sent communications through the notification management interface. Where do I access notification management? From your study's main Workspace, click on Quests to view your quest list. Then click the three-dot menu (⋮) next to any quest and select Notifications from the dropdown menu to open the notification management panel. How do I view my current notification schedule? The notification panel displays all scheduled emails organized by recipient category. You can see separate sections for Participant emails, All admins emails, Moderator emails, Observer emails, and Administrator emails. Each section shows the notification name, delivery date and time, and current status (Sent or scheduled). How do I create a new scheduled email? Click + New notification to open the email composer. Enter a descriptive reminder name, compose your message in the Body field, select your recipient category, and configure the delivery timing. Use the Save button to schedule your email. Who can receive scheduled notifications? Click the Category dropdown to select from available recipient groups: Admin (QuestionPro Administrators) Administrator Moderator Observer Participant The system shows checkboxes next to each category, allowing you to select one or multiple recipient types for each notification. How do I schedule when emails are sent? Configure the delivery timing using the Delivery date controls. Set a numeric value in the first field, then choose your time unit from the dropdown (Hours, Minutes, Days, Week, Month). Finally, select the timing reference point: \"Before start date\", \"After start date\", \"Before due date\", or \"After due date\" to determine when the notification will be sent relative to your quest timeline. How do I edit or manage existing scheduled emails? In the notifications panel, you can see all your scheduled communications organized by recipient type. Each notification shows its delivery date, time, and status. Use the toggle switches to enable or disable specific notifications, and access additional management options through the interface.",
+      "word_count": 383
+    },
+    {
+      "id": "ux/Demographic-Filtering-for-recruiting-Usability-tests-Interviews-focus-groups",
+      "product": "UX",
+      "title": "Demographic Filtering",
+      "summary": "Learn how to use demographic filtering in QuestionPro UX to recruit the exact audience for your research studies (Usability tests, Interviews and focus groups).",
+      "url": "https://www.questionpro.com/help/ux/Demographic-Filtering-for-recruiting-Usability-tests-Interviews-focus-groups.html",
+      "scraped_at": "2026-06-17T12:11:36.365Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Demographic Filtering"
+        }
+      ],
+      "steps": [],
+      "content": "Demographic Filtering How can I filter my participant audience? When recruiting from the QuestionPro UX panel, you can apply detailed demographic filters to ensure you are getting feedback from your target market. Available filters include: Age and Gender Country and Region Household Income and Employment Status Education Level and Family Status Social Network usage and Community Type These filters help you narrow down a broad panel to the specific segment that matches your user persona.",
+      "word_count": 75
+    },
+    {
+      "id": "ux/participant-invites",
+      "product": "UX",
+      "title": "Participant invites",
+      "summary": "Learn how to add more participant invites to your usability tests, focus groups, or interviews based on the current project state in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/participant-invites.html",
+      "scraped_at": "2026-06-17T12:11:40.517Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Adding More Invites to Your Project"
+        }
+      ],
+      "steps": [
+        "Navigate to your project and click Edit.",
+        "In Step 1: Basics, locate the Number of participants (or Number of testers) field.",
+        "Enter your desired total number or use the arrow keys to adjust the count.",
+        "Click Continue or Save and exit to update your draft.",
+        "From your main dashboard, locate the specific project row.",
+        "Click the options menu (three dots) on the far right of the row.",
+        "Select More invites from the dropdown list.",
+        "You will be taken directly to a Checkout page where you can specify the number of additional participants needed.",
+        "Review the order summary and click Place order to finalize the addition."
+      ],
+      "content": "Adding More Invites to Your Project How do I increase the number of participants for my project? In QuestionPro UX, the method for adding more participant invites depends on whether your project is still a draft or if it has already been ordered/launched. How do I add invites to a Draft project? If your usability test, interview, or focus group is still in the Draft state (not yet ordered), you can adjust the participant count directly within the setup configuration. Navigate to your project and click Edit. In Step 1: Basics, locate the Number of participants (or Number of testers) field. Enter your desired total number or use the arrow keys to adjust the count. Click Continue or Save and exit to update your draft. How do I add invites to an Ordered or Cancelled project? Once a project has been Ordered (launched) or even if it was subsequently Cancelled, the participant count is locked in the \"Basics\" setup screen to maintain data integrity. To add more participants at this stage, you must use the management dropdown. From your main dashboard, locate the specific project row. Click the options menu (three dots) on the far right of the row. Select More invites from the dropdown list. You will be taken directly to a Checkout page where you can specify the number of additional participants needed. Review the order summary and click Place order to finalize the addition. Why is the participant count field locked? The field is locked in the \"Basics\" screen for launched projects to prevent accidental changes to active recruitment parameters. Using the \"More invites\" workflow ensures that the new request is properly processed through the billing and fulfillment systems without interrupting the current session progress.",
+      "word_count": 288
+    },
+    {
+      "id": "ux/Tester-Recruitment",
+      "product": "UX",
+      "title": "Tester Recruitment",
+      "summary": "Understand the tester recruitment process in QuestionPro UX, including panel fulfillment and demographic targeting.",
+      "url": "https://www.questionpro.com/help/ux/Tester-Recruitment.html",
+      "scraped_at": "2026-06-17T12:11:44.857Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Tester Recruitment Process"
+        }
+      ],
+      "steps": [],
+      "content": "Tester Recruitment Process How are testers recruited for my studies? QuestionPro UX utilizes a multi-channel recruitment strategy to ensure high-quality feedback. You can source participants through our curated global panel, where users are pre-vetted for their ability to provide clear, verbal feedback. During the creation/edit phase at the \"Audience\" step (step 2), you define your target audience using demographic filters. Once your order is placed, our system automatically invites qualified participants who match your criteria. Each participant is compensated for their time, ensuring a professional and committed response pool.",
+      "word_count": 89
+    },
+    {
+      "id": "ux/recruitment-panel-studies",
+      "product": "UX",
+      "title": "Recruitment Panel: Studies",
+      "summary": "Use the Panel feature in QuestionPro UX to create screeners, manage panelists, and recruit qualified participants into your study.",
+      "url": "https://www.questionpro.com/help/ux/recruitment-panel-studies.html",
+      "scraped_at": "2026-06-17T12:11:52.842Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Recruitment Panel"
+        }
+      ],
+      "steps": [],
+      "content": "Recruitment Panel What is a Panel? The Panel feature allows you to create customized screeners, manage recruited panelists, and integrate participants directly into your studies. You can use it to build a pool of qualified respondents, segment them with tags, and invite them to specific studies based on their profile fit. Watch this video for a quick overview of the Panel feature in QuestionPro UX: Your browser does not support the video tag. Download Video Where do I access the Panel? To access the Panel feature, open your study and click the Panel tab in the left-hand sidebar. This opens the Panel dashboard where you can manage both your screeners and your list of potential panelists. How do I create a new screener? Click the Create Screener button to begin. Enter a title, description, and the estimated time required to complete the screener. These screeners are essential for qualifying participants before they are officially added to your panel. How do I add questions to my screener? After setting up the screener details, add your specific criteria using the Add Question button. You can choose from several question types and mark specific entries as required to ensure you capture all necessary data. What question types are supported? Each screener can include various question types to effectively capture participant demographics. Supported types include: Select One: For single-choice answers. Select Many: For multiple-choice selections. Short Text: For open-ended context and qualitative screening. Media Upload: Allows participants to upload images or videos to demonstrate fit. How do I share a screener? Once your screener is live, you can generate a shareable URL to distribute to potential participants. As they submit their responses, their data will automatically populate in your Panel view for review. How do I view and filter panelists? In the Panel tab, you will see a list of all candidates who have completed your screeners. You can use advanced filters to narrow the list by demographics, custom tags, or specific answers. You can also perform bulk actions, such as inviting a group to a study or tagging them for future longitudinal research. How do I view a panelist's profile? Click on any entry to open a detailed panelist profile. This view includes: Profile photo and contact information Historical responses to your screeners Internal tags and researcher notes Calculated eligibility and fit for your current studies You can trigger a direct invitation to join your study from this screen. How do I recruit participants from the panel? After finding the right profiles, click Invite to Study. Once they accept, they will transition to an active participant status in your study, allowing you to track their progress alongside other respondents. We recommend using tags (e.g., \"High Engagement\" or \"Power User\") to identify the best participants for repeat recruitment.",
+      "word_count": 464
+    },
+    {
+      "id": "ux/Video-Annotations",
+      "product": "UX",
+      "title": "Video Annotations",
+      "summary": "Use video annotations in QuestionPro UX for usability tests, interviews and focus groups to mark important moments in your research videos and share insights with your team.",
+      "url": "https://www.questionpro.com/help/ux/Video-Annotations.html",
+      "scraped_at": "2026-06-17T12:11:57.450Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Video Annotations"
+        }
+      ],
+      "steps": [],
+      "content": "Video Annotations How do I use video annotations? Annotations allow you to create time-stamped notes directly on your research videos. While watching a session, you can pause the video and add a comment at a specific timestamp. These annotations serve as bookmarks for key insights. Each annotation can also be saved as a \"clip,\" which can later be used to build highlight reels. Annotations are visible to all team members with access to the study, making it easy to collaborate on qualitative analysis.",
+      "word_count": 83
+    },
+    {
+      "id": "ux/Video-Transcription",
+      "product": "UX",
+      "title": "Video Transcription",
+      "summary": "Get automated or manual transcriptions of your user testing, interview and focus group videos in QuestionPro UX for faster analysis and quote extraction.",
+      "url": "https://www.questionpro.com/help/ux/Video-Transcription.html",
+      "scraped_at": "2026-06-17T12:12:01.639Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Video Transcription"
+        }
+      ],
+      "steps": [],
+      "content": "Video Transcription How can I get transcripts for my videos? QuestionPro UX provides transcription services to help you analyze video data more efficiently. Transcripts allow you to read along with the session and search for specific keywords without watching the entire video. Once a session is complete, you can request a transcript from the video player. Transcripts are time-synced with the video, allowing you to click on any sentence to jump to that exact moment in the recording. You can also extract quotes directly from the transcript for your reports.",
+      "word_count": 90
+    },
+    {
+      "id": "ux/ai-highlight-reels-srudies",
+      "product": "UX",
+      "title": "AI Highlight reels: Studies",
+      "summary": "Learn how to use AI-generated Highlight Reels in QuestionPro UX to consolidate video insights, group clips by theme, and share compelling participant stories with stakeholders.",
+      "url": "https://www.questionpro.com/help/ux/ai-highlight-reels-srudies.html",
+      "scraped_at": "2026-06-17T12:12:05.830Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Video Analysis: Highlight Reels"
+        }
+      ],
+      "steps": [],
+      "content": "Video Analysis: Highlight Reels Coming soon, Q2 2026 What are Highlight Reels? Highlight Reels enable researchers to quickly consolidate key moments from multiple participant videos into a single shareable video. This feature uses AI to group clips by theme and sentiment, transforming raw qualitative data into concise, stakeholder-ready stories. Key Features Automated Assembly: Bulk-generate clips based on AI-identified themes or sentiments across all responses. Custom Configuration: Set reel length, add captions, and choose between horizontal or vertical orientations. Manual Refinement: Reorder clips, add transitions, or insert manually saved clips to fine-tune the narrative. Seamless Sharing: Generate secure, shareable links with public or private access options for easy stakeholder delivery.",
+      "word_count": 109
+    },
+    {
+      "id": "ux/reports",
+      "product": "UX",
+      "title": "Reports",
+      "summary": "Explore the various reporting options in QuestionPro UX, including custom PowerPoint exports, automated activity guides, and the Documents history tab.",
+      "url": "https://www.questionpro.com/help/ux/reports.html",
+      "scraped_at": "2026-06-17T12:12:09.899Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Reports & Exports"
+        }
+      ],
+      "steps": [],
+      "content": "Reports & Exports Available Report Types QuestionPro UX offers several reporting formats to help you share insights and raw data. Researchers can generate custom visual presentations or download standardized data sheets depending on their analysis needs. Custom PowerPoint Reports In the Analytics section, click the Generate report button to open the customization modal. From here, you can configure your export: Title: Assign a custom name to your report for easy identification. Format: Select Powerpoint (.PPTX) as the output format for stakeholder presentations. Report Range: Choose All to include every task, or Specific sections to selectively include content from your Introduction or individual Quests. Standardized Report Formats You can access pre-prepared reports in the Reports tab for quick downloads of standardized datasets: Report Type Description Format Activity guide A summary of participant activities without showing individual results. PDF Detailed report Comprehensive participant-level data and individual results. XLS Participants report A tracking sheet to monitor task completion status for all participants. XLS Condensed report A high-level view of all participants and their primary responses. XLS Video Analysis Reports Within the Video Analysis section for a specific task, click Download Report to export an AI-driven summary and transcript data. This report is exported in PowerPoint (.PPTX) format, containing visual summaries of the trends and sensory observations identified by the AI analysis. Document Download History The Documents tab serves as a centralized log for all reports generated within the project. This view allows researchers to track previous activity and re-download historical files: Type: Displays the report format (e.g., Detailed Report, Smart Report). User: Identifies which team member initiated the report generation. Timestamp: Records the exact date and time the report was created. Output File: Provides a direct link to download the generated file.",
+      "word_count": 289
+    },
+    {
+      "id": "ux/Data-Export",
+      "product": "UX",
+      "title": "Data Export",
+      "summary": "Learn how to export your research data from QuestionPro UX for external analysis. Export CSV files of your test results and participant data.",
+      "url": "https://www.questionpro.com/help/ux/Data-Export.html",
+      "scraped_at": "2026-06-17T12:12:13.992Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Exporting Your Data: Usability tests, Interviews and Focus groups"
+        }
+      ],
+      "steps": [],
+      "content": "Exporting Your Data: Usability tests, Interviews and Focus groups How do I export my test data? QuestionPro UX allows you to export your qualitative and quantitative data into a CSV format for more in-depth analysis or for use in your own reporting tools. To export data for a specific methodology, navigate to the results page of your test. You will find the Export CSV button at the top of the data table. This file includes participant demographics, task completion rates, and survey responses.",
+      "word_count": 83
+    },
+    {
+      "id": "ux/media-library",
+      "product": "UX",
+      "title": "Media Library",
+      "summary": "Use the Media Library in QuestionPro UX to view, filter, and download image and video assets submitted by study participants.",
+      "url": "https://www.questionpro.com/help/ux/media-library.html",
+      "scraped_at": "2026-06-17T12:12:18.085Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Media Library"
+        }
+      ],
+      "steps": [],
+      "content": "Media Library What is the Media Library? The Media Library is a centralized gallery that aggregates all visual assets submitted by participants across different quests and tasks. It allows researchers to browse through photo and video responses in a grid view, providing a quick visual overview of the qualitative data collected during the study. How do I access the Media Library? To access your study's visual assets, click on the Media Library icon (image icon) in the left-hand navigation sidebar. This will open the gallery view where all submitted media are displayed with the participant's name and the associated task title listed below each item. How do I download media from the library? You can manage your assets by selecting specific items or the entire collection for export: Select All: Check the Select all box at the top of the gallery to highlight every media item in the current view. Bulk Download: Once items are selected, you can download all the highlighted images and videos to your local device for offline analysis or reporting. How do I filter the media gallery? To find specific assets, use the Filters tool located at the top right of the Media Library. This allows you to narrow down the gallery based on specific criteria: Participants: Filter the view to show media submitted by a specific participant or a group of participants. Tasks: Filter by individual tasks to see all media related to a specific prompt, such as \"Capture a Moment From Your Day.\" Clear All: Use the Clear all option within the filter menu to reset your view and see all media assets again.",
+      "word_count": 270
+    },
+    {
+      "id": "ux/saved-quotes",
+      "product": "UX",
+      "title": "Saved quotes",
+      "summary": "Learn how to capture, save, and manage participant quotes across Moderation, Analytics, and Video Analysis sections in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/saved-quotes.html",
+      "scraped_at": "2026-06-17T12:12:22.219Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Participant Quotes"
+        }
+      ],
+      "steps": [],
+      "content": "Participant Quotes What are Participant Quotes? Participant Quotes allow researchers to highlight and save specific segments of participant feedback from text responses or video transcripts. These captured insights can be categorized by sentiment and viewed collectively to support research findings. How do I create a quote from Moderation or Video Analysis? You can capture quotes directly while reviewing responses in the Moderation or Video Analysis sections: Text Moderation: Click the Quote icon (quotation marks) located at the top right of a participant's response. Video Analysis: While viewing a transcript, highlight the specific text you wish to save. A pop-up menu will appear allowing you to select Save as quote. Can I create quotes in Analytics or Participant Diaries? Yes. Within the Analytics or Participant Diaries sections, you can quickly generate quotes using the Pencil (Edit) icon found next to participant entries. This allows you to refine the text or directly convert a response into a saved insight. How do I save and categorize a quote? When you initiate a quote, the Save quote as dialog box appears: Sentiment: Assign a sentiment (Positive, Neutral, or Negative) to the quote using the dropdown menu. Text Editing: You can use rich text tools (Bold, Italics, Underline, Lists) to format the quote for your reports. Link to SuiteCX: If integrated, toggle the switch to link the quote to your SuiteCX project. Click Save or Update to add the quote to your library. Where can I view my saved quotes? Saved quotes are accessible in two primary ways: My Quotes: Click the Quotes icon in the left-hand sidebar to see a dedicated gallery of all captured insights across the project. Each quote card displays the participant's name, the original task, and any associated media. Analytics Responses: In the Analytics > Responses tab, quotes are displayed directly beneath the relevant tasks. How do I filter quotes? You can narrow down your saved quotes using the Filters button in the Quotes gallery or Analytics view: Participants: View quotes from specific respondents. Tasks: Filter by the specific Quest or Task the quote originated from. Segments: Filter based on participant demographic segments.",
+      "word_count": 353
+    },
+    {
+      "id": "ux/moderation",
+      "product": "UX",
+      "title": "Moderation",
+      "summary": "Use the Moderation feature in QuestionPro UX to review participant responses, manage data quality, and engage with longitudinal study entries across various media types.",
+      "url": "https://www.questionpro.com/help/ux/moderation.html",
+      "scraped_at": "2026-06-17T12:12:26.305Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Moderate Responses"
+        }
+      ],
+      "steps": [],
+      "content": "Moderate Responses What is Response Moderation? The Moderation feature allows researchers to oversee and manage data quality within a study. It provides a centralized dashboard to review text, photo, and video responses as they are submitted. Researchers can monitor participation levels, review individual entries, and interact with participants to ensure the research objectives are being met. How do I access the Moderation dashboard? Access the moderation view by clicking the Moderation icon in the left-hand sidebar. The dashboard organizes submissions by Quests and individual tasks, displaying the total number of responses and highlighting new entries that require review. Refresh: Use the refresh button to update the dashboard with the latest participant submissions. New Indicators: Tasks with unread submissions are marked with a \"New\" badge to help you prioritize your review. How do I moderate video submissions? Clicking into a video task allows you to review individual recordings and their associated data. The moderation interface for video includes: Video Playback: View the recorded response directly within the platform. Auto-Transcription: Review the text transcript of the participant's video for quick analysis. Keyword Analysis: A sidebar displays frequently used keywords and their counts, allowing you to search for specific themes across all video responses. Bulk Download: Export video files in bulk for offline review or archival. How do I moderate photo submissions? For photo-sharing tasks, the moderation view displays the uploaded image along with the participant's description. You can expand individual entries to see the full context of the captured moment. How do I interact with participant responses? Moderation is not just for observation; it allows for active engagement with participants to improve data depth: Replies: Click Reply on a text or media submission to ask follow-up questions or provide feedback. Smart Summary: Use the Smart Summary tool to generate AI-driven overviews of text-heavy discussion threads. Reactions: Like or acknowledge responses to encourage continued participation. Can I view responses by individual participants? Yes. By switching to the Individual Responses tab within a task, you can see a list of all participants and the count of their total submissions. This helps identify highly active contributors or those who may need a reminder to complete their tasks.",
+      "word_count": 362
+    },
+    {
+      "id": "ux/Usability-test-UX-Diagnostics",
+      "product": "UX",
+      "title": "Usability test: UX Diagnostics",
+      "summary": "Use UX Diagnostics in QuestionPro UX to analyze usability test performance across key metrics like task completion, duration, usability ratings, and psychometric scores.",
+      "url": "https://www.questionpro.com/help/ux/Usability-test-UX-Diagnostics.html",
+      "scraped_at": "2026-06-17T12:12:30.631Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "UX Diagnostics"
+        }
+      ],
+      "steps": [],
+      "content": "UX Diagnostics What is UX Diagnostics? UX Diagnostics is the primary analysis dashboard for usability studies in QuestionPro UX. It provides visual data and quantitative metrics to help researchers evaluate how easily participants can navigate a product or website. During study setup, researchers can choose from several industry-standard psychometric tests to measure the user experience: SUS (System Usability Scale): A reliable tool for measuring usability. SUPR-Q: Measures the quality of the website user experience. PSSUQ: Designed to evaluate user satisfaction with computer systems. SRS: A specialized scale for service and reliability. AUS: An alternative usability scale for quick assessments. ALFQ for Webapps: Specifically tailored for assessing the flow and quality of web applications. The dashboard aggregates these scores alongside Task Usability, Task Completion, Task Duration, and Emotions. Task Usability Analysis The Task usability tab visualizes participant feedback regarding the difficulty of specific tasks. This section measures responses on a scale from \"Very difficult\" (1) to \"Very easy\" (7). Individual Performance: A line graph maps each participant's rating across the tasks they performed. Average Benchmark: An \"Average\" line is included to help researchers identify tasks that were perceived as challenging across the user group. User Filtering: Use the right-hand sidebar to select or deselect specific users to compare individual experiences against the average. Task Completion Rates The Task completion tab provides a binary view of success rates for each task in the study. Success Visuals: Stacked bar charts show the percentage of participants who successfully completed a task (\"Complete\") versus those who did not (\"Incomplete\"). Friction Points: Researchers can quickly see which tasks had the highest failure rates, indicating potential navigation issues. Task Duration Metrics The Task duration tab measures efficiency by tracking the time taken per task in seconds. Time Tracking: Line graphs display the duration each selected participant spent on a task. Efficiency Benchmarking: Significant peaks in the graph often correlate with tasks that require more cognitive load. Emotions and Sentiment Analysis The Emotions tab utilizes face-cam recording and emotion recognition technology to track the participant's affective state during the test. Emotion Timeline: A line graph maps emotional states—such as happy, neutral, sad, surprised, fearful, angry, or disgusted—across the duration of the test session. Correlation with Tasks: Researchers can pinpoint exactly when a participant felt frustrated or pleased. Test Videos: Beneath the graph, the Test videos section allows you to play back specific recordings to see the raw footage behind the data points.",
+      "word_count": 404
+    },
+    {
+      "id": "ux/Sprint-View-Usability-tests",
+      "product": "UX",
+      "title": "Sprint View: Usability tests",
+      "summary": "Organize and compare user testing data across different research cycles with Sprint View in QuestionPro UX.",
+      "url": "https://www.questionpro.com/help/ux/Sprint-View-Usability-tests.html",
+      "scraped_at": "2026-06-17T12:12:34.721Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Sprint View"
+        }
+      ],
+      "steps": [],
+      "content": "Sprint View What is Sprint View? Sprint View is an organizational feature designed for agile teams to group and analyze test results based on specific development cycles or \"sprints.\" It allows you to track improvements in user experience over time by comparing data across different versions of your product. How do I enable and use Sprint View? You can enable Sprint View globally within your organization settings or on a per-test basis. When active, the system automatically segments test orders by their assigned sprint tag. This makes it easy to filter analytics, view side-by-side performance metrics, and identify whether UX issues identified in previous sprints have been successfully resolved.",
+      "word_count": 109
+    },
+    {
+      "id": "ux/Accessible-Usability-Scale-AUS",
+      "product": "UX",
+      "title": "Accessible Usability Scale - AUS",
+      "summary": "Learn about the Accessible Usability Scale (AUS) in QuestionPro UX, a specialized metric for measuring the usability of digital products for users with disabilities.",
+      "url": "https://www.questionpro.com/help/ux/Accessible-Usability-Scale-AUS.html",
+      "scraped_at": "2026-06-17T12:12:38.920Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Accessible Usability Scale (AUS)"
+        }
+      ],
+      "steps": [],
+      "content": "Accessible Usability Scale (AUS) What is the AUS metric? The Accessible Usability Scale (AUS) is a specialized metric utilized in QuestionPro UX to measure the usability of a product specifically for users with disabilities. While standard metrics often overlook accessibility-specific hurdles, the AUS provides a scientifically validated score to ensure your digital product is inclusive. How is the AUS calculated? Participants respond to a series of specific statements regarding their ease of use while navigating with assistive technologies (like screen readers). The resulting score helps you identify where your interface meets accessibility standards and where it creates barriers for users with diverse needs.",
+      "word_count": 103
+    },
+    {
+      "id": "ux/System-Usability-Scale-SUS",
+      "product": "UX",
+      "title": "System Usability Scale - SUS",
+      "summary": "Understand the System Usability Scale (SUS) in QuestionPro UX, the industry standard for measuring perceived ease of use.",
+      "url": "https://www.questionpro.com/help/ux/System-Usability-Scale-SUS.html",
+      "scraped_at": "2026-06-17T12:12:43.079Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "System Usability Scale (SUS)"
+        }
+      ],
+      "steps": [],
+      "content": "System Usability Scale (SUS) What is the System Usability Scale (SUS)? The SUS is a reliable, low-cost tool for measuring the usability of various products and services. It consists of a 10-item questionnaire with five response options for respondents; from Strongly Agree to Strongly Disagree. It has become an industry standard due to its versatility and ease of interpretation. How do I interpret my SUS score? QuestionPro UX automatically calculates your SUS score on a scale of 0 to 100. A score above 68 is generally considered average; anything below 68 indicates significant usability issues that should be addressed. You can view these results in the Analytics section after your test is complete.",
+      "word_count": 113
+    },
+    {
+      "id": "ux/SUPR-Q",
+      "product": "UX",
+      "title": "SUPR-Q",
+      "summary": "Learn about SUPR-Q in QuestionPro UX, a comprehensive metric for measuring website user experience across usability, trust, and appearance.",
+      "url": "https://www.questionpro.com/help/ux/SUPR-Q.html",
+      "scraped_at": "2026-06-17T12:12:47.407Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "SUPR-Q Metrics"
+        }
+      ],
+      "steps": [],
+      "content": "SUPR-Q Metrics What does SUPR-Q measure? The Standardized User Experience Percentile Rank Questionnaire (SUPR-Q) is an 8-item index that measures the quality of a website user experience. It goes beyond simple usability to capture Usability, Trust, Appearance, and Loyalty. When should I use SUPR-Q? Use SUPR-Q when you need a high-level view of how your brand's digital presence is perceived compared to competitors. Because it includes trust and loyalty metrics, it is particularly useful for e-commerce and banking websites where user confidence is paramount.",
+      "word_count": 84
+    },
+    {
+      "id": "ux/PSSUQ",
+      "product": "UX",
+      "title": "PSSUQ",
+      "summary": "Understand the Post-Study System Usability Questionnaire (PSSUQ) in QuestionPro UX for detailed scenario-based usability analysis.",
+      "url": "https://www.questionpro.com/help/ux/PSSUQ.html",
+      "scraped_at": "2026-06-17T12:12:51.600Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Post-Study System Usability Questionnaire (PSSUQ)"
+        }
+      ],
+      "steps": [],
+      "content": "Post-Study System Usability Questionnaire (PSSUQ) What is the PSSUQ? The PSSUQ is a questionnaire used to assess users' perceived satisfaction with a computer system or software at the end of a study. It provides more granular detail than the SUS by breaking scores down into three sub-scales: System Usefulness, Information Quality, and Interface Quality. How do I add PSSUQ to my test? In QuestionPro UX, you can enable PSSUQ during the \"Post-test\" configuration step. Once the test is completed, the dashboard will provide a breakdown of how participants rated the clarity of information provided by the system versus the aesthetic and functional quality of the interface.",
+      "word_count": 106
+    },
+    {
+      "id": "ux/UX-Crowd-usability-tests",
+      "product": "UX",
+      "title": "UX Crowd: Usability tests",
+      "summary": "Learn about the UX Crowd feature in QuestionPro UX, a crowdsourced analysis tool for identifying the most important usability issues.",
+      "url": "https://www.questionpro.com/help/ux/UX-Crowd-usability-tests.html",
+      "scraped_at": "2026-06-17T12:12:55.668Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "UX Crowd Analysis"
+        }
+      ],
+      "steps": [],
+      "content": "UX Crowd Analysis What is the UX Crowd? The UX Crowd is a proprietary crowdsourced analysis tool in QuestionPro UX that helps you quickly identify and prioritize the most significant usability issues and positive features of your product. How does the UX Crowd work? After completing their tasks, participants are asked to list things they liked, things they disliked, and suggestions for improvement. These responses are then presented to subsequent participants, who vote on the feedback they agree with most. The result is a ranked list of insights, backed by the \"crowd,\" allowing you to focus your development efforts on the areas that matter most to your users. This feature is typically available for studies with 10 or more participants.",
+      "word_count": 120
+    },
+    {
+      "id": "ux/AI-Insights-for-Usability-Tests",
+      "product": "UX",
+      "title": "AI Insights for Usability Tests",
+      "summary": "Utilize AI-powered insights in QuestionPro UX to automatically summarize video results and highlight key user behaviors.",
+      "url": "https://www.questionpro.com/help/ux/AI-Insights-for-Usability-Tests.html",
+      "scraped_at": "2026-06-17T12:12:59.864Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "AI Insights"
+        }
+      ],
+      "steps": [],
+      "content": "AI Insights How does AI help analyze my usability tests? QuestionPro UX integrates advanced AI models to accelerate your analysis phase. Instead of watching hours of footage, you can use AI to generate automated summaries of participant behavior and sentiment. What are the key features of AI Insights? Automated Summaries: AI generates high-level overviews of each participant's session, highlighting main takeaways. Sentiment Analysis: The system identifies emotional peaks and frustrations throughout the video. Auto-Annotations: Key events and task completions are automatically flagged with timestamps for quick review. You can enable AI analysis during the \"Post-test\" setup or directly from the video dashboard for all unmoderated sessions.",
+      "word_count": 106
+    },
+    {
+      "id": "ux/Self-Reported-Success-SRS",
+      "product": "UX",
+      "title": "Self-Reported Success (SRS)",
+      "summary": "Learn about the Self-Reported Success (SRS) metric in QuestionPro UX. Understand how to measure the gap between participant perception and actual task performance.",
+      "url": "https://www.questionpro.com/help/ux/Self-Reported-Success-SRS.html",
+      "scraped_at": "2026-06-17T12:13:04.183Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Self-Reported Success (SRS)"
+        }
+      ],
+      "steps": [],
+      "content": "Self-Reported Success (SRS) What is the Self-Reported Success (SRS) metric? Self-Reported Success (SRS) is a usability metric in QuestionPro UX that captures whether a participant believes they successfully completed a task. Unlike objective task completion (which is verified by a researcher), SRS measures the participant's own perception of their performance. How is SRS captured during a test? After a participant finishes a specific task in a usability test, they are immediately asked a follow-up question: \"Did you successfully complete this task?\" with a simple \"Yes\" or \"No\" response option. This happens before any post-test surveys or psychometric questionnaires (like SUS or PSSUQ) to ensure the participant's memory of the task effort is fresh. Why is comparing SRS to actual completion important? The true value of the SRS metric lies in the Success Gap. By comparing the participant’s self-report against the moderator’s objective verification, you can identify three critical user states: True Success: The participant believes they succeeded, and they actually did. True Failure: The participant knows they failed the task. Hidden Failure: The participant believes they succeeded, but they actually failed. This often points to significant design flaws or misleading interface cues. You can view the SRS breakdown in the Analytics dashboard under the Task Completion tab. How do I enable SRS for my test? SRS is enabled by default for all Usability Tests involving tasks. During Step 3: Tasks of your test setup, ensure that the \"Task Completion\" toggle is active for each task where you want to collect both objective and perceived success data.",
+      "word_count": 256
+    },
+    {
+      "id": "ux/AI-Executive-Summaries",
+      "product": "UX",
+      "title": "AI Executive Summaries",
+      "summary": "Use the AI-powered Executive Summary feature in QuestionPro UX to automatically synthesize research findings and save hours of manual analysis.",
+      "url": "https://www.questionpro.com/help/ux/AI-Executive-Summaries.html",
+      "scraped_at": "2026-06-17T12:13:09.539Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "AI-Generated Executive Summaries"
+        }
+      ],
+      "steps": [],
+      "content": "AI-Generated Executive Summaries This AI-powered tool automatically analyzes all participant videos, transcripts, and survey responses for a specific test to produce a high-level report. It identifies overarching patterns, primary pain points, and notable successes, allowing you to share insights with stakeholders almost immediately after data collection ends. Coming soon... How does this work? Once you have at least 5 completed sessions in a usability test, navigate to the Analytics tab. Click the Generate Executive Summary button. The AI will process the data and provide a structured report including a project overview, key findings, and recommended next steps. You can edit this text directly or export it to your final report.",
+      "word_count": 110
+    },
+    {
+      "id": "ux/Participant-Diaries-and-Study-Analysis",
+      "product": "UX",
+      "title": "Participant Diaries and Study Analysis",
+      "summary": "Analyze your QuestionPro UX data to uncover aggregate trends and individual-level insights from your longitudinal qualitative research studies.",
+      "url": "https://www.questionpro.com/help/ux/Participant-Diaries-and-Study-Analysis.html",
+      "scraped_at": "2026-06-17T12:13:16.018Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Study Analysis"
+        }
+      ],
+      "steps": [],
+      "content": "Study Analysis How can I analyze my study data? Study Analytics allows you to examine your qualitative data at multiple levels. You can view aggregate insights across all participants to identify high-level trends or focus on individual participant journeys to understand their specific experiences. The dashboard includes response timelines, AI-powered thematic analysis, sentiment tracking, and word clouds to help you uncover meaningful insights from your research. Watch this video for a quick overview of the Study Analysis features in QuestionPro UX: Your browser does not support the video tag. Download Video Where do I access Study Analytics? To access your research data, open your study and click the Analytics tab in the left-hand sidebar. This opens the Analytics dashboard, which features two primary views: Overview for aggregate study insights and Responses for detailed, task-by-task data. What information is available in the Analytics Overview? The Overview tab provides study-level metrics through several key cards: Summary Card: Displays key metrics including total participants, completion rate, counts of standard and diary quests, total tasks, and days elapsed. Response Timeline: A visual representation of participant activity, which can be toggled between daily, weekly, or monthly views. Completion Progress: Shows the percentage of tasks and quests that are completed, in progress, or incomplete. Thematic Analysis: Features AI-powered theme extraction with integrated sentiment analysis across all study responses. How does the Response Timeline work? The Response Timeline helps you understand the temporal flow of your study. You can filter by specific tasks or view all responses to identify patterns in engagement and spot any significant surges or drop-offs in participant activity. How does AI-powered Thematic Analysis work? Using natural language processing, this feature extracts prominent themes from your study. Each theme card displays the theme title, a brief description, the percentage of responses it appears in, and a sentiment distribution (positive, neutral, or negative). How do I use the Responses tab? The Responses tab organizes all submissions by quest and task. Use the left-hand sidebar to navigate through your study structure and apply filters to drill down into specific participant segments or date ranges. How do I view insights for a single participant? Navigate to the Participant Diaries section in the Analytics sidebar. You can view your participants in a Card view (initials and completion rate) or a List view (names, emails, and login history). Clicking on a participant's profile provides a holistic view of their journey, including their personal Word Cloud, completion statistics, and a chronological feed of all their media and text responses. How can I export my study data? Click the Generate report button in the top-right corner to create downloadable files for stakeholder presentations. You can customize the export by selecting specific quests, participant segments, or response types to ensure the report contains only the most relevant data.",
+      "word_count": 466
+    },
+    {
+      "id": "ux/image-analysis",
+      "product": "UX",
+      "title": "Image analysis",
+      "summary": "Use Image Analysis in QuestionPro UX to automatically extract visual elements, setting, context, and people count from participant photos in photojournal tasks.",
+      "url": "https://www.questionpro.com/help/ux/image-analysis.html",
+      "scraped_at": "2026-06-17T12:13:22.843Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Image Analysis – QuestionPro UX"
+        }
+      ],
+      "steps": [],
+      "content": "Image Analysis – QuestionPro UX How can you analyze images in QuestionPro UX? In QuestionPro UX, you can automatically analyze participant-uploaded photos from photojournal tasks to extract visual elements, setting and context, and people count. The AI-powered analysis turns hundreds of images into searchable, structured insights—helping you identify patterns quickly without spending hours on manual review. Watch this video for a quick overview of how Image Analysis works in QuestionPro UX: Your browser does not support the video tag. Download Video What is Image Analysis in QuestionPro UX? Image Analysis uses AI to automatically analyze participant-uploaded photos in photojournal tasks. Instead of manually reviewing hundreds of images, you can extract structured insights about visual elements, setting and context, and people present—helping you identify patterns quickly and standardize your visual analysis across studies. The AI extracts three key categories from each image: Visual Elements (objects and scene descriptions), Setting & Context (time of day, location type, environmental cues), and People Present (count of individuals visible). All extracted data becomes searchable within your analytics, allowing you to find specific visual scenarios instantly. Where is Image Analysis available? Image Analysis is available for photojournal tasks in the Analytics view of your QuestionPro UX study. Navigate to Analytics, then expand any photojournal task to access the image analysis features. How do I analyze images in a photojournal task? Once you've opened a photojournal task in the Analytics view, look for the Analyze images button in the top-right corner of the task card. Click this button to trigger AI analysis for all images in that task. The analysis processes all participant-uploaded images automatically, extracting visual elements, environmental context, and people count from each photo. The button will be disabled until at least 5 new images are available for analysis. What information does Image Analysis extract? Once analysis is complete, expand any participant's response to view the extracted insights. Below each image, you'll find an Image Analysis section with three categories of information: Visual Elements: Objects and scenes detected in the image (e.g., \"mountains,\" \"city buildings,\" \"park,\" \"trees,\" \"road,\" \"race track,\" \"marina,\" \"baby,\" \"computer mouse\"). Setting & Context: Environmental details like time of day and location type (e.g., \"evening,\" \"outdoor,\" \"clear,\" \"daytime\"). Some images may show \"Couldn't analyse\" if environmental cues are unclear. People Present: Number of individuals visible in the image (e.g., \"no people present,\" \"1,\" \"2\"). This helps you quickly filter images by whether they contain people and see exactly how many individuals appear in each photo. How do I search for specific visual scenarios? Use the search bar at the top of the task card to find images with specific visual characteristics. The search function works on both participant text responses and AI-extracted image data, allowing you to quickly locate relevant visual evidence across all participants. For example, search for \"hand\" to find all images containing hands, or search for \"outdoor\" to find images taken outside. The search will return matching results from both the image analysis tags and participant written responses. What can I do with image analysis in QuestionPro UX? Image Analysis helps you: Find patterns quickly: Identify common visual themes across hundreds of participant photos without manual review. Segment by context: Filter images by usage scenario (solo vs. group, home vs. office, indoor vs. outdoor). Pull visual evidence: Search for specific objects, settings, or scenes to support findings in research presentations. Standardize analysis: Ensure consistent categorization across multiple researchers and studies. Save time: Reduce manual image review from 3–5 minutes per image to seconds.",
+      "word_count": 584
+    },
+    {
+      "id": "ux/voting-task-analyze",
+      "product": "UX",
+      "title": "Voting task analysis",
+      "summary": "Analyze voting task results with proportional visualizations, participation metrics, and neutral data presentation in your QuestionPro UX study.",
+      "url": "https://www.questionpro.com/help/ux/voting-task-analyze.html",
+      "scraped_at": "2026-06-17T12:13:26.919Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Voting Task Analytics – QuestionPro UX"
+        }
+      ],
+      "steps": [],
+      "content": "Voting Task Analytics – QuestionPro UX How do I analyze voting task results? The voting task analytics view provides comprehensive insights into participant responses with proportional visualizations and key participation metrics. This interface displays voting patterns using neutral data presentation, allowing you to understand agreement levels and participation rates without bias. View total respondents, overall agreement rates, and individual statement performance through clear visual indicators that show the proportion of support for each voting item in your study. What do the summary metrics tell me? At the top of the analytics view, you'll find three key metrics that provide context for your voting results: Total Respondents - The number of participants who completed the voting task Total Votes - The aggregate number of individual votes cast across all statements Agreement Rate - The overall percentage showing how often participants agreed across all voting items These summary statistics help you quickly assess participation levels and general consensus patterns before diving into individual statement analysis. How do I interpret individual statement results? Each statement displays comprehensive voting data through multiple indicators: Vote count - Shows the number of participants who voted on this specific statement Visual proportion bar - Displays the ratio of agreement using a neutral blue color scheme Agreement percentage - The exact percentage of participants who agreed with the statement The proportional visualization makes it easy to compare support levels across different statements and identify patterns in participant responses. How can I organize the voting results? Use the sorting options in the top-right corner to organize your results based on different criteria: Most downvotes first - Shows statements with the lowest agreement rates at the top Default item order - Displays results in the original order they appeared in your voting task Most upvotes first - Prioritizes statements with the highest agreement rates These sorting options help you quickly identify consensus items, controversial statements, or maintain the original context of your voting sequence. How should I interpret the neutral color scheme? The analytics interface uses a neutral blue color scheme for all voting visualizations, avoiding traditional green/red associations that might imply positive or negative sentiment. This approach ensures: Unbiased data presentation that doesn't suggest value judgments Consistent visual treatment across all statements regardless of agreement levels Professional appearance suitable for stakeholder presentations The proportional bars show agreement levels as factual data points, allowing you to draw your own conclusions about what high or low agreement means in your research context. How do I assess participation quality? Monitor participation effectiveness by examining: Response consistency - Compare individual vote counts to total respondents to identify incomplete responses Engagement patterns - Look for statements with significantly different participation levels Overall completion rate - Use the total votes versus expected votes (respondents × statements) to gauge task completion Variations in individual statement participation can indicate comprehension issues, technical problems, or varying levels of participant engagement with specific content. How do I use these results for reporting? The neutral presentation and clear metrics make voting task results ideal for stakeholder communication: Reference specific agreement percentages for quantitative reporting Use the visual proportions to quickly communicate relative support levels Cite participation metrics to establish credibility and context Sort results to highlight key findings or maintain original task flow The unbiased color scheme and professional layout support objective data presentation in research reports and presentations.",
+      "word_count": 559
+    },
+    {
+      "id": "ux/Video-tasks-analysis",
+      "product": "UX",
+      "title": "Video tasks: Analysis",
+      "summary": "Use QuestionPro UX’s Video Analysis to surface themes, sentiments, summaries, and quotes from participant videos—quickly and visually.",
+      "url": "https://www.questionpro.com/help/ux/Video-tasks-analysis.html",
+      "scraped_at": "2026-06-17T12:13:33.667Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Video Analysis – QuestionPro UX"
+        }
+      ],
+      "steps": [],
+      "content": "Video Analysis – QuestionPro UX How can you analyze Video responses in QuestionPro UX? In QuestionPro UX, you can automatically review participant video responses to uncover key themes, sentiments, and insights—helping you understand what people say and how they feel. The AI-powered workspace turns hours of footage into visual summaries and sentiment-based theme visuals, so you can focus on the \"why\" behind participant behavior rather than manual transcription or tagging. Watch this video for a quick overview of how Video Analysis works in QuestionPro UX: Your browser does not support the video tag. Download Video Where do I find Video Analysis? Select your study, then click the blue camera icon in the left sidebar. This opens the Video Analysis workspace. What’s on the Overview page? The Overview page gives you an at-a-glance readout of all video responses for the selected task: Theme bar-chart: See which topics are mentioned most and their sentiment colouring. AI summary panel: A concise paragraph capturing the collective story. Participant gallery: Clickable thumbnails that jump into individual responses. What do I see in an individual response? Click any thumbnail to open a participant’s page. Below the video you’ll find: Theme tags: Auto-detected topics (e.g., \"Ease of cleaning\"). Transcript tab: Timestamped, speaker-labelled verbatim text. Where are the key takeaways? Switch to Key Takeaways to see actionable bullet-points automatically generated from the participant’s response. Need a one-sentence recap? The Summary tab provides a tight, AI-written synopsis of that participant’s message—perfect for quick scans. How do I save a great quote? Highlight any text in Summary, Key Takeaways, or Transcript. Choose Save as quote from the pop-up menu to file it for reporting.",
+      "word_count": 274
+    }
+  ]
+}

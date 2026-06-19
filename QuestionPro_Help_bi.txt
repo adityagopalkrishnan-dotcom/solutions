@@ -1,0 +1,1069 @@
+{
+  "meta": {
+    "source": "https://www.questionpro.com/help/",
+    "description": "QuestionPro Full Knowledge Base",
+    "scraped_at": "2026-06-17T12:18:38.772Z",
+    "total_articles": 57,
+    "total_words": 21226,
+    "products": [
+      "Surveys",
+      "Communities",
+      "Workforce",
+      "CX",
+      "Audience",
+      "LivePolls",
+      "UX",
+      "BI"
+    ],
+    "product": "BI"
+  },
+  "articles": [
+    {
+      "id": "bi/create-dashboards",
+      "product": "BI",
+      "title": "Create dashboard from scratch",
+      "summary": "Create BI dashboards from scratch the way you envision them.",
+      "url": "https://www.questionpro.com/help/bi/create-dashboards.html",
+      "scraped_at": "2026-06-17T12:13:37.823Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Create BI dashboards from scratch"
+        }
+      ],
+      "steps": [],
+      "content": "Create BI dashboards from scratch BI dashboards: what are they? QuestionPro's BI dashboards allow you to create stunning dashboards based on one or more surveys in the manner you envision. Multiple tabs can be added, different chart types can be used, your data can be compared, and many other features are available! How to create a dashboard from scratch? Click to download video Go to: Login » Create dashboard » Give it a name » Blank dashboard » Save License This feature is available with the following licenses : Team Edition Research Edition Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 114
+    },
+    {
+      "id": "bi/create-a-dashboard-using-QxBot",
+      "product": "BI",
+      "title": "Create a dashboard using QxBot",
+      "summary": "Create BI dashboards using QxBot.",
+      "url": "https://www.questionpro.com/help/bi/create-a-dashboard-using-QxBot.html",
+      "scraped_at": "2026-06-17T12:13:44.694Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Create a BI dashboard using QxBot"
+        }
+      ],
+      "steps": [],
+      "content": "Create a BI dashboard using QxBot QxBot dashboards: what are they? Creating stunning dashboards can take a lot of time. QxBot does the heavy lifting for you and gives you a baseline survey to work with. The bot has been trained to understand the context of the surveys, the questions asked and the type of question used. How to create a QxBot dashboard? Click to download video Go to: Login » Create dashboard » Give it a name » QxBot dashboard » Continue » Select data source » Select survey. Select the type of dashboard and give it a name: Select the data source and the survey: License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 143
+    },
+    {
+      "id": "bi/Adding-a-widget",
+      "product": "BI",
+      "title": "Adding a question based widget",
+      "summary": "Adding a widget to a BI dashboard",
+      "url": "https://www.questionpro.com/help/bi/Adding-a-widget.html",
+      "scraped_at": "2026-06-17T12:13:48.838Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Add widgets to your dashboard"
+        }
+      ],
+      "steps": [],
+      "content": "Add widgets to your dashboard What are widgets? Widgets is essentially a container within the dashboard in which you can represent data or content. This can be charts, tables, cross-tabs, images, etc. How to add a widget? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the chart type » Add Widget Click to download video Once you are inside your dashboard, click on add widget Click on question based or continue using this survey Select the data source and survey - This step is not needed if you select \"continue using this survey\" Select the question or a part of the question you wish to use: Give the widget a name, select the type of chart you wish to use and add widget. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 178
+    },
+    {
+      "id": "bi/add-an-advanced-widget",
+      "product": "BI",
+      "title": "Add an advanced widget",
+      "summary": "Adding an advanced widget to a BI dashboard",
+      "url": "https://www.questionpro.com/help/bi/add-an-advanced-widget.html",
+      "scraped_at": "2026-06-17T12:13:52.973Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Add advanced widgets to your dashboard"
+        }
+      ],
+      "steps": [],
+      "content": "Add advanced widgets to your dashboard What are advanced widgets? Widgets is essentially a container within the dashboard in which you can represent data or content. This can be charts, tables, cross-tabs, images, etc.Advanced widgets are slight more complex like cross-tabs, cluster analysis, images, etc How to add an advanced widget? Go to: Login » Select dashboard » Add widget » Advanced widget » Select chart type » Give it a name » Next Click to download videoThe steps after \"next\" will vary based on the graph type. Once you are inside your dashboard, click on add widget Click on Advanced widget Give the widget a name, select the type of chart you wish to use and click on next. The steps after \"next\" will vary based on the graph type.You can find more information on specific widget in the helpfile section \"widget types\" License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 180
+    },
+    {
+      "id": "bi/add-a-new-tab",
+      "product": "BI",
+      "title": "Add a new tab",
+      "summary": "Adding tabs to a BI dashboard",
+      "url": "https://www.questionpro.com/help/bi/add-a-new-tab.html",
+      "scraped_at": "2026-06-17T12:13:57.155Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Add a tab to your dashboard"
+        }
+      ],
+      "steps": [],
+      "content": "Add a tab to your dashboard What is a tab? Tabs in your BI dashboard are new pages you can add. This mainly helps to organize and present your data systematically. Tabs can be different filters of data or totally different data as well. How to add a new tab to your dashboard? Go to: Login » Select dashboard » Click \"+\" Or Select dashboard » More options » Copy Click to download video Once you are inside your dashboard, click on \"+\" You can also create a copy of an existing tab. For this, click on more options and then copy You can create a maximum of 10 tabs in 1 dashboard License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 149
+    },
+    {
+      "id": "bi/add-widgets-in-bulk",
+      "product": "BI",
+      "title": "Add widget in bulk",
+      "summary": "Add questions in bulk.",
+      "url": "https://www.questionpro.com/help/bi/add-widgets-in-bulk.html",
+      "scraped_at": "2026-06-17T12:14:04.728Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Add widgets in bulk"
+        }
+      ],
+      "steps": [],
+      "content": "Add widgets in bulk Adding widgets in bulk allows you to add upto 50 widgets at a time in your dashboard. Widgets can be added from multiple sources. (Surveys, CX, bi-variables, etc) Coming soon... How does this work? Once this is launched, when you go to add a question based widget, you will now be able to select multiple questions instead of just 1. Once the required questions are selected, you will select the type of widget for each one in the net step. Click to download video Steps to add multiple widgets: Step 1: Once you are inside your dashboard, click on add widget Step 2: Select the required question / bi-variables from 1 or more surveys. Step 3: Let QuestionPro AI pick the correct widgets based on the question or you can pick your own widgets. Step 4:Pick a widget for every selected questions and click on add. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 190
+    },
+    {
+      "id": "bi/Add-advanced-reports-to-dashboards",
+      "product": "BI",
+      "title": "Add advanced reports to Dashboards",
+      "summary": "Learn how to use the Unified BI Dashboard Integration feature to consolidate BI, Cross Tab, and Text AI reports into a single view.",
+      "url": "https://www.questionpro.com/help/bi/Add-advanced-reports-to-dashboards.html",
+      "scraped_at": "2026-06-17T12:14:10.379Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Add advanced report to BI dashboard"
+        }
+      ],
+      "steps": [],
+      "content": "Add advanced report to BI dashboard Introduction The add report feature allows users to bring together multiple analytical reports, including BI widgets, Cross Tab reports, and Text AI reports — into a single, consolidated BI dashboard. With this feature, users no longer need to switch between multiple report tabs or interfaces. Instead, they can centralize all key insights in one place, ensuring a seamless and holistic view of their data. Purpose and Benefits Centralized Insight Hub – Combine data visualizations, cross tab analyses, and text AI summaries into one comprehensive dashboard. Improved Efficiency – Save time by viewing and comparing multiple report types without navigating across tabs. Customizable Dashboards – Users can choose which reports to add as widgets, tailoring dashboards to their unique analytical needs. Collaborative Reporting – Share one unified BI report instead of multiple separate ones, making data storytelling simpler and more effective. Step by step guide Step 1 Identify crosstab report: Navigate to the 'Reports' section. Here, you can view all existing reports created. Identify the crosstab report you’ve created to add it to your BI Dashboard. Step 2 Identify text AI report to add to BI report: Open the TextAI Dashboards section. Identify the Text AI report that you want to integrate with your main BI Dashboard for consolidated analysis. Step 3 Select BI dashboard: Identify the BI dashboard where you want to add your Crosstab or Text AI report. This determines where your consolidated report will appear. Step 4 Add report on BI dashboard: Once inside your BI Dashboard, click the “+” icon and select 'Report' to begin adding a crosstab or text AI report as a new tab or widget within the dashboard. Step 5 Select crosstab to be added to the BI report: In the New Report Tab window, choose the Crosstab section, select the report you want to add, and click Save. This will integrate your selected Crosstab report into the BI dashboard. Step 6 Crosstab report added to BI dashboard: Your selected crosstab report is now successfully added to the BI dashboard. You can apply additional filters or modify settings as needed to refine the displayed data. Step 7 Click report to add more advanced reports: To add more analytics, click the “+” icon again and choose Report. This allows you to integrate additional advanced reports such as Text AI into your BI dashboard. Step 8 Add text analytics to BI dashboard: In the new report tab window, switch to the Text AI tab, select the dashboard where your Text AI analysis was created, and click Save to add it to your BI dashboard. Step 9 Text AI report integrated to BI dashboard: The Text AI report is now integrated into your BI Dashboard alongside your crosstab report. Users can easily switch between tabs to view all insights—quantitative and qualitative—in one unified dashboard. Glossary Below are definitions of key terms used in this help file: BI Dashboard – A centralized workspace for visualizing multiple data sources and reports in one place. Widget – A modular visual component (e.g., chart, table, text summary) added to the BI Dashboard for analysis. Cross Tab Report – A report that displays data in a matrix format to analyze relationships between variables. Text AI Report – A report powered by AI that analyzes open-ended responses or textual data for themes, sentiment, and insights. Unified Dashboard Integration – The process of bringing multiple analytical report types together within one BI Dashboard. Data Synchronization – Automatic updating of dashboard widgets when underlying report data is modified. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 606
+    },
+    {
+      "id": "bi/Bar",
+      "product": "BI",
+      "title": "Bar graph",
+      "summary": "Bar Graph for your widget",
+      "url": "https://www.questionpro.com/help/bi/Bar.html",
+      "scraped_at": "2026-06-17T12:14:16.037Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Bar Graph for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Bar Graph for your widget What is Bar Graph? A bar graph is a chart or graph that presents categorical data with rectangular bars with heights or lengths proportional to the values that they represent. How to add a Bar chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the Bar graph type » Add Widget Click to download video Step 1: Select a question Step 2: Give a name to widget >> Select Pie Chart type >> Add Widget Settings - Chart Elements You can customize the chart elements such as enable or disable legends, display Axis Titles, highlight highest proportion in the chart, display data labels inside or outside the chart and customize Label Width Click on options and settings of the widget: Once the general setting are shown, scroll down to access chart elements. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 192
+    },
+    {
+      "id": "bi/pie-chart",
+      "product": "BI",
+      "title": "Pie Chart",
+      "summary": "Pie Chart for your widget",
+      "url": "https://www.questionpro.com/help/bi/pie-chart.html",
+      "scraped_at": "2026-06-17T12:14:21.796Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Pie Chart for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Pie Chart for your widget What is Pie Chart? A pie chart is a circular statistical graphic which is divided into slices to illustrate numerical proportion. How to add a pie chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the Pie chart type » Add Widget Click to download video Step 1: Select a question Step 2: Give a name to widget >> Select Pie Chart type >> Add Widget Settings - Chart Elements You can customize the chart elements such as enable or disable legends, highlight highest proportion in the chart, display data labels inside or outside the chart Click on the options of the widget: Click on settings: Once the general setting are shown, scroll down to access chart elements. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 178
+    },
+    {
+      "id": "bi/line-chart",
+      "product": "BI",
+      "title": "Line chart",
+      "summary": "Line Chart for your widget",
+      "url": "https://www.questionpro.com/help/bi/line-chart.html",
+      "scraped_at": "2026-06-17T12:14:27.340Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Line Chart for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Line Chart for your widget What is Line Chart? A line chart or line graph is a type of chart that displays information as a series of data points called 'markers' connected by straight line segments. How to add a line chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the line chart type » Add Widget Click to download video Step 1: Select a question Step 2: Give a name to widget >> Select Line Chart type >> Add Widget Settings - Chart Elements You can customize the chart elements such as enable or disable Axis titles, display data labels inside, above or below the data marker. Click on the options of the widget: Click on settings: Once the general setting are shown, scroll down to access chart elements. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 185
+    },
+    {
+      "id": "bi/donut-chart",
+      "product": "BI",
+      "title": "Donut Chart",
+      "summary": "Donut Chart for your widget",
+      "url": "https://www.questionpro.com/help/bi/donut-chart.html",
+      "scraped_at": "2026-06-17T12:14:31.585Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Donut Chart for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Donut Chart for your widget What is Donut Chart? Donut chart is a variant of the pie chart, with a blank center allowing for additional information about the data as a whole to be included. How to add a donut chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the donut chart type » Add Widget Step 1: Select a question Step 2: Give a name to widget >> Select Donut Chart type >> Add Widget Settings - Chart Elements You can customize the chart elements such as enable or disable Legends, display data labels inside or outside the chart. Click on the options of the widget: Click on settings: Once the general setting are shown, scroll down to access chart elements. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 177
+    },
+    {
+      "id": "bi/scoring-trend",
+      "product": "BI",
+      "title": "Scoring Trend",
+      "summary": "Scoring trend for your dashboard",
+      "url": "https://www.questionpro.com/help/bi/scoring-trend.html",
+      "scraped_at": "2026-06-17T12:14:38.314Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Scoring trend widget"
+        }
+      ],
+      "steps": [],
+      "content": "Scoring trend widget What is a scoring trend? A scoring trend is a line graph that shows you a score or a value over time. It can be any score or vale like a mean, NPS, CSAT, customer effort score, etc. How to add a scoring trend? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the scoring trend chart type » Add Widget Click to download video Step 1: Once you are inside your dashboard, click on add widget Step 2: Click on question based or continue using this survey Step 3: Select the data source and survey - This step is not needed if you select \"continue using this survey\" Step 4: Give a name » select scoring trend » add widget How to slect the frequency for the trend line? You can select between weekly, monthly, quarterly and yearly. You will find this under widget settings » Analytics How to select the scoring model for the trend line? You can select between Net promoter score, customer effort score, customer satisfaction score and mean or custom mean. You will find this under widget settings » Analytics License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 242
+    },
+    {
+      "id": "bi/semi-circle",
+      "product": "BI",
+      "title": "Semi-Circle",
+      "summary": "Semi-Circle chart for your widget",
+      "url": "https://www.questionpro.com/help/bi/semi-circle.html",
+      "scraped_at": "2026-06-17T12:14:43.916Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Semi-Circle Chart for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Semi-Circle Chart for your widget What is Semi-Circle Chart? Semi-Circle charts, also known as half-doughnut charts, are similar to doughnut charts but only display a half circle. How to add a Semi-Circle chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the Semi-Circle chart type » Add Widget Click to download video Step 1: Select a question Step 2: Give a name to widget >> Select Semi-Circle Chart type >> Add Widge Settings - Chart Elements You can customize the chart elements such as enable or disable Legends, highlight highest propertion and display data labels inside or outside the chart. Click on the options of the widget: Click on settings: Once the general setting are shown, scroll down to access chart elements. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 177
+    },
+    {
+      "id": "bi/leaderboard",
+      "product": "BI",
+      "title": "Leaderboard",
+      "summary": "Leaderboard for your widget",
+      "url": "https://www.questionpro.com/help/bi/leaderboard.html",
+      "scraped_at": "2026-06-17T12:14:49.326Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Leaderboard for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Leaderboard for your widget What is Leaderboard? A leaderboard is a scoreboard that shows the ranked names and current scores (or other data points) of the leading competitors. How to add a leaderboard chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the Leaderboard chart type » Add Widget Click to download video Step 1: Select a question Step 2: Give a name to widget >> Select Leaderboard Chart type >> Add Widget License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 128
+    },
+    {
+      "id": "bi/pictorial-chart",
+      "product": "BI",
+      "title": "Pictorial Chart",
+      "summary": "Pictorial Graph for your widget",
+      "url": "https://www.questionpro.com/help/bi/pictorial-chart.html",
+      "scraped_at": "2026-06-17T12:14:54.992Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Pictorial Graph for your widget"
+        }
+      ],
+      "steps": [],
+      "content": "Pictorial Graph for your widget What is Pictorial Graph? A picture graph, or pictograph, is a graph used to display information that uses images or symbols to represent data. Although this does not give you any additional data points, it adds a bit of life to your dashboard. How to add a pictorial chart? Go to: Login » Select dashboard » Add widget » Question based or continue using this survey » Select question or part of a question » Select the Pictorial chart type » Add Widget Click to download video Step 1: Once you are inside your dashboard, click on add widget Step 2: Click on question based or continue using this survey Step 3: Select the data source and survey - This step is not needed if you select \"continue using this survey\" Step 4: Give a name » select pictorial » add widget How to change the graph . icon type? You can select from over 30 different graph / icon types. Click on more options » Settings » Labels » Select icon from the dropdown Click to download video Step 1: More options » Settings Step 2: Labels » select icon from the dropdown License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 235
+    },
+    {
+      "id": "bi/Histogram",
+      "product": "BI",
+      "title": "Histogram",
+      "summary": "Understanding and Using Histograms in Data Visualization",
+      "url": "https://www.questionpro.com/help/bi/Histogram.html",
+      "scraped_at": "2026-06-17T12:15:00.341Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Histogram"
+        }
+      ],
+      "steps": [
+        "Field Selector: Supports numeric data only, including integers.",
+        "Bin Control:\n      \n       Manual Binning: Define custom bin ranges.\n       Auto Binning: Automatically creates bins based on distribution and bin width.\n       Bin Width: Sets the size of each bin (e.g., 5-unit intervals).",
+        "Manual Binning: Define custom bin ranges.",
+        "Auto Binning: Automatically creates bins based on distribution and bin width.",
+        "Bin Width: Sets the size of each bin (e.g., 5-unit intervals).",
+        "Chart Display:\n      \n       Dynamic updates as settings change.\n       Hover tooltips showing bin range and frequency.",
+        "Dynamic updates as settings change.",
+        "Hover tooltips showing bin range and frequency.",
+        "Customization Panel: Modify title, axis labels, number of bins, and color scheme."
+      ],
+      "content": "Histogram Introduction Histogram is a powerful data visualization tool used to represent the distribution of numerical data. It works by grouping data values into intervals, or \"bins\", and then displaying the frequency of occurrences within each bin using vertical bars. The height of each bar corresponds to the number of data points that fall within its associated bin. Histograms are particularly valuable for understanding the shape, center, and spread of data. They can reveal patterns, such as symmetry, skewness, and the presence of outliers. Additionally, histograms help identify the mode and provide insights into the range and variability of the data. In survey data, histograms can visualize responses to numerical questions like age, satisfaction ratings, or income levels, helping researchers understand the sample's characteristics. What are the purposes and benefits of histograms? Visual representation of data distribution Identification of patterns and trends Estimation of central tendency and dispersion Comparison of data sets Detection of outliers Getting Started Coming Soon> Steps for setting up histograms BI -> Create Dashboard BI -> Create Dashboard -> Blank Dashboard -> Continue BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Question Based BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Question Based -> Select Survey BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Question Based -> Select Survey -> Select Numeric Question BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Question Based -> Select Survey -> Select Numeric Question -> Select Numeric Histogram -> Add Widget BI -> 3 dots BI -> 3 dots -> Settings BI -> 3 dots -> Settings -> Analytics -> Custom BI -> 3 dots -> Settings -> Analytics -> Custom -> Change Bin size BI -> 3 dots -> Settings -> Analytics -> Custom -> Change Bin size -> Histogram widget What is the core functionality of histograms? Field Selector: Supports numeric data only, including integers. Bin Control: Manual Binning: Define custom bin ranges. Auto Binning: Automatically creates bins based on distribution and bin width. Bin Width: Sets the size of each bin (e.g., 5-unit intervals). Chart Display: Dynamic updates as settings change. Hover tooltips showing bin range and frequency. Customization Panel: Modify title, axis labels, number of bins, and color scheme. Glossary of histogram-related terms Bin: A range or interval grouping data points; forms the base of histogram bars. Choosing the right bin width balances detail with readability. Frequency: Count of data points within a bin; bar height in a histogram represents frequency. Cumulative Histogram: Displays cumulative frequencies, showing running totals and aiding percentile/quantile estimation. Normalized: Frequencies expressed as percentages of total data, allowing comparison between different-sized samples. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 502
+    },
+    {
+      "id": "bi/Gauge-Widget",
+      "product": "BI",
+      "title": "Gauge",
+      "summary": "Understanding and Using the Gauge Feature for Key Metric Visualization",
+      "url": "https://www.questionpro.com/help/bi/Gauge-Widget.html",
+      "scraped_at": "2026-06-17T12:15:05.741Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Gauge Widget"
+        }
+      ],
+      "steps": [
+        "Dial Display:\n      \n       Radial Gauge Visualization: Displays the score on a circular gauge.\n       Needle Animation: Choose between static or animated needle for added engagement.",
+        "Radial Gauge Visualization: Displays the score on a circular gauge.",
+        "Needle Animation: Choose between static or animated needle for added engagement.",
+        "Threshold Configuration:\n      \n       Color-Coded Ranges: Assign colors to specific score ranges.\n       Performance Indicators: Add markers for key thresholds like low, medium, and high performance.",
+        "Color-Coded Ranges: Assign colors to specific score ranges.",
+        "Performance Indicators: Add markers for key thresholds like low, medium, and high performance.",
+        "Metric Options:\n      \n       Mean: Calculates the average of numeric responses.\n       Net Promoter Score (NPS): Measures loyalty by subtracting detractors from promoters.",
+        "Mean: Calculates the average of numeric responses.",
+        "Net Promoter Score (NPS): Measures loyalty by subtracting detractors from promoters.",
+        "Title and Label Controls:\n      \n       Customization: Add titles and labels to describe data.\n       Tooltips: Provide additional context when hovering over chart elements.",
+        "Customization: Add titles and labels to describe data.",
+        "Tooltips: Provide additional context when hovering over chart elements."
+      ],
+      "content": "Gauge Widget Introduction The Gauge chart is a powerful visualization tool designed to display and track essential metrics, such as Mean, NPS (Net Promoter Score), and CES (Customer Effort Score). It presents these metrics in a clear and concise gauge-style dial format, making it easy for users to quickly understand and interpret the data. This visual representation is particularly valuable for dashboards and executive reporting, where stakeholders need to grasp key performance indicators at a glance. By providing a visually engaging and informative representation of critical metrics, the Gauge feature enhances data-driven decision-making and facilitates effective communication of results. Purposes and Benefits of Gauge Widget Visualize essential scores in real-time using gauges. Add context to metrics through colors and thresholds. Improve readability of KPIs for quick decision-making. Getting Started Coming Soon Steps to set up Gauge Widget BI -> Create Dashboard BI -> Create Dashboard -> Blank Dashboard -> Continue BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Select question based widget BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Select question based widget -> Select Survey BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Select question based widget -> Select Survey -> Select Survey Question BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Select question based widget -> Select Survey -> Select Survey Question -> Select Gauge Widget -> Add Widget BI -> 3 dots -> Settings BI -> 3 dots -> Settings -> Analytics -> Custom scoring model BI -> 3 dots -> Settings -> Analytics -> Custom scoring model -> Scale Dropdown BI -> 3 dots -> Settings -> Analytics -> Respondent Count BI -> 3 dots -> Settings -> Analytics -> Respondent Count -> Scale right to left BI -> 3 dots -> Settings -> Analytics -> Customize Mean Scale(count and percentage) BI -> 3 dots -> Settings -> Analytics -> Customize Mean Scale(count and percentage) -> Gauge Widget What are the core functionalities of the Gauge feature? Dial Display: Radial Gauge Visualization: Displays the score on a circular gauge. Needle Animation: Choose between static or animated needle for added engagement. Threshold Configuration: Color-Coded Ranges: Assign colors to specific score ranges. Performance Indicators: Add markers for key thresholds like low, medium, and high performance. Metric Options: Mean: Calculates the average of numeric responses. Net Promoter Score (NPS): Measures loyalty by subtracting detractors from promoters. Title and Label Controls: Customization: Add titles and labels to describe data. Tooltips: Provide additional context when hovering over chart elements. Glossary of Gauge-related terms NPS (Net Promoter Score): Percentage of promoters minus detractors. CES (Customer Effort Score): Average score of how easy customers found a task. Thresholds: Value ranges used to color segments of the gauge. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 494
+    },
+    {
+      "id": "bi/Scorning-Donut-BI",
+      "product": "BI",
+      "title": "Scoring Donut",
+      "summary": "Scoring Donut Help Documentation",
+      "url": "https://www.questionpro.com/help/bi/Scorning-Donut-BI.html",
+      "scraped_at": "2026-06-17T12:15:09.981Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Scoring Donut Widget"
+        }
+      ],
+      "steps": [],
+      "content": "Scoring Donut Widget Introduction The Scoring Donut is a sleek, intuitive data visualization component designed to showcase scoring metrics such as averages, satisfaction scores, or performance ratings in a circular, donut-style chart. It excels at showcasing scoring metrics like averages, satisfaction scores, and performance ratings. This makes it ideal for dashboards, reports, and presentations where conveying overall performance at a glance is crucial. The donut chart's key strength lies in its ability to represent numeric scores within a circular format. This allows for intuitive interpretation, as the viewer can quickly gauge the score's position relative to the full range of possible values. Additionally, the central hole can be utilized to display the actual score or other relevant information, further enhancing the chart's informational value. By leveraging the Scoring Donut's visual impact and clarity, users can effectively communicate complex scoring data to a wide audience, regardless of their technical expertise. This makes it a valuable tool for data-driven decision-making and performance tracking across various industries and applications. Purpose and Benefits Compact and Visually Appealing: Scoring Donut charts efficiently display critical metrics in a visually engaging and concise manner, making them easy to understand at a glance. Instant Clarity: The circular design provides immediate comprehension of scores and performance levels, enhancing the effectiveness of dashboards and reports. Versatility: Gauge charts can be customized to suit diverse applications, including: Survey Data Visualization: Displaying survey response scores, such as customer satisfaction ratings or employee engagement levels Performance Tracking: Visualizing team or individual performance metrics, such as sales targets or key performance indicators (KPIs) Customizability: Scoring Donut charts offer flexibility in terms of colors and labels, allowing for adaptation to specific requirements and branding guidelines. Core Functionality Score Representation Displays numeric scores (e.g., 75 out of 100) at the center of the donut. Supports multiple scoring formats: percentage, 5-point scale, 10-point scale, etc. Donut Visualization The colored arc around the center represents the score proportionally. Customizable colors based on thresholds or scoring tiers (e.g., green for high scores, red for low). Dynamic Updates Scores update in real time when underlying data changes. Ideal for interactive dashboards where user inputs or filters affect the displayed score. Getting Started Coming Soon Step-by-Step Guide for Scoring Donut Widget BI -> Create dashboard BI -> Create dashboard -> Blank Dahboard -> Continue BI -> Create dashboard -> Blank Dahboard -> Continue -> Add Widget BI -> Create dashboard -> Blank Dahboard -> Continue -> Add Widget -> Question Based BI -> Create dashboard -> Blank Dahboard -> Continue -> Add Widget -> Question Based -> Select Survey BI -> Create dashboard -> Blank Dahboard -> Continue -> Add Widget -> Question Based -> Select Survey BI -> Create dashboard -> Blank Dahboard -> Continue -> Add Widget -> Question Based -> Select Survey -> Scoring Donut Widget -> Add Widget BI -> Scoring Donut Widget -> 3 dots -> Settings BI -> Scoring Donut Widget -> 3 dots -> Settings -> Analytics -> Customs Scoring Model BI -> Scoring Donut Widget -> 3 dots -> Settings -> Analytics -> Scale Modification BI -> Scoring Donut Widget -> 3 dots -> Settings -> Analytics -> Widget Stats (Respondent Count) BI -> Scoring Donut Widget Glossary Donut Chart: A circular graph where the data value is represented in a ring shape. Tooltip: Small popup that appears when hovering over a chart element, providing additional data. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 581
+    },
+    {
+      "id": "bi/Stacked-Bar",
+      "product": "BI",
+      "title": "Stacked Bar",
+      "summary": "Guide to using the Stacked Bar feature for visualizing Unichoice and Multichoice categorical data.",
+      "url": "https://www.questionpro.com/help/bi/Stacked-Bar.html",
+      "scraped_at": "2026-06-17T12:15:15.689Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Stacked Bar"
+        }
+      ],
+      "steps": [],
+      "content": "Stacked Bar Introduction The Stacked Bar feature enables users to visualize category data using stack bar charts. This feature supports both Unichoice and Multichoice categorical variables, making it ideal for survey data where respondents may select one or multiple answers. Purpose and Benefits: Gain insights into the distribution and comparison of categorical data. Easily interpret proportions of responses within a group. Efficiently represent overlapping data segments in a single visual. Ideal for tracking multi-dimensional categorical responses over groups or time. Core Functionality The Stacked Bar feature is designed to help you create insightful and layered bar charts from categorical datasets. Supported Inputs Unichoice Category: A category where each respondent selects only one option. Multichoice Category: A category where each respondent can select multiple options. Getting Started Coming Soon Step by Step Guide BI -> Create Dashboard BI -> Create Dashboard -> Blank Dashboard -> Continue BI -> Create Dashboard -> Blank Dashboard -> Continue -> Question Based BI -> Create Dashboard -> Blank Dashboard -> Continue -> Question Based -> Select Survey BI -> Create Dashboard -> Blank Dashboard -> Continue -> Question Based -> Select Survey -> Select Survey Question BI -> Create Dashboard -> Blank Dashboard -> Continue -> Question Based -> Select Survey -> Select Survey Question -> Stack Bar Widget BI -> Stack Bar Widget -> 3 dots -> Settings BI -> Stack Bar Widget -> 3 dots -> Settings -> Analytics -> Chart Orientation, Data Ordering, Top Answer value to display BI -> Stack Bar Widget -> 3 dots -> Settings -> Analytics -> Widget Stats BI -> Stack Bar Widget Glossary Unichoice: A single-choice question or variable where users select only one response. Multichoice: A question or variable allowing multiple selections per respondent. Stack: Each segment of the bar representing a portion of the category data. Normalization: Adjusting values to a common scale, such as converting counts to percentages. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 332
+    },
+    {
+      "id": "bi/Tabular",
+      "product": "BI",
+      "title": "Tabular",
+      "summary": "Tabular is a simplified table-based view for summarizing matrix data and comparing respondent groups based on qualification criteria.",
+      "url": "https://www.questionpro.com/help/bi/Tabular.html",
+      "scraped_at": "2026-06-17T12:15:21.253Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Tabular"
+        }
+      ],
+      "steps": [
+        "Summary-Only Display\n      Tabular outputs provide a condensed version of your matrix by displaying only the overall value of each measure. It eliminates row and column breakdowns, which is useful when the focus is on total impact rather than segmented analysis.",
+        "Simplified Visualization\n      Since Tabular is optimized for clarity, it avoids complex visual elements. The result is a minimalist and structured table that prioritizes data readability.",
+        "Seamless Integration\n      Tabular can be easily applied to any matrix object within the BI platform. Users can toggle between visual and tabular formats depending on the reporting need."
+      ],
+      "content": "Tabular Introduction Tabular is a powerful tabulation feature available on the BI platform. It enables users to view summarized data from matrices in a clean, table-based format. Designed for simplicity and efficiency, Tabular presents only the overall value for each metric, making it an ideal choice for high-level summaries and executive reporting. By focusing solely on the overall figures, Tabular ensures clarity, minimizes cognitive load, and facilitates quick data interpretation. Tabular also analyzes data for different groups of respondents based on specific qualification criteria from your survey. The feature is designed to help you slice your data and compare how different segments of respondents answered key questions. By segmenting your data—such as by age, region, or purchase behavior—you can see how each group’s responses compare to the overall sample. This helps you identify patterns, validate hypotheses, and generate deeper insights into respondent behavior. Core Functionality Summary-Only Display Tabular outputs provide a condensed version of your matrix by displaying only the overall value of each measure. It eliminates row and column breakdowns, which is useful when the focus is on total impact rather than segmented analysis. Simplified Visualization Since Tabular is optimized for clarity, it avoids complex visual elements. The result is a minimalist and structured table that prioritizes data readability. Seamless Integration Tabular can be easily applied to any matrix object within the BI platform. Users can toggle between visual and tabular formats depending on the reporting need. Step By Step Guide BI -> Create dashboard BI -> Create dashboard -> Blank Dashboard BI -> Create dashboard -> Blank Dashboard -> Add widget BI -> Create dashboard -> Blank Dashboard -> Add widget -> Question Based BI -> Create dashboard -> Blank Dashboard -> Add widget -> Question Based -> Select Survey BI -> Create dashboard -> Blank Dashboard -> Add widget -> Question Based -> Select Survey -> Select Question BI -> Create dashboard -> Blank Dashboard -> Add widget -> Question Based -> Select Survey -> Select Question -> Tabular Widget -> Add Widget BI -> Tabular Widget BI -> Dashboard -> Settings -> Data Slicer BI -> Dashboard -> Settings -> Data Slicer -> Data Criterion BI -> Dashboard -> Settings -> Data Slicer -> Data Criterion -> List of Data Slicer BI -> Tabular Widget -> 3 dots -> Settings BI -> Tabular Widget -> 3 dots -> Settings -> Analytics -> Data slicer options -> Widget -> Select data slicer BI -> Tabular Widget -> 3 dots -> Settings -> Analytics -> Data slicer options -> Widget -> Select data slicer -> Widget Stats BI -> Tabular Widget Glossary Tabular: A feature that displays summarized matrix data in a table format showing only the overall values. Matrix: A data structure that displays values in rows and columns, often used to show relationships between variables. Summarization: The process of aggregating data to show key metrics or totals. Qualification Criteria: Conditions based on survey variables used to define respondent groups (e.g., age ≥ 25). Frequency: The count of respondents who selected a particular response. Proportion: The percentage of a group (or total) that selected a particular response. Slice: To filter or segment the data based on a condition. Overall Sample: The full respondent base that completed the survey, used as a benchmark. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 562
+    },
+    {
+      "id": "bi/Matrix-Stackbar",
+      "product": "BI",
+      "title": "Matrix Stackbar",
+      "summary": "Learn how to use Matrix Stackbar in the BI dashboard to visualize and compare matrix-style survey data using horizontal or vertical stacked bar charts.",
+      "url": "https://www.questionpro.com/help/bi/Matrix-Stackbar.html",
+      "scraped_at": "2026-06-17T12:15:25.471Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Matrix Stackbar"
+        }
+      ],
+      "steps": [],
+      "content": "Matrix Stackbar Introduction Matrix Stackbar is a powerful visualization feature within the BI dashboard that enables users to build horizontal or vertical stacked bar charts specifically for matrix-style survey questions. These questions typically involve multiple attributes or items being measured using the same response scale (e.g. Likert scale, awareness option, usage option, ownership option etc.). The feature provides a clear and comparative view of how different attributes are rated by respondents, helping users identify trends, strengths, and improvement areas across multiple items in one visual. Core Functionality Key Capabilities of the Matrix Stackbar Feature: Matrix-Based Visualization Matrix Stackbar works with questions where multiple attributes share the same response options. Each attribute appears as a separate bar, divided into segments that represent the distribution of responses across the common scale. Stacked Bar Layout (Horizontal or Vertical) Users can toggle between horizontal and vertical stacked bars depending on the desired layout for reporting or presentation. Each stack reflects how respondents distributed their answers for a particular attribute. Attribute Comparison The feature is ideal for comparing sentiments or ratings across several attributes—making it especially useful for brand perception, service evaluation, or product feature assessments. Consistent Scale Handling The chart automatically aligns and colors segments consistently across all bars, allowing quick interpretation of positive, neutral, or negative tendencies. Common Tasks: Compare satisfaction levels across different service attributes in a customer experience survey. Visualize how various brands are perceived on the same set of traits (e.g., affordability, quality, innovation). Analyze employee feedback across different departments or processes using a common feedback matrix. Getting Started Coming Soon Step By Step Guide BI > Create Dashboard BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue > Add Widget BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue > Add Widget > Question Based BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue > Add Widget > Question Based > Select Survey BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue > Add Widget > Question Based > Select Survey > Select Question (Type - Matrix) BI > Create Dashboard > Dashboard Name > Blank Dashboard > Continue > Add Widget > Question Based > Select Survey > Select Question (Type - Matrix) > Matrix Stackbar > Add Widget BI > Matrix Stackbar > 3 Dots > Settings BI > Matrix Stackbar > 3 Dots > Settings > Analytics (Chart Metric, Transpose,Response Count and Widget Count) Matrix Stackbar Glossary Matrix Question A survey question format where multiple items are evaluated using the same response scale. Stacked Bar Chart A bar chart where different segments are stacked within a single bar to show the proportional breakdown of response categories. Attribute An individual item or characteristic being rated in a matrix question (e.g., “Product Quality”). Likert Scale A common survey response scale ranging from one extreme to another (e.g., Strongly Agree to Strongly Disagree). Horizontal/Vertical Bar The orientation options for how the stacked bars are displayed—either side-by-side or top-to-bottom. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 530
+    },
+    {
+      "id": "bi/Spider-Widget",
+      "product": "BI",
+      "title": "Spider Widget",
+      "summary": "Overview and usage guide for the Spider Widget feature in the BI dashboard for matrix-style survey questions.",
+      "url": "https://www.questionpro.com/help/bi/Spider-Widget.html",
+      "scraped_at": "2026-06-17T12:15:31.143Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Spider Widget"
+        }
+      ],
+      "steps": [
+        "Compare brand perceptions across different traits (e.g., trust, value, innovation).",
+        "Track employee satisfaction scores by department or location.",
+        "Analyze change in customer sentiment across survey waves or after product updates."
+      ],
+      "content": "Spider Widget Introduction Spider Widget is a data visualization feature in the BI dashboard designed for matrix-style survey questions, where multiple attributes or statements are measured using the same response scale (such as a Likert scale, awareness, or satisfaction level). It presents data in a radial chart—also known as a radar or spider chart—allowing users to easily compare multiple attributes on a unified scale. This feature is particularly effective for showcasing perception, performance, or sentiment across various categories, enabling quick visual assessment of strengths, weaknesses, and overall balance among attributes. Core Functionality Key Capabilities of the Spider Feature: Matrix Question Compatibility: Each axis on the chart represents one attribute, and the plotted values show the distribution or average score across those attributes. Radial Comparison Visualization: Data is displayed as a closed polygon across the axes, making it easier to spot patterns, imbalances, or outliers in responses. Multiple Series Support: Users can overlay multiple series on the same chart—ideal for comparing data across time periods, respondent groups, or survey waves. Customizable Scales and Labels: Adjust response ranges and axis labels to fit different use cases, such as satisfaction, agreement, or importance. Common Tasks: Compare brand perceptions across different traits (e.g., trust, value, innovation). Track employee satisfaction scores by department or location. Analyze change in customer sentiment across survey waves or after product updates. Step By Step Guide BI > Create Dashboard BI > Create Dashboard > Blank Dashboard BI > Create Dashboard > Blank Dashboard > Add Widget BI > Create Dashboard > Blank Dashboard > Add Widget > Question Based BI > Create Dashboard > Blank Dashboard > Add Widget > Question Based > Select Survey BI > Create Dashboard > Blank Dashboard > Add Widget > Question Based > Select Survey > Select Survey Question (Type - Matrix) BI > Create Dashboard > Blank Dashboard > Add Widget > Question Based > Select Survey > Select Survey Question (Type - Matrix) > Spider Widget BI > Spider Widget Glossary Matrix Question: A survey format where multiple attributes are rated on the same response scale. Spider Chart / Radar Chart: A graphical method of displaying multivariate data using axes starting from the same point. Attribute: A specific trait, statement, or item being evaluated in a matrix question. Likert Scale: A type of rating scale used to represent levels of agreement, frequency, importance, etc. Series: A group of related data points plotted on the same chart for comparison (e.g., Wave 1 vs. Wave 2). Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 430
+    },
+    {
+      "id": "bi/matrix-bar",
+      "product": "BI",
+      "title": "Matrix bar",
+      "summary": "Graphical representation of matrix data.",
+      "url": "https://www.questionpro.com/help/bi/matrix-bar.html",
+      "scraped_at": "2026-06-17T12:15:35.252Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Matrix bar"
+        }
+      ],
+      "steps": [],
+      "content": "Matrix bar The matrix Bar is a data visualization widget in the BI dashboard designed for matrix-style questions or any question containing multiple rows with common categorical columns. It enables users to visualize data using averages, counts, or average percentages across different rows, providing clear insights into comparative patterns. How do I add a Matrix Bar? To add a Matrix Bar, follow these steps: Click on Add Widget. Select the desired data source. Choose a matrix-style question. Select the Matrix Bar widget and confirm by clicking Add Widget. Different chart metrics A chart metric refers to the data used to generate a chart. The following chart metrics are available for use: Count: Based on the number of respondents for that row. Percentage: Based on the mean percentage for that row. Mean: Based on the mean for that row. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 178
+    },
+    {
+      "id": "bi/stats-highlight",
+      "product": "BI",
+      "title": "Stat Highlight",
+      "summary": "Stat Highlight widget displays key survey metrics such as NPS, CES, CSAT, and averages as a single highlighted value.",
+      "url": "https://www.questionpro.com/help/bi/stats-highlight.html",
+      "scraped_at": "2026-06-17T12:15:42.845Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Stat Highlight"
+        }
+      ],
+      "steps": [],
+      "content": "Stat Highlight Introduction The Stat Highlight widget allows you to create a single-value statistics widget to display key survey metrics such as Net Promoter Score (NPS), Customer Effort Score (CES), Customer Satisfaction Score (CSAT), Mean, and Mean Percentage. This widget is designed to surface important performance indicators at a glance, making it ideal for dashboards focused on high-level insights and quick interpretation. To use the Stat Highlight widget, add it as a standard question-based widget to a BI dashboard, select a data source, and configure the desired scoring model and display settings. Watch this video for a quick overview of the Stat Highlight widget in BI: Your browser does not support the video tag. Click to download the video Core Functionality Single-Value Metric Display Displays a single calculated statistic derived from survey responses to highlight key performance indicators. Support for Standard Scoring Models Supports commonly used customer experience metrics such as NPS, CES, CSAT, Mean, and Mean Percentage. Custom Scoring Configuration Allows mapping of answer options to scoring categories based on the selected scoring model. Flexible Number Formatting Provides options to control decimal precision, number formats, prefixes, suffixes, and value labels. Filter-Aware Calculations Dynamically updates the displayed value based on applied dashboard or widget-level filters. Common Tasks: Highlight key customer experience metrics such as NPS, CES, or CSAT. Display average or percentage-based scores for survey questions. Apply custom scoring logic to categorical response options. Add contextual labels, prefixes, or suffixes to improve clarity. Control how filters impact the displayed statistic. Step By Step Guide to creating a Stat Highlight widget: Step 1: Select the dashboard where the widget will be added. Navigate to BI and select the dashboard from the dashboard list where you want to add the Stat Highlight widget. Step 2: Start adding a new widget to the dashboard. On the selected dashboard, click the Add widget button located in the top-right area of the screen. Step 3: Select question based widget type. Stat Highlight is part of the standard question-based widgets available in BI. Step 4: Select the data source. Choose the data source for which you want to create the Stat Highlight widget. Step 5: Select Stat Highlight and provide a widget name. From the widget list, select Stat Highlight and enter a name for the widget in the provided name field. Stat Highlight General settings: How to add a highlighted insight to the Stat Highlight widget? Enable the highlighted insight option in the General tab and enter your message in the provided input field to display a short explanatory text above the value. How to control how filters apply to the Stat Highlight widget? Use the filter options in the General tab to decide whether dashboard filters, widget filters, or no filters should apply. How to apply a value label to the Stat Highlight widget? Use the value label field in the General tab to define a label displayed below the metric value. How to add a prefix or suffix? Use the Prefix and Suffix fields in the General tab to add contextual symbols or text to the displayed value. How to change the number format? Select the desired number format from the Number format dropdown, such as International, European, Indian, Compact, or No formatting. Stat Highlight Analytics settings: How to enable widget stats? From the Analytics tab, enable the Widget stats toggle to display additional information such as response count. How to change the customer scoring model? Use the Customer scoring model dropdown in the Analytics tab and select the desired scoring model for the widget. Glossary Stat Highlight Widget: A BI dashboard widget that displays a single calculated statistic derived from survey responses. Customer Scoring Model: A predefined calculation logic used to derive metrics such as NPS, CES, or CSAT by mapping responses to scoring categories. Widget Stats: Additional contextual information, such as response count, displayed alongside the primary metric. Number Format: A display option that controls how numeric values are formatted and presented in the widget. Highlighted Insight: A short explanatory message shown above the widget value to provide context or interpretation. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 699
+    },
+    {
+      "id": "bi/Map",
+      "product": "BI",
+      "title": "Map",
+      "summary": "Map is a geographic visualization feature in the BI dashboard that shows survey participation by region.",
+      "url": "https://www.questionpro.com/help/bi/Map.html",
+      "scraped_at": "2026-06-17T12:15:47.332Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Map"
+        }
+      ],
+      "steps": [],
+      "content": "Map Introduction Map is a geographic visualization feature available on the BI dashboard. It enables users to see where survey responses were collected by displaying respondent count on a map by count and percentage. This feature is especially useful when surveys are conducted across multiple locations or regions, as it provides a clear visual representation of participation density. You can focus on specific areas rather than viewing the entire world map—helpful when surveys are limited to particular countries, states, or regions. By using the Map feature, you gain quick insights into where your respondents are located, how many participated in each area, and the relative contribution of each region to the overall sample. Core Functionality Geographic Breakdown by Count and Percentage The map displays how many responses were collected from each region and what percentage they represent of the total sample. This is shown directly on the map through color intensity or tooltips. Region Selection You can focus the map on specific regions instead of displaying a global view. This makes it easier to analyze results from localized surveys or remove noise from irrelevant geographies. Visual Insight The map provides an immediate and intuitive understanding of where your survey had the most or least traction, making it ideal for stakeholder presentations or internal tracking. Getting Started Coming Soon Step By Step Guide BI -> Create Dashboard BI -> Create Dashboard -> Blank Dashboard -> Continue BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Advanced Widget BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Advanced Widget -> Map Widget -> Next BI -> Create Dashboard -> Blank Dashboard -> Continue -> Add Widget -> Advanced Widget -> Map Widget -> Next -> Select Survey BI -> Map Widget -> 3 dots -> Settings BI -> Map Widget -> 3 dots -> Settings -> Analytics -> Map -> Select Region OR Minimum Response Count Value -> Minimum Response OR Chart Metric -> Count / Percentage BI -> Map Widget -> 3 dots -> Settings -> Analytics -> Widget Stats -> Response Count Glossary Map: A visual component that shows geographic distribution of survey responses. Region Selection: The ability to narrow the view to specific countries, states, or areas for more focused analysis. Count: The total number of responses collected from a particular region. Percentage: The share of total responses represented by a specific region. Tooltip: A small pop-up box that appears when hovering over a map area, showing additional information. Geographic Visualisation: The graphical display of data on a map to show patterns across locations. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 462
+    },
+    {
+      "id": "bi/Response-Timeline",
+      "product": "BI",
+      "title": "Response Timeline",
+      "summary": "Response Timeline is a BI dashboard feature that visualizes how survey responses were collected over time.",
+      "url": "https://www.questionpro.com/help/bi/Response-Timeline.html",
+      "scraped_at": "2026-06-17T12:15:51.398Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Response Timeline"
+        }
+      ],
+      "steps": [],
+      "content": "Response Timeline Introduction Response Timeline is a time-series visualization feature in the BI dashboard that displays how survey responses were collected over a defined period. It provides a clear view of response trends by date, helping users understand data collection progress, identify response peaks and dips, and assess campaign effectiveness. The feature is particularly valuable for monitoring the pace of data collection in real time and making timely adjustments to fieldwork or outreach if necessary. Core Functionality Time-Based Response Tracking Visualizes how responses accumulate over time—daily, weekly, or monthly—allowing users to monitor the progress of data collection. Date Range Selection Customize the displayed date range to focus on specific periods during the survey fielding window. Volume Indicators Bars or line points represent the number of responses collected on each day, offering a quick way to spot surges or drop-offs. Real-Time Monitoring For live surveys, the timeline updates with the latest data, enabling teams to take immediate action if targets are not being met. Common Tasks: Monitor daily response volume. Identify days with peak survey participation. Filter to display a specific fielding period. Compare response trends across different time periods or waves. Getting Started Coming Soon Step By Step Guide BI -> Create Dashboard BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Response Timeline Widget -> Next BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Response Timeline Widget -> Next-> Select Survey -> Save Widget BI -> Response Timeline Widget -> 3 dots -> Select Setting BI -> Response Timeline Widget -> 3 dots -> Select Setting -> Click Analytics (Select Interval / Time Series Calculation Mode / Widget Stats) BI -> Response Timeline Widget Glossary Response Timeline: A visual chart that shows the number of survey responses collected over time. Time-Series Visualization: A graph that displays data points in chronological order. Date Range: The specific start and end dates for which response data is shown. Response Volume: The number of survey completions on a given date. Fielding Period: The time frame during which a survey is active and responses are being collected. Real-Time Monitoring: Viewing response data as it updates continuously during a live data collection process. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 446
+    },
+    {
+      "id": "bi/Response-Info",
+      "product": "BI",
+      "title": "Response Info",
+      "summary": "Response Info provides a quick summary of key survey response metrics such as total responses, completions, response time, and survey duration.",
+      "url": "https://www.questionpro.com/help/bi/Response-Info.html",
+      "scraped_at": "2026-06-17T12:15:55.585Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Response Info"
+        }
+      ],
+      "steps": [],
+      "content": "Response Info Introduction Response Info is a metrics summary feature in the BI dashboard that provides key statistics about your survey’s data collection. It offers a snapshot of survey progress and quality by displaying the total number of responses, number of completed responses, average time taken, and more. This feature helps users quickly assess fieldwork status, identify outliers in response behavior, and validate data quality before further analysis. It is especially useful in tracking survey health and operational efficiency during live data collection. Core Functionality Total Responses Displays the total number of survey responses collected, including both completed and partials (if applicable). Completed Responses Shows how many respondents finished the entire survey, based on your survey completion logic. Average Response Time Calculates the mean time respondents took to complete the survey, helping evaluate survey length or complexity. Number of Questions Displays the total number of questions that respondents were exposed to during the survey. First and Last Response Date Indicates the date when the first and last responses were collected, offering a fieldwork duration view. Minimum and Maximum Response Time Shows the shortest and longest time taken by any respondent to complete the survey. Useful for spotting speeders or slow takers. Getting Started Coming Soon Step By Step Guide BI -> Create Dashboard BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Response Info Widget -> Next BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Response Info Widget -> Next-> Select Survey -> Save Widget BI -> Response Info Widget -> 3 dots -> Select Setting BI -> Response Timeline Widget -> 3 dots -> Select Setting -> Click Analytics (Select Survey Stat) BI -> Response Timeline Widget Glossary Total Responses: The number of entries recorded for the survey, including partial and completed responses. Completed Responses: The number of respondents who reached the end of the survey as defined by the completion logic. Average Response Time: The average duration (in minutes or seconds) taken by all respondents to complete the survey. Number of Questions: The total count of questions shown to respondents based on the survey logic. First Response Date: The date on which the first response was submitted. Last Response Date: The date on which the most recent response was submitted. Minimum Response Time: The shortest time taken by a respondent to complete the survey. Maximum Response Time: The longest time taken by a respondent to complete the survey. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 488
+    },
+    {
+      "id": "bi/Comparative-Bar",
+      "product": "BI",
+      "title": "Comparative Bar",
+      "summary": "Comparative Bar help file for BI dashboard",
+      "url": "https://www.questionpro.com/help/bi/Comparative-Bar.html",
+      "scraped_at": "2026-06-17T12:15:59.894Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Comparative Bar"
+        }
+      ],
+      "steps": [],
+      "content": "Comparative Bar Introduction Comparative Bar is a visualization feature in the BI dashboard that enables users to compare responses across multiple questions—either from the same survey or across different surveys. It uses side-by-side bar charts to visually present differences in data, making comparisons intuitive and easy to interpret. This feature is particularly useful for tracking changes over time, analyzing performance across regions or demographics, or comparing benchmarks between surveys. Whether you're looking to monitor trend shifts or validate consistency, the Comparative Bar offers a straightforward way to analyze multiple datasets in one view. Core Functionality Multi-Survey Comparison: Easily compare the same question across different surveys. This is ideal for longitudinal studies or benchmarking exercises. Same-Survey Multi-Question Comparison: Use Comparative Bar to view and compare different but related questions from a single survey side by side. Visual Simplicity: Bars are aligned and color-coded for clear visual distinction, making insights accessible at a glance. Common Tasks: Compare Net Promoter Scores (NPS) across two waves of research. Contrast satisfaction scores across different regions or demographics. Track changes in key metrics between two time points. Getting Started Coming Soon Step By Step Guide BI -> Create Dashboard BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Comparative Bar Widget -> Next BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Comparative Bar Widget -> Next-> Select Survey -> Save Widget BI -> Create Dashboard -> Select Blank Dashboard, Add Dashboard Name -> Continue -> Add Widget -> Advanced Widget -> Comparative Bar Widget -> Next-> Select Survey -> Save Widget -> Select Survey Question -> Save Widget BI -> Comparative Bar Widget -> 3 dots -> Select Settings BI -> Comparative Bar Widget -> 3 dots -> Select Settings -> Bars Management -> Add Bar BI -> Comparative Bar Widget -> 3 dots -> Select Settings -> Bars Management -> Add Bar -> Select Survey BI -> Comparative Bar Widget -> 3 dots -> Select Settings -> Bars Management -> Add Bar -> Select Comparative Survey -> Select Comparative Survey Question -> Update BI -> Comparative Bar Widget -> Click Analytics (Chart Metric / Transpose / Widget Stats) BI -> Comparative Bar Widget Glossary Comparative Bar: A type of bar chart used to show side-by-side comparisons of survey data. Multi-Survey Comparison: Analyzing the same question across two or more different surveys. Same-Survey Comparison: Comparing different questions or response groups within the same survey. Wave: A specific round or time point of data collection in longitudinal surveys. Legend: A visual guide indicating what each bar or color represents in the chart. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 513
+    },
+    {
+      "id": "bi/BI-Response-Viewer",
+      "product": "BI",
+      "title": "Response Viewer",
+      "summary": "Help documentation for the BI-Response-Viewer widget",
+      "url": "https://www.questionpro.com/help/bi/BI-Response-Viewer.html",
+      "scraped_at": "2026-06-17T12:16:05.136Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "BI-Response-Viewer"
+        }
+      ],
+      "steps": [],
+      "content": "BI-Response-Viewer 1. Introduction The BI-Response-Viewer widget allows users to view individual-level survey responses directly within a dashboard environment. It provides a clean, scrollable, and paginated interface to inspect detailed response data without having to export or switch contexts. Purpose and Benefits: Enables analysts and stakeholders to view raw survey data inline with visual analytics. Supports quick diagnostics, audit trails, and verbatim review for text responses. Ideal for QA, storytelling, and deep dives into outlier or thematic segments. 2. Core Functionality Dashboard Integration: Add the widget as a visual block to any BI dashboard layout. Response Pagination: Navigate through all responses page by page. Horizontal Scroll: Easily scroll across all survey questions from left to right. Timestamp Display: View response time and date per entry, supporting audit needs. Response Filtering: Filter the Response Viewer data by applying column-level filters on available Questions and BI variables. 3. Step By Step Guide Step 1: Create dashboard – To create response view widget create a new dashboard or in an existing one, go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your response view widget. Step 3: Add widget – Click on “Add Widget” to begin inserting response view into your dashboard. Step 4: Select advanced widget – User need to select advanced widget to add response view. Step 5: Select response view widget – User can select response view (table) and add to dashboard. Step 6: Select survey – User need to indicate which survey dataset needs to be added as a widget to the dashboard. Step 7a: Right arrow (Page next) – User choose to review the response by moving to the next page in the widget. Step 7b: Horizontal scroll – User choose to review all responses and questions in the survey. Step 8: Settings > Columns – User can choose columns they would like to add in the response view widget. Metadata: Choose to display survey metadata in the widget. Questions: Choose to display survey questions in the widget. System variables: Choose to display system variables in the widget. BI variables: Display BI variables mapped to the survey.Coming soon Step 9: Response filtering – User can filter the Response Viewer data by applying column-level filters on available Questions and BI variables. Click the filter icon next to a Question or BI variable column header. Select one or more response values to refine the data shown in the widget. These filters are temporary and apply only to the current session. Filters do not persist across page refreshes or shared dashboards. Glossary Response Viewer: A dashboard component that shows row-level survey response data. Pagination: Breaking the data into multiple pages for easy navigation. Scroll: Moving horizontally to see all available columns/questions. BI Dashboard: A visualization interface used to view, analyze, and interact with data insights. Response Filtering: A temporary column-level filter in the Response Viewer used to refine data by selected Question or BI variable responses. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 513
+    },
+    {
+      "id": "bi/funnel-chart",
+      "product": "BI",
+      "title": "Funnel Chart",
+      "summary": "Funnel Chart is an advanced BI widget that visualizes segmented survey responses using counts or percentages.",
+      "url": "https://www.questionpro.com/help/bi/funnel-chart.html",
+      "scraped_at": "2026-06-17T12:16:10.613Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Funnel Chart"
+        }
+      ],
+      "steps": [],
+      "content": "Funnel Chart Introduction Funnel Chart is an advanced visualization widget in the BI dashboard that displays how survey responses are distributed across multiple segments. It allows users to compare response counts or percentages in a funnel-style layout. This widget is especially useful for analyzing relative proportions, identifying drop-offs between segments, and comparing segmented response behavior using flexible calculation and visualization options. To use the Funnel Chart, add it as an Advanced Widget to a BI dashboard, select a survey as the data source, and define one or more segments. Additional analytics and segment settings can be configured after the widget is created. Watch this video for a quick overview of funnel charts in BI: Your browser does not support the video tag. Click to download the video Core Functionality Segment-Based Visualization Displays survey responses grouped by user-defined segments in a funnel layout. Flexible Metric Selection View data as absolute counts or percentages based on configurable calculation logic. Custom Percentage Calculation Define global or per-segment denominator logic for percentage calculations. Advanced Display Controls Customize chart orientation, tooltip behavior, and weighting schemes. Common Tasks: Compare response distribution across multiple segments. Analyze proportional differences using percentage-based funnels. Apply custom denominator logic for accurate comparisons. Adjust chart layout and interaction behavior. Step By Step Guide to creating a Funnel Chart widget: Step 1: Select the dashboard where the widget will be added. Navigate to BI and select the dashboard from the dashboard list where you want to add the Funnel Chart. Step 2: Start adding a new widget to the dashboard. On the selected dashboard, click the Add widget button located in the top-right area of the screen. Step 3: Open the list of advanced widgets. In the Add Widget dialog, select Advanced Widgets to view advanced visualization options. Step 4: Select the Funnel Chart and provide a widget name. From the Advanced Widgets list, select Funnel Chart and enter a name for the widget in the name field provided. Step 5: Choose the survey data source. Select the survey that will be used as the data source for the Funnel Chart. Step 6: Add an initial segment and create the widget. Define a segment using the available conditions, then click Save widget to create the Funnel Chart. Funnel chart General settings: How to add a highlighted insight to the Funnel Chart? Enable the highlighted insight option in the General tab and add your message in the provided input field to display a short explanatory text above the chart. How to control how filters apply to the Funnel Chart? Use the filter options in the General tab to decide whether dashboard filters, widget filters, or no filters should apply. How to show or hide chart legends? Enable legends in the General tab to help users identify each segment in the funnel. How to configure data labels in the Funnel Chart? Choose whether data labels appear inside the chart or are hidden using the data label options. Funnel chart Analytics settings: How to switch between count and percentage metrics? Open the Analytics tab and use the Chart Metric option to switch between count and percentage. How to change the orientation of the Funnel Chart? In the Analytics tab, select Horizontal or Vertical under Chart Orientation. How to customize tooltip information? Use the Tooltip Style option in the Analytics tab to customize the information shown on hover. How to disable tooltips? Select None under Tooltip Style to hide tooltips. How to apply weighting at the widget level? In the Analytics tab, change the Weighting Scheme to Widget level. How to disable weighting? Select None under Weighting Scheme to display unweighted data. Funnel chart Segment settings: How to open segment settings for the Funnel Chart? Click the three-dot menu on the Funnel Chart widget and select Settings, then open the Segment tab. How to add more segments in a Funnel Chart? In the Segment tab, click the Create segment button to define additional segments. How to ensure responses belong to only one segment? Enable the Funnel segments mutual exclusive toggle to prevent overlap between segments. How to control percentage calculation logic? Turn on Custom segment percentage calculation mode to define how percentages are calculated. How to define a denominator segment? Use the Add option under Denominator Segment to select a reference segment for percentage calculations. How to apply different denominator logic for each segment? Enable Custom for each segment to assign different denominator segments per segment. Funnel chart Design settings: How to switch between dashboard and widget design types? Open the Design tab and choose whether the Funnel Chart should inherit dashboard styling or use widget-level styling. How to apply a different theme or color palette? After selecting widget-level design, choose a theme and color palette to customize the Funnel Chart’s appearance. Glossary Funnel Chart: An advanced BI visualization that displays how survey responses are distributed across multiple segments, helping users compare proportions and identify drop-offs between groups. General Settings: Controls that manage the overall behavior and readability of the Funnel Chart, such as highlighted insights, filter application, legends, and data labels. Analytics Settings: Options that define how data is calculated and displayed in the Funnel Chart, including metric type, chart orientation, tooltip behavior, and weighting. Segment Settings: Tools used to create, manage, and structure response segments, including rules for exclusivity and percentage calculation logic. Design Settings: Customization options that control the visual appearance of the Funnel Chart, such as theme selection, color palettes, and widget-level styling. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 927
+    },
+    {
+      "id": "bi/BI-Word-Cloud",
+      "product": "BI",
+      "title": "Word Cloud",
+      "summary": "Help documentation for the Word Cloud feature, used for visualizing frequently mentioned words in open-ended text data.",
+      "url": "https://www.questionpro.com/help/bi/BI-Word-Cloud.html",
+      "scraped_at": "2026-06-17T12:16:15.886Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Word Cloud"
+        }
+      ],
+      "steps": [
+        "Auto-generated Frequency-Based Clouds – Automatically identifies and visualizes frequently used terms across all or filtered responses.",
+        "Stop Word Filtering – Removes common, non-informative words to highlight meaningful content. Users can also add custom stop words.",
+        "Frequency Threshold Control – Lets users set a minimum frequency for words to be displayed in the cloud."
+      ],
+      "content": "Word Cloud How does this work? Word Cloud GIF 1. Introduction The Word Cloud is a visual tool that displays the most frequently used words or phrases in open-ended text responses. Larger words represent higher frequency, offering users an immediate sense of prominent themes or topics in qualitative feedback. This feature helps users quickly identify dominant terms, support storytelling with visuals, and dig deeper into sentiment and keyword trends. 2. Core Functionality Auto-generated Frequency-Based Clouds – Automatically identifies and visualizes frequently used terms across all or filtered responses. Stop Word Filtering – Removes common, non-informative words to highlight meaningful content. Users can also add custom stop words. Frequency Threshold Control – Lets users set a minimum frequency for words to be displayed in the cloud. 3. Step-by-Step Guide Step 1: Create dashboard – To create word cloud widget create a new dashboard or in an existing go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your word cloud widget or in an existing go to Step 6. Step 3: Add widget – Click on “Add Widget” to begin inserting visual elements, such as the word cloud, into your dashboard Step 4: Select your widget – Choose the Word Cloud widget and link it to a specific open-ended survey question to visualize key terms from respondent feedback. Step 5: Select survey and survey question – Select the relevant survey and then choose a text-based (open-ended) question. The Word Cloud widget supports only text question types to generate meaningful visualizations from respondent verbatim. Step 6: Select word cloud widget – From the list of available widgets, select Word Cloud to create a visual representation of the most frequently used words in responses to the selected text question. Step 7: Change setting for word cloud widget – Click on the three-dot menu (⋮) on the Word Cloud widget to access and customize settings such as minimum word count threshold, excluded words (stop words), and other visualization preferences. Step 7a: Change setting for minimum no of words – Users can define a minimum word count threshold to ensure that only verbatim responses containing a sufficient number of words are included in the word cloud visualization. This serves as a quality control measure to maintain the relevance and reliability of the word cloud output. Step 7b: Change setting for stop words – Users can specify words they wish to exclude from appearing in the word cloud. These are commonly referred to as 'stop words'—terms that are either irrelevant, overly frequent, or non-informative (e.g., 'the', 'and', 'it'), and are typically removed to enhance the clarity and significance of the visualization. Step 8: Final word cloud widget – The final word cloud widget displays the most frequently occurring and relevant terms from the selected verbatim responses, based on applied filters and settings. It offers a visual summary of key themes, enabling quick insights into common topics and sentiments expressed by respondents. 5. Glossary Word Cloud – A visual representation of word frequency in open-ended text responses. Stop Words – Common, low-information words (e.g., “and,” “the”) that are removed from the word cloud. Threshold – Minimum frequency a word must appear to be included in the word cloud. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 559
+    },
+    {
+      "id": "bi/BI-Text-Response",
+      "product": "BI",
+      "title": "Text Response",
+      "summary": "Learn how to use the Text Response Widget to read, search, and analyze open-ended survey responses with sentiment tagging.",
+      "url": "https://www.questionpro.com/help/bi/BI-Text-Response.html",
+      "scraped_at": "2026-06-17T12:16:20.114Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Text Response"
+        }
+      ],
+      "steps": [],
+      "content": "Text Response 1. Introduction The Text Response Widget allows users to view and analyze verbatim responses to open-ended questions in a survey. It enables deeper insights by offering keyword-based filtering and sentiment tagging, making it easier to detect customer intent and tone. 2. Core Functionality View all verbatim responses for a selected open-ended question. Search for specific keywords to filter relevant responses. Enable automated sentiment detection to classify each response as Positive, Neutral, or Negative. Video to be added soon.... 3. Step By Step Guide Step 1: Create dashboard – To create text response widget create a new dashboard or in an exsisting go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your text response widget or in an exsisting go to Step 6. Step 3: Add widget – Click on “Add Widget” to begin inserting visual elements, into your dashboard Step 4: Select your widget – Choose the text response widget and link it to a specific open-ended survey question to visualize verbatim from each respondent in the survey. Step 5: Select survey and survey question – Select the relevant survey and then choose a text-based (open-ended) question. The text response widget supports only text question types to display respondent verbatim. Step 6: Select text response widget – This widget is designed to display all verbatim responses associated with a selected open-ended survey question. It provides options to search specific keywords and optionally enable sentiment tagging for each response. Step 7: Text response widget added to dashboard – Once selected, the text response widget will be added to your dashboard, displaying all text responses linked to the chosen open-ended question Step 8: Search keywords in text response – Use the search bar to filter and display only those text responses that contain specific keywords of interest. Step 9: Highlight Sentiment – Click the three-dot menu (⋮) on the widget, go to Settings > Analytics, and enable \"Highlight Sentiment\" to display detected sentiment for each response. Step 10: Final text response widget – The widget is now fully configured and displays all open-ended responses, along with keyword filters and optional sentiment highlights for easier analysis. Glossary un ordered list Verbatim Response: A respondent’s exact written answer to an open-ended survey question. Keyword Search: A search tool to filter and display responses that contain specific keywords or phrases. Sentiment Detection: An automated system that classifies each response as Positive, Neutral, or Negative based on tone and language. Open-Ended Question: A type of survey question that allows respondents to write their own answers freely. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 451
+    },
+    {
+      "id": "bi/BI-Sentiment-Stackbar",
+      "product": "BI",
+      "title": "Sentiment Stackbar",
+      "summary": "Visualize proportion of sentiments in open-ended question responses using a stacked bar format.",
+      "url": "https://www.questionpro.com/help/bi/BI-Sentiment-Stackbar.html",
+      "scraped_at": "2026-06-17T12:16:25.450Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Sentiment Stackbar Help File"
+        }
+      ],
+      "steps": [],
+      "content": "Sentiment Stackbar Help File 1.Introduction The Sentiment Stackbar visualizes the sentiment distribution across responses to an open-ended survey question. It helps users understand the overall emotional tone expressed in text comments by showing the proportion of each sentiment—ranging from very negative to very positive—in a single stacked bar. 2.Core Functionality The Sentiment Stackbar provides a proportional visual breakdown of sentiments detected in text responses for a selected question. Very Negative Negative Neutral Positive Very Positive No Sentiment Each sentiment is represented as a color-coded segment of a single horizontal bar, where the total length equals 100% of responses. It provides quick insight into emotional trends in your data. This visualization is ideal for comparing sentiment across time periods, demographics, or filtered data sets. 3.Step By Step Guide Step 1: Create dashboard – To create sentiment stackbar response widget create a new dashboard or in an existing go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your sentiment stackbar widget or in an existing go to Step 6. Step 3: Add widget – Click on “Add Widget” to begin inserting visual elements, into your dashboard Step 4: Select your widget – Choose the sentiment stackbar widget and link it to a specific open-ended survey question to visualize sentiment proportion from each respondent in the survey. Step 5: Select survey and survey question – Select the relevant survey and then choose a text-based (open-ended) question. The sentiment stackbar widget supports only text question types to display proportion of sentiments for a specific survey question. Step 6: Select sentiment stackbar – Select the relevant survey and then choose a text-based (open-ended) question. The sentiment stackbar widget supports only text question types to display proportion of sentiment for a specific survey question. Step 7: Final sentiment stackbar widget – The sentiment stackbar widget is now added to the dashboard, displaying the proportion of sentiments—very negative, negative, neutral, positive, very positive, or no sentiment—for the selected question. This visual summary helps users quickly interpret the emotional tone of responses at a glance. Glossary Sentiment Analysis: An NLP technique used to identify the emotional tone in textual data. Stacked Bar Chart: A chart where different segments represent different parts of a whole. No Sentiment: Indicates that no clear sentiment could be detected in the response. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 408
+    },
+    {
+      "id": "bi/BI-Sentiment-Donut",
+      "product": "BI",
+      "title": "Sentiment Donut",
+      "summary": "Help file for the Sentiment Donut widget that displays sentiment proportions in a donut chart format.",
+      "url": "https://www.questionpro.com/help/bi/BI-Sentiment-Donut.html",
+      "scraped_at": "2026-06-17T12:16:30.742Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Sentiment Donut"
+        }
+      ],
+      "steps": [],
+      "content": "Sentiment Donut 1. Introduction The Sentiment Donut is a visual widget that shows the proportional distribution of sentiments derived from text responses to a specific survey question. This donut-style chart categorizes responses into six sentiment categories: Very Negative, Negative, Neutral, Positive, Very Positive, and No Sentiment. It helps users quickly assess the emotional tone of feedback and compare sentiment trends across questions, groups, or time periods. 2. Core Functionality Sentiment Categories: Each sentiment is color-coded and represented as a segment of the donut. Very Negative Negative Neutral Positive Very Positive No Sentiment Proportional View: The donut visually represents the percentage share of each sentiment based on the total number of valid text responses. Cross-Question Comparison: Multiple sentiment donuts can be used to compare sentiment across groups or questions (if available). Video coming soon... 3. Step By Step Guide Step 1: Create dashboard – To create sentiment donut widget create a new dashboard or in an existing go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your sentiment donut widget or in an existing go to Step 6. Step 3: Add widget – Click on “Add Widget” to begin inserting visual elements, into your dashboard Step 4: Select your widget – Choose the sentiment donut widget and link it to a specific open-ended survey question to visualize sentiment proportion from each respondent in the survey. Step 5: Select survey and survey question – Select the relevant survey and then choose a text-based (open-ended) question. The sentiment donut widget supports only text question types to display proportion of sentiments for a specific survey question. Step 6: Select sentiment donut – Select the relevant survey and then choose a text-based (open-ended) question. The sentiment donut widget supports only text question types to display proportion of sentiment for a specific survey question. Step 7: Change setting for sentiment donut widget – Click on the three-dot menu (⋮) on the sentiment donut widget to access and customize settings for the widget Step 7a: Change setting > Analytics – Select to add or remove smiley form the widget, overall sentiment score or add response count Step 8: Final sentiment donut widget – This widget visually displays the proportion of sentiments—Very Negative, Negative, Neutral, Positive, Very Positive, or No Sentiment—derived from the analyzed text responses to a specific question, using a color-coded donut chart. It provides an at-a-glance summary of overall respondent sentiment. Glossary un ordered list Sentiment Analysis: The process of identifying and categorizing emotions in text responses, such as positive or negative tones. Donut Chart: A circular statistical graphic similar to a pie chart but with a blank center. No Sentiment: Text responses that could not be classified under any of the defined sentiment categories. Text Response: A participant’s written answer to an open-ended question. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 489
+    },
+    {
+      "id": "bi/BI-Text-Topic-Stacked-Bar",
+      "product": "BI",
+      "title": "Topic Stacked Bar",
+      "summary": "Help file for Topic Stackbar visualization in sentiment analysis.",
+      "url": "https://www.questionpro.com/help/bi/BI-Text-Topic-Stacked-Bar.html",
+      "scraped_at": "2026-06-17T12:16:36.104Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Topic Stackbar"
+        }
+      ],
+      "steps": [],
+      "content": "Topic Stackbar 1. Introduction The Topic Stackbar is a visualization tool that displays the distribution of sentiment across different topics in a stacked bar format. Each bar represents a topic, and the stack segments within the bar indicate the proportion of sentiments — Very Positive, Positive, Neutral, Negative, and Very Negative. This feature helps users quickly compare sentiment distribution across topics and drill down into the actual responses behind each sentiment. Additionally, a sentiment score line chart overlays the bar chart as a secondary axis, helping users assess overall topic sentiment trends at a glance. 2. Core Functionality Stacked Sentiment Distribution: Each topic is represented as a bar, stacked with different sentiment layers (Very Positive, Positive, Neutral, Negative, Very Negative). Interactive Drill-down: Users can click on any sentiment layer within a bar to view the underlying open-ended responses tagged to that sentiment and topic. Tooltips and Highlights: Hovering over a stack or the sentiment line reveals the exact percentage and count of responses for that sentiment level. Filtering Options: Users can filter topics, time periods, or respondent segments using BI filters to tailor the analysis context. 3. Step By Step Guide Step 1: Create dashboard – To create Topic stackbar widget create a new dashboard or in an existing one, go to Step 6. Step 2: Select blank dashboard – Choose a blank dashboard layout as the starting point for adding your Topic stackbar widget. Step 3: Add widget – Click on “Add Widget” to begin inserting visual elements into your dashboard. Step 4: Select your widget – Choose the Topic stackbar widget and link it to a specific open-ended survey question. Step 5: Select survey and question – Select the relevant survey and choose a text-based (open-ended) question. Step 6: Select stackbar – Reconfirm your survey and open-ended question to configure the widget properly. Step 7: Topic stackbar widget – The widget visually breaks down sentiment by topic in a stacked bar format. Each bar represents a topic, with color-coded segments showing proportions of Very Positive, Positive, Neutral, Negative, and Very Negative responses. A line chart overlays the bars to display the overall sentiment score per topic. Step 8: Click stackbar for comment – Users can click on any sentiment segment to view underlying comments. Step 9: List of comments – Browse through comments and their assigned sentiments. Step 10: Select page to view next set of comments – Use pagination to navigate through more responses. 4. Glossary Sentiment: A classification of respondent tone as Very Positive, Positive, Neutral, Negative, or Very Negative. Topic: A keyword or theme identified in open-ended responses through automated or manual tagging. Stacked Bar Chart: A chart type where individual categories (sentiment levels) are stacked on top of one another in a single bar to show proportionality. Sentiment Score: A numerical representation of the overall sentiment for a topic (e.g., weighted average from -2 to +2). Drill-down: A feature allowing users to click on a chart element to explore the detailed data behind it. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 517
+    },
+    {
+      "id": "bi/create-a-data-filter",
+      "product": "BI",
+      "title": "Create a data filter",
+      "summary": "Creating filters for your dashboard",
+      "url": "https://www.questionpro.com/help/bi/create-a-data-filter.html",
+      "scraped_at": "2026-06-17T12:16:42.269Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Create filters for your data"
+        }
+      ],
+      "steps": [],
+      "content": "Create filters for your data What is a filter? Data filter is a smaller part of your data which you can use as a subset for viewing, analysis or comparison. Filtering allows you to view / analyze data based on certain key parameters or criteria. How to create a data filter? Go to: Login » Select dashboard » Filter » Response status and date range » Add criteria » Save filter » Name » Save Click to download video Step 1 Once you are inside your dashboard, click on Filter » Chose response status and date range » Add criteria Step 2 Add the required rules » Save filter You can create a maximum of 10 rules in 1 criteria How can I apply a filter to the entire dashboard? When you create a new filter, it is automatically applied to the dashboard. To apply an older filter, follow the following steps: Filter » Open the create new filter dropdown » Select the filter How can I apply a filter to a specific tab in the dashboard? To apply a filter to a specific tab on the dashboard, follow the following steps - Click on the 3 dots next to the tab » Tab filter » Select the filter » Save What is a default filter? Default filter is automatically applied to the dashboard. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 260
+    },
+    {
+      "id": "bi/data-slicer",
+      "product": "BI",
+      "title": "Data slicer",
+      "summary": "Create data slicers for your dashboard",
+      "url": "https://www.questionpro.com/help/bi/data-slicer.html",
+      "scraped_at": "2026-06-17T12:16:49.258Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Adding data slicers"
+        }
+      ],
+      "steps": [],
+      "content": "Adding data slicers What is a data slicer? Data slicers are different slices or segments of your data, which you can use to visually compare the data against one or more slicers. How to add a data slicer? Go to: Dashboard settings » Data slicers » Create data slicer » Give it a name » Add the criteria » Save » Select the slicer you wish to use. Click to download video Step 1: Once you are inside your dashboard, click on Dashboard settings Step 2: Click on data slicers » Create data slicers Step 3: Give the slicer a name » add criteria » Save Step 4: Select the slicer you wish to apply to the dashboard How to apply or disable a slicer from a specific widget? Data slicers can be applied to the entire dashboard, disabled from certain widgets or only be applied to certain widgets To update data slicer settings on a particular widget, follow the following steps: Step 1: Click on more and then settings for the widget Step 2: Analytics » Data Slicer options License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 216
+    },
+    {
+      "id": "bi/Exports",
+      "product": "BI",
+      "title": "Exports",
+      "summary": "BI Helpfile - Exports",
+      "url": "https://www.questionpro.com/help/bi/Exports.html",
+      "scraped_at": "2026-06-17T12:16:54.567Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "BI - Exports"
+        }
+      ],
+      "steps": [],
+      "content": "BI - Exports Introduction The Exports feature within the QuestionPro platform provides a comprehensive solution for users seeking to analyze their survey data. By offering compatibility with widely adopted formats like SPSS (.sav) and CSV (.csv), Exports ensures seamless integration with a broad array of statistical and analytical tools. This functionality empowers users to delve deeper into their survey results, extracting valuable insights and facilitating data-driven decision-making. Purpose and Benefits: Streamline Data Analysis:Effortlessly transfer your survey data into a format that's primed for analysis, eliminating manual formatting and reducing the risk of errors. Ensure Broad Compatibility:Export your data in widely accepted formats that seamlessly integrate with popular statistical software packages like SPSS, R, and SAS, as well as spreadsheet programs like Excel. Accelerate Insights:Save valuable time and effort by generating clean, well-structured data exports that are ready for immediate use in your analysis tools, allowing you to focus on extracting meaningful insights. Core Functionality Export Format Selection CSV: This widely compatible format can be opened and edited in various spreadsheet software, including Microsoft Excel, Google Sheets, Numbers, and OpenOffice Calc. It's ideal for data analysis, manipulation, and sharing. SPSS: Specifically designed for statistical analysis, this format is compatible with IBM SPSS Statistics software. It preserves valuable metadata such as variable labels and value codes, ensuring data integrity and facilitating in-depth analysis within SPSS. Getting Started Coming Soon Steps for Setup BI -> Exports BI -> Exports -> Select format (CSV or SPSS) BI -> Exports -> Select format (CSV or SPSS) -> Select Survey BI -> Exports -> Select format (CSV or SPSS) -> Select Survey -> Download. Steps for Setup (Combined Surveys) BI -> Exports -> Survey -> My Survey Stack BI -> Exports -> Survey -> My Survey Stack -> Select Survey BI -> Exports -> Survey -> My Survey Stack -> Select Survey -> Download. Glossary CSV:Comma Separated Values, used for spreadsheets. SPSS: A statistical software format used for complex data analysis. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 342
+    },
+    {
+      "id": "bi/Survey-Stack",
+      "product": "BI",
+      "title": "Survey Stack",
+      "summary": "BI Helpfile - Segment Trend",
+      "url": "https://www.questionpro.com/help/bi/Survey-Stack.html",
+      "scraped_at": "2026-06-17T12:16:58.698Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Survey Stack"
+        }
+      ],
+      "steps": [
+        "Browse and Select: Allows you to navigate through and choose the specific survey(s) that you want to include in your data merging process. It may display survey titles, creation dates, or other relevant information to help you identify the correct survey.",
+        "Auto-Match Identical Fields: The system can automatically recognize and match fields that have the same name in different surveys, streamlining the merging process.",
+        "Manual Field Name Override: If the automatic matching is incorrect or if you need to combine fields with different names, you can manually adjust and specify how the fields should be mapped.",
+        "BI -> Survey Stacks",
+        "BI -> Survey Stacks",
+        "BI -> Survey Stacks ->Add Your Survey",
+        "BI -> Survey Stacks ->Add Your Survey -> Select Survey",
+        "BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey",
+        "BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey-> Autopopulated combined fields from survey",
+        "BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey-> Add New combined fields (optional)",
+        "BI -> Dashboard",
+        "BI -> Dashboard-> Create Dashboard",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Stacked Survey",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Select Question",
+        "BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Select Question -> Select Widget -> Add Widget"
+      ],
+      "content": "Survey Stack Introduction Survey Stacks is a data management feature that empowers users to seamlessly integrate data from multiple surveys into a single, cohesive dataset. This centralized repository of information facilitates streamlined reporting, in-depth analysis, and the generation of actionable insights. By merging data from various surveys, Survey Stacks eliminates the need for manual data consolidation and enables a holistic view of respondent feedback and behavior. This feature is particularly valuable for clients that conduct multiple surveys over time, across different departments, or for varying target audiences. With Survey Stacks, users can identify trends, compare results, and track changes in respondent sentiment over time. This comprehensive understanding of data can inform strategic decision-making, drive process improvements, and enhance overall organizational performance. Purpose and Benefits: Data Consolidation: This involves merging responses from multiple surveys into a unified dataset, allowing for a comprehensive analysis of collected information. Efficiency and Automation: Streamlining the data cleaning and merging process saves valuable time and reduces the need for manual intervention, minimizing the risk of errors and improving overall efficiency. Standardization: Ensuring consistency across different reporting systems enables seamless integration and facilitates accurate and reliable comparisons of data, leading to more informed decision-making. Core Functionality Browse and Select: Allows you to navigate through and choose the specific survey(s) that you want to include in your data merging process. It may display survey titles, creation dates, or other relevant information to help you identify the correct survey. Auto-Match Identical Fields: The system can automatically recognize and match fields that have the same name in different surveys, streamlining the merging process. Manual Field Name Override: If the automatic matching is incorrect or if you need to combine fields with different names, you can manually adjust and specify how the fields should be mapped. Getting Started Coming Soon Survey Stacks BI -> Survey Stacks BI -> Survey Stacks BI -> Survey Stacks ->Add Your Survey BI -> Survey Stacks ->Add Your Survey -> Select Survey BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey-> Autopopulated combined fields from survey BI -> Survey Stacks ->Add Your Survey -> Select Survey -> Add Survey-> Add New combined fields (optional) BI -> Dashboard BI -> Dashboard-> Create Dashboard BI -> Dashboard-> Create Dashboard -> Add Widget BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Stacked Survey BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Select Question BI -> Dashboard-> Create Dashboard -> Add Widget -> Question based -> Data Source -> Select Question -> Select Widget -> Add Widget Glossary Stack: A stack is a dataset that merges data from multiple surveys, allowing you to combine and analyze responses from different sources as if they were part of a single, unified dataset. This is particularly useful when you're conducting similar surveys over time, across different regions, or with different demographic groups, and want to compare or track trends across these variations. Field Mapping:Field mapping is a crucial aspect of creating a stack. Since different surveys might use different names or labels for similar questions or variables, field mapping involves aligning these fields so that they can be combined and compared accurately. This ensures that data from different surveys is organized consistently and that you're not comparing apples to oranges. Auto-Stack:Auto-Stack is an automated feature that streamlines the process of stacking new data as it comes in. Based on pre-saved rules and field mappings that you define, Auto-Stack can automatically merge new survey data into your existing stack, saving you time and effort on manual data integration. This allows you to keep your stacked dataset up-to-date and analyze trends in real time as new responses are collected. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 694
+    },
+    {
+      "id": "bi/BI-Variable",
+      "product": "BI",
+      "title": "BI Variable",
+      "summary": "Guide to using BI Variables for importing external datasets into QuestionPro.",
+      "url": "https://www.questionpro.com/help/bi/BI-Variable.html",
+      "scraped_at": "2026-06-17T12:17:02.846Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "BI Variables"
+        }
+      ],
+      "steps": [],
+      "content": "BI Variables BI Variables allow you to import variables from external datasets into QuestionPro. These variables can be mapped to existing survey data or used to create a new dataset. To create BI variables, please follow the following steps: BI » BI Variable BI » BI Variable » New BI Variable BI » BI Variable » New BI Variable » Map to Survey BI » BI Variable » New BI Variable » Map to Survey » Select Survey BI » BI Variable » New BI Variable » Map to Survey » Select Survey » Download template file BI » BI Variable » BI New Variable » Map to Survey » Select Survey » Download template file » Add Data (Numerical, Categorical OR Long Text) BI » BI Variable » New BI Variable » Map to Survey » Select Survey » Download template file » Add Data (Numerical, Categorical OR Long Text) » Upload template file to BI » Create Multi-Select Data Support (Released: August 2025) The platform now supports multi-select data (Select all that apply). To add this type of data, follow these steps: Step 1: In the import template, use row 1 to define variables and their options: Select the variable number and enter the option name after it. Example: Variable 1 - Master Each option should be placed in its own column. The variable number remains the same for all options, while only the option name changes. Step 2: For every column in the import template, set row 2 to Multi select categorical. Step 3: The data in each column should be entered as either 1 (selected) or 0 (not selected). How do I create a dashboard from or use the BI variables in an existing dashboard? You will simply see BI variables as a new data source while creating a dashboard or even while adding widgets to an existing dashboard. Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 330
+    },
+    {
+      "id": "bi/BI-Variable-Builder",
+      "product": "BI",
+      "title": "BI Variable Builder",
+      "summary": "Help documentation for the BI Variable Builder feature",
+      "url": "https://www.questionpro.com/help/bi/BI-Variable-Builder.html",
+      "scraped_at": "2026-06-17T12:17:08.091Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Composite variables"
+        }
+      ],
+      "steps": [],
+      "content": "Composite variables Composite variables are a powerful feature that allows users to create new variables by combining two or more data points from an existing survey. It is designed to eliminate manual, offline workarounds and bring composite metric creation directly into the platform. Your browser does not support the video tag. Click to download the video This feature is expected to be released in Q4 2025. How do I create a Composite Variable? Step 1: Navigate to: BI Variables Click on New BI Variable to begin. Step 2: Select Map to Survey. This links the composite variable directly to your survey dataset, allowing it to be used like a survey question in analysis, dashboards, or filters. Select the data source Step 3: Name the dataset and choose Derived. Give your dataset a clear name such as Demographics Derived Data or Customer Segments. Then select the Derived option, indicating that this dataset will be generated using existing data fields. Step 4: Create the BI Variable. Click Create BI Variable to proceed with defining the new variable. You’ll now specify its name and value ranges. Step 5: Define the variable. Enter a descriptive name for your new variable — for example, Age Group or Income Band. This name will appear in reports and visualizations. Step 6: Add the variable values and the conditions associated with it. Define your value ranges. For instance, for an Age Group variable, you might add: 18 to 29 30 to 39 40 to 49 50 or older Each range represents a segment that respondents will be grouped into based on their original data. If there are any respondent that fall outside the boundaries of defined composite variable, select the default category and assign an appropriate default value. Step 7: Save and sync. Once you’ve defined all values, click Create. The new variable will be generated automatically and synced within minutes. The dataset also auto-syncs every 24 hours to keep your data current. Key information What is the maximum number of values I can add in a single composite variable? You can add upto 50 values. What is the maximum number of composite variable I can add? You can add upto 400 variables. What is the maximum number of composite variable I can add? You can add upto 400 variables. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 420
+    },
+    {
+      "id": "bi/dashboard-sharing",
+      "product": "BI",
+      "title": "Dashboard sharing",
+      "summary": "Learn how to share dashboards in QuestionPro BI Dashboard, enable viewer access controls, apply base and dynamic filters, and securely share curated data views.",
+      "url": "https://www.questionpro.com/help/bi/dashboard-sharing.html",
+      "scraped_at": "2026-06-17T12:17:16.306Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Dashboard sharing"
+        }
+      ],
+      "steps": [],
+      "content": "Dashboard sharing Introduction The dashboard Sharing feature lets you securely distribute your BI dashboards to internal or external stakeholders using a shareable link. With flexible sharing controls, you can decide exactly what viewers can see, whether it’s insights, comments, or interactive filters. You also have the option to apply a base filter before sharing, giving viewers a curated version of the dashboard without exposing sensitive or internal data. Once sharing is enabled, you can further tailor the viewer experience by choosing which filters are available and whether viewers can interact with them. This ensures you maintain full control over the data while still allowing stakeholders to explore it meaningfully. Watch this video for a quick overview of dashboard sharing in BI: Your browser does not support the video tag. Click to download the video How do I share a dashboard externally? Inside the dashboard, click the “Share dashboard” button at the top-right. This opens the sharing configuration panel. How do I enable sharing for my dashboard? Turn on the dashboard sharing toggle. Once enabled, a unique shareable link appears, which you can copy and share with your viewers. What interaction options can I enable for shared dashboards? After enabling sharing, you can choose what viewers can access, including insights, comments, a base filter, and dynamic filters. These settings help tailor the viewer experience and control what data they can interact with. How does the base filter work when sharing a dashboard? When you enable the base filter, you can select a saved filter that defines the default data context for the shared dashboard. This ensures viewers see only a curated and predefined subset of the data. The base filter you apply remains hidden from viewers and is applied silently in the background to prevent exposure of sensitive or internal information. How do dynamic filters work for shared dashboards? Dynamic filters give viewers the ability to interact with the data. You can choose to allow only saved filters or enable fully interactive filters where viewers can adjust filter values themselves. What additional filter controls can I enable for interactive filters? When using interactive filters, you can enable additional controls such as date filtering, response status filtering, and filter value editing to give viewers more flexibility in exploring data. What does the final shared dashboard look like for viewers? Viewers will see a clean, curated version of your dashboard with only the options you’ve enabled. They may interact with filters, view insights, or leave comments, depending on your configuration. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 453
+    },
+    {
+      "id": "bi/dynamic-public-sharing",
+      "product": "BI",
+      "title": "Dynamic Public Sharing",
+      "summary": "Dynamic Public Sharing allows you to create customized public dashboard links with configurable filters, permissions, interactive controls, and multilingual support.",
+      "url": "https://www.questionpro.com/help/bi/dynamic-public-sharing.html",
+      "scraped_at": "2026-06-17T12:17:21.819Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Dynamic Public Sharing"
+        }
+      ],
+      "steps": [],
+      "content": "Dynamic Public Sharing Introduction Dynamic Public Sharing in BI allows you to create customized public dashboard experiences using unique shareable links. Instead of duplicating dashboards for different audiences, you can configure individual shared links with their own permissions, filters, interactive controls, commenting access, and language preferences. This makes it easier to securely share tailored dashboard views with executives, clients, partners, or internal teams while maintaining a single source dashboard. Watch this video for a quick overview of Dynamic Public Sharing in BI: Your browser does not support the video tag. Click to download the video Core Functionality Custom Public Dashboard Experiences Create multiple public sharing links from a single dashboard with independent configurations and viewing experiences. Dynamic and Interactive Filters Allow viewers to interact with dashboard filters, date ranges, response statuses, and editable filter values. Configurable Access Controls Control whether viewers can access insights, comments, and filter interactions within the shared dashboard. Base Filter Support Apply predefined filters so dashboards always open with specific data conditions. Multilingual Dashboard Support Select the language in which the shared dashboard experience should appear. Step By Step Guide to creating a public sharing link: Step 1: Open the dashboard for which you want to create a public sharing link. Navigate to BI and select the dashboard you want to share publicly. Step 2: Open dashboard settings. Click the Settings option from the dashboard toolbar. Step 3: Navigate to Shared links. Open the Shared links tab to manage public sharing configurations. Step 4: Start creating a new public sharing link. Click the Create button to open the public sharing configuration window. Step 5: Configure basic sharing settings. Provide a link name and configure optional settings such as Insights and Comments access. Step 6: Configure base filters. Enable Base Filters to apply a predefined filter whenever the shared dashboard is opened. Step 7: Configure dynamic filters. Enable Dynamic Filters to allow viewers to interact with dashboard filters in the shared view. Enable Show only saved filters to restrict the shared dashboard to predefined saved filters only. Step 8: Configure interactive filters. Select which interactive filter should be available, along with Date Filters, Response Status, and editable filter values. Step 9: Select dashboard language. Choose the language in which the shared dashboard experience should appear. Step 10: Create the public sharing link. After configuring all required settings, click the Create button to generate the public sharing link. Managing public sharing links: How to edit an existing public sharing link? Use the Edit option from the Actions column to modify existing configurations such as filters, permissions, language preferences, and interactive controls. How to disable a public sharing link? Use the status toggle to temporarily disable public access without deleting the shared link. How to delete a public sharing link? Use the Delete option from the Actions column and confirm the action from the popup to permanently remove the shared link. Glossary Dynamic Public Sharing: A BI capability that allows creation of customizable public dashboard links with independent configurations. Base Filter: A predefined filter automatically applied when a shared dashboard is opened. Dynamic Filters: Interactive filters that viewers can use while exploring the shared dashboard. Interactive Filters: Advanced filter controls that allow viewers to modify filter selections and values directly. Shared link: A publicly accessible dashboard link with customizable permissions and configurations. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 572
+    },
+    {
+      "id": "bi/segment-trend",
+      "product": "BI",
+      "title": "Segment trend",
+      "summary": "BI Helpfile - Segment Trend",
+      "url": "https://www.questionpro.com/help/bi/segment-trend.html",
+      "scraped_at": "2026-06-17T12:17:27.485Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Segment Trends Help Documentation"
+        }
+      ],
+      "steps": [
+        "Tracks Consumer Behavior and Preferences: Segment Trend allows businesses to monitor how consumer behavior and preferences shift over time.",
+        "Identifies Trends and Patterns: By analyzing historical data and current market conditions, Segment Trend can identify emerging trends and patterns in consumer behavior.",
+        "Focuses on Specific Consumer Segments: Businesses can use Segment Trend to track the behavior and preferences of specific consumer segments.",
+        "Correlates Events with Behavior Shifts: Segment Trend enables users to identify correlations between specific events and shifts in consumer behavior or perception.",
+        "Supports Hypothesis Testing and Causation: Businesses can test hypotheses and establish causal relationships between events and consumer behavior.",
+        "Facilitates Competitive Advantage: Understanding and anticipating customer needs helps businesses develop targeted strategies.",
+        "Step 1: Login to BI > Add Widget",
+        "Step 2: Login to BI > Add Widget > Segment Trend",
+        "Step 3: Login to BI > Add Widget > Segment Trend > Select Survey",
+        "Step 4: Login to BI > Add Widget > Segment Trend > Select Survey > Select Question > Create Segment > Save.",
+        "Step 1: BI Segment Trend Widget > Settings",
+        "Step 2: BI Segment Trend Widget > Settings > Segment > Create Segment",
+        "Step 3: BI Segment Trend Widget > Settings > Segment > Create Segment > Save",
+        "Step 1: BI Segment Trend Widget > Settings",
+        "Step 2: BI Segment Trend Widget > Settings > Analytics > Weekly (Interval)",
+        "Step 1: BI Segment Trend Widget > Settings",
+        "Step 2: BI Segment Trend Widget > Settings > Analytics",
+        "Step 3: BI Segment Trend Widget > Settings > Analytics > Moving Average",
+        "BI Segment Trend Widget > Settings> Analytics > Exclude Responses from Trend",
+        "Step 1: BI Segment Trend Widget > Settings> Segment",
+        "Step 2: BI Segment Trend Widget > Settings > Segment > Add denominator",
+        "Step 3: BI Segment Trend Widget > Settings > Segment > Add denominator >",
+        "Step 4: BI Segment Trend Widget > Settings > Segment > Add denominator >  Save"
+      ],
+      "content": "Segment Trends Help Documentation Segment Trends A robust tool that empowers businesses to monitor and analyze the ever-changing landscape of consumer behavior and preferences over time. This analysis can be focused on specific consumer segments or broader population cohorts. By understanding these dynamic shifts, companies can proactively adapt their products, services, and marketing strategies to better align with evolving consumer expectations and maintain a competitive edge. Segment Trend allows users to draw correlations between specific events and shifts in consumer behavior or perception. These correlations can be further hypothesized and tested using business intelligence (BI) statistical methods to establish causation. By identifying causal relationships, businesses gain a competitive advantage in understanding and connecting with their core customers. Key Features and Benefits Tracks Consumer Behavior and Preferences: Segment Trend allows businesses to monitor how consumer behavior and preferences shift over time. Identifies Trends and Patterns: By analyzing historical data and current market conditions, Segment Trend can identify emerging trends and patterns in consumer behavior. Focuses on Specific Consumer Segments: Businesses can use Segment Trend to track the behavior and preferences of specific consumer segments. Correlates Events with Behavior Shifts: Segment Trend enables users to identify correlations between specific events and shifts in consumer behavior or perception. Supports Hypothesis Testing and Causation: Businesses can test hypotheses and establish causal relationships between events and consumer behavior. Facilitates Competitive Advantage: Understanding and anticipating customer needs helps businesses develop targeted strategies. How to create Segment Trend in BI? Login to BI > Add Widget > Segment Trend > Select Survey > Select Question > Create Segment > Save. Step 1: Login to BI > Add Widget Step 2: Login to BI > Add Widget > Segment Trend Step 3: Login to BI > Add Widget > Segment Trend > Select Survey Step 4: Login to BI > Add Widget > Segment Trend > Select Survey > Select Question > Create Segment > Save. Advanced Segmentation Segment formation is based on the hypothesis you would like to test through your analysis. QP’s BI platform allows you to build complex consumer segments by combining demographics, preferences, psychographics, and usage questions to track patterns among critical user personas. By leveraging the data and insights provided by QuestionPro's BI platform, companies can develop a deeper understanding of their customers and create strategies that drive growth and success. Step 1: BI Segment Trend Widget > Settings Step 2: BI Segment Trend Widget > Settings > Segment > Create Segment Step 3: BI Segment Trend Widget > Settings > Segment > Create Segment > Save Aggregate Overview and Drill Down Capabilities While analysing trends it becomes essential to zoom out to have an overall understanding of changing trends or zoom in to a specific time period to see if there is any correlation between an event and consumer behavior. The following capability is available in the Segment Trends → Analytics section where the user could either choose if they would zoom on to yearly / quarterly trends or zoom in to monthly and weekly trends. Step 1: BI Segment Trend Widget > Settings Step 2: BI Segment Trend Widget > Settings > Analytics > Weekly (Interval) Moving Averages in Segment Trend Moving averages are used to smooth time-series data by calculating a continuously updated average price, which helps to mitigate temporary fluctuations. Time-series data can sometimes show sharp increases or decreases in trends that aren't caused by a specific event or factor. In these cases, using moving averages can help to reduce these abnormal variations. The system's default configuration includes the calculation of two moving averages i.e. the current period and the preceding two periods, within the time-series data. The duration for calculating the moving average is configurable to align with the specific parameters of the research. Step 1: BI Segment Trend Widget > Settings Step 2: BI Segment Trend Widget > Settings > Analytics Step 3: BI Segment Trend Widget > Settings > Analytics > Moving Average Exclude Responses from Trend Certain time intervals might have low responses for no specific reason, potentially affecting moving average computations. If the objective is to maintain a minimum base per period and mitigate this impact, select the 'Exclude Responses from Trend' feature. BI Segment Trend Widget > Settings> Analytics > Exclude Responses from Trend Custom Segment in Segment Trend By default the system calculates proportions on the total number of completed responses. However with Custom Segment, we could further carve the segment by adding the denominator to any variable. The default calculation for proportions within the system is based on the total number of completed responses. However, the Custom Segment feature offers more flexibility. With Custom Segment, you can create a more specific segment by defining a denominator based on any variable to all the segments shown in the widget. The following allows you to focus on specific groups within your data and gain more targeted insights. Step 1: BI Segment Trend Widget > Settings> Segment Step 2: BI Segment Trend Widget > Settings > Segment > Add denominator Step 3: BI Segment Trend Widget > Settings > Segment > Add denominator > Step 4: BI Segment Trend Widget > Settings > Segment > Add denominator > Save Glossary Interval: Measured along a numerical scale that has equal distances between adjacent values, mostly periodical scale in Segment Trends. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 923
+    },
+    {
+      "id": "bi/rim-weighting",
+      "product": "BI",
+      "title": "Create RIM / raked weighting scheme",
+      "summary": "Raking or RIM weighting",
+      "url": "https://www.questionpro.com/help/bi/rim-weighting.html",
+      "scraped_at": "2026-06-17T12:17:34.436Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Raked / RIM weighting"
+        }
+      ],
+      "steps": [],
+      "content": "Raked / RIM weighting In a survey we design a sample with the objective to represent the population and provide us insights about the population which would help researchers to draw inferences and conclusive findings for business or public agencies. When we sample for a survey assign equal probability for individuals to be selected who would represent the population. However due to availability of individuals OR due to sensitivity of the research subjects OR accessibility of samples sometimes our samples could get skewed and would have the right representation of the population. In RIM weighting we consider the an iterative proportional fitting procedure estimates the individual weights. The first iteration computes weights to match the first dimension (weighting variable) totals, the second iteration matches the second dimension totals, and so on. These steps for all the dimensions are performed repeatedly unless convergence is achieved within an acceptable margin of error. How to create a raking / RIM weighting scheme for your data? Login to BI » Weightings » New weight scheme » Raked weighting » Select survey » Select the questions » Select data filter » Add a name » Add the proportions » Save Click to download video Step 1: Weightings » New weight scheme Step 2: Raked weighting » Next Step 3: Select survey Step 4: Select questions » Next Step 5 (Optional): Create the required filter » Next Step 5: Give a name » Add the proportions » Save After the weighting scheme is created Processing can take anywhere from 1 minutes to 60 minutes. You can see the status here: You can click on the weighting scheme name to see the stats for that particular scheme: Important information: Efficiency: At what percentage of data efficiency did the weights converge.. Iterations: The number of iterations required Status: Success (The data converged successfully) | Max stuck (More iterations could not improve the efficiency) | max iter (Reached the maximum number of iterations before data could converge) License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 362
+    },
+    {
+      "id": "bi/apply-weighting-scheme-to-data",
+      "product": "BI",
+      "title": "Apply weighting scheme to your data",
+      "summary": "Apply a weighting scheme to your dashboard",
+      "url": "https://www.questionpro.com/help/bi/apply-weighting-scheme-to-data.html",
+      "scraped_at": "2026-06-17T12:17:38.600Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Apply a weighting scheme to your dashboard"
+        }
+      ],
+      "steps": [],
+      "content": "Apply a weighting scheme to your dashboard A weighting scheme is the proportions added and the filters chosen for weighting. To apply a weighting scheme to your dashboard, follow these steps: Dashboard settings » Weight schemes » Select the weight scheme » Save Click to download video Step 1: Click on dashboard settings Step 2: Weight schemes » Select the weight scheme from the dropdown How to disable weighting from a widget? Step 1: Click on more for any widget » Settings Step 2: Click Analytics » None License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 122
+    },
+    {
+      "id": "bi/advanced-cross-tabulation",
+      "product": "BI",
+      "title": "Advanced cross-tabulation",
+      "summary": "Learn how to create and customize an advanced cross-tabulation report in QuestionPro BI. This tutorial covers setup, analytics options, labeling, and exporting reports for seamless integration into your BI dashboards.",
+      "url": "https://www.questionpro.com/help/bi/advanced-cross-tabulation.html",
+      "scraped_at": "2026-06-17T12:17:43.109Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Advanced Cross-Tabulation in QuestionPro BI"
+        }
+      ],
+      "steps": [],
+      "content": "Advanced Cross-Tabulation in QuestionPro BI The Advanced Cross-Tabulation Report in QuestionPro BI is designed to help you uncover deeper insights from your survey data. With just a few clicks, you can run cross-tabulations across multiple questions or custom variables, apply advanced analytics like Chi-Square and proportion tests, and customize how results are displayed. Whether you’re preparing a quick snapshot or a detailed analysis, this feature makes it easy to explore relationships in your data and integrate reports seamlessly into your BI dashboards. Your browser does not support the video tag. Click to download the video How do I add an advanced cross tabulation report? To add an advanced cross-tabulation report, follow these steps: Navigate to Reports. Select Create report Select crosstab report and give report name Select a data source for the cross-tab Confirm data source » Create Once created, a default report will be genarated with first two variables from the selected dataset How do I configure my cross-tab report? To configure the cross-tab: Select settings (top-right hand corner) Drag variables / questions from question list and drop them in rows (stubs) and columns (banner). Variables in cross-tab reports could be further drilled down by selecting questions or BI variables from the drop-down. BI variables could also be added to the cross-tab as Stubs (rows) or Banners (columns). How do I configure the analytics? To add advanced analytics to the cross-tab: In the Analytics tab, choose from the following analysis: Count: Number of responses (or respondents) in each cell. Row percentage: Proportion of responses within a row distributed across columns (100% per row). Column percentage: Proportion of responses within each column relative to that column’s total. Row overall: Total responses or percentages across all columns for that specific row. Column overall: Distribution of responses across all rows within each column. Row total and Column total: Sum of all responses across rows/columns. Mean and Average: Arithmetic mean (sum/count) or average shown across categories to compare groups. Row and Column Mean: Average of values across all columns/rows. Row and Column heatmap: Highlights patterns and intensity with shading for quick trend spotting. Fisher's Exact Test: Tests non-random associations between two categorical variables (small sample sizes). Chi-Square: Tests whether differences between observed and expected frequencies across categories are statistically significant. Confidence Interval for proportion test: A confidence interval for a proportion test in cross-tabs gives the range of values within which the true population proportion is likely to fall, with a chosen level of confidence. How do I customize labels in my cross-tab report? To customize labels in cross-tab: In the Labels tab customize text and label names in cross-tab. How do I download my cross-tab report? To download cross-tab, click download icon How do I add my customized cross-tab report to my BI report? To add cross-tab report to BI report: Select BI report » Click on add tab button (left-bottom corner) » Click report » Select cross-tab report » Click save. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 528
+    },
+    {
+      "id": "bi/bi-dashboard-limits",
+      "product": "BI",
+      "title": "BI dashboard limits",
+      "summary": "bi dashboard limits",
+      "url": "https://www.questionpro.com/help/bi/bi-dashboard-limits.html",
+      "scraped_at": "2026-06-17T12:17:47.302Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "BI dashboard limits"
+        }
+      ],
+      "steps": [],
+      "content": "BI dashboard limits We need to have certain limits on BI dashboard, mainly to maintain our strict UX standards. We want all dashboards and widgets to load within seconds, and for that, we have put in certain limitations / guard rails. Following are the key limitations: Description Limit Number of widgets in a tab 40 Number of answers in a widget No limit. Pie/Donut/Semi-Circle/Donut:max answers 10 Number of tabs 10 Data slicer creation 100 Apply data slicers to a widget, tab or dashboard 10 Number of colours in a custom theme 50 Surveys in a dataset 10 Questions in a basic cross tab 10 Questions in an advanced cross tab Coming soon Height of a widget. (In pixels) 960 AI insights (char limit) 400 Insight comments in a dashboard 1,000 Comment reply for a single AI insight or widget 100 Questions in a comparative bar chart 10 Questions in a heatmap widget 50 Segments in a heatmap widget 50 Widget level filters 100 Number of rules in a filter 10 Can any of these limits be increased Please reach out to your customer success manager. In rare cases, depending on the requirement, we can make extensions. There will be a cost assoicated for any such requests. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 242
+    },
+    {
+      "id": "bi/create-a-filter",
+      "product": "BI",
+      "title": "Create a filter",
+      "summary": "Creating filters for your dashboard",
+      "url": "https://www.questionpro.com/help/bi/create-a-filter.html",
+      "scraped_at": "2026-06-17T12:17:52.862Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Create filters for your data"
+        }
+      ],
+      "steps": [],
+      "content": "Create filters for your data What is a filter? Data filter is a smaller part of your data which you can use as a subset for viewing, analysis or comparison. Filtering allows you to view / analyze data based on certain key parameters or criteria. How to create a data filter? Go to: Login » Select dashboard » Filter » Response status and date range » Add criteria » Save filter » Name » Save Click to download video Step 1 Once you are inside your dashboard, click on Filter » Chose response status and date range » Add criteria Step 2 Add the required rules » Save filter You can create a maximum of 10 rules in 1 criteria What is a default filter? Default filter is automatically applied to the dashboard. Go to: Login » Select dashboard » Filter » Response status and date range » Add criteria » Save filter » Name » Save Click to download video Step 1 Once you are inside your dashboard, click on Filter » Chose response status and date range » Add criteria Step 2 Add the required rules » Save filter You can create a maximum of 10 rules in 1 criteria License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 238
+    },
+    {
+      "id": "bi/supported-question-types",
+      "product": "BI",
+      "title": "Supported Question Types",
+      "summary": "question types supported on bi, supported question types",
+      "url": "https://www.questionpro.com/help/bi/supported-question-types.html",
+      "scraped_at": "2026-06-17T12:17:57.004Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Supported question types"
+        }
+      ],
+      "steps": [],
+      "content": "Supported question types The BI dashboards presently have certain limitations with respect to the range of question types supported. The objective is to attain complete support for all question types across the full suite of products offered by QuestionPro. As of September 2025, the following question types are supported: Category Type Multiple choice Select one Multiple choice Select many Multiple choice Drop-down menu Text Comment box Text Single row text (Numeric) Graphical rating Star rating Graphical rating Simey - rating Graphical rating Text slider Graphical rating Numeric slider Graphical rating Thumbs up/down Image chooser Select one Image chooser Select many Image chooser Rating Basic matrix Multi-point scales Basic matrix Multi-select Ordering Rank order Ordering Constant sum Ordering Drag and drop Custom satisfaction Net promoter score Custom satisfaction AskWhy Custom satisfaction Customer satisfaction Data Reference Lookup table The following question types will be supported soon: Category Type Advanced Matrix Side-by-side matrix Choice models Max-diff Choice models Conjoint License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 196
+    },
+    {
+      "id": "bi/advanced-text-analytics-dashboard",
+      "product": "BI",
+      "title": "Advanced Text Analytics Dashboard",
+      "summary": "Learn how to create an Advanced Text Analytics dashboard in QuestionPro TextAI, select a data source, configure codebooks, choose questions, add context, and track dashboard creation status.",
+      "url": "https://www.questionpro.com/help/bi/advanced-text-analytics-dashboard.html",
+      "scraped_at": "2026-06-17T12:18:02.616Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Advanced Text Analytics in TextAI"
+        }
+      ],
+      "steps": [],
+      "content": "Advanced Text Analytics in TextAI Introduction Advanced Text Analytics in QuestionPro TextAI helps teams turn open-ended feedback into structured, actionable themes. By selecting a source such as a survey, Customer Experience project, Employee Experience project, or dataset, you can create a TextAI dashboard that applies topic modeling to qualitative responses and highlights the patterns that matter most. The setup flow lets you define the dashboard goal, choose an output language, generate or upload a codebook, select the questions to analyze, and provide question-level context for more accurate results. This helps product, research, customer experience, and employee experience teams organize large volumes of text feedback without manually reading and tagging every response. Watch this video for a quick overview of Advanced Text Analytics in TextAI: Your browser does not support the video tag. Click to download the video How do I create an Advanced Text Analytics dashboard in TextAI? Step 1: Go to bi.questionpro.com, and open TextAI from the left navigation menu. Step 2: On the TextAI dashboards page, click Create Dashboard to start a new dashboard. Step 3: To get started, choose the type of data you want to analyze, such as Surveys, Customer Experience, Employee Experience, or Datasets. Step 3.1: If you choose Datasets as the data source, select one of the available datasets to use as the source. Step 4: Enter a clear dashboard name so the report is easy to identify later. Step 5: Choose the preferred output language for the TextAI dashboard. Step 6: Add the goal for topic modeling to guide how TextAI should interpret and organize the responses. Step 7: Choose from the available methods for creating or selecting a codebook. Step 7.1: To let QuestionPro AI generate the codebook for you, select Generate with QuestionPro AI. Step 7.2: To upload your own codebook, select Upload from template file. Step 7.3: To use a codebook from an existing dashboard, select Upload from report codebook. Step 8: Click Next to continue to the question selection step. Step 9: Select the questions for which you want to run Advanced Text Analytics. Use the checkboxes to include or exclude individual questions from the analysis. Step 10: Add question-level context that explains what each question is intended to capture. Step 11: If the selected questions cover different topics or contexts, enable separate dashboard creation to create multiple dashboards—one for each group of related questions. Step 12: Click Create Dashboard to start generating the Advanced Text Analytics dashboard. Step 13: Wait while the dashboard creation process starts. Step 14: Return to the dashboard list to view the new dashboard and monitor its status. Step 15: When multiple dashboards are created, expand the dashboard entry to view the generated sub-dashboards. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition",
+      "word_count": 471
+    },
+    {
+      "id": "bi/sub-topic-stacked-bar",
+      "product": "BI",
+      "title": "Sub-topic stacked bar",
+      "summary": "Sub-topic stacked bar",
+      "url": "https://www.questionpro.com/help/bi/sub-topic-stacked-bar.html",
+      "scraped_at": "2026-06-17T12:18:09.492Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Sub-topic stacked bar"
+        }
+      ],
+      "steps": [],
+      "content": "Sub-topic stacked bar What is a sub-topic stacked bar? A Stacked Bar enables users to visualize data through stacked bar charts. The Sub-topic Stacked Bar builds on this by automatically incorporating all sub-topics generated by QuestionPro AI as drill-downs under their corresponding main topics. Users can view these sub-topics by clicking the arrow to the left of each topic. This functionality streamlines the exploration and comparison of hundreds of sub-topics within a single, intuitive interface. This widget is scheduled for beta release on August 15, 2025, and will be made available to all clients by October 15, 2025. How do I add a sub-topic stacked bar? Click to download video Step 1: Click on add widget Step 2: Select the required question. Step 3: Give it a name (optional) >> Select sub-topic stacked bar How do I actually see the sub-topics? To see the sub-topics, you need to drill-down into one of the topics. To do this, simple click on the arrow on the left of the topic. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 206
+    },
+    {
+      "id": "bi/use-your-own-codebook",
+      "product": "BI",
+      "title": "Use your own codebook",
+      "summary": " Use your own codebook",
+      "url": "https://www.questionpro.com/help/bi/use-your-own-codebook.html",
+      "scraped_at": "2026-06-17T12:18:14.767Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Use your own codebook for topic analysis."
+        }
+      ],
+      "steps": [],
+      "content": "Use your own codebook for topic analysis. QuestionPro AI automatically analyzes all open-ended text data to generate relevant topics and sub-topics. However, if you upload your own codebook, the system will bypass auto-generation and instead tag all responses based on the topics and sub-topics defined in your uploaded file.This feature is especially useful when you want to maintain consistency in your topic structure, such as when tracking trends over time. Your browser does not support the video tag. Click to download the video This feature will be available to beta clients by the end of August 2025, and will be rolled out to all clients by the end of October 2025. How do I use my codebook for topic generation? To use your own codebook, please follow the following steps: Step 1: Navigate to the TextAI » Click on Create dashboard » Select advanced analytics » Click on continue to proceed Step 2: Select the source and survey. Step 3: Select an existing industry or create a new one Step 4: Add the goal for the topic modeling » Enable Upload codebook » Download Step 5: Add the topics » Add the sub-topics Sub-topic need to be comma separated. Step 6: Upload the Excel file back in the system and and click on create. How long does it take to process the data? Once you upload the codebook, QuestionPro AI will begin processing the responses based on the provided instructions. The processing time typically ranges from 1 to 8 hours, depending on the volume of responses. You can proceed to add the desired widgets to your dashboard immediately. The data will begin populating in real-time as the processing progresses. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 317
+    },
+    {
+      "id": "bi/trend-line",
+      "product": "BI",
+      "title": "Trend line",
+      "summary": "sentiment trend line, sentiment based trend line",
+      "url": "https://www.questionpro.com/help/bi/trend-line.html",
+      "scraped_at": "2026-06-17T12:18:20.132Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Trend line"
+        }
+      ],
+      "steps": [],
+      "content": "Trend line The trend line widget displays the monthly trend of average sentiment, allowing you to track changes and patterns over time. Your browser does not support the video tag. Click to download the video This widget is scheduled for beta release on September 15, 2025, and will be made available to all clients in Q4, 2025. How do I add a trend line widget? To add a trend line widget, please follow the following steps - Step 1: Navigate to Text AI » Select an advanced text analtics dashboard Step 2: Add widget » Select a question Step 3: Select the Trend line widget » Add widget Can I filter the dashboard? Yes, you can apply any off the following filters - Filter: Filter by date, time, or responses to survey questions. Topic: Filter by one or more topics that have been generated. Sub-topic: Filter by one or more sub-topics that have been generated. License This feature is available with the following licenses : Research Edition Communities Customer Experience Employee Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 193
+    },
+    {
+      "id": "bi/introduction-to-workspaces",
+      "product": "BI",
+      "title": "Introduction to workspaces",
+      "summary": "Learn about Workspaces in QuestionPro BI, how they help organize dashboards and enable collaboration across teams.",
+      "url": "https://www.questionpro.com/help/bi/introduction-to-workspaces.html",
+      "scraped_at": "2026-06-17T12:18:24.264Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Introduction to Workspaces"
+        }
+      ],
+      "steps": [],
+      "content": "Introduction to Workspaces Introduction Workspaces in QuestionPro Business Intelligence help you organize your dashboards, reports, and analysis in a structured and meaningful way. Instead of managing all content in a single place, workspaces allow you to group related dashboards and reports based on projects, teams, or use cases. This makes it easier to navigate, manage, and maintain your analytical assets as your work grows. In addition to organization, workspaces also support collaboration by allowing you to share access with other users in your organization. Workspaces are designed to: Organize dashboards and reports into dedicated environments. Simplify navigation and content management. Enable collaboration through shared access. How Workspaces Work A workspace contains dashboards, reports, and other analytical assets created by users. These assets are grouped together to provide a focused view of a specific project or area of analysis. Users can share access to their workspace with others in the organization. Depending on the level of access provided: Read Access: Users can view dashboards and reports within the workspace. Write Access: Users can create, edit, and manage content within the workspace. This ensures that teams can work together while maintaining control over content changes. Create a new Workspace This feature is expected to be released in July 2026. Key Benefits of Workspaces Better Organization: Keep related dashboards and reports grouped together. Improved Navigation: Quickly find and manage content within a structured environment. Collaboration: Share workspaces with team members to collaboratively create, edit, and manage dashboards and reports. Access Control: Define who can view or edit content. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 274
+    },
+    {
+      "id": "bi/organization-workspace",
+      "product": "BI",
+      "title": "Organization workspace",
+      "summary": "Learn about Organization Workspace in QuestionPro BI, a centralized workspace that enables organization-wide access and collaboration on dashboards and reports.",
+      "url": "https://www.questionpro.com/help/bi/organization-workspace.html",
+      "scraped_at": "2026-06-17T12:18:28.412Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Organization Workspace"
+        }
+      ],
+      "steps": [],
+      "content": "Organization Workspace This feature is expected to be released in June 2026. Introduction The Organization Workspace is a centralized workspace designed for organization-wide access and collaboration in QuestionPro BI. Unlike individual workspaces, which are typically used for specific projects or teams, the Organization Workspace serves as a common environment where all users within the organization can access and contribute to shared dashboards and reports. This makes it easier to maintain a single source of truth and ensures that important insights are accessible to everyone in the organization. How Organization Workspace Works The Organization Workspace is accessible to all users within the organization, providing a shared environment for viewing and contributing to dashboards and reports. Users can: Access shared dashboards and reports created across the organization. Contribute by creating or updating content within the workspace. Collaborate in a single, unified environment. This setup helps reduce duplication of work and ensures consistency in reporting and analysis. Key Benefits of Organization Workspace Centralized Access: All users can access shared dashboards and reports in one place. Improved Collaboration: Teams can contribute to and build on shared work without duplication. Consistency: Maintain a single source of truth for reporting and insights. Visibility: Ensure important insights are easily accessible across the organization. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 225
+    },
+    {
+      "id": "bi/manage-permissions",
+      "product": "BI",
+      "title": "Manage permissions",
+      "summary": "Learn how to manage workspace permissions in QuestionPro BI, including how to share read and edit access and access workspaces shared with you.",
+      "url": "https://www.questionpro.com/help/bi/manage-permissions.html",
+      "scraped_at": "2026-06-17T12:18:33.635Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Manage Permissions"
+        }
+      ],
+      "steps": [],
+      "content": "Manage Permissions Introduction Workspace permissions in QuestionPro BI allow you to control who can access and contribute to your workspace. By assigning appropriate access levels, you can ensure that the right users can view, create, and modify dashboards, reports, and analytical assets while maintaining control over your content. Permissions can be assigned at multiple levels, including organization-wide access, team-level access, and individual user access. This flexibility allows you to manage collaboration at scale while still maintaining granular control when needed. Whether you are sharing a workspace broadly across your organization or with a few specific users, permissions help ensure that access is both controlled and aligned with user responsibilities. Watch this video for a quick overview of how to manage permissions in the BI workspace: Your browser does not support the video tag. Click to download the video Permission Levels When sharing a workspace, you can assign either Read Access or Edit Access depending on the level of interaction required. Users with Read Access can view dashboards, reports, and analytical assets within the workspace, but they cannot make any changes. This level is suitable for stakeholders who need visibility into insights without modifying content. Users with Edit Access can create, update, and manage dashboards, reports, and analytical assets within the workspace. This level is intended for users who actively contribute to building and maintaining content. Sharing a Workspace Follow these steps to share your workspace with other users: Step 1: Open Workspaces. From the BI navigation panel, click Workspaces. Step 2: Open sharing settings. Hover over the workspace and click the padlock icon. Step 3: Configure general access. In the popup, use General Access to assign Read or Edit access to everyone in your organization. Step 4: Add specific permissions. Click Add Permissions to grant access to specific users or teams within your organization. Step 5: Assign access levels. Select Users or Teams and assign them the desired Read or Edit access. Individual permissions override team and organization-level permissions. For example, if organization or team access is set to Read, but a user is granted Edit access individually, the user will have Edit access. Accessing a Shared Workspace When a workspace is shared with you, it will appear in the Shared Workspaces section. Step 1: Navigate to Workspaces. Click Workspaces from the BI navigation panel. Step 2: Locate the shared workspace. Find the workspace under the Shared Workspaces section. Step 3: Open the workspace. Click on a workspace to jump in and start working. Your level of access (read or edit) will determine whether you can only view content or also make changes. Best Practices Assign Edit Access only to users who need to create or modify content. Use Read Access for stakeholders who only need to view dashboards. Regularly review workspace access to ensure permissions remain relevant. License This feature is available with the following licenses : Team Edition Research Edition Communities Customer Experience Employee Experience",
+      "word_count": 487
+    }
+  ]
+}

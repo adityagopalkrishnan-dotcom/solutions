@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "source": "https://www.questionpro.com/help/",
+    "description": "QuestionPro Full Knowledge Base",
+    "scraped_at": "2026-06-17T12:18:38.772Z",
+    "total_articles": 1,
+    "total_words": 66,
+    "products": [
+      "Surveys",
+      "Communities",
+      "Workforce",
+      "CX",
+      "Audience",
+      "LivePolls",
+      "UX",
+      "BI"
+    ],
+    "product": "LivePolls"
+  },
+  "articles": [
+    {
+      "id": "",
+      "product": "LivePolls",
+      "title": "Help center",
+      "summary": "QuestionPro Help Center",
+      "url": "https://www.questionpro.com/help/",
+      "scraped_at": "2026-06-17T12:08:59.337Z",
+      "headings": [
+        {
+          "level": "H4",
+          "text": "Create survey\n                                    arrow_right"
+        },
+        {
+          "level": "H4",
+          "text": "Distribute survey\n                                    arrow_right"
+        },
+        {
+          "level": "H4",
+          "text": "Analyze survey\n                                    arrow_right"
+        },
+        {
+          "level": "H4",
+          "text": "Genie\n                                    arrow_right"
+        }
+      ],
+      "steps": [],
+      "content": "Create survey arrow_right Creating surveys Survey templates Adding questions to survey Standard theme Survey logic How to Design and Brand your Survey How to create a Test Survey Distribute survey arrow_right Distribution options Sending survey via email Manage email list Share on social media Analyze survey arrow_right Responses - raw data Data segmentation and filtering Cross-tabulation Open-ended text analysis Word cloud Export data Genie arrow_right Overview",
+      "word_count": 66
+    }
+  ]
+}

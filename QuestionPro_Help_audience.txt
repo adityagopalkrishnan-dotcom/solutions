@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "source": "https://www.questionpro.com/help/",
+    "description": "QuestionPro Full Knowledge Base",
+    "scraped_at": "2026-06-17T12:18:38.772Z",
+    "total_articles": 12,
+    "total_words": 5199,
+    "products": [
+      "Surveys",
+      "Communities",
+      "Workforce",
+      "CX",
+      "Audience",
+      "LivePolls",
+      "UX",
+      "BI"
+    ],
+    "product": "Audience"
+  },
+  "articles": [
+    {
+      "id": "audience/specialized-sample",
+      "product": "Audience",
+      "title": "Specialized Sample",
+      "summary": "Specialized Sample",
+      "url": "https://www.questionpro.com/help/audience/specialized-sample.html",
+      "scraped_at": "2026-06-17T12:08:00.707Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Specialized Sample"
+        }
+      ],
+      "steps": [
+        "Check feasibility:- First you need to check if the audience that you are looking for is feasible through this platform.",
+        "Go to Audience",
+        "Click on the Create Project button.",
+        "Select \"Specialized Sample\" in the pop-up window.",
+        "Feasibility:- To check feasibility, you need to enter the mandatory fields below:\n                    \n                        \n                            Responses:- The number of responses you want to collect.\n                        \n                        \n                            Survey length:- If you have a survey ready to launch, you can select it from the dropdown, and the system will auto-populate the survey length. If you don't have a survey yet, you can manually enter the survey length in minutes (between 1 to 20).\n                        \n                        \n                            Incidence Rate:- It's an assumption that refers to the percentage of respondents who complete the survey out of those who were invited to take it.\n                        \n                        \n                            Field Time:- The number of days available to achieve the target number of responses. You must select a date starting from today.\n                        \n                        \n                            Qualification Library:- Select the qualification criteria based on your target audience.",
+        "Responses:- The number of responses you want to collect.",
+        "Survey length:- If you have a survey ready to launch, you can select it from the dropdown, and the system will auto-populate the survey length. If you don't have a survey yet, you can manually enter the survey length in minutes (between 1 to 20).",
+        "Incidence Rate:- It's an assumption that refers to the percentage of respondents who complete the survey out of those who were invited to take it.",
+        "Field Time:- The number of days available to achieve the target number of responses. You must select a date starting from today.",
+        "Qualification Library:- Select the qualification criteria based on your target audience.",
+        "Final Feasibility:- You can check if your defined audience is feasible in the right panel, along with the cost per interview (CPI) and total project cost",
+        "Soft launch:- You can choose to launch the survey for 10%, 20%, 30%, 40%, or 50% of the total sample. The goal is to test the survey, validate data quality, and monitor live metrics such as survey length and incidence rate.",
+        "Live:- This will launch the survey to collect all required responses at once."
+      ],
+      "content": "Specialized Sample What is Specialized Sample? The Specialized Sample feature under Audience helps you reach highly targeted and hard-to-find audiences for your research studies. Whether you need B2B professionals, niche consumer segments, or specific demographics, Specialized Sample connects you with verified respondents who meet your unique criteria. How to check feasibility through Audience? Check feasibility:- First you need to check if the audience that you are looking for is feasible through this platform. Go to Audience Click on the Create Project button. Select \"Specialized Sample\" in the pop-up window. Feasibility:- To check feasibility, you need to enter the mandatory fields below: Responses:- The number of responses you want to collect. Survey length:- If you have a survey ready to launch, you can select it from the dropdown, and the system will auto-populate the survey length. If you don't have a survey yet, you can manually enter the survey length in minutes (between 1 to 20). Incidence Rate:- It's an assumption that refers to the percentage of respondents who complete the survey out of those who were invited to take it. Field Time:- The number of days available to achieve the target number of responses. You must select a date starting from today. Qualification Library:- Select the qualification criteria based on your target audience. Final Feasibility:- You can check if your defined audience is feasible in the right panel, along with the cost per interview (CPI) and total project cost How to launch my survey through Audience? Launch Project:- Once your audience is feasible and within budget, you can proceed to launch the survey. Project name:- Give your project a name of your choice and hit the Check button. Select Survey:- Choose the survey you want to launch from the dropdown. Ensure the survey is set to “Active” in the survey settings to appear in the dropdown list. Click on Create button Click on the Bid drop down button:- You will see two options. Soft launch:- You can choose to launch the survey for 10%, 20%, 30%, 40%, or 50% of the total sample. The goal is to test the survey, validate data quality, and monitor live metrics such as survey length and incidence rate. Live:- This will launch the survey to collect all required responses at once. Your survey is now launched, and you can monitor progress on the main dashboard. What if my audience is not feasible? If your defined audience is not feasible, you will see a \"Contact\" button. Click this button to submit your request to the team. They will assess the feasibility and get back to you on your registered email address with the cost and options. How is Incidence Rate(IR) calculated? IR is the percentage of people from the total screened sample who qualify for a study based on the screening criteria. It tells you how common your target audience is in the population you are sampling from. IR is assumed rather than calculated as (number of respondents who will qualify the survey divided by number of respondents who have entered into the survey) multiplied by 100. IR is calculated only based on screening questions, not survey completion behavior. Example: Supose a client requested for 250 responses from people who own an electric car. Total respondents screened = 1000 Completed (Own electric car) = 250 Terminated = 700 Overquota/Dropout = 50 IR is now calculated as = 250(completed)+50(Overquota/Dropout)/ 1000 × 100 So the IR will be 30% License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 611
+    },
+    {
+      "id": "audience/instant-answer",
+      "product": "Audience",
+      "title": "Instant Answers",
+      "summary": "Instant Answers",
+      "url": "https://www.questionpro.com/help/audience/instant-answer.html",
+      "scraped_at": "2026-06-17T12:08:04.856Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Instant answers"
+        }
+      ],
+      "steps": [
+        "Go to Audience",
+        "Click on Create Project button.",
+        "Select Instant Answers from the pop-up window.",
+        "Fill the form\n                \n                    \n                        Name:- Enter the name for your project.\n                    \n                    \n                        Question:- Type the question you want to ask the respondents.\n                    \n                    \n                        Answer options:- Insert all the options one below the other.\n                    \n                    \n                    \n                    \n\n                \n                       \n              \n\n    \n                    \n                    \n                        Question type:- Select the question type as single select of     multiselect from the drop down button.\n                    \n                    \n                        Country:- Select the country where you want to launch this project.\n                    \n                    \n                        Number of responses:- Select the number of responses required from the available options or insert the custom number.\n                    \n                    \n                \n                \n                    Launch:- Hit the Launch button to launch the project.",
+        "Name:- Enter the name for your project.",
+        "Question:- Type the question you want to ask the respondents.",
+        "Answer options:- Insert all the options one below the other.",
+        "Question type:- Select the question type as single select of     multiselect from the drop down button.",
+        "Country:- Select the country where you want to launch this project.",
+        "Number of responses:- Select the number of responses required from the available options or insert the custom number."
+      ],
+      "content": "Instant answers What is instant answers? QuestionPro makes it easy to choose high-quality respondents in the shortest amount of time by letting you purchase QuestionPro audience sample directly from the platform for a single question survey. With just three simple clicks in the QuestionPro Audience tab, you can access over 22 million double opt-in panelists around the globe. How do I access instant answers? Go to Audience Click on Create Project button. Select Instant Answers from the pop-up window. Fill the form Name:- Enter the name for your project. Question:- Type the question you want to ask the respondents. Answer options:- Insert all the options one below the other. Question type:- Select the question type as single select of multiselect from the drop down button. Country:- Select the country where you want to launch this project. Number of responses:- Select the number of responses required from the available options or insert the custom number. Launch:- Hit the Launch button to launch the project. Your survey is now launched and you can monitor the progress from the dashboard. How do I pause or close the project after it has been launched? Once you launched the survey you can pause the project and relaunch it or close it. Please note, there could be respondents still answering the survey after it has been paused. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 260
+    },
+    {
+      "id": "audience/audience-qualification-library",
+      "product": "Audience",
+      "title": "Audience Qualification Library",
+      "summary": "Audience qualification library",
+      "url": "https://www.questionpro.com/help/audience/audience-qualification-library.html",
+      "scraped_at": "2026-06-17T12:08:09.386Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Audience Qualification Library"
+        }
+      ],
+      "steps": [
+        "Go to Create project under Specialized Audience",
+        "Click on Add criteria",
+        "Select the qualification category from the list",
+        "Select the qualification criteria within the selected category.",
+        "Select the options that match your target audience’s requirements, and click the Save button."
+      ],
+      "content": "Audience Qualification Library What is audience qualification library? The audience Qualification Library is a collection of screening questions, filters, and audience definitions that help you easily find the exact respondents you need for your surveys. It consists of qualification criteria based on different categories such as demographics, employment, family, travel, and more. This allows users to check feasibility or launch a survey to a specific target audience by applying these criteria. Your browser does not support the video tag. Click to download the video How to apply qualifications? Go to Create project under Specialized Audience Click on Add criteria Select the qualification category from the list Select the qualification criteria within the selected category. Select the options that match your target audience’s requirements, and click the Save button. Once added, the qualification will update the feasibility based on your selected criteria. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 180
+    },
+    {
+      "id": "audience/audience-ir-management",
+      "product": "Audience",
+      "title": "IR Management",
+      "summary": "Incidence Rate (IR) Management",
+      "url": "https://www.questionpro.com/help/audience/audience-ir-management.html",
+      "scraped_at": "2026-06-17T12:08:13.521Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Incidence Rate(IR) Management"
+        }
+      ],
+      "steps": [],
+      "content": "Incidence Rate(IR) Management What is Incidence Rate (IR) Management and how does it work? Incidence Rate (IR) Management is a feature within the QuestionPro Audience tool that monitors the real-time incidence rate while the survey is live in the field. It helps keep the survey active and ensures that it receives the required traffic. If there is a sudden drop in the on-field incidence rate or a significant increase in survey length compared to what was estimated at launch, the system tracks these changes and recalculates the cost based on current performance metrics. If a CPI change is required, the system notifies the user and shares the updated metrics along with the suggested CPI at which the survey should be relaunched. How is Incidence Rate(IR) calculated? IR is the percentage of people from the total screened sample who qualify for a study based on the screening criteria. It tells you how common your target audience is in the population you are sampling from. IR is assumed rather than calculated as (number of respondents who will qualify the survey divided by number of respondents who have entered into the survey) multiplied by 100. IR is calculated only based on screening questions, not survey completion behavior. Example: Supose a client requested for 250 responses from people who own an electric car. Total respondents screened = 1000 Completed (Own electric car) = 250 Terminated = 700 Overquota/Dropout = 50 IR is now calculated as = 250(completed)+50(Overquota/Dropout)/ 1000 × 100 So the IR will be 30% What should I do after receiving an email notification from IR Management? When you receive an email notification from IR Management about a live project, it indicates that the survey has been paused due to poor field performance metrics. The notification includes the current on-field IR and LOI, along with the recommended CPI. Step 1: Log in to your account and go to the Audience dashboard. Step 2: Click the Manage button. Step 3: Click Accept to approve the suggested CPI and launch the survey. OR Click on Reject and close to close the project and stop the survey fielding. What should I do if my project is paused due to a critical Incidence Rate? If you do not see an option to relaunch your project or if your project is flagged under Project Critically Paused, it is because your project no longer meets the minimum fielding requirements. A project cannot be relaunched if either of the following conditions is true: The Incidence Rate (IR) is below 10%, or The Length of Interview (LOI) is greater than 20 minutes In such cases, the project is considered not viable for fielding. What should you do? Log in to your account and close the project manually The remaining credits will be refunded to your account Contact support@questionpro.com or your Account Manager before creating or launching a new project What if I don’t have enough credits to accept the suggested CPI? You can add credits to your account using Add more button. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 540
+    },
+    {
+      "id": "audience/census-balancing",
+      "product": "Audience",
+      "title": "Audience balancing",
+      "summary": "Audience balancing",
+      "url": "https://www.questionpro.com/help/audience/census-balancing.html",
+      "scraped_at": "2026-06-17T12:08:19.673Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Audience balancing"
+        }
+      ],
+      "steps": [
+        "Go to Audience and click on the Create project button.",
+        "Select the Specialized sample",
+        "Click on the criteria such as age, gender, ethnicity or region. (For ethnicity and region you might have to add them first via \"add criteria\"-> demographic)",
+        "Switch on the balancing toggle.",
+        "Click the dropdown and choose Census.",
+        "Click the save button.",
+        "Go to Audience and click on the Create project button.",
+        "Select the Specialized sample",
+        "Click on the criteria such as age, gender, ethnicity or region. (For ethnicity and region you might have to add them first via \"add criteria\"-> demographic)",
+        "Switch on the balancing toggle.",
+        "Click the dropdown and choose Custom.",
+        "Now, you can edit balancing in percentage for each option and hit the save button.",
+        "Select only the age ranges you want to target.",
+        "Edit the balancing percentages as needed, then click Save."
+      ],
+      "content": "Audience balancing What is Audience balancing? The Audience balancing feature enables you to field surveys in alignment with the demographic distribution of a specific region—based on official government census data—or to apply custom balancing. Your browser does not support the video tag. Click to download the video How to apply census balancing? You can apply census balancing only on age, gender, ethnicity and region. Go to Audience and click on the Create project button. Select the Specialized sample Click on the criteria such as age, gender, ethnicity or region. (For ethnicity and region you might have to add them first via \"add criteria\"-> demographic) Switch on the balancing toggle. Click the dropdown and choose Census. Click the save button. How to apply custom balancing? Go to Audience and click on the Create project button. Select the Specialized sample Click on the criteria such as age, gender, ethnicity or region. (For ethnicity and region you might have to add them first via \"add criteria\"-> demographic) Switch on the balancing toggle. Click the dropdown and choose Custom. Now, you can edit balancing in percentage for each option and hit the save button. Can I apply balancing only to selected options? Yes, you can apply balancing on the selected option within a criterion. Take an example of age. Select only the age ranges you want to target. Edit the balancing percentages as needed, then click Save. License This feature is available with the following licenses : Team Edition Research Edition Communities University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 269
+    },
+    {
+      "id": "audience/nested-quota",
+      "product": "Audience",
+      "title": "Nested Quota",
+      "summary": "Nested quota",
+      "url": "https://www.questionpro.com/help/audience/nested-quota.html",
+      "scraped_at": "2026-06-17T12:08:25.040Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Nested quota"
+        }
+      ],
+      "steps": [
+        "Click the Nested quota button.",
+        "Select the qualifications on which you want to apply Nested quota.",
+        "Edit the nested segments by adjusting the quota fields.",
+        "After completing your edits, click on the Save button.",
+        "Go to Nested quota. By default, two criteria will already be selected.",
+        "Select the third criteria from the available dropdown.",
+        "Define or edit the nested segments in the quota field.",
+        "Click Save to apply the changes",
+        "Click on the Nested quota button.",
+        "In the Nested quota modal, click Remove nested quota.",
+        "Confirm by clicking on Remove."
+      ],
+      "content": "Nested quota What is a Nested quota? This feature enables users to apply quotas across multiple criteria (up to three dimensions: age, gender, ethnicity, or region), instead of being restricted to a single quota criterion. It gives researchers and analysts finer control over respondent distribution, ensuring data collection more accurately reflects targeted sub-population structures. Your browser does not support the video tag. Click to download the video Why should you use Nested quota? To ensure balanced representation across sub-groups within a broader segment. To prevent over- or under-sampling of smaller sub-segments. To maintain greater control over your sample structure. How do I apply Nested quota? Before applying a Nested quota, you must ensure the following: The required number of responses is at least 100. Audience balancing is applied at the qualification level. You can also define quotas using custom balancing. At least two qualifications have audience balancing applied. Once all required specifications are entered and balancing has been applied to the selected qualifications, the Nested quota button will become active. Now follow these steps: Click the Nested quota button. Select the qualifications on which you want to apply Nested quota. Edit the nested segments by adjusting the quota fields. After completing your edits, click on the Save button. Your nested quotas are now applied, and you can proceed to create the project. How many criteria can I use in a Nested quota? You can nest up to three criteria at a time using Nested quota. The available criteria include: Age Gender Region Ethnicity Note: In some countries, only Age, Gender, and Region are supported. How do I apply a Nested quota with three criteria? Follow these steps: Go to Nested quota. By default, two criteria will already be selected. Select the third criteria from the available dropdown. Define or edit the nested segments in the quota field. Click Save to apply the changes How do I remove an applied Nested quota? To remove a nested quota: Click on the Nested quota button. In the Nested quota modal, click Remove nested quota. Confirm by clicking on Remove. License This feature is available with the following licenses : Team Edition Research Edition Communities University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 382
+    },
+    {
+      "id": "audience/audience-template",
+      "product": "Audience",
+      "title": "Audience Templates",
+      "summary": "Audience Templates",
+      "url": "https://www.questionpro.com/help/audience/audience-template.html",
+      "scraped_at": "2026-06-17T12:08:29.862Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Audience Templates"
+        }
+      ],
+      "steps": [
+        "Navigate to the first page of Create Project.",
+        "In the Templates section you will see the list of available Default Templates.",
+        "Hover over a template card to:",
+        "View the qualification criteria included in the template.",
+        "Access the Select button.",
+        "Click Select to apply the template.",
+        "Add audience qualification criteria manually or apply a default template.",
+        "Customize the criteria based on your frequent use case.",
+        "Click the Save Template button.",
+        "Enter a template name when prompted.",
+        "Click the Check/Save button."
+      ],
+      "content": "Audience Templates What are Audience Templates? Audience Templates help you quickly apply a predefined set of audience qualifications without manually selecting criteria every time. There are two types of templates: Default Templates System‑provided templates based on common market research audiences, including: Census Home Owners Gamers Full‑Time Employee Parents Children through Parents These templates are designed for commonly used targeting scenarios and help speed up project setup. My Templates Custom templates created and saved by you for frequently used audience criteria. Create your own templates. Reuse them across projects. Edit, rename, or delete them anytime. How do I apply a Default Template? Navigate to the first page of Create Project. In the Templates section you will see the list of available Default Templates. Hover over a template card to: View the qualification criteria included in the template. Access the Select button. Click Select to apply the template. Once applied: All template criteria automatically populate in the audience qualification section. You can still add or remove criteria based on your project needs. Changes made after applying will not modify the original default template. How do I create a Template? You can create a custom template in two ways: By building a custom audience from scratch. By starting with a default template and modifying it. Steps to create a Template: Add audience qualification criteria manually or apply a default template. Customize the criteria based on your frequent use case. Click the Save Template button. Enter a template name when prompted. Click the Check/Save button. The system will save your template successfully. Once saved: Your template will appear under My Templates. My Templates are displayed at the top of the template list. Default Templates will appear below them. Can I edit Templates? Yes, you can manage and edit your saved templates anytime. How to manage My Templates: On each template card, click the three‑dots menu to access the following options: Rename Allows you to change the template name. Delete Removes the template permanently from your saved templates. Edit Applies the template so you can: Add new criteria. Remove existing criteria. Update audience logic. After making changes, you can: Save the changes to the same template, or Save it as a new template. Note: Editing a saved template does not impact any projects where the template was previously used. Important Notes My Templates are visible only if you have saved at least one template. If no custom templates are available, only Default Templates will be shown. Changes made after applying a template only affect the current project unless explicitly saved again as a template. Frequently Asked Questions (FAQs) Can I modify criteria after applying a template? Yes. You can freely add or remove criteria after applying a template. Will modifying a template affect the original default template? No. Default templates remain unchanged. Can I save multiple templates? Yes. You can create and save multiple custom templates. Where can I find my saved templates? Your saved templates appear at the top of the Templates section on the Create Project page. Can I create a template using a default template? Yes. You can apply a default template, modify it, and save it as your own custom template. Can I edit and save My Template after making changes? Yes. You can update and save a My Template, but only the template owner can make and save modifications. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 596
+    },
+    {
+      "id": "audience/synthetic-data",
+      "product": "Audience",
+      "title": "Synthetic data",
+      "summary": "Synthetic data",
+      "url": "https://www.questionpro.com/help/audience/synthetic-data.html",
+      "scraped_at": "2026-06-17T12:08:35.590Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Synthetic data"
+        }
+      ],
+      "steps": [
+        "Select Surveys as the data source.\n        \n\n                \n                       \n              \n\n    \n        A popup will appear listing all surveys available in your account.",
+        "Add up to 5 surveys to sync using Add button.\n        \n\n                \n                       \n              \n\n    \n        Criteria:\n            \n                \n                    The system will allow a maximum of 5 surveys per sync job.\n                \n                \n                    Only surveys with more than 100 responses will be listed.\n                \n                \n                    Only survey with minimum of 20 questions will be allowed to sync.",
+        "The system will allow a maximum of 5 surveys per sync job.",
+        "Only surveys with more than 100 responses will be listed.",
+        "Only survey with minimum of 20 questions will be allowed to sync.",
+        "A Confirmation window will appear displaying the following details for each selected survey:\n        \n          Survey name\n          Number of questions in the survey\n          Responses to sync – By default, this is set to the total number of responses in the survey, but you can edit this value for each survey only if the total number of responses exceeds 10,000 responses.",
+        "Survey name",
+        "Number of questions in the survey",
+        "Responses to sync – By default, this is set to the total number of responses in the survey, but you can edit this value for each survey only if the total number of responses exceeds 10,000 responses.",
+        "Enter a name for this sync job in the confirmation window and click Confirm.",
+        "The system will start synthesizing the survey data for all selected surveys.",
+        "Select Communities as the data source.\n        \n\n                \n                       \n              \n\n    \n                A popup will appear with two tabs:\n        \n          My Communities – Lists all communities hosted on your own account.\n          QuestionPro Communities – Lists all QuestionPro-owned communities available for synthetic research.",
+        "My Communities – Lists all communities hosted on your own account.",
+        "QuestionPro Communities – Lists all QuestionPro-owned communities available for synthetic research.",
+        "Select the community you want to sync.\n        \n\n                \n                       \n              \n\n    \n        A confirmation modal will display the following details:\n        \n          Data source: Community\n          Community name\n          Number of respondents",
+        "Data source: Community",
+        "Community name",
+        "Number of respondents",
+        "Click Confirm to begin the sync process.\n        \n\n                \n                       \n              \n\n    \n        The system will start synthesizing the community data.",
+        "Define the number of responses\n        \n          Specify how many synthetic responses you want to collect.",
+        "Specify how many synthetic responses you want to collect.",
+        "Select a survey\n        \n          Choose the survey for which you want to generate synthetic responses.\n          \n\n                \n                       \n              \n\n    \n          \n            The system will validate the selected survey for compatibility. Certain question types are not supported for Synthetic Responses. If the survey contains any unsupported question types, it will be flagged as invalid and cannot be launched.",
+        "Choose the survey for which you want to generate synthetic responses.",
+        "The system will validate the selected survey for compatibility. Certain question types are not supported for Synthetic Responses. If the survey contains any unsupported question types, it will be flagged as invalid and cannot be launched.",
+        "Confirm and launch\n        \n          A confirmation launch window will appear displaying:\n          \n            Project name – Enter a name for this project.\n            Description – Optionally describe the purpose of the study.\n            Data source – The synced data source selected.\n            Survey selected – The survey chosen in the previous step.\n            Number of responses – The target response count defined earlier.\n            Survey validity – Displays Yes if the survey is compatible, or No if unsupported question types were detected.\n          \n          If the survey is valid, click Confirm to launch.\n          \n\n                \n                       \n              \n\n    \n          The synthetic members from the data source will begin responding to the survey.",
+        "A confirmation launch window will appear displaying:",
+        "Project name – Enter a name for this project.",
+        "Description – Optionally describe the purpose of the study.",
+        "Data source – The synced data source selected.",
+        "Survey selected – The survey chosen in the previous step."
+      ],
+      "content": "Synthetic data What is Synthetic data? Synthetic data refers to artificially generated, respondent-level data that mirrors real-world survey or panel data distributions. It is used for survey testing, forecasting, modeling, and scenario analysis, while ensuring speed, cost efficiency, and privacy. At QuestionPro, you can use the Synthetic data platform to generate synthetic reports and responses based on available survey or community data within your own account. Your browser does not support the video tag. Click to download the video Can someone else use my data to generate Synthetic reports? No, other users cannot access your data. You have complete control over your account data. Your data remains fully private and secure and is not shared or made accessible to any other user, organization, or external entity. At QuestionPro, we strictly adhere to privacy and data protection standards. This means: We do not allow any internal or external users to access your data for generating or gathering synthetic reports. We do not use your data to train any Large Language Models (LLMs), Small Language Models (SLMs), AI, or agentic models. You retain full ownership and control of how your data is used within your account. In summary, your data is isolated, protected, and never utilized for synthetic report generation or any form of AI model training. How do I sync data for Synthetic research? Go to Audience → Synthetic data and click the Sync data button. You will be prompted to select a data source type: Surveys – Sync data from surveys in your account (up to 5 surveys at a time). Communities – Sync data from communities in your account. Syncing Surveys (Batch Sync – Up to 5 Surveys) Select Surveys as the data source. A popup will appear listing all surveys available in your account. Add up to 5 surveys to sync using Add button. Criteria: The system will allow a maximum of 5 surveys per sync job. Only surveys with more than 100 responses will be listed. Only survey with minimum of 20 questions will be allowed to sync. A Confirmation window will appear displaying the following details for each selected survey: Survey name Number of questions in the survey Responses to sync – By default, this is set to the total number of responses in the survey, but you can edit this value for each survey only if the total number of responses exceeds 10,000 responses. Enter a name for this sync job in the confirmation window and click Confirm. The system will start synthesizing the survey data for all selected surveys. Syncing a Community Select Communities as the data source. A popup will appear with two tabs: My Communities – Lists all communities hosted on your own account. QuestionPro Communities – Lists all QuestionPro-owned communities available for synthetic research. Select the community you want to sync. A confirmation modal will display the following details: Data source: Community Community name Number of respondents Click Confirm to begin the sync process. The system will start synthesizing the community data. What research modes are available after syncing data? Once your data is synced, you can perform two types of synthetic research: Synthetic Responses – Simulate survey responses from the synthesized data source. Synthetic Cohort – Run in-depth qualitative research using a matched cohort of synthetic members. How do I generate Synthetic Responses? Synthetic Responses allow you to simulate survey responses using your synced data. Follow the steps below: Define the number of responses Specify how many synthetic responses you want to collect. Select a survey Choose the survey for which you want to generate synthetic responses. The system will validate the selected survey for compatibility. Certain question types are not supported for Synthetic Responses. If the survey contains any unsupported question types, it will be flagged as invalid and cannot be launched. Confirm and launch A confirmation launch window will appear displaying: Project name – Enter a name for this project. Description – Optionally describe the purpose of the study. Data source – The synced data source selected. Survey selected – The survey chosen in the previous step. Number of responses – The target response count defined earlier. Survey validity – Displays Yes if the survey is compatible, or No if unsupported question types were detected. If the survey is valid, click Confirm to launch. The synthetic members from the data source will begin responding to the survey. How do I generate a Synthetic Cohort report? Synthetic Cohort enables qualitative, in-depth interview (IDI)-style research using matched synthetic members. Follow the steps below: Create a Cohort Click the Synthetic cohort button. Enter a name, description, and a detailed purpose for your study. The purpose helps filter data and match it with relevant questions and participants. Set the similarity percentage to define how closely the synthetic data should align with your study purpose. Click Create to create the cohort. In-Depth Interviews (IDIs) The cohort will display: Matched questions from the synthesized data (with matching percentages). Matched members (with matching scores). Specify the number of members to include in the interview (between 1 and 50). Add Questions Use QuestionPro AI to auto-generate questions by clicking the Ask question button. Or add your own custom questions. Generate Report Once your questions are finalized, click Generate report. QuestionPro AI will ask the selected members the questions. QuestionPro AI will then generate a summary report that includes: Key takeaways In-depth summary Insightful quotes Similarities and differences Recommended actions to support decisions Download Report Export the report in PDF or Markdown format for easy sharing. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 952
+    },
+    {
+      "id": "audience/synthetic-responses",
+      "product": "Audience",
+      "title": "Synthetic responses",
+      "summary": "Synthetic responses",
+      "url": "https://www.questionpro.com/help/audience/synthetic-responses.html",
+      "scraped_at": "2026-06-17T12:08:40.849Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Synthetic responses"
+        }
+      ],
+      "steps": [
+        "Go to Surveys in the Synthetic data platform from the sidebar",
+        "Click on New project",
+        "Enter following details:\n                \n                    \n                        Project name\n                        A name to identify your project.\n                    \n                    \n                        Description\n                        Example: Understanding consumer preferences for electric vehicles\n                    \n                    \n                        Region\n                        Select the country.\n                    \n                    \n                        Age range\n                        Select the age ranges you want to target\n                    \n                    \n                        Gender\n                        Select the gender you want to target\n                    \n                    Now, click Next",
+        "Project name\n                        A name to identify your project.",
+        "Description\n                        Example: Understanding consumer preferences for electric vehicles",
+        "Region\n                        Select the country.",
+        "Age range\n                        Select the age ranges you want to target",
+        "Gender\n                        Select the gender you want to target",
+        "Select the number of synthetic responses required and click on Next",
+        "Select a survey\n                The survey you select will be answered by synthetic respondents.\n                Ensure that the survey:\n                \n                    \n                        is finalized\n                    \n                    \n                        contains valid question logic\n                    \n                    \n                        is ready to be launched",
+        "is finalized",
+        "contains valid question logic",
+        "is ready to be launched",
+        "Confirm launch\n                You will see a confirmation message:\n                Click Launch to collect synthetic responses from active members of the community.",
+        "System Processing\n                Once the survey is launched, the platform begins collecting responses.\n                The system will:\n                \n                    \n                        Select active members from the synced community.\n                    \n                    \n                        Build respondent context profiles.\n                    \n                    \n                        Send the context and survey questions to the AI model.\n                    \n                    \n                        Collect responses for each respondent.\n                    \n                    \n                        Store the responses in the survey dataset.",
+        "Select active members from the synced community.",
+        "Build respondent context profiles.",
+        "Send the context and survey questions to the AI model.",
+        "Collect responses for each respondent.",
+        "Store the responses in the survey dataset.",
+        "Monitor project status\n                \n                    The response generation job will appear in your dashboard.\n                \n                Possible statuses include:\n                \n                    \n                        Answering\n                    \n                    \n                        Completed\n                    \n                    \n                        Failed",
+        "Answering",
+        "Completed",
+        "Failed",
+        "View Synthetic responses\n                Once the job is completed:\n                \n                    \n                        Responses will appear in the survey results.\n                    \n                    \n                        Synthetic responses will be labeled accordingly.\n                    \n                    \n                        You can also view the questions answered inside the project by clicking on the member card.\n                        \n                            \n                                First click on the project.\n                            \n                            \n\n                \n                       \n              \n\n    \n            \n            \n                            \n                                Click on the member card.\n                            \n                            \n\n                \n                       \n              \n\n    \n                            \n                            \n                                You can view the responses here.",
+        "Responses will appear in the survey results.",
+        "Synthetic responses will be labeled accordingly.",
+        "You can also view the questions answered inside the project by clicking on the member card.\n                        \n                            \n                                First click on the project.\n                            \n                            \n\n                \n                       \n              \n\n    \n            \n            \n                            \n                                Click on the member card.\n                            \n                            \n\n                \n                       \n              \n\n    \n                            \n                            \n                                You can view the responses here.",
+        "First click on the project.",
+        "Click on the member card."
+      ],
+      "content": "Synthetic responses What is Synthetic responses? Synthetic responses allows you to collect survey responses using simulated versions of real community members. Instead of waiting for respondents to complete your survey, the platform uses AI to predict how active members of the community would answer the questions. This feature helps researchers: Get instant insights Test survey questionnaires Simulate research outcomes Reduce research timelines Your browser does not support the video tag. Click to download the video How do I collect Synthetic responses in my survey? Follow these steps to collect synthetic responses in the survey. Go to Surveys in the Synthetic data platform from the sidebar Click on New project Enter following details: Project name A name to identify your project. Description Example: Understanding consumer preferences for electric vehicles Region Select the country. Age range Select the age ranges you want to target Gender Select the gender you want to target Now, click Next Select the number of synthetic responses required and click on Next Select a survey The survey you select will be answered by synthetic respondents. Ensure that the survey: is finalized contains valid question logic is ready to be launched Confirm launch You will see a confirmation message: Click Launch to collect synthetic responses from active members of the community. System Processing Once the survey is launched, the platform begins collecting responses. The system will: Select active members from the synced community. Build respondent context profiles. Send the context and survey questions to the AI model. Collect responses for each respondent. Store the responses in the survey dataset. Monitor project status The response generation job will appear in your dashboard. Possible statuses include: Answering Completed Failed View Synthetic responses Once the job is completed: Responses will appear in the survey results. Synthetic responses will be labeled accordingly. You can also view the questions answered inside the project by clicking on the member card. First click on the project. Click on the member card. You can view the responses here. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 370
+    },
+    {
+      "id": "audience/Workbook",
+      "product": "Audience",
+      "title": "Synthetic cohort",
+      "summary": "Synthetic cohort",
+      "url": "https://www.questionpro.com/help/audience/Workbook.html",
+      "scraped_at": "2026-06-17T12:08:44.991Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Synthetic cohort"
+        }
+      ],
+      "steps": [
+        "Go to the Synthetic platform",
+        "Select data source: Choose the community (or dataset) you want to use.",
+        "Click “New research”",
+        "Define your cohort:\n                \n                    \n                        Name:- Provide a name to your cohort\n                    \n                    \n                        Short description: Add a brief summary.\n                    \n                    \n                        Cohort purpose: Provide a detailed cohort purpose: The system will use this purpose to filter the data from the community and create a cohort to run different research modules like IDI and Converse AI.\n                        \n                        Example:\n                        \n                            \n                                Understand why customers churn\n                            \n                            \n                                Explore perceptions about pricing\n                            \n                            \n                                Evaluate onboarding experience\n                            \n                        \n                    \n                    \n                        Set a similarity cut-off percentage: Choose the similarity percentage that determines how closely members should match your cohort purpose.\n                        \n                            \n                                Higher % (e.g., 80–90%): More precise match, smaller but highly relevant cohort\n                            \n                            \n                                Lower % (e.g., 50–70%): Broader match, larger cohort with more diversity\n                            \n                        \n                    \n                    \n                        Save and generate: Click Create",
+        "Name:- Provide a name to your cohort",
+        "Short description: Add a brief summary.",
+        "Cohort purpose: Provide a detailed cohort purpose: The system will use this purpose to filter the data from the community and create a cohort to run different research modules like IDI and Converse AI.\n                        \n                        Example:\n                        \n                            \n                                Understand why customers churn\n                            \n                            \n                                Explore perceptions about pricing\n                            \n                            \n                                Evaluate onboarding experience",
+        "Understand why customers churn",
+        "Explore perceptions about pricing",
+        "Evaluate onboarding experience",
+        "Set a similarity cut-off percentage: Choose the similarity percentage that determines how closely members should match your cohort purpose.\n                        \n                            \n                                Higher % (e.g., 80–90%): More precise match, smaller but highly relevant cohort\n                            \n                            \n                                Lower % (e.g., 50–70%): Broader match, larger cohort with more diversity",
+        "Higher % (e.g., 80–90%): More precise match, smaller but highly relevant cohort",
+        "Lower % (e.g., 50–70%): Broader match, larger cohort with more diversity",
+        "Save and generate: Click Create",
+        "In-Depth Interviews (IDI)\n      \n       Select cohort members (1-50) based on matching scores to your study purpose.\n       Add or AI-generate questions.\n       Run interviews → Get AI responses, key takeaways, summaries, quotes, similarities/differences, and action recommendations.\n       Download report as PDF or Markdown.",
+        "Select cohort members (1-50) based on matching scores to your study purpose.",
+        "Add or AI-generate questions.",
+        "Run interviews → Get AI responses, key takeaways, summaries, quotes, similarities/differences, and action recommendations.",
+        "Download report as PDF or Markdown.",
+        "Converse AI\n      \n       Engage in real-time, conversational interviews with cohort members.\n       Ask dynamic follow-up questions based on responses.\n       Ideal for exploratory research, probing deeper insights conversationally.\n       Generate summaries or export chat transcripts.",
+        "Engage in real-time, conversational interviews with cohort members.",
+        "Ask dynamic follow-up questions based on responses.",
+        "Ideal for exploratory research, probing deeper insights conversationally.",
+        "Generate summaries or export chat transcripts."
+      ],
+      "content": "Synthetic cohort What is Synthetic cohort? A Synthetic cohort is built from your community/survey data that allows you to generate insights without launching a new study. It acts as a research workspace where: Your selected data source is organized into a cohort AI synthesizes past responses You can ask a set of questions to generate insights Think of a Synthetic cohort as a reusable research group created from your existing data. How to Create a Synthetic cohort? Follow these steps: Go to the Synthetic platform Select data source: Choose the community (or dataset) you want to use. Click “New research” Define your cohort: Name:- Provide a name to your cohort Short description: Add a brief summary. Cohort purpose: Provide a detailed cohort purpose: The system will use this purpose to filter the data from the community and create a cohort to run different research modules like IDI and Converse AI. Example: Understand why customers churn Explore perceptions about pricing Evaluate onboarding experience Set a similarity cut-off percentage: Choose the similarity percentage that determines how closely members should match your cohort purpose. Higher % (e.g., 80–90%): More precise match, smaller but highly relevant cohort Lower % (e.g., 50–70%): Broader match, larger cohort with more diversity Save and generate: Click Create Your Synthetic cohort is now ready to use for insight generation. What can I do with my Synthetic Cohort? Post-creation, access two main features: In-Depth Interviews (IDI) and Converse AI. In-Depth Interviews (IDI) Select cohort members (1-50) based on matching scores to your study purpose. Add or AI-generate questions. Run interviews → Get AI responses, key takeaways, summaries, quotes, similarities/differences, and action recommendations. Download report as PDF or Markdown. Converse AI Engage in real-time, conversational interviews with cohort members. Ask dynamic follow-up questions based on responses. Ideal for exploratory research, probing deeper insights conversationally. Generate summaries or export chat transcripts. Both preserve privacy—no real data is used beyond synthesis, and results stay in your account. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 363
+    },
+    {
+      "id": "audience/in-depth-interviews",
+      "product": "Audience",
+      "title": "In-Depth Interviews (IDIs)",
+      "summary": "In-Depth Interviews",
+      "url": "https://www.questionpro.com/help/audience/in-depth-interviews.html",
+      "scraped_at": "2026-06-17T12:08:50.304Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "In-Depth Interviews (IDI)"
+        }
+      ],
+      "steps": [
+        "Open a Workbook: Go to the Synthetic platform and open the workbook you want to analyze",
+        "Select “In-Depth Interview (IDI)”: Click on the In-Depth Interviews (IDI) option within the research mode.",
+        "Specify member count: Specify the number of members to include in the interview (between 1 and 50).",
+        "Add questions: \n                \n                    \n                        Use QuestionPro AI to auto-generate questions by clicking the Ask question button.\n                    \n                    \n\n                \n                       \n              \n\n    \n                    \n                    \n                        Or add your own questions.",
+        "Use QuestionPro AI to auto-generate questions by clicking the Ask question button.",
+        "Or add your own questions.",
+        "Generate report: Click on the Generate report button."
+      ],
+      "content": "In-Depth Interviews (IDI) What is In-Depth Interviews (IDI) under the Synthetic platform?? In-Depth Interviews (IDI) is a feature within the Synthetic platform that generates quick qualitative-style insights and a summarized report based on your workbook cohort. Instead of conducting live interviews, the system synthesizes existing community data to simulate interview-like insights. This helps you generate insights which includes: Quick summary Key takeaways In-depth summary Insightful quotes Similarities and differences Recommended action Think of it as a fast, AI-powered summary of what in-depth interviews might reveal — using your existing data. Your browser does not support the video tag. Click to download the video How do I generate IDI reports? Once you have created a workbook, follow these steps: Open a Workbook: Go to the Synthetic platform and open the workbook you want to analyze Select “In-Depth Interview (IDI)”: Click on the In-Depth Interviews (IDI) option within the research mode. Specify member count: Specify the number of members to include in the interview (between 1 and 50). Add questions: Use QuestionPro AI to auto-generate questions by clicking the Ask question button. Or add your own questions. Generate report: Click on the Generate report button. The system will analyze the cohort data by asking all the selected questions to the top selected members and produce quick insights which includes: Member responses Quick summary Key takeaways In-depth summary Insightful quotes Similarities and differences Recommended action You can also download the report in PDF or Markdown format License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 280
+    },
+    {
+      "id": "audience/converse-ai",
+      "product": "Audience",
+      "title": "Converse AI",
+      "summary": "Live insightful conversation with the synthetic data",
+      "url": "https://www.questionpro.com/help/audience/converse-ai.html",
+      "scraped_at": "2026-06-17T12:08:55.505Z",
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Converse AI"
+        }
+      ],
+      "steps": [
+        "Conversation history: \n                This is the history of conversations initiated with any member. You can find it on the Converse AI research module page, as shown below.",
+        "Recent: This shows the history of all chats initiated with a single member. You can find it within the member’s conversation or chat interface.\n                To view chat history:\n                Click on the sidebar icon shown below.\n                \n\n                \n                       \n              \n\n    \n        \n        You will see all the list of conversation with the member."
+      ],
+      "content": "Converse AI What is Converse AI? Converse AI lets you have a live, interactive conversation with your synthetic cohort inside a workbook. Instead of asking all your questions at once, you can ask follow-up questions, explore insights dynamically, and save the entire conversation for later use. Think of it as talking to your data — like conducting a virtual interview with your synthetic audience. Your browser does not support the video tag. Click to download the video When should you use Converse AI? Use Converse AI when you want to: Ask “why” or “how” questions after seeing initial insights. Explore customer motivations, emotions, or pain points. Validate assumptions without launching a new study. Dive deeper into unexpected results. Simulate qualitative interviews or CX conversations. How do I start Converse AI? Once you have created a workbook by defining the workbook purpose and setting the similarity cut-off percentage, follow the steps below: Step 1: Open a workbook Select Converse AI research mode Step 2: Launch Converse AI Click on one of the “Member card” to start the conversation. A chat panel will open inside the workbook Step 3: Ask your first question Select a question from pre-populated set of questions OR Type a question in natural language Your chat has now been initiated with this member, and you can continue with your follow-up questions. Can I initiate multiple chats with a single member? Yes, you can start multiple chats with a single member. To do so: Click on the member to open a new chat window and start a new chat OR Click the “+” icon to open a new chat window. Where can I find the chat history? There are two types of chat history: Conversation history: This is the history of conversations initiated with any member. You can find it on the Converse AI research module page, as shown below. Recent: This shows the history of all chats initiated with a single member. You can find it within the member’s conversation or chat interface. To view chat history: Click on the sidebar icon shown below. You will see all the list of conversation with the member. License This feature is available with the following licenses : Advanced Team Edition Research Edition Communities Customer Experience University - Research Edition Was the article helpful? Yes No How can we improve it? Submit Thank you for submitting feedback.",
+      "word_count": 396
+    }
+  ]
+}
