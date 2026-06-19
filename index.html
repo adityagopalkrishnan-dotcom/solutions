@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QP Insights Commons — Community Knowledge Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── QP DESIGN TOKENS (from style JSON + screenshot) ── */
+:root{
+  --qp-text:rgb(84,94,107);
+  --qp-light:rgb(155,155,155);
+  --qp-bg:#fff;
+  --qp-border:rgb(229,231,235);
+  --qp-nav:#1B2A3F;          /* darker navy matching screenshot */
+  --qp-nav2:#243347;
+  --qp-nav-active:rgba(255,255,255,.12);
+  --qp-nav-hover:rgba(255,255,255,.07);
+  --qp-accent:#1B74E4;       /* QP blue */
+  --qp-accent-l:#EBF2FD;
+  --qp-accent-d:#1561C8;
+  --qp-orange:#FF6B35;
+  --qp-orange-l:#FFF0EB;
+  --qp-surface:#F7F8FA;
+  --qp-green:#16A34A;
+  --qp-green-l:#DCFCE7;
+  --qp-amber:#B45309;
+  --qp-amber-l:#FEF3C7;
+  --qp-red:#DC2626;
+  --qp-red-l:#FEE2E2;
+  --font:'Fira Sans',sans-serif;
+}
+
+body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text);background:var(--qp-bg);line-height:24px;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+
+/* ── TOP BAR (matches IH chrome bar) ── */
+.topbar{height:46px;background:var(--qp-nav);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.topbar-logo{display:flex;align-items:center;gap:8px;color:white;font-size:14px;font-weight:500;text-decoration:none}
+.topbar-logomark{width:24px;height:24px;border-radius:5px;background:var(--qp-accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:white}
+.topbar-divider{width:1px;height:20px;background:rgba(255,255,255,.15);margin:0 4px}
+.topbar-product{font-size:13px;color:rgba(255,255,255,.7);font-weight:400}
+.topbar-spacer{flex:1}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.topbar-btn{background:none;border:1px solid rgba(255,255,255,.2);border-radius:6px;color:rgba(255,255,255,.85);font-family:var(--font);font-size:12px;font-weight:500;padding:5px 12px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s}
+.topbar-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35)}
+.topbar-btn.primary{background:var(--qp-accent);border-color:var(--qp-accent);color:white}
+.topbar-btn.primary:hover{background:var(--qp-accent-d)}
+.topbar-avatar{width:28px;height:28px;border-radius:50%;background:var(--qp-orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;cursor:pointer}
+
+/* ── MAIN LAYOUT ── */
+.shell{display:flex;flex:1;overflow:hidden}
+
+/* ── LEFT NAV (IH sidebar) ── */
+.sidenav{width:220px;min-width:220px;background:var(--qp-nav);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.06)}
+.nav-section-label{padding:16px 14px 4px;font-size:10px;font-weight:500;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 14px;color:rgba(255,255,255,.72);font-size:13px;cursor:pointer;transition:background .12s;border-radius:0;text-decoration:none}
+.nav-item:hover{background:var(--qp-nav-hover)}
+.nav-item.active{background:var(--qp-nav-active);color:white}
+.nav-item i{font-size:15px;opacity:.8;width:16px;text-align:center}
+.nav-bottom{margin-top:auto;border-top:1px solid rgba(255,255,255,.08);padding:8px 0}
+.nav-workspace{padding:10px 14px;font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.06);margin-top:4px}
+
+/* ── MAIN CONTENT ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── PAGE HEADER ── */
+.page-header{padding:16px 24px 12px;border-bottom:1px solid var(--qp-border);display:flex;align-items:center;gap:12px;background:white;flex-shrink:0}
+.page-title{font-size:16px;font-weight:500;color:var(--qp-text)}
+.page-sub{font-size:12px;color:var(--qp-light);margin-top:1px}
+.ph-spacer{flex:1}
+.ph-actions{display:flex;align-items:center;gap:8px}
+.pill{background:var(--qp-accent-l);color:var(--qp-accent);font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px}
+.pill.orange{background:var(--qp-orange-l);color:var(--qp-orange)}
+.pill.green{background:var(--qp-green-l);color:var(--qp-green)}
+
+/* ── VIEWS ── */
+.view{flex:1;overflow-y:auto;display:none}
+.view.active{display:flex;flex-direction:column}
+
+/* ── AI CHAT VIEW ── */
+.chat-area{flex:1;overflow-y:auto;padding:28px 10% 16px;display:flex;flex-direction:column;gap:20px;background:var(--qp-surface)}
+.chat-area::-webkit-scrollbar{width:4px}
+.chat-area::-webkit-scrollbar-thumb{background:var(--qp-border);border-radius:2px}
+
+.ai-welcome{text-align:center;margin:auto;max-width:520px;padding:32px 20px}
+.ai-welcome-badge{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--qp-accent),#3B82F6);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.ai-welcome-badge i{font-size:26px;color:white}
+.ai-welcome h2{font-size:20px;font-weight:500;color:var(--qp-text);margin-bottom:8px}
+.ai-welcome p{font-size:14px;color:var(--qp-light);line-height:1.7}
+.starter-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.starter-chip{padding:7px 14px;border:1px solid var(--qp-border);border-radius:20px;font-size:12px;cursor:pointer;color:var(--qp-text);font-family:var(--font);background:white;transition:all .12s;line-height:1.3;text-align:left}
+.starter-chip:hover{border-color:var(--qp-accent);color:var(--qp-accent);background:var(--qp-accent-l)}
+
+.msg{display:flex;gap:10px;max-width:100%}
+.msg.user{flex-direction:row-reverse}
+.msg-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-size:11px;font-weight:600}
+.msg.ai .msg-av{background:linear-gradient(135deg,var(--qp-accent),#3B82F6);color:white}
+.msg.user .msg-av{background:var(--qp-orange);color:white}
+.msg-body{max-width:76%}
+.msg-bubble{padding:12px 16px;font-size:14px;line-height:21px;border-radius:2px 12px 12px 12px}
+.msg.ai .msg-bubble{background:white;border:1px solid var(--qp-border);color:var(--qp-text)}
+.msg.user .msg-bubble{background:var(--qp-accent);color:white;border-radius:12px 2px 12px 12px}
+.msg-sections{margin-top:4px}
+.msg-section{margin-bottom:10px}
+.msg-section-title{font-size:12px;font-weight:600;color:var(--qp-text);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.msg-section-title i{font-size:13px;color:var(--qp-accent)}
+
+/* File references panel (IH style) */
+.file-refs{margin-top:10px;padding-top:10px;border-top:1px solid var(--qp-border)}
+.file-refs-label{font-size:11px;font-weight:500;color:var(--qp-light);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
+.file-ref{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--qp-accent);cursor:pointer;padding:3px 0;text-decoration:none}
+.file-ref:hover{text-decoration:underline}
+.file-ref i{font-size:12px;color:var(--qp-light)}
+
+/* Action row below AI message */
+.msg-actions{display:flex;gap:6px;margin-top:6px;align-items:center}
+.msg-act-btn{font-size:11px;color:var(--qp-light);background:none;border:1px solid var(--qp-border);border-radius:5px;padding:3px 9px;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:4px;transition:all .12s}
+.msg-act-btn:hover{border-color:var(--qp-text-light);color:var(--qp-text)}
+.msg-act-btn.saved{color:var(--qp-green);border-color:var(--qp-green);background:var(--qp-green-l)}
+
+.typing-ind{display:flex;gap:4px;align-items:center;padding:4px 0}
+.typing-ind span{width:5px;height:5px;border-radius:50%;background:var(--qp-light);animation:dot 1.2s ease-in-out infinite}
+.typing-ind span:nth-child(2){animation-delay:.2s}
+.typing-ind span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,80%,100%{transform:scale(.7);opacity:.35}40%{transform:scale(1);opacity:1}}
+
+.chat-input-wrap{border-top:1px solid var(--qp-border);background:white;padding:12px 24px;flex-shrink:0}
+.repo-selector{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.repo-selector span{font-size:11px;color:var(--qp-light)}
+.repo-tag{display:flex;align-items:center;gap:4px;padding:3px 9px;border:1px solid var(--qp-border);border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;color:var(--qp-text);background:white;transition:all .12s}
+.repo-tag.selected{background:var(--qp-accent-l);border-color:var(--qp-accent);color:var(--qp-accent)}
+.repo-tag i{font-size:10px}
+.chat-input-box{border:1px solid var(--qp-border);border-radius:8px;display:flex;align-items:flex-end;background:white;transition:border-color .15s}
+.chat-input-box:focus-within{border-color:var(--qp-accent)}
+.chat-input-box textarea{flex:1;resize:none;border:none;outline:none;padding:11px 14px;font-family:var(--font);font-size:14px;color:var(--qp-text);line-height:21px;max-height:120px;min-height:46px;background:transparent}
+.chat-input-box textarea::placeholder{color:var(--qp-light)}
+.chat-input-actions{display:flex;align-items:center;gap:6px;padding:8px 10px}
+.send-btn{width:34px;height:34px;border-radius:6px;background:var(--qp-accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.send-btn:hover{background:var(--qp-accent-d)}
+.send-btn:disabled{background:var(--qp-border);cursor:not-allowed}
+.send-btn i{color:white;font-size:15px}
+.input-hint{font-size:11px;color:var(--qp-light);margin-top:5px}
+
+/* ── REPOSITORY VIEW ── */
+.repo-view-inner{padding:20px 24px;flex:1}
+.repo-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.search-box{flex:1;max-width:320px;display:flex;align-items:center;border:1px solid var(--qp-border);border-radius:6px;background:white;padding:0 10px}
+.search-box i{font-size:14px;color:var(--qp-light)}
+.search-box input{flex:1;border:none;outline:none;font-family:var(--font);font-size:13px;color:var(--qp-text);padding:7px 8px;background:transparent}
+.search-box input::placeholder{color:var(--qp-light)}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.filter-chip{padding:4px 11px;border:1px solid var(--qp-border);border-radius:20px;font-size:12px;cursor:pointer;color:var(--qp-text);background:white;transition:all .12s;font-family:var(--font)}
+.filter-chip.active{background:var(--qp-accent);border-color:var(--qp-accent);color:white}
+.sort-select{border:1px solid var(--qp-border);border-radius:6px;padding:6px 10px;font-family:var(--font);font-size:12px;color:var(--qp-text);background:white;outline:none;cursor:pointer}
+
+/* Entry cards (community posts) */
+.entries-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.entry-card{background:white;border:1px solid var(--qp-border);border-radius:10px;padding:16px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:8px}
+.entry-card:hover{border-color:var(--qp-accent);box-shadow:0 2px 12px rgba(27,116,228,.08);transform:translateY(-1px)}
+.entry-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.entry-tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.tag-tip{background:#EEF2FF;color:#4338CA}
+.tag-method{background:#F0FDF4;color:#15803D}
+.tag-benchmark{background:#FFF7ED;color:#C2410C}
+.tag-tool{background:#FDF4FF;color:#7E22CE}
+.tag-case{background:#FFF1F2;color:#BE123C}
+.tag-guide{background:#F0F9FF;color:#0369A1}
+.tag-file{background:var(--qp-accent-l);color:var(--qp-accent)}
+.entry-title{font-size:14px;font-weight:500;color:var(--qp-text);line-height:1.4}
+.entry-excerpt{font-size:12px;color:var(--qp-light);line-height:1.5;flex:1}
+.entry-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--qp-light)}
+.entry-meta-chip{display:flex;align-items:center;gap:3px}
+.entry-meta-chip i{font-size:11px}
+.entry-author{display:flex;align-items:center;gap:5px}
+.author-av{width:18px;height:18px;border-radius:50%;background:var(--qp-orange);display:flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:600;flex-shrink:0}
+.author-av.blue{background:var(--qp-accent)}
+.author-av.green{background:var(--qp-green)}
+.author-av.purple{background:#7C3AED}
+.vote-row{display:flex;align-items:center;gap:6px;margin-top:2px}
+.vote-btn{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--qp-light);background:none;border:1px solid var(--qp-border);border-radius:4px;padding:2px 7px;cursor:pointer;font-family:var(--font);transition:all .12s}
+.vote-btn:hover{border-color:var(--qp-accent);color:var(--qp-accent)}
+.vote-btn.voted{background:var(--qp-accent-l);border-color:var(--qp-accent);color:var(--qp-accent)}
+.entry-card.uploaded{border-left:3px solid var(--qp-accent)}
+
+/* ── CONTRIBUTE VIEW ── */
+.contribute-inner{padding:24px;max-width:720px;flex:1}
+.form-section-title{font-size:13px;font-weight:500;color:var(--qp-text);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--qp-border)}
+.form-row{margin-bottom:14px}
+.form-row label{font-size:12px;font-weight:500;color:var(--qp-text);display:block;margin-bottom:5px}
+.form-row label span{color:var(--qp-red);margin-left:2px}
+.form-row input,.form-row textarea,.form-row select{width:100%;border:1px solid var(--qp-border);border-radius:6px;padding:9px 12px;font-size:14px;font-family:var(--font);font-weight:400;color:var(--qp-text);background:white;outline:none;transition:border-color .15s;line-height:21px}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--qp-accent)}
+.form-row textarea{min-height:100px;resize:vertical}
+.tag-picker{display:flex;flex-wrap:wrap;gap:6px}
+.tag-option{padding:5px 12px;border:1px solid var(--qp-border);border-radius:20px;font-size:12px;cursor:pointer;font-family:var(--font);transition:all .12s;color:var(--qp-text)}
+.tag-option.selected{background:var(--qp-accent);border-color:var(--qp-accent);color:white}
+
+/* File upload zone */
+.upload-zone{border:2px dashed var(--qp-border);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .15s;background:var(--qp-surface);position:relative}
+.upload-zone.dragover{border-color:var(--qp-accent);background:var(--qp-accent-l)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone i{font-size:28px;color:var(--qp-light);display:block;margin-bottom:8px}
+.upload-zone h4{font-size:13px;font-weight:500;color:var(--qp-text);margin-bottom:4px}
+.upload-zone p{font-size:12px;color:var(--qp-light)}
+.format-chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px}
+.format-chip{background:white;border:1px solid var(--qp-border);color:var(--qp-light);padding:2px 7px;border-radius:4px;font-size:10px}
+.parse-status{margin-top:10px;padding:10px 14px;border-radius:6px;font-size:13px;display:none;align-items:center;gap:8px}
+.parse-status.loading{display:flex;background:var(--qp-accent-l);color:var(--qp-accent)}
+.parse-status.ok{display:flex;background:var(--qp-green-l);color:var(--qp-green)}
+.parse-status.err{display:flex;background:var(--qp-red-l);color:var(--qp-red)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.spinning{animation:spin .8s linear infinite;display:inline-block}
+.submit-bar{display:flex;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--qp-border)}
+.btn{padding:9px 20px;border-radius:6px;font-size:13px;font-weight:500;font-family:var(--font);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;border:none}
+.btn-primary{background:var(--qp-accent);color:white}
+.btn-primary:hover{background:var(--qp-accent-d)}
+.btn-secondary{background:white;color:var(--qp-text);border:1px solid var(--qp-border)}
+.btn-secondary:hover{background:var(--qp-surface)}
+
+/* ── NOTES VIEW ── */
+.notes-inner{padding:20px 24px;flex:1}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:12px}
+.note-card{background:white;border:1px solid var(--qp-border);border-radius:8px;padding:14px;border-left:3px solid var(--qp-accent)}
+.note-card-q{font-size:12px;color:var(--qp-light);margin-bottom:6px;font-style:italic}
+.note-card-a{font-size:13px;color:var(--qp-text);line-height:1.6}
+.note-card-meta{font-size:11px;color:var(--qp-light);margin-top:8px;display:flex;justify-content:space-between}
+.note-del{cursor:pointer;color:var(--qp-light);font-size:11px}
+.note-del:hover{color:var(--qp-red)}
+
+/* ── SETTINGS VIEW ── */
+.settings-inner{padding:24px;max-width:640px;flex:1}
+.settings-section{margin-bottom:28px}
+.settings-section h3{font-size:14px;font-weight:500;color:var(--qp-text);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--qp-border)}
+.setting-row{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--qp-border);gap:16px}
+.setting-info{flex:1}
+.setting-label{font-size:13px;font-weight:500;color:var(--qp-text)}
+.setting-desc{font-size:12px;color:var(--qp-light);margin-top:2px;line-height:1.5}
+.setting-input{border:1px solid var(--qp-border);border-radius:6px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--qp-text);background:white;outline:none;min-width:200px}
+.setting-input:focus{border-color:var(--qp-accent)}
+.setting-input.mono{font-family:monospace;font-size:12px}
+.config-save-btn{margin-top:16px}
+
+/* ── MODAL OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:white;border-radius:12px;width:640px;max-width:95vw;max-height:90vh;overflow-y:auto;border:1px solid var(--qp-border);box-shadow:0 12px 48px rgba(0,0,0,.15)}
+.modal-hd{padding:20px 24px 14px;border-bottom:1px solid var(--qp-border);display:flex;align-items:flex-start;justify-content:space-between}
+.modal-hd h3{font-size:16px;font-weight:500;color:var(--qp-text)}
+.modal-hd p{font-size:13px;color:var(--qp-light);margin-top:3px}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--qp-light);font-size:18px;padding:2px;margin-top:-2px}
+.modal-bd{padding:20px 24px}
+.modal-ft{padding:14px 24px;border-top:1px solid var(--qp-border);display:flex;justify-content:flex-end;gap:8px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:#1e293b;color:white;padding:12px 18px;border-radius:8px;font-size:13px;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:8px;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast i{font-size:15px;color:var(--qp-green)}
+.toast.err i{color:#F87171}
+
+/* ── EMPTY STATES ── */
+.empty{text-align:center;padding:48px 20px;color:var(--qp-light)}
+.empty i{font-size:36px;display:block;margin-bottom:12px;opacity:.35}
+.empty h3{font-size:15px;font-weight:500;color:var(--qp-text);margin-bottom:6px}
+.empty p{font-size:13px;line-height:1.6}
+
+/* ── STATS BAR ── */
+.stats-bar{display:flex;gap:0;border-bottom:1px solid var(--qp-border);background:white;flex-shrink:0;padding:0 24px}
+.stat-item{padding:10px 20px 10px 0;margin-right:20px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--qp-border);margin-right:0;padding-right:24px;padding-left:0}
+.stat-item:last-child{border-right:none}
+.stat-item+.stat-item{padding-left:24px}
+.stat-val{font-size:18px;font-weight:600;color:var(--qp-text)}
+.stat-label{font-size:11px;color:var(--qp-light)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--qp-border);border-radius:2px}
+
+/* ── BULK UPLOAD QUEUE CARDS ── */
+.queue-card{background:white;border:1px solid var(--qp-border);border-radius:8px;overflow:hidden;transition:border-color .15s}
+.queue-card.ready{border-left:3px solid var(--qp-green)}
+.queue-card.processing{border-left:3px solid var(--qp-accent)}
+.queue-card.error{border-left:3px solid var(--qp-red)}
+.queue-card.done{border-left:3px solid var(--qp-green);opacity:.6}
+.qc-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none}
+.qc-icon{width:32px;height:32px;border-radius:6px;background:var(--qp-accent-l);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qc-icon i{font-size:15px;color:var(--qp-accent)}
+.qc-icon.err{background:var(--qp-red-l)}.qc-icon.err i{color:var(--qp-red)}
+.qc-icon.ok{background:var(--qp-green-l)}.qc-icon.ok i{color:var(--qp-green)}
+.qc-name{flex:1;min-width:0}
+.qc-filename{font-size:13px;font-weight:500;color:var(--qp-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qc-filemeta{font-size:11px;color:var(--qp-light);margin-top:1px}
+.qc-status{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;flex-shrink:0}
+.qc-status.extracting{background:var(--qp-accent-l);color:var(--qp-accent)}
+.qc-status.ready{background:var(--qp-green-l);color:var(--qp-green)}
+.qc-status.error{background:var(--qp-red-l);color:var(--qp-red)}
+.qc-status.saved{background:#F3F4F6;color:var(--qp-light)}
+.qc-toggle{font-size:14px;color:var(--qp-light);transition:transform .2s;flex-shrink:0}
+.qc-toggle.open{transform:rotate(180deg)}
+.qc-remove{background:none;border:none;cursor:pointer;color:var(--qp-light);font-size:13px;padding:2px 5px;border-radius:4px;flex-shrink:0}
+.qc-remove:hover{color:var(--qp-red);background:var(--qp-red-l)}
+.qc-body{display:none;padding:0 14px 14px;border-top:1px solid var(--qp-border)}
+.qc-body.open{display:block}
+.qc-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.qc-field label{font-size:11px;font-weight:500;color:var(--qp-light);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+.qc-field input,.qc-field select,.qc-field textarea{width:100%;border:1px solid var(--qp-border);border-radius:5px;padding:6px 9px;font-family:var(--font);font-size:12px;color:var(--qp-text);background:white;outline:none}
+.qc-field input:focus,.qc-field select:focus,.qc-field textarea:focus{border-color:var(--qp-accent)}
+.qc-field.full{grid-column:1/-1}
+.qc-field textarea{min-height:80px;resize:vertical;font-size:12px;line-height:1.5}
+.qc-char-count{font-size:10px;color:var(--qp-light);text-align:right;margin-top:2px}
+
+/* Mobile */
+@media(max-width:700px){
+  .sidenav{width:52px;min-width:52px}
+  .nav-section-label,.nav-item span,.nav-workspace{display:none}
+  .nav-item{justify-content:center;padding:10px}
+  .entries-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-logomark">Q</div>
+    <span>QuestionPro</span>
+  </div>
+  <div class="topbar-divider"></div>
+  <span class="topbar-product">Insights Commons</span>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-actions">
+    <button class="topbar-btn" onclick="showView('contribute')"><i class="ti ti-plus"></i> Contribute</button>
+    <button class="topbar-btn" onclick="showView('settings')"><i class="ti ti-settings"></i></button>
+    <div class="topbar-avatar" title="Your profile">SC</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- SIDENAV -->
+  <nav class="sidenav">
+    <div class="nav-section-label">Knowledge Hub</div>
+    <a class="nav-item active" onclick="showView('ai')" id="nav-ai"><i class="ti ti-sparkles"></i><span>QuestionPro AI</span></a>
+    <a class="nav-item" onclick="showView('browse')" id="nav-browse"><i class="ti ti-database"></i><span>Repository</span></a>
+    <a class="nav-item" onclick="showView('notes')" id="nav-notes"><i class="ti ti-notes"></i><span>Saved Notes</span></a>
+    <div class="nav-section-label" style="margin-top:8px">Contribute</div>
+    <a class="nav-item" onclick="showView('contribute')" id="nav-contribute"><i class="ti ti-pencil-plus"></i><span>Add Knowledge</span></a>
+    <a class="nav-item" onclick="showView('upload')" id="nav-upload"><i class="ti ti-upload"></i><span>Upload File</span></a>
+    <div class="nav-bottom">
+      <a class="nav-item" onclick="showView('settings')" id="nav-settings"><i class="ti ti-adjustments"></i><span>Settings</span></a>
+    </div>
+    <div class="nav-workspace">Hub: Insights Commons · Public</div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- ══════════════ AI CHAT VIEW ══════════════ -->
+    <div class="view active" id="view-ai">
+      <div class="page-header">
+        <div>
+          <div class="page-title">QuestionPro AI</div>
+          <div class="page-sub">Ask anything about research, insights, and survey methodology</div>
+        </div>
+        <div class="ph-spacer"></div>
+        <span class="pill" id="entry-count-badge">0 entries</span>
+        <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px" onclick="clearChat()"><i class="ti ti-refresh" style="font-size:12px"></i> New chat</button>
+      </div>
+      <div class="chat-area" id="chatArea">
+        <div class="ai-welcome" id="aiWelcome">
+          <div class="ai-welcome-badge"><i class="ti ti-brain"></i></div>
+          <h2>The Insights World's Collective Brain</h2>
+          <p>Ask about survey methodology, benchmark studies, JS branching logic, data analysis approaches, CX programme design — anything insights. Answers come from the community knowledge base.</p>
+          <div class="starter-chips">
+            <div class="starter-chip" onclick="askStarter(this)">How should I structure a benchmark study?</div>
+            <div class="starter-chip" onclick="askStarter(this)">Best JS setups for complex branching logic?</div>
+            <div class="starter-chip" onclick="askStarter(this)">Creative ways to analyze open-ended responses?</div>
+            <div class="starter-chip" onclick="askStarter(this)">How do I design a VoC programme from scratch?</div>
+            <div class="starter-chip" onclick="askStarter(this)">What's the difference between NPS, CSAT, and CES?</div>
+            <div class="starter-chip" onclick="askStarter(this)">Tips for improving survey completion rates?</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-wrap">
+        <div class="repo-selector">
+          <span>Searching:</span>
+          <div class="repo-tag selected" onclick="toggleRepo(this,'all')"><i class="ti ti-stack"></i> All knowledge</div>
+          <div class="repo-tag" onclick="toggleRepo(this,'methodology')"><i class="ti ti-book"></i> Methodology</div>
+          <div class="repo-tag" onclick="toggleRepo(this,'technical')"><i class="ti ti-code"></i> Technical</div>
+          <div class="repo-tag" onclick="toggleRepo(this,'cx')"><i class="ti ti-heart"></i> CX / VoC</div>
+          <div class="repo-tag" onclick="toggleRepo(this,'uploads')"><i class="ti ti-file"></i> Uploaded files</div>
+        </div>
+        <div class="chat-input-box">
+          <textarea id="chatInput" placeholder="Ask the community knowledge base anything…" rows="1"
+            onkeydown="handleChatKey(event)" oninput="autoResize(this)"></textarea>
+          <div class="chat-input-actions">
+            <button class="send-btn" id="sendBtn" onclick="sendChat()" disabled><i class="ti ti-arrow-up"></i></button>
+          </div>
+        </div>
+        <div class="input-hint">Enter to send · Shift+Enter for new line · Answers grounded in community knowledge</div>
+      </div>
+    </div>
+
+    <!-- ══════════════ BROWSE / REPOSITORY VIEW ══════════════ -->
+    <div class="view" id="view-browse">
+      <div class="page-header">
+        <div><div class="page-title">Community Repository</div><div class="page-sub">Browse, search, and vote on community knowledge</div></div>
+        <div class="ph-spacer"></div>
+        <span class="pill green" id="repo-count">0 entries</span>
+        <button class="btn btn-primary" style="padding:7px 14px;font-size:12px" onclick="showView('contribute')"><i class="ti ti-plus"></i> Contribute</button>
+      </div>
+      <!-- Stats bar -->
+      <div class="stats-bar" id="statsBar">
+        <div class="stat-item"><span class="stat-val" id="stat-total">0</span><span class="stat-label">Total entries</span></div>
+        <div class="stat-item"><span class="stat-val" id="stat-files">0</span><span class="stat-label">Uploaded files</span></div>
+        <div class="stat-item"><span class="stat-val" id="stat-contributors">1</span><span class="stat-label">Contributors</span></div>
+        <div class="stat-item"><span class="stat-val" id="stat-votes">0</span><span class="stat-label">Total votes</span></div>
+      </div>
+      <div class="repo-view-inner">
+        <div class="repo-toolbar">
+          <div class="search-box"><i class="ti ti-search"></i><input id="repoSearch" type="text" placeholder="Search knowledge…" oninput="renderEntries()"/></div>
+          <div class="filter-chips" id="filterChips">
+            <div class="filter-chip active" onclick="setFilter(this,'all')">All</div>
+            <div class="filter-chip" onclick="setFilter(this,'tip')">Tips</div>
+            <div class="filter-chip" onclick="setFilter(this,'method')">Methodology</div>
+            <div class="filter-chip" onclick="setFilter(this,'benchmark')">Benchmarks</div>
+            <div class="filter-chip" onclick="setFilter(this,'tool')">Tools</div>
+            <div class="filter-chip" onclick="setFilter(this,'case')">Case studies</div>
+            <div class="filter-chip" onclick="setFilter(this,'guide')">Guides</div>
+            <div class="filter-chip" onclick="setFilter(this,'file')">Files</div>
+          </div>
+          <select class="sort-select" id="sortSelect" onchange="renderEntries()">
+            <option value="newest">Newest first</option>
+            <option value="votes">Most voted</option>
+            <option value="az">A–Z</option>
+          </select>
+        </div>
+        <div class="entries-grid" id="entriesGrid"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════ NOTES VIEW ══════════════ -->
+    <div class="view" id="view-notes">
+      <div class="page-header">
+        <div><div class="page-title">Saved Notes</div><div class="page-sub">AI responses you've saved for later</div></div>
+        <div class="ph-spacer"></div>
+        <span class="pill" id="notes-count">0 notes</span>
+      </div>
+      <div class="notes-inner">
+        <div id="notesGrid" class="notes-grid"></div>
+        <div class="empty" id="notesEmpty" style="display:none">
+          <i class="ti ti-notes"></i>
+          <h3>No saved notes yet</h3>
+          <p>When you get a useful AI response, click "Save as note" to keep it here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ CONTRIBUTE VIEW ══════════════ -->
+    <div class="view" id="view-contribute">
+      <div class="page-header">
+        <div><div class="page-title">Add Knowledge</div><div class="page-sub">Share your expertise with the community</div></div>
+      </div>
+      <div class="contribute-inner">
+        <div class="form-section-title">What are you sharing?</div>
+        <div class="form-row">
+          <label>Title <span>*</span></label>
+          <input type="text" id="entryTitle" placeholder="e.g. How to structure a 3-wave panel study for tracking brand perception"/>
+        </div>
+        <div class="form-row">
+          <label>Category <span>*</span></label>
+          <div class="tag-picker" id="tagPicker">
+            <div class="tag-option" onclick="selectTag(this,'tip')">💡 Tip</div>
+            <div class="tag-option" onclick="selectTag(this,'method')">📊 Methodology</div>
+            <div class="tag-option" onclick="selectTag(this,'benchmark')">📈 Benchmark</div>
+            <div class="tag-option" onclick="selectTag(this,'tool')">🔧 Tool / Setup</div>
+            <div class="tag-option" onclick="selectTag(this,'case')">📋 Case Study</div>
+            <div class="tag-option" onclick="selectTag(this,'guide')">📖 Guide</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Topic area</label>
+          <select id="entryTopic">
+            <option value="">Any topic</option>
+            <option value="methodology">Survey Methodology</option>
+            <option value="cx">CX / VoC</option>
+            <option value="technical">Technical / JS</option>
+            <option value="analysis">Data Analysis</option>
+            <option value="benchmarks">Benchmarks & Norms</option>
+            <option value="platform">QuestionPro Platform</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Your knowledge <span>*</span></label>
+          <textarea id="entryContent" rows="6" placeholder="Share what you know — tips, step-by-step guidance, gotchas, links, examples. The more specific, the more useful."></textarea>
+        </div>
+        <div class="form-row">
+          <label>Your name / handle</label>
+          <input type="text" id="entryAuthor" placeholder="e.g. Aditya G. or @adityaqp" />
+        </div>
+        <div class="submit-bar">
+          <button class="btn btn-primary" onclick="submitEntry()"><i class="ti ti-send"></i> Publish to community</button>
+          <button class="btn btn-secondary" onclick="showView('browse')">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ UPLOAD VIEW (BULK) ══════════════ -->
+    <div class="view" id="view-upload">
+      <div class="page-header">
+        <div><div class="page-title">Upload Files</div><div class="page-sub">Add one file or many at once — text is extracted automatically in your browser</div></div>
+        <div class="ph-spacer"></div>
+        <span class="pill" id="bulk-queued-badge" style="display:none">0 queued</span>
+      </div>
+      <div class="contribute-inner" style="max-width:860px">
+
+        <!-- Drop zone — accepts multiple -->
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.xlsx,.xls,.csv,.txt,.md,.json" multiple onchange="handleBulkFiles(this.files)"/>
+          <i class="ti ti-files"></i>
+          <h4>Drop files here or click to browse</h4>
+          <p>Select one or many — each is extracted separately and queued for review</p>
+          <div class="format-chips">
+            <span class="format-chip">PDF</span><span class="format-chip">DOCX</span>
+            <span class="format-chip">XLSX</span><span class="format-chip">CSV</span>
+            <span class="format-chip">TXT</span><span class="format-chip">JSON</span>
+          </div>
+        </div>
+
+        <!-- Global settings applied to all files in this batch -->
+        <div id="bulkGlobalSettings" style="display:none;margin-top:16px;padding:14px;background:var(--qp-surface);border:1px solid var(--qp-border);border-radius:8px">
+          <div style="font-size:12px;font-weight:500;color:var(--qp-text);margin-bottom:10px">Apply to all files in this batch</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+            <div style="flex:1;min-width:160px">
+              <label style="font-size:11px;font-weight:500;color:var(--qp-light);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Default category</label>
+              <select id="bulkCategory" style="width:100%;border:1px solid var(--qp-border);border-radius:6px;padding:7px 10px;font-family:var(--font);font-size:13px;color:var(--qp-text);background:white;outline:none">
+                <option value="file">📄 File (auto)</option>
+                <option value="method">📊 Methodology</option>
+                <option value="guide">📖 Guide</option>
+                <option value="benchmark">📈 Benchmark</option>
+                <option value="tool">🔧 Tool / Setup</option>
+                <option value="case">📋 Case Study</option>
+                <option value="tip">💡 Tip</option>
+              </select>
+            </div>
+            <div style="flex:1;min-width:160px">
+              <label style="font-size:11px;font-weight:500;color:var(--qp-light);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Default topic</label>
+              <select id="bulkTopic" style="width:100%;border:1px solid var(--qp-border);border-radius:6px;padding:7px 10px;font-family:var(--font);font-size:13px;color:var(--qp-text);background:white;outline:none">
+                <option value="">Any topic</option>
+                <option value="methodology">Survey Methodology</option>
+                <option value="cx">CX / VoC</option>
+                <option value="technical">Technical / JS</option>
+                <option value="analysis">Data Analysis</option>
+                <option value="benchmarks">Benchmarks & Norms</option>
+                <option value="platform">QuestionPro Platform</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div style="flex:1;min-width:160px">
+              <label style="font-size:11px;font-weight:500;color:var(--qp-light);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Contributor name</label>
+              <input id="bulkAuthor" type="text" placeholder="Your name" style="width:100%;border:1px solid var(--qp-border);border-radius:6px;padding:7px 10px;font-family:var(--font);font-size:13px;color:var(--qp-text);background:white;outline:none"/>
+            </div>
+            <button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;white-space:nowrap" onclick="applyBulkDefaults()"><i class="ti ti-refresh"></i> Apply to all</button>
+          </div>
+        </div>
+
+        <!-- File queue -->
+        <div id="bulkQueue" style="margin-top:14px;display:flex;flex-direction:column;gap:8px"></div>
+
+        <!-- Bulk action bar -->
+        <div id="bulkActionBar" style="display:none;margin-top:16px;padding-top:14px;border-top:1px solid var(--qp-border);display:none;align-items:center;gap:10px">
+          <div id="bulkProgress" style="flex:1;font-size:13px;color:var(--qp-light)"></div>
+          <button class="btn btn-secondary" style="padding:7px 12px;font-size:12px" onclick="clearBulkQueue()"><i class="ti ti-trash"></i> Clear all</button>
+          <button class="btn btn-primary" id="bulkSubmitBtn" onclick="submitAllUploads()" style="padding:7px 16px;font-size:13px"><i class="ti ti-database-plus"></i> Add all to knowledge base</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════ SETTINGS VIEW ══════════════ -->
+    <div class="view" id="view-settings">
+      <div class="page-header">
+        <div><div class="page-title">Settings</div><div class="page-sub">Configure your AI Router connection and hub preferences</div></div>
+      </div>
+      <div class="settings-inner">
+        <div class="settings-section">
+          <h3>🤖 AI Router Configuration</h3>
+          <p style="font-size:13px;color:var(--qp-light);margin-bottom:14px;line-height:1.6">Connected to <strong>airouter-api.questionpro.com</strong> · use case: <code style="background:var(--qp-surface);padding:1px 5px;border-radius:3px;font-size:12px">knowledge-base</code> · model: <strong>GPT-5 mini</strong></p>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">API Key</div><div class="setting-desc">Your QuestionPro AI Router api-key</div></div>
+            <input class="setting-input mono" type="password" id="cfg-apikey" placeholder="qp-router-key-…"/>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">User ID</div><div class="setting-desc">Your QP user_id (numeric)</div></div>
+            <input class="setting-input" id="cfg-userid" placeholder="12345678"/>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Organization ID</div><div class="setting-desc">Your QP organization_id</div></div>
+            <input class="setting-input" id="cfg-orgid" placeholder="98765432"/>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Use Case Name</div><div class="setting-desc">The prompt name configured in your AI Router admin (e.g. insights_commons)</div></div>
+            <input class="setting-input" id="cfg-usecase" placeholder="insights_commons" value="insights_commons"/>
+          </div>
+          <div style="margin-top:12px;padding:14px;background:#F8FAFF;border:1px solid var(--qp-accent-l);border-radius:8px;font-size:12px;line-height:1.7;color:var(--qp-text)">
+            <strong>📋 Suggested AI Router system prompt</strong> (paste this in your QP AI Router admin panel for the <em>insights_commons</em> use case):<br/><br/>
+            <code style="background:white;border:1px solid var(--qp-border);border-radius:4px;padding:10px;display:block;font-size:11px;line-height:1.7;white-space:pre-wrap">You are Insights Commons AI, a research assistant for the QuestionPro community knowledge hub.
+
+CONTEXT: You receive a user question and a set of KNOWLEDGE ENTRIES — community-contributed tips, methodologies, case studies, and uploaded documents. Your job is to synthesize these into a clear, grounded answer.
+
+RULES:
+1. Answer ONLY from the provided knowledge entries. Never invent facts, statistics, or citations.
+2. If the knowledge base does not contain enough information to answer, say so clearly: "I couldn't find enough in the community knowledge base to answer this confidently."
+3. Always cite which entry/file your answer comes from using [Entry: Title] inline.
+4. Structure responses as: Key Answer → Supporting Detail → Caveats/Gaps → File References.
+5. Be direct and practical. Avoid filler. This is a professional research audience.
+6. For methodology questions, give concrete steps. For tool questions, give specific settings.
+7. DO NOT hallucinate QuestionPro feature names, pricing, or capabilities not mentioned in entries.</code>
+          </div>
+          <button class="btn btn-primary config-save-btn" onclick="saveConfig()"><i class="ti ti-device-floppy"></i> Save configuration</button>
+          <button class="btn btn-secondary" style="margin-left:8px;margin-top:16px" onclick="testConnection()"><i class="ti ti-plug"></i> Test connection</button>
+        </div>
+        <div class="settings-section">
+          <h3>🎛️ Hub Preferences</h3>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Your display name</div><div class="setting-desc">Shown when you contribute entries</div></div>
+            <input class="setting-input" id="cfg-displayname" placeholder="Your name or @handle"/>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Default search scope</div><div class="setting-desc">Which content types to include in AI queries by default</div></div>
+            <select class="setting-input" id="cfg-defaultscope">
+              <option value="all">All knowledge</option>
+              <option value="methodology">Methodology only</option>
+              <option value="technical">Technical only</option>
+              <option value="cx">CX / VoC only</option>
+            </select>
+          </div>
+          <button class="btn btn-primary config-save-btn" onclick="savePrefs()"><i class="ti ti-device-floppy"></i> Save preferences</button>
+        </div>
+        <div class="settings-section">
+          <h3>🗄️ Data Management</h3>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Export knowledge base</div><div class="setting-desc">Download all entries as JSON for backup or migration</div></div>
+            <button class="btn btn-secondary" style="padding:7px 12px;font-size:12px" onclick="exportData()"><i class="ti ti-download"></i> Export JSON</button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Import knowledge base</div><div class="setting-desc">Load a previously exported JSON file</div></div>
+            <label class="btn btn-secondary" style="padding:7px 12px;font-size:12px;cursor:pointer"><i class="ti ti-upload"></i> Import JSON<input type="file" accept=".json" style="display:none" onchange="importData(this)"/></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><div class="setting-label">Clear all data</div><div class="setting-desc">Remove all entries, files, and notes from local storage</div></div>
+            <button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;color:var(--qp-red);border-color:var(--qp-red)" onclick="clearAll()"><i class="ti ti-trash"></i> Clear all</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>🌐 Hosting & Sharing</h3>
+          <div style="background:var(--qp-surface);border:1px solid var(--qp-border);border-radius:8px;padding:16px;font-size:13px;line-height:1.8;color:var(--qp-text)">
+            <strong>How to host this publicly so anyone can use it via a link:</strong><br/><br/>
+            <strong>Option 1 — GitHub Pages (free, permanent link):</strong><br/>
+            1. Create a GitHub repo → upload this HTML file as <code style="background:white;padding:1px 5px;border-radius:3px;border:1px solid var(--qp-border)">index.html</code><br/>
+            2. Go to Settings → Pages → deploy from main branch<br/>
+            3. Your URL: <code style="background:white;padding:1px 5px;border-radius:3px;border:1px solid var(--qp-border)">https://yourusername.github.io/insights-commons</code><br/><br/>
+            <strong>Option 2 — Netlify Drop (instant, no account needed):</strong><br/>
+            1. Go to <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--qp-accent)">app.netlify.com/drop</a><br/>
+            2. Drag and drop this HTML file<br/>
+            3. Get a shareable URL instantly<br/><br/>
+            <strong>Option 3 — Cloudflare Pages (fast global CDN):</strong><br/>
+            Connect your GitHub repo → auto-deploys on every push<br/><br/>
+            <strong>Note on the 5GB storage limit:</strong> This tool stores knowledge in browser localStorage (per-user). For a shared community database, you'd add a backend (Supabase free tier works perfectly — 500MB free, real-time sync). Want me to build that version?
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="ti ti-circle-check"></i><span id="toastMsg"></span></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  PDF.js worker
+// ══════════════════════════════════════════════
+if(typeof pdfjsLib!=='undefined')
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+const SK_ENTRIES='qpic_entries_v1';
+const SK_NOTES='qpic_notes_v1';
+const SK_CONFIG='qpic_config_v1';
+const SK_VOTES='qpic_votes_v1';
+
+let entries=[], notes=[], config={}, votes={};
+let activeFilter='all', activeRepo='all', selectedTag='', selectedUploadTag='file';
+let chatHistory=[], isChatBusy=false;
+
+function load(){
+  try{entries=JSON.parse(localStorage.getItem(SK_ENTRIES)||'[]')}catch(e){entries=[]}
+  try{notes=JSON.parse(localStorage.getItem(SK_NOTES)||'[]')}catch(e){notes=[]}
+  try{config=JSON.parse(localStorage.getItem(SK_CONFIG)||'{}')}catch(e){config={}}
+  try{votes=JSON.parse(localStorage.getItem(SK_VOTES)||'{}')}catch(e){votes={}}
+  // Pre-load curated seed entries if empty
+  if(entries.length===0) entries=getSeedEntries();
+  applyConfig();
+  renderAll();
+}
+function save(){
+  localStorage.setItem(SK_ENTRIES,JSON.stringify(entries));
+  localStorage.setItem(SK_NOTES,JSON.stringify(notes));
+  localStorage.setItem(SK_CONFIG,JSON.stringify(config));
+  localStorage.setItem(SK_VOTES,JSON.stringify(votes));
+}
+
+// ══════════════════════════════════════════════
+//  SEED DATA — curated starter knowledge
+// ══════════════════════════════════════════════
+function getSeedEntries(){return[
+  {id:'s1',title:'How to structure a benchmark study',tag:'benchmark',topic:'benchmarks',content:'A benchmark study needs: (1) Define what you\'re measuring — NPS, CSAT, CES, or custom KPI. (2) Choose a consistent question wording you\'ll use every wave — never change it mid-study. (3) Set a cadence: quarterly for operational metrics, annual for brand/perception. (4) Use the same sample frame each wave — same panel, same screeners. (5) Track both the metric AND the verbatim. Verbatim is where the "why" lives. (6) Always run a significance test between waves before claiming movement. A 3-point NPS swing is usually noise in samples under 200.',author:'Insights Commons Team',date:new Date().toISOString(),votes:12,isFile:false},
+  {id:'s2',title:'NPS vs CSAT vs CES — when to use which',tag:'method',topic:'methodology',content:'NPS (Net Promoter Score): Use for relationship health, brand loyalty, overall growth signal. Best for quarterly strategic reviews. Weakness: doesn\'t tell you what to fix.\n\nCSAT (Customer Satisfaction Score): Use for transactional touchpoints — support tickets, purchases, onboarding. Best for operational monitoring. Fast feedback loop.\n\nCES (Customer Effort Score): Use specifically for support and service interactions. Predicts churn better than CSAT for service contexts. Question: "How easy was it to resolve your issue?"\n\nRule of thumb: NPS for the relationship, CSAT for the transaction, CES for the service. Most mature CX programmes use all three at different points in the journey.',author:'Insights Commons Team',date:new Date().toISOString(),votes:18,isFile:false},
+  {id:'s3',title:'JS branching logic best practices in QuestionPro',tag:'tool',topic:'technical',content:'1. Use "Display Logic" over "Skip Logic" wherever possible — display logic is non-destructive and easier to audit.\n2. For complex multi-condition branching, build a logic map first (even a napkin sketch) before touching the survey builder.\n3. Pipe previous answers using {{Q1}} syntax — but always set a fallback default in case the question was skipped.\n4. When using JavaScript for custom validation, use the qp.showError() method rather than alert() — it respects the survey\'s styling.\n5. Test your logic with edge cases: respondent skips Q2, respondent selects "Other", respondent goes back and changes an answer.\n6. For quota-controlled routing, set quotas BEFORE building the branching — the quota engine runs before skip logic.',author:'Insights Commons Team',date:new Date().toISOString(),votes:9,isFile:false},
+  {id:'s4',title:'Improving open-ended response quality',tag:'tip',topic:'methodology',content:'Short, vague verbatims are a survey design problem, not a respondent problem. Fixes:\n\n• Use a two-box approach: a short "headline" box (50 char limit, required) then an optional "tell us more" box. Headlines are easier to code and respondents complete them.\n• Add a character minimum of 20-30 characters to force more than "good" or "fine".\n• Position open-ends AFTER rating questions — respondents are primed to elaborate on a score they just gave.\n• Use a follow-up probe: "You rated us a 6. What would make this a 9 or 10 for you?" Drives constructive detail.\n• Avoid generic prompts like "Any other comments?" — be specific: "What could we improve about the checkout experience?"',author:'Insights Commons Team',date:new Date().toISOString(),votes:15,isFile:false},
+  {id:'s5',title:'VoC programme design from scratch',tag:'guide',topic:'cx',content:'A Voice of Customer programme needs four layers:\n\n1. RELATIONSHIP layer: Annual or semi-annual survey to the full customer base. NPS-anchored. Strategic view.\n2. TRANSACTIONAL layer: Post-interaction surveys triggered by specific events (purchase, support close, onboarding). CSAT or CES.\n3. CONTINUOUS layer: Always-on intercept surveys on key digital touchpoints. Short (1-3 questions). CES or micro-CSAT.\n4. QUALITATIVE layer: Regular in-depth interviews (6-10 per quarter) for "why" behind the numbers. Don\'t skip this.\n\nOrchestration rules: (a) Never survey the same customer more than once every 30 days across all layers. (b) Close the loop — every detractor should get a follow-up within 48 hours. (c) Connect VoC data to your CRM so front-line teams see customer sentiment.',author:'Insights Commons Team',date:new Date().toISOString(),votes:22,isFile:false},
+  {id:'s6',title:'Survey completion rate benchmarks by industry',tag:'benchmark',topic:'benchmarks',content:'Industry average completion rates (email distribution):\n• B2B / enterprise: 15-25% open rate, 5-10% completion\n• B2C / retail: 8-12% open rate, 2-5% completion\n• Healthcare patient surveys: 20-35% (higher trust)\n• Employee engagement: 60-80% when leadership-sponsored, 20-30% without\n• Post-support / transactional: 10-20% (embedded in email works better than link)\n\nFactors that move the needle most:\n1. Subject line — personalized subject lines lift opens by ~26%\n2. Survey length — every additional minute of length drops completion by ~5-7%\n3. Mobile optimization — 60%+ of surveys are opened on mobile; non-mobile surveys lose 30% of completions\n4. Incentives — meaningful for B2C panels, rarely effective for B2B',author:'Insights Commons Team',date:new Date().toISOString(),votes:11,isFile:false},
+]}
+
+// ══════════════════════════════════════════════
+//  VIEW ROUTER
+// ══════════════════════════════════════════════
+function showView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v)?.classList.add('active');
+  document.getElementById('nav-'+v)?.classList.add('active');
+  if(v==='browse'||v==='ai') renderEntries();
+  if(v==='notes') renderNotes();
+  if(v==='settings') loadConfigForm();
+}
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
+function renderAll(){renderEntries();renderNotes();updateBadges()}
+
+function updateBadges(){
+  const n=entries.length;
+  document.getElementById('entry-count-badge').textContent=n+' entr'+(n===1?'y':'ies');
+  document.getElementById('repo-count').textContent=n+' entr'+(n===1?'y':'ies');
+  document.getElementById('stat-total').textContent=n;
+  document.getElementById('stat-files').textContent=entries.filter(e=>e.isFile).length;
+  document.getElementById('stat-votes').textContent=entries.reduce((a,e)=>a+(e.votes||0),0);
+  document.getElementById('notes-count').textContent=notes.length+' note'+(notes.length===1?'':'s');
+}
+
+const TAG_CLASS={tip:'tag-tip',method:'tag-method',benchmark:'tag-benchmark',tool:'tag-tool',case:'tag-case',guide:'tag-guide',file:'tag-file'};
+const TAG_LABEL={tip:'Tip',method:'Methodology',benchmark:'Benchmark',tool:'Tool/Setup',case:'Case Study',guide:'Guide',file:'File'};
+
+function renderEntries(){
+  const grid=document.getElementById('entriesGrid');
+  const q=(document.getElementById('repoSearch')?.value||'').toLowerCase();
+  const sort=document.getElementById('sortSelect')?.value||'newest';
+  let filtered=entries.filter(e=>{
+    if(activeFilter!=='all'&&e.tag!==activeFilter)return false;
+    if(!q)return true;
+    return (e.title+e.content+e.author).toLowerCase().includes(q);
+  });
+  if(sort==='votes')filtered.sort((a,b)=>(b.votes||0)-(a.votes||0));
+  else if(sort==='az')filtered.sort((a,b)=>a.title.localeCompare(b.title));
+  else filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if(!filtered.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><i class="ti ti-search-off"></i><h3>No entries found</h3><p>Try a different search or <a href="#" onclick="showView(\'contribute\')" style="color:var(--qp-accent)">contribute the first one</a>.</p></div>';return}
+  grid.innerHTML=filtered.map(e=>entryCardHTML(e)).join('');
+  updateBadges();
+}
+
+function entryCardHTML(e){
+  const cls=TAG_CLASS[e.tag]||'tag-guide';
+  const lbl=TAG_LABEL[e.tag]||e.tag;
+  const voted=votes[e.id];
+  const excerpt=e.content.slice(0,140).replace(/\n/g,' ')+(e.content.length>140?'…':'');
+  const dateStr=new Date(e.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const authorColor=e.author==='Insights Commons Team'?'blue':e.isFile?'green':'';
+  return`<div class="entry-card${e.isFile?' uploaded':''}" onclick="openEntry('${e.id}')">
+    <div class="entry-card-top">
+      <div class="entry-title">${esc(e.title)}</div>
+      <span class="entry-tag ${cls}">${lbl}</span>
+    </div>
+    <div class="entry-excerpt">${esc(excerpt)}</div>
+    <div class="entry-meta">
+      <div class="entry-author"><div class="author-av ${authorColor}">${(e.author||'A')[0].toUpperCase()}</div>${esc(e.author||'Anonymous')}</div>
+      <span style="color:var(--qp-border)">·</span>
+      <div class="entry-meta-chip"><i class="ti ti-calendar"></i>${dateStr}</div>
+      ${e.isFile?'<span style="color:var(--qp-border)">·</span><div class="entry-meta-chip"><i class="ti ti-file"></i>File</div>':''}
+    </div>
+    <div class="vote-row">
+      <button class="vote-btn${voted?' voted':''}" onclick="event.stopPropagation();vote('${e.id}')"><i class="ti ti-arrow-big-up"></i>${e.votes||0}</button>
+      <button class="vote-btn" onclick="event.stopPropagation();openEntry('${e.id}')"><i class="ti ti-message-circle"></i>View</button>
+      <button class="vote-btn" onclick="event.stopPropagation();askAbout('${e.id}')"><i class="ti ti-sparkles"></i>Ask AI</button>
+    </div>
+  </div>`;
+}
+
+function renderNotes(){
+  const grid=document.getElementById('notesGrid');
+  const empty=document.getElementById('notesEmpty');
+  if(!notes.length){grid.innerHTML='';empty.style.display='';return}
+  empty.style.display='none';
+  grid.innerHTML=notes.map((n,i)=>`<div class="note-card">
+    <div class="note-card-q">"${esc(n.question)}"</div>
+    <div class="note-card-a">${esc(n.answer.slice(0,300))}${n.answer.length>300?'…':''}</div>
+    <div class="note-card-meta"><span>${new Date(n.date).toLocaleDateString()}</span><span class="note-del" onclick="deleteNote(${i})">Remove</span></div>
+  </div>`).join('');
+  updateBadges();
+}
+
+// ══════════════════════════════════════════════
+//  ENTRY MODAL
+// ══════════════════════════════════════════════
+function openEntry(id){
+  const e=entries.find(x=>x.id===id);if(!e)return;
+  const cls=TAG_CLASS[e.tag]||'tag-guide';
+  const lbl=TAG_LABEL[e.tag]||e.tag;
+  const dated=new Date(e.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const bodyHTML=`<span class="entry-tag ${cls}" style="margin-bottom:12px;display:inline-block">${lbl}</span>
+    <h2 style="font-size:18px;font-weight:500;color:var(--qp-text);margin-bottom:12px">${esc(e.title)}</h2>
+    <div style="font-size:13px;color:var(--qp-light);margin-bottom:16px">By ${esc(e.author||'Anonymous')} · ${dated}</div>
+    <div style="font-size:14px;line-height:1.8;color:var(--qp-text);white-space:pre-wrap">${esc(e.content)}</div>
+    <div style="margin-top:20px;display:flex;gap:8px">
+      <button class="btn btn-primary" style="font-size:12px;padding:7px 14px" onclick="askAbout('${id}');closeModal()"><i class="ti ti-sparkles"></i>Ask AI about this</button>
+      <button class="btn btn-secondary" style="font-size:12px;padding:7px 14px" onclick="deleteEntry('${id}');closeModal()"><i class="ti ti-trash"></i>Delete</button>
+    </div>`;
+  showModal(e.title,bodyHTML);
+}
+
+function showModal(title,body){
+  let m=document.getElementById('globalModal');
+  if(!m){m=document.createElement('div');m.className='overlay';m.id='globalModal';m.innerHTML='<div class="modal"><div class="modal-hd"><div><h3 id="modalTitle"></h3></div><button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button></div><div class="modal-bd" id="modalBody"></div></div>';document.body.appendChild(m);m.addEventListener('click',e=>{if(e.target===m)closeModal()})}
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=body;
+  m.classList.add('open');
+}
+function closeModal(){document.getElementById('globalModal')?.classList.remove('open')}
+
+// ══════════════════════════════════════════════
+//  FILTER & SORT
+// ══════════════════════════════════════════════
+function setFilter(el,f){
+  activeFilter=f;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderEntries();
+}
+function toggleRepo(el,scope){
+  document.querySelectorAll('.repo-tag').forEach(t=>t.classList.remove('selected'));
+  el.classList.add('selected');
+  activeRepo=scope;
+}
+
+// ══════════════════════════════════════════════
+//  CONTRIBUTE
+// ══════════════════════════════════════════════
+let selectedTagVal='';
+function selectTag(el,tag){
+  document.querySelectorAll('#tagPicker .tag-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');selectedTagVal=tag;
+}
+
+function submitEntry(){
+  const title=document.getElementById('entryTitle').value.trim();
+  const content=document.getElementById('entryContent').value.trim();
+  const author=document.getElementById('entryAuthor').value.trim()||config.displayname||'Anonymous';
+  const topic=document.getElementById('entryTopic').value;
+  if(!title){toast('Please add a title','err');return}
+  if(!content){toast('Please add your knowledge','err');return}
+  if(!selectedTagVal){toast('Please select a category','err');return}
+  const entry={id:'e'+Date.now(),title,content,tag:selectedTagVal,topic,author,date:new Date().toISOString(),votes:0,isFile:false};
+  entries.unshift(entry);save();
+  document.getElementById('entryTitle').value='';
+  document.getElementById('entryContent').value='';
+  document.getElementById('entryAuthor').value='';
+  document.querySelectorAll('#tagPicker .tag-option').forEach(o=>o.classList.remove('selected'));
+  selectedTagVal='';
+  toast('Published to community knowledge base! 🎉');
+  showView('browse');
+}
+
+// ══════════════════════════════════════════════
+//  BULK FILE UPLOAD + PARSING
+// ══════════════════════════════════════════════
+let bulkQueue = []; // [{id, file, status:'pending'|'extracting'|'ready'|'error'|'done', text, title, tag, topic, author, error}]
+
+// Drag-and-drop on the zone
+const dz = document.getElementById('uploadZone');
+dz?.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+dz?.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+dz?.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handleBulkFiles(e.dataTransfer.files);
+});
+
+function guessCategory(filename) {
+  const n = filename.toLowerCase();
+  if (n.includes('method') || n.includes('study')) return 'method';
+  if (n.includes('benchmark') || n.includes('norm')) return 'benchmark';
+  if (n.includes('guide') || n.includes('how')) return 'guide';
+  if (n.includes('case') || n.includes('client')) return 'case';
+  if (n.includes('tip') || n.includes('trick')) return 'tip';
+  if (n.includes('tool') || n.includes('setup') || n.includes('js') || n.includes('script')) return 'tool';
+  return 'file';
+}
+
+async function handleBulkFiles(fileList) {
+  const allowed = ['pdf','docx','doc','xlsx','xls','csv','txt','md','json'];
+  const newItems = [];
+  for (const file of Array.from(fileList)) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (!allowed.includes(ext)) {
+      toast(`Skipped ${file.name} — unsupported format`, 'err'); continue;
+    }
+    newItems.push({
+      id: 'bq' + Date.now() + Math.random().toString(36).slice(2),
+      file, status: 'pending', text: '', error: '',
+      title: file.name.replace(/\.[^.]+$/, ''),
+      tag: guessCategory(file.name),
+      topic: document.getElementById('bulkTopic')?.value || '',
+      author: document.getElementById('bulkAuthor')?.value || config.displayname || ''
+    });
+  }
+  if (!newItems.length) return;
+  bulkQueue = [...bulkQueue, ...newItems];
+  renderBulkQueue();
+  document.getElementById('bulkGlobalSettings').style.display = 'block';
+  showBulkActionBar();
+  // Start extracting all new items concurrently
+  await Promise.all(newItems.map(item => extractQueueItem(item)));
+}
+
+async function extractQueueItem(item) {
+  item.status = 'extracting';
+  updateQueueCard(item);
+  try {
+    const ext = item.file.name.split('.').pop().toLowerCase();
+    let text = '';
+    if (ext === 'pdf') text = await extractPDF(item.file);
+    else if (ext === 'docx' || ext === 'doc') text = await extractDOCX(item.file);
+    else if (ext === 'xlsx' || ext === 'xls') text = await extractExcel(item.file);
+    else {
+      text = await readText(item.file);
+      if (ext === 'json') { try { text = JSON.stringify(JSON.parse(text), null, 2); } catch(e) {} }
+    }
+    text = text.trim();
+    if (!text) throw new Error('No readable text found');
+    item.text = text;
+    item.status = 'ready';
+  } catch(err) {
+    item.error = err.message;
+    item.status = 'error';
+  }
+  updateQueueCard(item);
+  updateBulkProgress();
+}
+
+function renderBulkQueue() {
+  const container = document.getElementById('bulkQueue');
+  container.innerHTML = bulkQueue.map(item => buildQueueCardHTML(item)).join('');
+  updateBulkProgress();
+}
+
+function buildQueueCardHTML(item) {
+  const statusLabel = { pending:'Pending', extracting:'Extracting…', ready:'Ready', error:'Error', done:'Saved ✓' }[item.status] || '';
+  const iconClass = item.status === 'error' ? 'err' : item.status === 'done' || item.status === 'ready' ? 'ok' : '';
+  const iconName = item.status === 'error' ? 'ti-alert-circle' : item.status === 'extracting' ? 'ti-loader-2' : item.status === 'done' ? 'ti-check' : 'ti-file-text';
+  const sizeKB = (item.file.size / 1024).toFixed(0);
+  const charCount = item.text ? item.text.length.toLocaleString() + ' chars extracted' : (item.error || '');
+  const catOptions = [
+    ['file','📄 File'],['tip','💡 Tip'],['method','📊 Methodology'],
+    ['benchmark','📈 Benchmark'],['tool','🔧 Tool / Setup'],['case','📋 Case Study'],['guide','📖 Guide']
+  ].map(([v,l]) => `<option value="${v}"${item.tag===v?' selected':''}>${l}</option>`).join('');
+  const topicOptions = [
+    ['','Any topic'],['methodology','Survey Methodology'],['cx','CX / VoC'],
+    ['technical','Technical / JS'],['analysis','Data Analysis'],
+    ['benchmarks','Benchmarks & Norms'],['platform','QuestionPro Platform'],['other','Other']
+  ].map(([v,l]) => `<option value="${v}"${item.topic===v?' selected':''}>${l}</option>`).join('');
+  const bodyDisplay = item.status === 'ready' || item.status === 'error' ? '' : 'display:none';
+  return `<div class="queue-card ${item.status}" id="qcard-${item.id}">
+    <div class="qc-header" onclick="toggleQueueCard('${item.id}')">
+      <div class="qc-icon ${iconClass}"><i class="ti ${iconName}${item.status==='extracting'?' spinning':''}"></i></div>
+      <div class="qc-name">
+        <div class="qc-filename">${esc(item.file.name)}</div>
+        <div class="qc-filemeta">${sizeKB}KB · ${charCount}</div>
+      </div>
+      <span class="qc-status ${item.status}">${statusLabel}</span>
+      ${item.status!=='done'?`<button class="qc-remove" onclick="event.stopPropagation();removeQueueItem('${item.id}')" title="Remove"><i class="ti ti-x"></i></button>`:''}
+      <i class="ti ti-chevron-down qc-toggle" id="qtoggle-${item.id}"></i>
+    </div>
+    <div class="qc-body" id="qbody-${item.id}" style="${bodyDisplay}">
+      ${item.status==='error'
+        ? `<div style="padding:10px 0;font-size:13px;color:var(--qp-red)"><i class="ti ti-alert-circle"></i> ${esc(item.error)}</div>`
+        : `<div class="qc-fields">
+            <div class="qc-field">
+              <label>Title</label>
+              <input type="text" value="${esc(item.title)}" onchange="updateQueueField('${item.id}','title',this.value)"/>
+            </div>
+            <div class="qc-field">
+              <label>Category</label>
+              <select onchange="updateQueueField('${item.id}','tag',this.value)">${catOptions}</select>
+            </div>
+            <div class="qc-field">
+              <label>Topic</label>
+              <select onchange="updateQueueField('${item.id}','topic',this.value)">${topicOptions}</select>
+            </div>
+            <div class="qc-field">
+              <label>Contributor</label>
+              <input type="text" value="${esc(item.author)}" placeholder="Your name" onchange="updateQueueField('${item.id}','author',this.value)"/>
+            </div>
+            <div class="qc-field full">
+              <label>Extracted content <span style="font-weight:400;color:var(--qp-light)">(edit if needed)</span></label>
+              <textarea onchange="updateQueueField('${item.id}','text',this.value)">${esc(item.text)}</textarea>
+              <div class="qc-char-count">${item.text.length.toLocaleString()} chars</div>
+            </div>
+          </div>`
+      }
+    </div>
+  </div>`;
+}
+
+function updateQueueCard(item) {
+  const card = document.getElementById('qcard-'+item.id);
+  if (card) card.outerHTML = buildQueueCardHTML(item);
+}
+
+function toggleQueueCard(id) {
+  const body = document.getElementById('qbody-'+id);
+  const tog = document.getElementById('qtoggle-'+id);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  tog?.classList.toggle('open', !isOpen);
+}
+
+function updateQueueField(id, field, value) {
+  const item = bulkQueue.find(i => i.id === id);
+  if (item) item[field] = value;
+}
+
+function removeQueueItem(id) {
+  bulkQueue = bulkQueue.filter(i => i.id !== id);
+  renderBulkQueue();
+  if (!bulkQueue.length) {
+    document.getElementById('bulkGlobalSettings').style.display = 'none';
+    document.getElementById('bulkActionBar').style.display = 'none';
+  }
+}
+
+function applyBulkDefaults() {
+  const cat = document.getElementById('bulkCategory').value;
+  const topic = document.getElementById('bulkTopic').value;
+  const author = document.getElementById('bulkAuthor').value;
+  bulkQueue.forEach(item => {
+    if (item.status === 'ready') {
+      if (cat) item.tag = cat;
+      if (topic) item.topic = topic;
+      if (author) item.author = author;
+    }
+  });
+  renderBulkQueue();
+  toast('Defaults applied to all ready files ✓');
+}
+
+function updateBulkProgress() {
+  const total = bulkQueue.length;
+  const ready = bulkQueue.filter(i => i.status === 'ready').length;
+  const extracting = bulkQueue.filter(i => i.status === 'extracting').length;
+  const done = bulkQueue.filter(i => i.status === 'done').length;
+  const errs = bulkQueue.filter(i => i.status === 'error').length;
+  const badge = document.getElementById('bulk-queued-badge');
+  if (badge) { badge.textContent = ready + ' ready'; badge.style.display = ready ? '' : 'none'; }
+  const prog = document.getElementById('bulkProgress');
+  if (prog) prog.textContent = `${total} file${total!==1?'s':''} · ${ready} ready · ${extracting ? extracting+' extracting · ' : ''}${done} saved${errs?' · '+errs+' error':''}`;
+  const btn = document.getElementById('bulkSubmitBtn');
+  if (btn) btn.disabled = ready === 0;
+}
+
+function showBulkActionBar() {
+  const bar = document.getElementById('bulkActionBar');
+  if (bar) bar.style.display = 'flex';
+  updateBulkProgress();
+}
+
+function clearBulkQueue() {
+  bulkQueue = [];
+  document.getElementById('bulkQueue').innerHTML = '';
+  document.getElementById('bulkGlobalSettings').style.display = 'none';
+  document.getElementById('bulkActionBar').style.display = 'none';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('bulk-queued-badge').style.display = 'none';
+}
+
+function submitAllUploads() {
+  const readyItems = bulkQueue.filter(i => i.status === 'ready');
+  if (!readyItems.length) { toast('No files ready to save', 'err'); return; }
+  let saved = 0;
+  readyItems.forEach(item => {
+    if (!item.title || !item.text) return;
+    entries.unshift({
+      id: 'e' + Date.now() + Math.random().toString(36).slice(2),
+      title: item.title, content: item.text,
+      tag: item.tag || 'file', topic: item.topic || '',
+      author: item.author || config.displayname || 'Anonymous',
+      date: new Date().toISOString(), votes: 0, isFile: true
+    });
+    item.status = 'done';
+    saved++;
+  });
+  save();
+  renderBulkQueue();
+  updateBulkProgress();
+  toast(`${saved} file${saved!==1?'s':''} added to knowledge base ✓`);
+  setTimeout(() => { clearBulkQueue(); showView('browse'); }, 1200);
+}
+
+function readText(f){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.onerror=()=>j(new Error('Read failed'));rd.readAsText(f,'UTF-8')})}
+function readBuf(f){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.onerror=()=>j(new Error('Read failed'));rd.readAsArrayBuffer(f)})}
+async function extractPDF(f){const buf=await readBuf(f);const pdf=await pdfjsLib.getDocument({data:buf}).promise;const pages=[];for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const ct=await pg.getTextContent();pages.push(ct.items.map(x=>x.str).join(' '))}return pages.join('\n\n')}
+async function extractDOCX(f){const buf=await readBuf(f);const r=await mammoth.extractRawText({arrayBuffer:buf});return r.value}
+async function extractExcel(f){const buf=await readBuf(f);const wb=XLSX.read(buf,{type:'array'});return wb.SheetNames.map(n=>'[Sheet: '+n+']\n'+XLSX.utils.sheet_to_csv(wb.Sheets[n])).filter(s=>s.trim()).join('\n\n')}
+
+// ══════════════════════════════════════════════
+//  VOTING
+// ══════════════════════════════════════════════
+function vote(id){
+  const e=entries.find(x=>x.id===id);if(!e)return;
+  if(votes[id]){delete votes[id];e.votes=Math.max(0,(e.votes||1)-1)}
+  else{votes[id]=true;e.votes=(e.votes||0)+1}
+  save();renderEntries();
+}
+function deleteEntry(id){entries=entries.filter(e=>e.id!==id);save();renderEntries();toast('Entry removed')}
+function askAbout(id){
+  const e=entries.find(x=>x.id===id);if(!e)return;
+  showView('ai');
+  const inp=document.getElementById('chatInput');
+  inp.value='Tell me more about: '+e.title;
+  inp.focus();
+  autoResize(inp);
+  document.getElementById('sendBtn').disabled=false;
+}
+
+// ══════════════════════════════════════════════
+//  AI CHAT — QP ROUTER
+// ══════════════════════════════════════════════
+function buildContext(question){
+  // Scope filter
+  let pool = entries;
+  if(activeRepo==='methodology') pool = entries.filter(e=>e.topic==='methodology');
+  else if(activeRepo==='technical') pool = entries.filter(e=>e.topic==='technical');
+  else if(activeRepo==='cx') pool = entries.filter(e=>e.topic==='cx');
+  else if(activeRepo==='uploads') pool = entries.filter(e=>e.isFile);
+
+  if(!pool.length) return 'No knowledge entries found. Encourage users to add content via the Contribute or Upload sections.';
+
+  // Detect short/conversational follow-ups that have no real search signal
+  const stopWords = new Set(['a','an','the','is','are','was','were','how','what','why','when','where','which','who','do','does','did','i','my','me','can','will','would','should','could','to','of','in','on','for','with','and','or','but','not','be','have','has','had','it','its','this','that','these','those','about','sure','yes','no','ok','okay','please','go','ahead','help','draft','write','create','make','show','tell','more','also','that','great','thanks']);
+  const qWords = (question||'').toLowerCase().split(/\W+/).filter(w=>w.length>2&&!stopWords.has(w));
+
+  // If the follow-up has no meaningful search words, anchor to the last substantive user question
+  let searchWords = qWords;
+  if(qWords.length < 2 && chatHistory.length >= 2){
+    const prevQuestions = chatHistory
+      .filter(m=>m.role==='user')
+      .slice(-3)
+      .map(m=>m.content)
+      .join(' ');
+    searchWords = prevQuestions.toLowerCase().split(/\W+/).filter(w=>w.length>2&&!stopWords.has(w));
+  }
+
+  const scored = pool.map(e=>{
+    const haystack = (e.title+' '+e.content+' '+e.topic+' '+TAG_LABEL[e.tag]).toLowerCase();
+    const kwScore = searchWords.reduce((sum,w)=> sum + (haystack.includes(w)?1:0), 0);
+    const voteScore = Math.log1p(e.votes||0) * 0.3;
+    return { e, score: kwScore + voteScore };
+  });
+
+  scored.sort((a,b)=>b.score-a.score);
+  const top = scored.slice(0,6).map(s=>s.e);
+
+  // Smart chunking: for large entries, find the most relevant section
+  // rather than always taking the first 1200 chars
+  function bestChunk(entry, words, maxLen) {
+    const txt = entry.content;
+    if (txt.length <= maxLen) return txt;
+    // Score every 400-char window, pick the highest-scoring one
+    const windowSize = 400;
+    const step = 200;
+    let bestScore = -1, bestStart = 0;
+    for (let i = 0; i < txt.length - windowSize; i += step) {
+      const window = txt.slice(i, i + windowSize).toLowerCase();
+      const score = words.reduce((s, w) => s + (window.includes(w) ? 1 : 0), 0);
+      if (score > bestScore) { bestScore = score; bestStart = i; }
+    }
+    // Take context around the best window: 400 chars before + 1600 chars after
+    const start = Math.max(0, bestStart - 400);
+    const end = Math.min(txt.length, bestStart + 1600);
+    const chunk = txt.slice(start, end);
+    return (start > 0 ? '[…] ' : '') + chunk + (end < txt.length ? ' […]' : '');
+  }
+
+  return top.map((e,i)=> {
+    const chunk = bestChunk(e, searchWords, 2000);
+    return `[Entry ${i+1}: "${e.title}" | Category: ${TAG_LABEL[e.tag]||e.tag} | Topic: ${e.topic||'general'} | Votes: ${e.votes||0}]\n${chunk}`;
+  }).join('\n\n---\n\n')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
+    .replace(/\\u[0-9a-fA-F]{4}/g, '')
+    .slice(0, 8000)
+    .trim();
+}
+
+async function sendChat(override){
+  const inp=document.getElementById('chatInput');
+  const text=override||inp.value.trim();
+  if(!text||isChatBusy)return;
+  hideWelcome();
+  if(!override){inp.value='';autoResize(inp)}
+  isChatBusy=true;
+  document.getElementById('sendBtn').disabled=true;
+  appendMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  const typing=showTyping();
+  try{
+    const knowledgeContext = buildContext(text);
+
+    // Build conversation history — last 3 full exchanges (6 turns), well-labelled
+    const recentHistory = chatHistory.slice(-6);
+    const historyStr = recentHistory.length > 0
+      ? recentHistory.map(m =>
+          (m.role === 'user' ? '[User]' : '[Assistant]') + ' ' + m.content.slice(0, 800)
+        ).join('\n\n')
+      : '';
+
+    let aiResponse = '';
+
+    const proxyUrl = config.proxyUrl || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev/';
+
+    if (proxyUrl) {
+      const res = await fetch(proxyUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'api-key': config.apiKey || '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4'
+        },
+        body: JSON.stringify({
+          user_id: parseInt(config.userId || '4379318'),
+          prompt_version: 2,
+          use_case_name: config.useCase || 'knowledge-base',
+          organization_id: parseInt(config.orgId || '4285979'),
+          data_center: 'US',
+          input_data: {
+            input: [
+              { key: 'content',              value: '' },
+              { key: 'QUESTION',             value: text },
+              { key: 'CONTEXT',              value: knowledgeContext },
+              { key: 'CONVERSATION_HISTORY', value: historyStr || '' }
+            ]
+          }
+        })
+      });
+      const data = await res.json();
+      // QP Router wraps the answer — unwrap all possible shapes
+      // Extract response — matches QP Router's actual response shape
+      // result.documents[0].output is an array of {key,value} — find key==='content'
+      let aiResponse_raw = null;
+      if (data?.result?.documents?.[0]?.output) {
+        const outputArr = data.result.documents[0].output;
+        const contentItem = outputArr.find(o => o.key === 'content');
+        aiResponse_raw = contentItem?.value || outputArr[0]?.value;
+      }
+      aiResponse = aiResponse_raw
+        || data?.response
+        || data?.data?.response
+        || data?.choices?.[0]?.message?.content
+        || data?.result?.content
+        || data?.answer
+        || data?.output
+        || data?.message
+        || (typeof data === 'string' ? data : null)
+        || JSON.stringify(data, null, 2);
+
+    } else {
+      // ── Path B: Anthropic API directly (works from any browser, no proxy needed) ──
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1200,
+          system: systemPrompt,
+          messages: chatHistory.map(m => ({ role: m.role, content: m.content }))
+        })
+      });
+      const data = await res.json();
+      aiResponse = data.content?.[0]?.text || 'Sorry, something went wrong.';
+    }
+    typing.remove();
+    // Parse structured response
+    const refs=extractRefs(aiResponse,entries);
+    appendMsg('assistant',aiResponse,refs,text);
+    chatHistory.push({role:'assistant',content:aiResponse});
+  }catch(err){
+    typing.remove();
+    appendMsg('assistant','Something went wrong connecting to the AI. Check your router configuration in Settings.');
+  }
+  isChatBusy=false;
+  document.getElementById('sendBtn').disabled=false;
+}
+
+function extractRefs(text,entries){
+  // Find entry names mentioned in response
+  const refs=[];
+  entries.forEach(e=>{
+    if(text.toLowerCase().includes(e.title.toLowerCase().slice(0,25))){refs.push(e)}
+  });
+  return refs.slice(0,5);
+}
+
+function appendMsg(role,content,refs=[],question=''){
+  const area=document.getElementById('chatArea');
+  const div=document.createElement('div');
+  div.className='msg '+(role==='user'?'user':'ai');
+  const av=role==='user'
+    ?`<div class="msg-av" style="background:var(--qp-orange)">${(config.displayname||'U')[0].toUpperCase()}</div>`
+    :`<div class="msg-av"><i class="ti ti-sparkles" style="font-size:12px"></i></div>`;
+  const bubble=document.createElement('div');
+  bubble.className='msg-body';
+  const bub=document.createElement('div');
+  bub.className='msg-bubble';
+  bub.innerHTML=fmtMsg(content);
+  bubble.appendChild(bub);
+  if(role==='assistant'){
+    if(refs.length){
+      const refsDiv=document.createElement('div');
+      refsDiv.className='file-refs';
+      refsDiv.innerHTML=`<div class="file-refs-label">File references</div>`+
+        refs.map(r=>`<a class="file-ref" onclick="openEntry('${r.id}')"><i class="ti ti-file-text"></i>${esc(r.title)}</a>`).join('');
+      bub.appendChild(refsDiv);
+    }
+    const acts=document.createElement('div');
+    acts.className='msg-actions';
+    acts.innerHTML=`<button class="msg-act-btn" onclick="saveNote(this,'${esc(question).replace(/'/g,"\\'")}','${esc(content).replace(/'/g,"\\'")}')"><i class="ti ti-bookmark"></i>Save note</button>
+      <button class="msg-act-btn" onclick="copyText(this,'${esc(content).replace(/'/g,"\\'")}')"><i class="ti ti-copy"></i>Copy</button>`;
+    bubble.appendChild(acts);
+  }
+  div.innerHTML=av;div.appendChild(bubble);
+  area.appendChild(div);area.scrollTop=area.scrollHeight;
+}
+
+function showTyping(){
+  const area=document.getElementById('chatArea');
+  const div=document.createElement('div');div.className='msg ai';
+  div.innerHTML=`<div class="msg-av"><i class="ti ti-sparkles" style="font-size:12px"></i></div><div class="msg-body"><div class="msg-bubble"><div class="typing-ind"><span></span><span></span><span></span></div></div></div>`;
+  area.appendChild(div);area.scrollTop=area.scrollHeight;return div;
+}
+function hideWelcome(){document.getElementById('aiWelcome')?.remove()}
+function clearChat(){chatHistory=[];const area=document.getElementById('chatArea');area.innerHTML='';area.insertAdjacentHTML('afterbegin',`<div class="ai-welcome" id="aiWelcome"><div class="ai-welcome-badge"><i class="ti ti-brain"></i></div><h2>The Insights World's Collective Brain</h2><p>Ask about survey methodology, benchmark studies, JS branching logic, data analysis approaches, CX programme design — anything insights.</p><div class="starter-chips"><div class="starter-chip" onclick="askStarter(this)">How should I structure a benchmark study?</div><div class="starter-chip" onclick="askStarter(this)">Best JS setups for complex branching logic?</div><div class="starter-chip" onclick="askStarter(this)">Creative ways to analyze open-ended responses?</div><div class="starter-chip" onclick="askStarter(this)">How do I design a VoC programme from scratch?</div></div></div>`)}
+function askStarter(el){sendChat(el.textContent)}
+function handleChatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}document.getElementById('sendBtn').disabled=!e.target.value.trim()||isChatBusy}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';document.getElementById('sendBtn').disabled=!el.value.trim()||isChatBusy}
+document.getElementById('chatInput')?.addEventListener('input',function(){document.getElementById('sendBtn').disabled=!this.value.trim()||isChatBusy})
+
+// ══════════════════════════════════════════════
+//  NOTES
+// ══════════════════════════════════════════════
+function saveNote(btn,q,a){
+  notes.unshift({question:q,answer:a,date:new Date().toISOString()});
+  save();renderNotes();btn.classList.add('saved');btn.innerHTML='<i class="ti ti-check"></i>Saved';
+  toast('Saved to notes ✓');
+}
+function deleteNote(i){notes.splice(i,1);save();renderNotes()}
+function copyText(btn,text){
+  navigator.clipboard.writeText(text).then(()=>{btn.innerHTML='<i class="ti ti-check"></i>Copied';setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i>Copy'},1500)})
+}
+
+// ══════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════
+// Default credentials — override in Settings if needed
+const QP_DEFAULTS = {
+  apiKey:  '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4',
+  userId:  '4379318',
+  orgId:   '4285979',
+  useCase: 'knowledge-base'
+};
+
+function applyConfig(){
+  document.getElementById('cfg-apikey').value      = config.apiKey      || QP_DEFAULTS.apiKey;
+  document.getElementById('cfg-userid').value      = config.userId      || QP_DEFAULTS.userId;
+  document.getElementById('cfg-orgid').value       = config.orgId       || QP_DEFAULTS.orgId;
+  document.getElementById('cfg-usecase').value     = config.useCase     || QP_DEFAULTS.useCase;
+  document.getElementById('cfg-displayname').value = config.displayname || '';
+  document.getElementById('cfg-defaultscope').value= config.defaultScope|| 'all';
+}
+function loadConfigForm(){applyConfig()}
+function saveConfig(){
+  config.apiKey=document.getElementById('cfg-apikey').value.trim();
+  config.userId=document.getElementById('cfg-userid').value.trim();
+  config.orgId=document.getElementById('cfg-orgid').value.trim();
+  config.useCase=document.getElementById('cfg-usecase').value.trim();
+  save();toast('Configuration saved ✓');
+}
+function savePrefs(){
+  config.displayname=document.getElementById('cfg-displayname').value.trim();
+  config.defaultScope=document.getElementById('cfg-defaultscope').value;
+  save();toast('Preferences saved ✓');
+}
+async function testConnection(){
+  toast('Testing connection to QP AI Router…');
+  const key = document.getElementById('cfg-apikey').value.trim() || '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4';
+  const uid = parseInt(document.getElementById('cfg-userid').value.trim() || '4379318');
+  const oid = parseInt(document.getElementById('cfg-orgid').value.trim() || '4285979');
+  const uc  = document.getElementById('cfg-usecase').value.trim() || 'knowledge-base';
+  try{
+    const res=await fetch('https://airouter-api.questionpro.com/v1/prompt-routes',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','api-key':key},
+      body:JSON.stringify({user_id:uid,prompt_version:1,use_case_name:uc,organization_id:oid,data_center:'US',input_data:{input:[{key:'content',value:'ping test'}]}})
+    });
+    const data=await res.json();
+    if(res.ok) toast('✓ Connected to QP AI Router successfully');
+    else toast('Connection failed: '+res.status+' — '+(data?.message||'check credentials'),'err');
+  }catch(e){toast('Connection failed: '+e.message,'err')}
+}
+
+// ══════════════════════════════════════════════
+//  DATA IMPORT / EXPORT
+// ══════════════════════════════════════════════
+function exportData(){
+  const blob=new Blob([JSON.stringify({entries,notes,config,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='insights-commons-export.json';a.click();
+}
+function importData(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(data.entries){entries=[...entries,...data.entries.filter(ne=>!entries.find(ex=>ex.id===ne.id))]}
+      if(data.notes){notes=[...notes,...data.notes]}
+      save();renderAll();toast('Imported '+data.entries?.length+' entries ✓');
+    }catch(err){toast('Invalid JSON file','err')}
+  };r.readAsText(f);
+}
+function clearAll(){
+  if(!confirm('Clear ALL entries, notes, and configuration? This cannot be undone.'))return;
+  entries=[];notes=[];votes={};save();renderAll();toast('All data cleared');
+}
+
+// ══════════════════════════════════════════════
+//  UTILITIES
+// ══════════════════════════════════════════════
+function fmtMsg(t){
+  t = t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t = t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  t = t.replace(/\*(.+?)\*/g,'<em>$1</em>');
+  t = t.replace(/`(.+?)`/g,'<code style="background:#F7F8FA;padding:1px 5px;border-radius:3px;font-size:.88em;border:1px solid #E5E7EB">$1</code>');
+  const paras = t.split(/\n\n+/);
+  if(paras.length > 1){
+    return paras.map(p => '<p style="margin:0 0 10px;line-height:1.7">' + p.replace(/\n/g,'<br>') + '</p>').join('');
+  }
+  return '<p style="margin:0;line-height:1.7">' + t.replace(/\n/g,'<br>') + '</p>';
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg,type){
+  const t=document.getElementById('toast');
+  const i=t.querySelector('i');
+  i.className=type==='err'?'ti ti-alert-circle':'ti ti-circle-check';
+  t.className='toast'+(type==='err'?' err':'');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+load();
+</script>
+</body>
+</html>
