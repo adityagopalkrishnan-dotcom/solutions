@@ -1,90 +1,174 @@
-import os
 import json
+import os
 import re
+import sys
+import fnmatch
 
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_PATH = os.path.join(REPO_ROOT, "index.json")
+FILE_PATTERNS = [
+    "QuestionPro_API_*.txt",
+    "QuestionPro_Help_*.txt"
+]
 
-SKIP_FILES = {"index.json", "build_index.py", "index.html", "worker.js", "README.md"}
+OUTPUT_FILE = "index.json"
+
+
+def get_files():
+    files = []
+    for f in os.listdir("."):
+        for pattern in FILE_PATTERNS:
+            if fnmatch.fnmatch(f, pattern):
+                files.append(f)
+                break
+    return sorted(files)
+
 
 def extract_keywords(text, max_keywords=20):
-      stopwords = {"the","a","an","in","is","it","of","to","and","or","for","with","this","that","are","was","on","at","by","from","as","be","has","have","had","not","but","if","its","also","can","will","all","more","about","their","they","which","when","how"}
-      words = re.findall(r'\b[a-zA-Z]{4,}\b', text.lower())
-      freq = {}
-      for w in words:
-                if w not in stopwords:
-                              freq[w] = freq.get(w, 0) + 1
-                      return [w for w, _ in sorted(freq.items(), key=lambda x: -x[1])[:max_keywords]]
+    stopwords = set([
+        "the","a","an","and","or","but","in","on","at","to","for","of","with",
+        "is","are","was","were","be","been","has","have","had","do","does","did",
+        "this","that","these","those","it","its","by","from","as","not","can",
+        "will","you","your","we","our","they","their","what","how","when","where",
+        "which","who","if","so","all","any","more","also","use","used","using",
+        "may","into","than","then","about","up","out","per","each","such","other"
+    ])
+    words = re.findall(r"[a-z]{3,}", text.lower())
+    freq = {}
+    for w in words:
+        if w not in stopwords:
+            freq[w] = freq.get(w, 0) + 1
+    sorted_words = sorted(freq.items(), key=lambda x: -x[1])
+    return [w for w, _ in sorted_words[:max_keywords]]
 
-  def parse_help_file(data, filename):
-        entries = []
-        article = data.get("article", {})
-        meta = data.get("meta", {})
-        title = article.get("title", filename)
-        content = article.get("content", "")
-        product = meta.get("product", "unknown")
-        category = article.get("category", "")
-        entries.append({"title": title, "product": product, "category": category, "tags": extract_keywords(f"{title} {content}"), "path": filename, "type": "help", "summary": content[:300].strip()})
+
+def parse_file(filepath):
+    entries = []
+    filename = os.path.basename(filepath)
+
+    if "_API_" in filename:
+        file_type = "api"
+    else:
+        file_type = "help"
+
+    match = re.search(r"QuestionPro_(?:API|Help)_(.+)\.txt$", filename, re.IGNORECASE)
+    product = match.group(1).lower() if match else "unknown"
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            raw = f.read()
+    except Exception as e:
+        print(f"  ERROR reading {filepath}: {e}")
         return entries
 
-def parse_api_file(data, filename):
-      entries = []
-      meta = data.get("meta", {})
-      product = meta.get("product", "unknown")
-      articles = data.get("articles", [])
-      for article in articles:
-                title = article.get("title", "")
-                content = article.get("content", "")
-                article_id = article.get("id", "")
-                entries.append({"title": title, "product": product, "category": article.get("category", ""), "tags": extract_keywords(f"{title} {content}"), "path": filename, "article_id": article_id, "type": "api", "summary": content[:300].strip()})
-            return entries
-
-def parse_combined_file(data, filename):
-      entries = []
-    for article in data:
-              title = article.get("title", "")
-              content = article.get("content", "")
-              product = article.get("product", "unknown")
-              article_id = article.get("id", "")
-              entries.append({"title": title, "product": product, "category": article.get("category", ""), "tags": extract_keywords(f"{title} {content}"), "path": filename, "article_id": article_id, "type": "combined", "summary": content[:300].strip()})
-          return entries
-
-def process_file(filepath, filename):
-      entries = []
     try:
-              with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
-                            raw = f.read().strip()
-                        try:
-                                      data = json.loads(raw)
-except json.JSONDecodeError:
-            entries.append({"title": filename.replace(".txt", "").replace("_", " "), "product": "general", "category": "", "tags": extract_keywords(raw), "path": filename, "type": "text", "summary": raw[:300].strip()})
-            return entries
-        if isinstance(data, list):
-                      entries = parse_combined_file(data, filename)
-elif isinstance(data, dict):
-            if "articles" in data:
-                              entries = parse_api_file(data, filename)
-elif "article" in data:
-                entries = parse_help_file(data, filename)
-else:
-                content = json.dumps(data)
-                  entries.append({"title": filename.replace(".txt", "").replace("_", " "), "product": data.get("product", "general"), "category": "", "tags": extract_keywords(content), "path": filename, "type": "json", "summary": content[:300].strip()})
-except Exception as e:
-        print(f"  Error: {e}")
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        keywords = extract_keywords(raw)
+        entries.append({
+            "title": filename.replace(".txt", "").replace("_", " "),
+            "product": product,
+            "type": file_type,
+            "category": file_type,
+            "path": filename,
+            "article_id": None,
+            "summary": raw[:300].strip(),
+            "tags": keywords
+        })
+        return entries
+
+    if isinstance(data, dict) and "articles" in data:
+        articles = data["articles"]
+        for article in articles:
+            art_id = str(article.get("id", ""))
+            title = article.get("title", "Untitled")
+            content = article.get("content", "")
+            category = article.get("product", product)
+            keywords = extract_keywords(f"{title} {content}")
+            entries.append({
+                "title": title,
+                "product": product,
+                "type": file_type,
+                "category": category,
+                "path": filename,
+                "article_id": art_id,
+                "summary": content[:300].strip(),
+                "tags": keywords
+            })
+        return entries
+
+    if isinstance(data, dict) and "article" in data:
+        article = data["article"]
+        art_id = str(article.get("id", ""))
+        title = article.get("title", "Untitled")
+        content = article.get("content", "")
+        category = article.get("product", product)
+        keywords = extract_keywords(f"{title} {content}")
+        entries.append({
+            "title": title,
+            "product": product,
+            "type": file_type,
+            "category": category,
+            "path": filename,
+            "article_id": art_id,
+            "summary": content[:300].strip(),
+            "tags": keywords
+        })
+        return entries
+
+    if isinstance(data, list):
+        for item in data:
+            art_id = str(item.get("id", ""))
+            title = item.get("title", "Untitled")
+            content = item.get("content", item.get("text", ""))
+            category = item.get("product", product)
+            keywords = extract_keywords(f"{title} {content}")
+            entries.append({
+                "title": title,
+                "product": product,
+                "type": file_type,
+                "category": category,
+                "path": filename,
+                "article_id": art_id,
+                "summary": content[:300].strip(),
+                "tags": keywords
+            })
+        return entries
+
+    text = json.dumps(data)
+    keywords = extract_keywords(text)
+    entries.append({
+        "title": filename.replace(".txt", "").replace("_", " "),
+        "product": product,
+        "type": file_type,
+        "category": file_type,
+        "path": filename,
+        "article_id": None,
+        "summary": text[:300].strip(),
+        "tags": keywords
+    })
     return entries
 
+
 def main():
-      all_entries = []
-    txt_files = [f for f in os.listdir(REPO_ROOT) if f.endswith(".txt") and f not in SKIP_FILES]
-    print(f"Found {len(txt_files)} .txt files to index...\n")
-    for filename in sorted(txt_files):
-              filepath = os.path.join(REPO_ROOT, filename)
-        entries = process_file(filepath, filename)
-        print(f"  {filename} -> {len(entries)} entries")
+    files = get_files()
+    print(f"Found {len(files)} files to index:")
+    for f in files:
+        print(f"  {f}")
+
+    all_entries = []
+    for filepath in files:
+        print(f"\nProcessing: {filepath}")
+        entries = parse_file(filepath)
+        print(f"  -> {len(entries)} entries")
         all_entries.extend(entries)
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-              json.dump(all_entries, f, indent=2)
-    print(f"\nDone! {len(all_entries)} total entries written to index.json")
+
+    print(f"\nTotal entries: {len(all_entries)}")
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(all_entries, f, indent=2, ensure_ascii=False)
+
+    size_kb = os.path.getsize(OUTPUT_FILE) / 1024
+    print(f"Written to {OUTPUT_FILE} ({size_kb:.1f} KB)")
+
 
 if __name__ == "__main__":
-      main()
+    main()
