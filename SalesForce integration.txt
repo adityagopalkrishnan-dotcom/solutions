@@ -1,0 +1,390 @@
++------------------------------------------------------------------------------------------------------+
+| SALESFORCE → QUESTIONPRO                                                                             |
+|                                                                                                      |
+| Integration                                                                                          |
+|                                                                                                      |
+| Cookbook                                                                                             |
+|                                                                                                      |
+| Triggering QuestionPro surveys automatically from Salesforce — built for Hewlett Packard Enterprise. |
+|                                                                                                      |
+| Step-by-step: Named Credentials → Flow Builder → HTTP Callout → Survey Delivery                      |
+|                                                                                                      |
+| QuestionPro CX | Internal Use                                                                        |
++======================================================================================================+
++------------------------------------------------------------------------------------------------------+
+
+Hewlett Packard Enterprise
+
++------------------------------------------------------------------------------------------------------+
+| SALESFORCE → QUESTIONPRO                                                                             |
+|                                                                                                      |
+| Integration                                                                                          |
+|                                                                                                      |
+| Cookbook                                                                                             |
+|                                                                                                      |
+| Triggering QuestionPro surveys automatically from Salesforce — built for Hewlett Packard Enterprise. |
+|                                                                                                      |
+| Step-by-step: Named Credentials → Flow Builder → HTTP Callout → Survey Delivery                      |
+|                                                                                                      |
+| QuestionPro CX | Internal Use                                                                        |
++======================================================================================================+
++------------------------------------------------------------------------------------------------------+
+
+1. The Client & The Problem
+
++------------------------------------+----------------------------------------------+
+| CLIENT                             | PLATFORM                                     |
+|                                    |                                              |
+| Hewlett Packard Enterprise         | Salesforce CRM → QuestionPro CX Surveys      |
+|                                    |                                              |
+| Global Technology | B2B Enterprise | Triggered via Salesforce Flow + HTTP Callout |
++====================================+==============================================+
++------------------------------------+----------------------------------------------+
+
+Background
+
+Hewlett Packard Enterprise manages a large global customer base across enterprise technology — infrastructure, cloud, and as-a-service products. Their customer relationships are managed in Salesforce, where support cases, sales cycles, and account interactions are tracked at scale. HPE already used QuestionPro to run CX surveys, but the two systems were disconnected. Surveys were triggered manually or by batch process, meaning feedback arrived days after the key moment — or not at all.
+
+The HPE CX team wanted to capture feedback at exactly the right moment: immediately after a support case was closed, a product delivery was confirmed, or a critical account milestone was reached. These are the moments when the experience is freshest in the customer's mind and when the feedback is most actionable. The gap was that Salesforce, where these events were recorded in real time, had no native way to dispatch a QuestionPro survey automatically when they occurred.
+
+The Specific Gaps
+
+-   Survey invitations were sent manually or via scheduled batch, often days after the moment that mattered, when recall and motivation to respond had dropped significantly.
+
+-   There was no way to pass Salesforce record data (case number, account ID, contact details, product information) directly into the survey as custom variables — meaning the team couldn't pre-populate the survey or tie responses back to specific CRM records.
+
+-   QuestionPro did not have native integration with Salesforce for survey distribution.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The core requirement
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  When a defined event occurs in Salesforce — a case closes, a delivery is confirmed, a service milestone is hit — a QuestionPro survey invitation must be dispatched to the relevant contact automatically, within seconds, with the relevant account and case data pre-loaded. No manual steps. No batch delay. No data disconnection.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What Success Looked Like
+
+A support engineer closes a case in Salesforce. Within seconds — without any manual action — the customer receives a personalised survey invitation from HPE. The survey is pre-loaded with the case number and account context. The response comes back into QuestionPro, tied to the record. The CX team sees real-time sentiment data in the dashboard. If the response is Very Negative, the system can trigger a follow-up alert back into Salesforce. The entire loop is automated and traceable.
+
+2. The Solution: Salesforce Flow + QuestionPro API
+
+The solution uses Salesforce's native Flow Builder to create a Record-Triggered Flow that fires when a defined event occurs — for example, when a Case record's Status field changes to Closed. The Flow assembles the contact and case data, then makes an HTTP callout to the QuestionPro Transactions API. QuestionPro receives the request and immediately dispatches the survey invitation to the specified contact.
+
+No middleware. No third-party connector. No scheduled batch. The connection is direct, real-time, and built entirely within tools both teams already had access to: Salesforce Flow Builder and the QuestionPro API.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Component                      Role in the integration
+  ------------------------------ --------------------------------------------------------------------------------------------------------------------------------------------------------
+  Named Credential               Stores the QuestionPro API endpoint URL securely in Salesforce. Referenced by the Flow so the endpoint is never hardcoded.
+
+  Salesforce Flow                Record-Triggered Flow that fires on the Case closure event (or any other defined trigger). Orchestrates data assembly and the callout.
+
+  Assignment Element             Populates the request body dynamically from Salesforce record fields — contact name, email, mobile, case number, account ID.
+
+  HTTP Callout Action            Makes the POST request to the QuestionPro Transactions API using the Named Credential and API key header.
+
+  QuestionPro Transactions API   Receives the contact and context data, imports the contact, and dispatches the survey invitation immediately.
+
+  Custom Variables in QP         The case number, account ID, and any other fields passed in custom1/custom2 are available in the survey for pre-population and in the raw data export.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Prerequisites
+
+Salesforce Permissions Required
+
+The user creating the Named Credential and Flow must have the following Salesforce permissions assigned to their profile or permission set:
+
+-   Manage Flow — to create, edit, and activate Flows in Flow Builder.
+
+-   Customize Applications — required to create Named Credentials and access Setup configuration.
+
+QuestionPro Requirements
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Item                               Where to find it
+  ---------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------
+  QuestionPro API Key                On CX: Log into QuestionPro → preferred Workspace → Admin → Integration → API → Copy the API key
+                                     On Research: Log into QuestionPro → preferred survey → Integration → API → Copy the API key
+
+  Environment URL                    Depends on your data centre. US: api.questionpro.com | EU: api.questionpro.eu | Other regions: refer to this doc
+
+  Segment Code (CX only)             Found in QuestionPro under the relevant survey's distribution settings. Required in the request body to identify which survey to send.
+
+  Survey triggered by Transactions   The survey must be set up to send via the Transactions import method — confirm this with the QP survey configuration before testing.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Step-by-Step Setup
+
+Step 1: Create a Named Credential in Salesforce
+
+The Named Credential stores the QuestionPro API base URL securely in Salesforce. This means the URL is never hardcoded in the Flow itself — it is referenced by name, making it easy to change environments (e.g. from US to EU) without editing every Flow.
+
+1.  Go to Setup → search for Named Credentials in the Quick Find box → click Named Credentials.
+
+2.  Click New Named Credential.
+
+3.  Fill in the fields as follows:
+
+  ------------------------------------------------------------------------------
+  Field                     Value
+  ------------------------- ----------------------------------------------------
+  Label                     QuestionProAPI
+
+  Name                      QuestionProAPI
+
+  URL                       https://api.questionpro.com (or your regional URL)
+
+  Identity Type             Anonymous
+
+  Authentication Protocol   No Authentication
+  ------------------------------------------------------------------------------
+
+The authentication is set to No Authentication here because the API key will be passed as a request header inside the Flow — not as a Salesforce authentication credential. This keeps the setup simpler and gives more control over how and when the key is applied.
+
+4.  Click Save.
+
+[]
+
+Named Credentials list — QuestionProAPI entry highlighted after creation.
+
+[]
+
+New Named Credential form — Label, Name, URL, and Authentication settings.
+
+Step 2: Create the Flow in Flow Builder
+
+Navigate to Setup → search Flows → click Flows → click New Flow.
+
+[]
+
+Setup → Flows — click New Flow to begin. Existing flows are listed here.
+
+On the New Flow dialog, select Record-Triggered Flow. This is the flow type that fires automatically when a Salesforce record meets a defined condition — in this case, when a Case is closed.
+
+[]
+
+Select Record-Triggered Flow — this fires when the Case Status changes to Closed.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Configuring the trigger
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  When the Flow Builder canvas opens, set the Object to Case and the trigger condition to: Status Changes To → Closed. This ensures the flow fires precisely at the moment the case is resolved — not when it is created or updated for other reasons.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 3: Add an Assignment Element to Build the Request Body
+
+Before the HTTP callout can fire, the request body needs to be assembled. The Assignment element in the Flow collects the field values from the triggering Case record and related objects (Contact, Account) and assigns them to Flow variables.
+
+In the Flow canvas, click the + button to add an element. Select Assignment. Create a Flow variable for each field you want to pass to QuestionPro:
+
+  -----------------------------------------------------------------------
+  Flow Variable         Salesforce Field Source
+  --------------------- -------------------------------------------------
+  var_firstName         {!$Record.Contact.FirstName}
+
+  var_lastName          {!$Record.Contact.LastName}
+
+  var_email             {!$Record.Contact.Email}
+
+  var_mobile            {!$Record.Contact.MobilePhone}
+
+  var_custom1           {!$Record.CaseNumber}
+
+  var_custom2           {!$Record.Account.Id}
+
+  var_segmentCode       S1 (hardcoded or from a custom field)
+  -----------------------------------------------------------------------
+
+These variables are then bound to the HTTP callout's input fields in the next step. The Assignment element ensures the request body is dynamically populated per record — every survey invitation carries the correct contact and case data.
+
+Step 4: Configure the HTTP Callout
+
+After the Assignment element, add an Action element to the canvas. Select Create HTTP Callout (or External Service, depending on your Salesforce version). Configure it as follows:
+
+  -------------------------------------------------------------------------
+  Setting                 Value
+  ----------------------- -------------------------------------------------
+  External Service Name   QuestionProSurveySend
+
+  Named Credential        QuestionProAPI (select from dropdown)
+
+  Label                   SendSurveyToQuestionPro
+
+  HTTP Method             POST
+
+  Endpoint URL            /a/api/v2/cx/transactions/import
+
+  Header Key              api-key
+
+  Header Value            Your QuestionPro API key
+  -------------------------------------------------------------------------
+
+[]
+
+HTTP Callout configuration panel — Named Credential, endpoint, and apiKey header set.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Important: the API key goes in the header, not the Named Credential
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The Named Credential only stores the base URL. The API key is passed separately as a request header with key: apiKey and value: your QuestionPro API key. This can be a static value or dynamically retrieved from a Custom Metadata Type if you need to manage it centrally.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 5: Configure the Request Body
+
+In the HTTP Callout configuration, paste the sample JSON request body. Salesforce uses this to auto-generate the Apex-typed input class, which defines the structure of the data the callout will send. After pasting, map each field to the Flow variables created in Step 3.
+
+  -----------------------------------------------------------------------
+  {
+  -----------------------------------------------------------------------
+  "contacts": [
+
+  {
+
+  "firstName": "First",
+
+  "lastName": "Contact",
+
+  "email": "firstcontact@emaildomain.com",
+
+  "mobile": "+10123456789",
+
+  "segmentCode": "S1",
+
+  "transactionDate": "14/01/2020",
+
+  "custom1": "CaseNumber",
+
+  "custom2": "AccountID"
+
+  }
+
+  ]
+
+  }
+  -----------------------------------------------------------------------
+
+[]
+
+Request body pasted into the HTTP Callout. Fields on the right are mapped from Salesforce record variables.
+
+After saving the callout definition, go back to the Action element in the Flow and bind each input field to the corresponding Flow variable from the Assignment step. For example, bind firstName to {!var_firstName}, email to {!var_email}, and so on.
+
+Step 6: Define the Expected Response Body
+
+In the same HTTP Callout definition, paste the sample response JSON. This tells Salesforce what structure to expect back from QuestionPro. The three fields returned are:
+
+  -----------------------------------------------------------------------
+  {
+  -----------------------------------------------------------------------
+  "emailStatus": "Successful: Initiated email send process.",
+
+  "importStatus": "Successful: Contact imported.",
+
+  "importCount": "1"
+
+  }
+  -----------------------------------------------------------------------
+
+Salesforce will use this to generate the output Apex class. You can then reference these response fields in the Flow — for example, checking importStatus to confirm success before proceeding, or logging the result to a custom object for audit purposes.
+
+Step 7: Save and Activate the Flow
+
+5.  Click Save in the Flow Builder toolbar. Give the flow the label: HPE_SendSurveyOnCaseClosure.
+
+6.  Click Activate to move the flow from Draft to Active status. Only Active flows fire on record changes.
+
+7.  Test by changing a Case Status to Closed on a test record. The flow should fire within seconds.
+
+8.  Confirm in QuestionPro Transactions that the contact was imported and the survey invitation was dispatched.
+
+5. Testing the Full Setup
+
+Before testing against live cases, create a test Case in Salesforce with a real contact email address you control. Set the Status to something other than Closed. Then manually update the Status to Closed and monitor the following checkpoints:
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------
+  Checkpoint                   What to verify
+  ---------------------------- ----------------------------------------------------------------------------------------------------------------------
+  Flow fires                   Go to Setup → Flows → click the flow → View Run History. Confirm a run appears immediately after the case is closed.
+
+  HTTP callout executes        In the run history, check the HTTP Callout step shows status 200 OK and a successful response body.
+
+  QuestionPro Transactions     Log into QuestionPro → Transactions → confirm the contact appears with status Imported.
+
+  Survey email delivered       Check the test contact's inbox for the survey invitation. Confirm it arrived and the survey loads correctly.
+
+  Custom variables populated   Open the survey link and confirm any pre-populated fields (case number, account info) are correct.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+[]
+
+Successful debug run — Flow executed, HTTP callout returned 200 OK with importStatus: Successful.
+
+6. Common Issues and Fixes
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Issue                                      What to check
+  ------------------------------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------
+  Flow does not fire on case closure         Confirm the flow is Active (not Draft). Confirm the trigger condition matches exactly — check the field API name and value used in the condition.
+
+  HTTP callout fails with 401 Unauthorized   The apiKey header value is incorrect or missing. Confirm the key is copied from QuestionPro Account Settings without extra spaces.
+
+  HTTP callout fails with 403 Forbidden      The Named Credential URL may be wrong for your data centre. Confirm whether your QP account uses api.questionpro.com or api.questionpro.eu.
+
+  Contact not appearing in QP Transactions   Confirm the segmentCode matches an active segment in QuestionPro. Confirm the email address is valid and not already suppressed.
+
+  Survey email not received                  Check QuestionPro email sending settings. Confirm the contact's email is not on a suppression or bounce list in QuestionPro.
+
+  Request body not mapping correctly         Confirm the Flow variables in the Assignment element are being referenced correctly in the callout input bindings. Check for typos in variable names.
+
+  importCount returns 0                      The contact may already exist with the same email. QuestionPro may still send the survey — check Transactions for status.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. What Else Can Be Triggered This Way
+
+The Case closure trigger is the starting point. The same Named Credential and API pattern works for any event that can be captured in a Salesforce Flow. This makes the integration reusable across the full HPE customer journey:
+
+  --------------------------------------------------------------------------------------------------------------
+  Salesforce Event                                 Survey Use Case
+  ------------------------------------------------ -------------------------------------------------------------
+  Case Status → Closed                             Post-support CSAT — how was the resolution experience?
+
+  Opportunity Stage → Closed Won                   Post-sale satisfaction — how was the sales journey?
+
+  Custom Object: Delivery Confirmed                Post-delivery NPS — how was the fulfilment experience?
+
+  Contract End Date approaching (scheduled flow)   Renewal intent survey — are they likely to renew?
+
+  Account Health Score drops below threshold       At-risk customer check-in — what can we do better?
+
+  Onboarding milestone completed                   Onboarding satisfaction — how smooth was the setup process?
+  --------------------------------------------------------------------------------------------------------------
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Closed-loop potential
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Once QuestionPro responses come back, a second integration can push the results back into Salesforce. A Very Negative response can create a follow-up Task for the account manager. A low NPS score can flag the account in the CRM as At Risk. The same Named Credential pattern applies in reverse using Salesforce's inbound API capabilities.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Internal Recommendations
+
+-   Use a Custom Metadata Type to store the QuestionPro API key rather than hardcoding it in the Flow. This allows the key to be rotated without editing every Flow that references it.
+
+-   Create one Named Credential per QuestionPro environment (US, EU, etc.). Reference the correct one in each Flow depending on where the survey data should reside.
+
+-   Log each HTTP callout response to a custom Salesforce object (e.g. QP_Survey_Log__c). This gives you a traceable audit trail of when surveys were sent, to whom, and whether they succeeded.
+
+-   Build the Flow in a Sandbox first and test against a non-production QuestionPro account before activating in Production.
+
+-   If multiple teams are setting up similar flows for different triggers, document the Named Credential name and API key management process centrally so credentials are not duplicated or mismanaged.
+
++--------------------------------------------------------------------------------------------+
+| A survey sent days after the moment is a survey sent too late.                             |
+|                                                                                            |
+| This integration puts the invitation in front of the customer within seconds of the event. |
+|                                                                                            |
+| That is when the feedback is honest, specific, and worth acting on.                        |
++============================================================================================+
++--------------------------------------------------------------------------------------------+

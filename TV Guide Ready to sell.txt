@@ -1,0 +1,323 @@
+READY-TO-SELL (RTS)
+
+Dynamic TV Guide Engine
+
+Searchable dataset selection inside QuestionPro surveys
+
+  ------------------------------------------------------------------------------------------------------------------------
+  Solution type         Services-led reusable implementation pattern
+  --------------------- --------------------------------------------------------------------------------------------------
+  Proof point           Built for TRP Research Ireland media/audience measurement workflow
+
+  Core platform         QuestionPro Survey + QuestionPro Middleware Dataset API + Custom Variables + Advanced JavaScript
+  ------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Internal positioning: Use this when a customer needs a searchable, guide-like survey experience for a large and changing catalogue of programmes, products, locations, accounts, sessions or other reference data.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QuestionPro CX | Internal Use | Version 1.0 | May 2026
+
+1. What problem does this solution solve? (1-2 sentences)
+
+Customers with large or frequently changing catalogues cannot rely on long static answer lists without hurting respondent experience, data quality and completion rates.
+
+The Dynamic TV Guide Engine solves this by turning a standard QuestionPro survey page into a searchable selection experience, where respondents find the right item, add it to a personal list and then answer follow-up questions about exactly what they selected.
+
+2. What is the solution and how does it work?
+
+What it does
+
+Dynamic TV Guide Engine is a services-led implementation pattern that converts QuestionPro survey questions into a searchable guide-style interface. Respondents can search by title, episode title, synopsis or description, add items to a My Programmes or My Podcasts basket, remove items, and continue to downstream questions that reuse their selections.
+
+How it fits into the existing product
+
+The solution sits on top of QuestionPro Survey, QuestionPro Middleware Datasets, custom variables, piping and advanced JavaScript. Middleware stores the uploaded catalogue as a versioned dataset and exposes it through a Dataset API endpoint. In production, a secure proxy can sit between the survey and Middleware so the production API key is handled server-side.
+
+Core components
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------
+  Component                      Role in the solution
+  ------------------------------ -------------------------------------------------------------------------------------------------------------------------
+  QuestionPro Survey UI          Hosts the respondent-facing search fields, result list, selected basket, validation and downstream questions.
+
+  Middleware Dataset             Stores the searchable programme/catalogue data from CSV or Excel uploads and exposes the dataset endpoint.
+
+  Secure proxy pattern           Recommended for production so the browser does not expose the Middleware API key.
+
+  Search basket                  Lets respondents add, remove and de-duplicate selected programmes or catalogue items.
+
+  Custom variables               Stores selected values into controlled ranges such as custom101-custom125, custom126-custom150 and custom151-custom175.
+
+  CID / internal ID tagging      Preserves ContentID or another internal identifier in the stored value while stripping it from visible text.
+
+  Pre-fill and cleanup scripts   Restores selected values when respondents navigate back and removes technical tags from the respondent-facing UI.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+When/how a customer would use it
+
+Customers use this when they need respondents to choose from a large dataset, but also need those choices to drive survey logic, follow-up questions, exports or analytics matching. The TRP Ireland proof point applies this to programmes, streaming content and podcasts, but the same pattern can apply to products, stores, sessions, accounts, branches, facilities, events or any other searchable reference dataset.
+
+3. What are the key benefits? (3-5 bullets)
+
+  · Improves respondent experience by replacing long static lists with a fast, searchable, guide-like interface.
+
+  · Supports large and changing catalogues without rebuilding the survey every time the dataset changes.
+
+  · Keeps downstream QuestionPro logic intact by writing selections into custom variables that can be piped, looped and exported.
+
+  · Preserves backend identifiers such as ContentID for analytics matching while keeping the respondent-facing text clean.
+
+  · Creates a reusable services-led pattern for media research, product feedback, branch selection, event/session feedback and other large-reference-list use cases.
+
+4. Who is it for? (Target users and use cases)
+
+Roles that care
+
+  · Media research and audience measurement teams
+
+  · Market research and insights teams
+
+  · CX / VoC teams that need respondent-level context
+
+  · Product, catalogue and operations teams
+
+  · Data and analytics teams that need stable IDs behind selected labels
+
+Workflows it improves
+
+  · Weekly TV, streaming or podcast tracking surveys
+
+  · Product catalogue feedback studies
+
+  · Store, branch, location or venue selection in CX surveys
+
+  · Training-session or event feedback surveys where each session has a unique ID
+
+  · B2B surveys where respondents must select accounts, products, facilities or touchpoints before follow-up questions
+
+Most useful when
+
+  · The answer list is too large for a normal multi-select question.
+
+  · The dataset changes regularly and should be updated outside the survey build.
+
+  · Respondents may remember only part of the item name or description.
+
+  · The selected item must carry a hidden backend identifier for reporting or matching.
+
+  · Selections need to be reused later in the survey through piping, loops or custom variables.
+
+Great fit vs. poor fit
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Strong fit                                                                                 Poor fit / proceed with caution
+  ------------------------------------------------------------------------------------------ -----------------------------------------------------------------------------------------------
+  The answer list is too large for a normal multi-select (hundreds or thousands of items).   A short, stable list of a few dozen options — a standard multi-select is simpler and cheaper.
+
+  The catalogue changes regularly and should be updated outside the survey build.            The list never changes — no payoff for the dataset/Middleware overhead.
+
+  Selected items must carry a hidden backend ID (e.g. ContentID) for analytics matching.     No need to match selections back to records — plain text answers would do.
+
+  Selections need to be reused downstream via piping, loops or custom variables.             Selections are terminal and not reused later in the survey.
+
+  The customer can support a services-led build and (for production) a secure proxy.         No Services budget or appetite, and a hard requirement for out-of-the-box only.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Worked pricing example
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Worked example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| A weekly TV tracker with one catalogue dataset, basic search, a selected basket and CV mapping is a Starter build. Add multiple content ecosystems (live TV, iPlayer, podcasts), ViewingType filters, de-duplication and pre-fill persistence and it becomes Advanced. A customer-facing production deployment needing the secure proxy, API-key protection and analytics export support is Enterprise, and weekly dataset refreshes add the Ongoing services line. Scope by number of datasets, search complexity, proxy/security needs and refresh cadence; confirm final pricing with your Services lead. |
++==============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Objection handling
+
+Insert as a new section immediately after “7. Competitive angle” and before “8. Enablement assets”.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                  Your response
+  ------------------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “Can’t we just use a long dropdown or multi-select?”   Not at this scale — long static lists hurt completion and data quality. This gives a fast searchable basket inside the survey, so respondents find the right item even if they recall only part of the name.
+
+  “Why not build a custom web app for the picker?”       A custom app usually breaks the native survey workflow, reporting and respondent-level data. This keeps everything inside QuestionPro — Middleware datasets, custom variables, piping and exports stay intact.
+
+  “Is this a standard feature we can self-serve?”        No — it is a services-led implementation pattern, deliberately tailored to your dataset, search rules and downstream logic, which a generic question type can’t do.
+
+  “Will our API key be exposed in the browser?”          For internal demos the survey can call Middleware directly. For production we use a secure proxy so the key is held server-side and never exposed in browser JavaScript.
+
+  “Who maintains the data after go-live?”                The customer or Services can update the CSV/Excel or Middleware dataset version without rebuilding the survey UI, as long as field names stay consistent. Ongoing refresh support can be scoped.
+
+  “What could go wrong in implementation?”               Known risks are mismatched field names, reused custom-variable ranges, missing ContentID and dataset schema changes — all covered by the QA checklist and stable CV-range planning before development starts.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Use cases / Examples
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Use case                     Example positioning
+  ---------------------------- ------------------------------------------------------------------------------------------------------------------------------------
+  Media / TV tracking          Respondents search for programmes they watched, add them to My Programmes, then rate or discuss the selected programmes.
+
+  Podcast listening study      Respondents search for podcasts or S4C Clic items and continue into podcast-specific follow-up questions.
+
+  Retail product feedback      Customers search a product catalogue, select the product they used or purchased, and answer product-specific experience questions.
+
+  Branch / location CX         Customers search for a store, branch, property or venue instead of scrolling through hundreds of locations.
+
+  Training or event feedback   Participants search or land on a session ID, then answer feedback tied to the exact session, trainer or course.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. How do you demo it?
+
+Recommended internal demo flow:
+
+  1. Start with the pain: show how a normal static list becomes unusable when the respondent has to choose from a large catalogue.
+
+  2. Open Middleware > My Datasets and show the uploaded dataset with fields such as ContentID, Title, Series, Episode, EpisodeTitle, Synopsis, SortOrder and ViewingType.
+
+  3. Explain that the survey calls the Middleware Dataset API endpoint, or a secure proxy in production, from the searchPrograms() layer.
+
+  4. Launch the survey and type a partial title or synopsis into the search field to show real-time search after the 250ms debounce.
+
+  5. Click a result and add it to My Programmes / My Podcasts. Show that selected items disappear from the result list to prevent duplicates.
+
+  6. Remove an item and show that it becomes searchable again.
+
+  7. Submit the page and move to a downstream question where the selected programme appears as clean piped text.
+
+  8. Show the backend/export logic: the stored value can retain ContentID/CID for matching while the respondent sees only the clean label.
+
+  9. Close by positioning this as a reusable pattern for any large, changing reference dataset, not just media content.
+
+Suggested demo talk track
+
+"Instead of forcing respondents to scroll through a long list, we turn the survey into a searchable guide. The respondent searches for what they remember, adds the right item to their personal basket, and the survey then uses those selections for follow-up questions. On the backend, we still preserve the item ID, so analytics can match every response back to the correct programme, product or record."
+
+6. Pricing
+
+This is not positioned as a standard out-of-the-box question type today. It should be sold as a services-led solution using QuestionPro Survey, Middleware Datasets, advanced JavaScript and optional secure proxy development.
+
+Recommended packaging
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Package            What is included                                                                                                                                Commercial note
+  ------------------ ----------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------------------------------------------------------------
+  Starter            Static CSV or Middleware dataset selector, basic search, selected basket and CV mapping for one dataset.                                        Best for smaller pilots or one content ecosystem.
+
+  Advanced           Multiple content ecosystems, ViewingType filters, de-duplication, manual fallback, pre-fill persistence and QA checklist.                       Best for media, catalogue or recurring tracker programmes.
+
+  Enterprise         Secure proxy pattern, API key protection, multiple datasets/versions, ID mapping, analytics export support and reusable script configuration.   Best for customer-facing production deployments and enterprise security expectations.
+
+  Ongoing services   Dataset refresh support, survey wave updates, script maintenance and changes to fields or content types.                                        Recommended when the customer updates datasets weekly/monthly.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pricing should be scoped by Services based on number of datasets, complexity of search rules, number of survey flows, proxy/security requirements, QA requirements, and whether the customer needs ongoing dataset refresh support.
+
+Worked pricing example
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Worked example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| A weekly TV tracker with one catalogue dataset, basic search, a selected basket and CV mapping is a Starter build. Add multiple content ecosystems (live TV, iPlayer, podcasts), ViewingType filters, de-duplication and pre-fill persistence and it becomes Advanced. A customer-facing production deployment needing the secure proxy, API-key protection and analytics export support is Enterprise, and weekly dataset refreshes add the Ongoing services line. Scope by number of datasets, search complexity, proxy/security needs and refresh cadence; confirm final pricing with your Services lead. |
++==============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+7. Competitive angle
+
+  · Many survey tools can display static answer lists, but they do not easily create a true searchable basket experience inside the survey flow.
+
+  · Custom web apps can solve the UI problem, but they usually break the native survey workflow, reporting and respondent-level data structure.
+
+  · QuestionPro can keep the entire experience inside the survey while still using Middleware datasets, custom variables, piping and exports.
+
+  · The differentiator is not only search. It is search plus selected-basket logic plus hidden ID preservation plus downstream survey reuse.
+
+  · This gives teams a practical way to modernize complex surveys without forcing respondents into a separate portal or asking customers to rebuild their research workflow.
+
+Objection handling
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                  Your response
+  ------------------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “Can’t we just use a long dropdown or multi-select?”   Not at this scale — long static lists hurt completion and data quality. This gives a fast searchable basket inside the survey, so respondents find the right item even if they recall only part of the name.
+
+  “Why not build a custom web app for the picker?”       A custom app usually breaks the native survey workflow, reporting and respondent-level data. This keeps everything inside QuestionPro — Middleware datasets, custom variables, piping and exports stay intact.
+
+  “Is this a standard feature we can self-serve?”        No — it is a services-led implementation pattern, deliberately tailored to your dataset, search rules and downstream logic, which a generic question type can’t do.
+
+  “Will our API key be exposed in the browser?”          For internal demos the survey can call Middleware directly. For production we use a secure proxy so the key is held server-side and never exposed in browser JavaScript.
+
+  “Who maintains the data after go-live?”                The customer or Services can update the CSV/Excel or Middleware dataset version without rebuilding the survey UI, as long as field names stay consistent. Ongoing refresh support can be scoped.
+
+  “What could go wrong in implementation?”               Known risks are mismatched field names, reused custom-variable ranges, missing ContentID and dataset schema changes — all covered by the QA checklist and stable CV-range planning before development starts.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sales positioning
+
+Lead with respondent experience and data quality, then move into operational flexibility: "You can update the dataset without rebuilding the whole survey, respondents get a cleaner search experience, and your analytics team still gets the backend IDs they need."
+
+8. Enablement assets
+
+  · RTS document for sales and solution consultants
+
+  · Technical cookbook with implementation steps and reusable JavaScript patterns
+
+  · Sample survey showing Live/Other, BBC iPlayer and Podcasts/S4C Clic flows
+
+  · Middleware dataset setup screenshots or short screen recording
+
+  · CSV / Excel dataset template with required fields: ContentID, Title, Series, Episode, EpisodeTitle, Synopsis, SortOrder and ViewingType
+
+  · Reusable searchPrograms() snippet with Middleware/proxy configuration block
+
+  · QA checklist covering search, selected basket, duplicate prevention, CV writes, CID cleanup and downstream piping
+
+  · One-page architecture diagram showing Survey UI -> Middleware/proxy -> Dataset -> CV storage -> downstream reporting
+
+9. FAQ (3-5 questions max)
+
+Is this a standard QuestionPro feature?
+
+  No. Position it as a services-led implementation pattern built using QuestionPro Survey, Middleware Datasets, advanced JavaScript, custom variables and optional secure proxy development.
+
+Can the customer update the programme or catalogue data themselves?
+
+  Yes, if the dataset structure remains stable. The customer or Services team can update the CSV/Excel source or Middleware dataset version without rebuilding the full survey UI. Field names should remain consistent.
+
+Will the API key be visible in the survey?
+
+  In a controlled internal demo, the survey can call the Middleware endpoint directly. For production or customer-facing deployments, use a secure proxy so the API key is stored server-side and not exposed in browser-side JavaScript.
+
+Can this work outside media research?
+
+  Yes. The pattern works for any large searchable reference dataset: products, branches, properties, events, training sessions, accounts, facilities, assets or service categories.
+
+What are the main implementation risks?
+
+  The main risks are mismatched field names, reused custom-variable ranges, API key exposure, missing ContentID, insufficient QA on downstream piping, and dataset changes that break the expected schema.
+
+Appendix: Quick qualification checklist
+
+Use these questions during discovery to decide whether this solution is a fit:
+
+  · How many options/items does the respondent need to search or select from?
+
+  · How often does the dataset change?
+
+  · Which fields should be searchable: title, description, ID, category, location, date or another field?
+
+  · Does each selected item need to carry a backend ID for reporting or matching?
+
+  · Which downstream questions need to reuse the selected values?
+
+  · What custom variable range can be reserved for this flow?
+
+  · Will the deployment require a secure proxy to keep API keys server-side?
+
+  · Who owns dataset updates after go-live?
+
+End of document

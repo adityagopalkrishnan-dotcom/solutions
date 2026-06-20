@@ -1,0 +1,212 @@
+READY-TO-SELL (RTS)
+
+Salesforce-Triggered Surveys
+
+Real-time, event-driven survey dispatch from Salesforce into QuestionPro CX
+
+  ------------------------------------------------------------------------------------------------------------------
+  Solution type           Services-led integration (Salesforce-native, no middleware)
+  ----------------------- ------------------------------------------------------------------------------------------
+  Proof point             Built for Hewlett Packard Enterprise — real-time post-case CSAT across a global B2B base
+
+  Core platform           QuestionPro CX + Transactions API + Custom Variables + Salesforce Flow Builder
+
+  Released                Ongoing CX integration pattern
+  ------------------------------------------------------------------------------------------------------------------
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Internal positioning                                                                                                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                                                                                     |
+| Use this when a customer already lives in Salesforce and wants feedback captured at the moment of truth — case closed, deal won, delivery confirmed — not days later in a batch. Position it as a direct, real-time bridge that needs no middleware and no third-party connector, built entirely from tools both teams already own. |
++=====================================================================================================================================================================================================================================================================================================================================+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+QuestionPro CX | Internal Use | Version 1.0
+
+1. What problem does this solve?
+
+Most CRM-driven survey programs fire on a batch or a manual trigger, so the invitation reaches the customer days after the experience — when recall has faded and response rates have dropped. The events worth measuring are recorded in Salesforce in real time, but Salesforce has no native way to dispatch a QuestionPro survey the instant they happen.
+
+Salesforce-Triggered Surveys close that gap. A defined Salesforce event automatically dispatches a personalised QuestionPro invitation within seconds, with the relevant CRM data pre-loaded and the response tied back to the originating record.
+
+2. What is the solution and how does it work?
+
+What it does. A Salesforce Record-Triggered Flow fires on a defined event (e.g. Case Status → Closed), assembles the contact and record data, and makes an HTTP callout to the QuestionPro Transactions API. QuestionPro imports the contact and dispatches the survey immediately — carrying case number, account ID and any other fields as custom variables for pre-population, reporting and export.
+
+How it fits the product. The entire integration is built inside Salesforce Flow Builder and the QuestionPro API. No middleware, no third-party connector, no scheduled batch. Responses land in QuestionPro tied to the CRM record, ready for dashboards, filters and closed-loop workflows.
+
+Core components
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+  Component                      Role in the solution
+  ------------------------------ ----------------------------------------------------------------------------------------------------------------------
+  Named Credential               Securely stores the QuestionPro API base URL in Salesforce so it is never hardcoded and easy to switch environments.
+
+  Salesforce Flow                Record-Triggered Flow that fires on the defined event and orchestrates data assembly and the callout.
+
+  Assignment Element             Populates the request body dynamically from record fields — contact details, case number, account ID.
+
+  HTTP Callout Action            Makes the POST to the QuestionPro Transactions API with the API key header.
+
+  QuestionPro Transactions API   Imports the contact and dispatches the survey invitation in real time.
+
+  Custom Variables in QP         Carry CRM context into the survey for pre-population and into the raw data export.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Core flow
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Salesforce event fires → Flow assembles data → HTTP callout to QP API → Contact imported → Survey dispatched in seconds → Response tied to CRM record → Dashboard + closed-loop action
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Key benefits
+
+  • Captures feedback at the moment of truth — within seconds of the event, when recall and response rates are highest.
+
+  • Pre-loads every invitation with CRM context, so responses tie cleanly back to specific cases, accounts and contacts.
+
+  • No middleware and no third-party connector — built entirely from tools both teams already own, which lowers cost and security friction.
+
+  • Reusable across the whole customer journey from one pattern — support, sales, delivery, onboarding, renewal.
+
+  • Enables a true closed loop: a Very Negative response can flag the account or create a follow-up task back in Salesforce.
+
+4. Who is it for?
+
+Roles that care: CX and VoC leaders, Salesforce / CRM admins and RevOps, Customer Success and Support leaders, Sales operations.
+
+Workflows it improves: Post-support CSAT, post-sale satisfaction, post-delivery NPS, onboarding satisfaction, renewal-intent and at-risk check-ins.
+
+Most useful when:
+
+  • The customer runs their relationships in Salesforce and events are already captured there.
+
+  • Feedback timing matters — they are losing signal to batch delay or manual sends.
+
+  • They need responses tied back to CRM records for segmentation or follow-up.
+
+  • They want closed-loop action (alerts, tasks, at-risk flags) inside Salesforce.
+
+5. Great fit vs. poor fit
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Strong fit                                                                  Poor fit / proceed with caution
+  --------------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------
+  Salesforce is the system of record and events are reliably logged there.    Customer is not on Salesforce — this exact pattern is SFDC-specific; other CRMs need a different build.
+
+  Customer has admin access and someone who can own Flow Builder.             No internal Salesforce admin and no appetite to involve one — implementation stalls.
+
+  Clear, high-value trigger moments (case close, deal won, delivery).         Vague “we just want more surveys” with no defined event — there is nothing to trigger on.
+
+  They value real-time, CRM-tied data enough to fund a services engagement.   Tiny volume where manual sends are genuinely fine — the integration will not pay for itself.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. Use cases / examples
+
+  ---------------------------------------------------------------------------------------------------------------------------------
+  Use case                  Example positioning
+  ------------------------- -------------------------------------------------------------------------------------------------------
+  Post-support CSAT         Case closes in Salesforce → customer is asked about the resolution experience within seconds.
+
+  Post-sale satisfaction    Opportunity moves to Closed Won → buyer is surveyed on the sales journey while it is fresh.
+
+  Post-delivery NPS         A “Delivery Confirmed” event → fulfilment experience captured at the moment it lands.
+
+  Renewal intent            Contract end date approaching (scheduled flow) → likelihood-to-renew check ahead of the conversation.
+
+  At-risk check-in          Account health score drops below threshold → proactive “what can we do better?” outreach.
+
+  Onboarding satisfaction   Onboarding milestone completed → feedback on how smooth setup was, per account.
+  ---------------------------------------------------------------------------------------------------------------------------------
+
+7. How do you demo it?
+
+Recommended internal demo flow:
+
+  1. Start with the pain: show a survey arriving days after a closed case, and ask what the response rate looks like by then.
+
+  2. Open Salesforce Flow Builder and show the Record-Triggered Flow on Case → Closed.
+
+  3. Close a test case live. Within seconds, show the invitation arriving in the test inbox.
+
+  4. Open the survey and show the case number and account context already pre-loaded.
+
+  5. Show the response landing in QuestionPro, tied to the record, visible in the dashboard.
+
+  6. Close on the closed loop: a Very Negative response creating a follow-up task back in Salesforce.
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Suggested demo talk track                                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                                             |
+| “The moment that matters is recorded in your CRM in real time — so why is the survey going out three days later? This puts the invitation in front of the customer within seconds of the event, pre-loaded with the case and account, and brings the answer right back to the same record.” |
++=============================================================================================================================================================================================================================================================================================+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+8. Pricing
+
+Position this as a services-led integration. There is no per-response AI cost — the commercial value is in the Salesforce-side build, testing and reusable trigger pattern. Scope by the number of trigger events and the complexity of the closed-loop logic.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Package            What is included                                                                                                                                         Commercial note
+  ------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------
+  Starter            One trigger event (e.g. case closure), Named Credential + Flow + callout, custom-variable pre-population, testing in sandbox.                            Best for a single-touchpoint proof of value.
+
+  Advanced           Multiple trigger events across the journey, response-field handling, basic closed-loop (task or flag back into Salesforce), QA support.                  Best for a production CX programme on Salesforce.
+
+  Enterprise         Multi-environment (US/EU) credentials, centralised API-key management, audit logging to a custom object, reusable trigger framework and documentation.   Best for large, multi-team, security-conscious deployments.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Worked example                                                                                                                                                                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                                                                                                                                                              |
+| A customer wants post-support CSAT only. That is one trigger (Case → Closed), one Flow, one callout, and sandbox testing — an Starter engagement. Adding post-sale (Closed Won) and post-delivery NPS plus a follow-up task on Very Negative responses moves it to Advanced. Scope Services time against each additional trigger and each closed-loop action; confirm final pricing with your Services lead. |
++==============================================================================================================================================================================================================================================================================================================================================================================================================+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+9. Competitive angle
+
+  • Many feedback tools rely on a native connector or paid middleware to integrate with Salesforce. This pattern needs neither — it is built from Flow Builder and the QuestionPro API, which lowers cost and shortens the security review.
+
+  • Because it is event-triggered inside Salesforce, the survey fires in real time, not on a nightly batch like many CRM-survey integrations.
+
+  • Every invitation carries CRM context as custom variables, so responses are tied to the exact record — not stranded in a separate feedback silo.
+
+  • The same trigger pattern is reusable across the journey, so the customer is buying a framework, not a single one-off integration.
+
+Sales positioning. Lead with timing and ownership: “The event is already in your CRM in real time. We turn that event into a survey within seconds — no middleware, no new platform, and the answer comes straight back to the same Salesforce record.”
+
+10. Objection handling
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                         Your response
+  ------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “We already have a Salesforce connector / AppExchange app.”   Great — this can complement or replace it. The advantage here is no extra licensed middleware and full control of the trigger and payload inside your own Flow.
+
+  “Is this secure? Where does the API key live?”                The key is passed as a request header and can be stored in a Custom Metadata Type for central rotation. The base URL sits in a Named Credential. Nothing is hardcoded in the Flow.
+
+  “Will this need developer / Apex work?”                       No custom code is required — it is built declaratively in Flow Builder. A Salesforce admin with Manage Flow and Customize Applications permissions can own it.
+
+  “What if the callout fails or the contact already exists?”    The response body returns import and email status, which can be logged to a custom object for audit. Existing contacts still receive the survey; status is visible in Transactions.
+
+  “Can it do more than one survey moment?”                      Yes. The same Named Credential and callout pattern is reused for any Salesforce event — sales, delivery, onboarding, renewal — so it scales across the journey.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+11. Enablement assets
+
+  • Full technical cookbook: Salesforce → QuestionPro Integration (Named Credentials → Flow Builder → HTTP Callout → Survey Delivery).
+
+  • Sample request and response JSON bodies for the Transactions API import.
+
+  • Trigger-to-survey mapping table covering case closure, Closed Won, delivery, renewal, at-risk and onboarding.
+
+  • Demo script and talk track (Sections 7).
+
+  • Sandbox checklist for testing flow fire, callout 200 OK, contact import, email delivery and custom-variable pre-population.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  A survey sent days after the moment is a survey sent too late. This integration puts the invitation in front of the customer within seconds of the event — when the feedback is honest, specific, and worth acting on.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

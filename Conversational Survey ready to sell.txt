@@ -1,0 +1,350 @@
+READY-TO-SELL (RTS)
+
+AI Router Conversational Surveys
+
+Adaptive conversational intelligence inside QuestionPro CX surveys
+
+  ------------------------------------------------------------------------------------------------------------------------------------------
+  Solution type              Platform capability + services-led conversational implementation
+  -------------------------- ---------------------------------------------------------------------------------------------------------------
+  Proof point                AI Router framework for adaptive NPS, CSAT, CES and journey feedback conversations - 7/11, Kapital Bank, ACCA
+
+  Core platform              QuestionPro CX + Surveys + AI Router + Custom Variables + Dashboards + Workflows
+
+  Released                   Ongoing CX platform capability
+  ------------------------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Internal positioning: Use this when a customer wants to understand the why behind a score, not just collect a rating. Position it as an adaptive CX intelligence layer that probes for root cause, behavior change and improvement signals, then stores structured insight directly alongside response data.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QuestionPro CX | Internal Use | Version 1.0 | May 2026
+
+1. What problem does this solution solve?
+
+Traditional surveys capture a score but fail to capture the story behind it. Every respondent receives the same static follow-up, which creates shallow insight, inconsistent open-ended feedback and more manual analysis work for CX teams.
+
+AI Router Conversational Surveys solve this by turning static survey flows into adaptive conversations that respond in real time, uncover root causes and structure qualitative feedback into actionable CX intelligence.
+
+2. What is the solution and how does it work?
+
+What it does
+
+AI Router transforms a standard survey into an intelligent conversational experience. Each response is analyzed in real time to detect sentiment, themes, intensity and intent, allowing the system to decide the most relevant next question dynamically.
+
+How it fits into the existing product
+
+The solution is built inside QuestionPro CX and QuestionPro Surveys. AI Router sits behind the conversational survey flow, while custom variables store the router outputs alongside normal survey data. The resulting fields can be used in CX dashboards, filters, workflows, exports and closed-loop action paths.
+
+Core components
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+  Component                    Role in the solution
+  ---------------------------- ------------------------------------------------------------------------------------------------------------------------
+  QuestionPro survey flow      Hosts the rating question, conversational prompts and respondent-facing experience.
+
+  AI Router                    Analyzes each answer in real time and determines the next best prompt or analysis output.
+
+  Prompt framework             Defines the adaptive layers: opening, root cause, behavior, trust, future signal and final analysis.
+
+  Custom variables             Store question-level outputs and final structured JSON fields beside the respondent record.
+
+  Structured JSON output       Returns normalized fields such as dominant_theme, secondary_theme, sentiment, experience_stage and improvement_signal.
+
+  Dashboards and workflows     Use the AI fields as filters, segments, routing triggers or operational improvement signals.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Core conversational flow
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------
+  Stage                           How it works
+  ------------------------------- -------------------------------------------------------------------------------------------------------------------
+  Adaptive opening                The first follow-up changes based on the respondent score, such as detractor, passive or promoter.
+
+  Root cause exploration          The system probes the answer to identify specific drivers, recurring issues, one-time incidents or mixed signals.
+
+  Behavioral impact detection     The conversation explores whether the experience changed customer behavior, effort, usage or future intent.
+
+  Trust and relationship signal   AI Router determines whether confidence, loyalty or perception of the brand has been affected.
+
+  Forward-looking insight         The survey captures a practical improvement signal based on what the customer actually experienced.
+
+  Structured AI analysis          The completed conversation is converted into dashboard-ready fields for reporting and action.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Structured output model
+
+The final AI Router analysis should return a controlled JSON output so CX teams can analyze conversational feedback at scale instead of reading every open-ended answer manually.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------
+  Output field              What it captures
+  ------------------------- ----------------------------------------------------------------------------------------------------------------
+  dominant_theme            The main experience driver behind the response.
+
+  secondary_theme           A supporting theme or contributing driver when one is clearly present.
+
+  sentiment                 A normalized sentiment classification, typically Negative, Neutral or Positive, or an agreed five-point scale.
+
+  experience_stage          The journey stage, touchpoint or interaction area connected to the feedback.
+
+  improvement_signal        The clearest action opportunity, operational fix or reinforcement signal extracted from the conversation.
+  ------------------------------------------------------------------------------------------------------------------------------------------
+
+When/how a customer would use it
+
+Customers use this when the business needs to understand the why behind scores, not just measure scores. It is strongest when open-ended responses are inconsistent, hard to analyze at scale or disconnected from operational workflows.
+
+The same framework can be used across relationship NPS, post-interaction CSAT, onboarding, digital journeys, support journeys, product feedback, complaint follow-up and closed-loop recovery programs.
+
+3. What are the key benefits? (3-5 bullets)
+
+  · Captures the story behind the score through adaptive, context-aware questioning.
+
+  · Uncovers root causes in real time instead of relying only on post-survey text analysis.
+
+  · Converts qualitative feedback into filterable, dashboard-ready CX intelligence.
+
+  · Improves respondent relevance by asking only questions that fit the customer’s previous answer.
+
+  · Links feedback directly to operational action through themes, experience stages and improvement signals.
+
+4. Who is it for? (Target users and use cases)
+
+Roles that care
+
+  · CX and VoC leaders
+
+  · Product and UX teams
+
+  · Customer insights and research teams
+
+  · Operations and service teams
+
+  · Customer support and service recovery teams
+
+Workflows it improves
+
+  · NPS, CSAT and CES programs
+
+  · Post-interaction and journey feedback
+
+  · Service recovery and closed-loop workflows
+
+  · Customer lifecycle and experience diagnostics
+
+  · Digital experience, branch/store and contact center feedback
+
+Most useful when
+
+  · Surveys collect ratings but do not explain what actually happened.
+
+  · Open-ended feedback is underutilized, manually reviewed or too inconsistent to trend.
+
+  · Teams need specific operational drivers rather than generic text analytics summaries.
+
+  · Insights must be comparable across regions, products, locations, touchpoints or customer segments.
+
+  · The organization wants to move from measurement to diagnosis and action.
+
+Use cases / Examples
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------
+  Use case                   Example positioning
+  -------------------------- -------------------------------------------------------------------------------------------------------------------------------
+  Relationship NPS           A detractor is asked a focused root-cause question, while a promoter is asked what should be preserved or amplified.
+
+  Post-service CSAT          The system probes whether the issue was speed, quality, staff knowledge, resolution, process clarity or emotional confidence.
+
+  Digital journey feedback   A vague comment such as “the app was frustrating” is followed up to identify the exact friction point.
+
+  Complaint recovery         The conversation identifies whether trust was restored, partially restored or further damaged.
+
+  Product experience         The flow separates feature issues, usability problems, pricing concerns and positive adoption signals.
+
+  Branch/store operations    Customer feedback is mapped to location-level drivers and improvement signals for local teams.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Great fit vs. poor fit
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Strong fit                                                                                 Poor fit / proceed with caution
+  ------------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------
+  The customer collects scores (NPS/CSAT/CES) but struggles to explain what drove them.      They only need a number for a board metric and have no intent to act on the “why”.
+
+  Open-ended feedback is currently inconsistent, manually reviewed, or too messy to trend.   Survey volume is tiny and a person already reads every verbatim comfortably.
+
+  They want adaptive follow-up that changes by detractor / passive / promoter path.          They require a fixed, identical questionnaire for every respondent (e.g. strict regulatory wording).
+
+  Insight must be comparable across regions, products, touchpoints or segments.              One-off survey with no repeat waves and no segmentation need.
+
+  There is a downstream home for the output — dashboards, workflows, closed-loop action.     No operational owner for the insight, so improvement signals would go nowhere.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Objection handling
+
+Insert as a new section immediately after “7. Competitive angle” and before “8. Enablement assets”.
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                                  Your response
+  ---------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “How is this different from survey skip logic we already have?”        Skip logic picks from pre-written branches. This reads the actual answer in real time and generates the next best probe, then structures the whole conversation into fields — adaptive, not just conditional.
+
+  “Qualtrics/Medallia already do text analytics.”                        Those analyse after submission. This adapts during the survey to dig into root cause, then still returns comparable structured data. It is probing plus analytics, not analytics alone.
+
+  “Won’t an AI conversation annoy respondents or make surveys longer?”   It usually feels shorter and more relevant — respondents are only asked what fits their previous answer. Stop conditions and depth limits are set in prompt design.
+
+  “What if the AI asks something odd or off-brand?”                      Tone, branching rules, low-signal handling and stop conditions are defined in the prompt framework and QA-tested on detractor, passive and promoter paths before launch.
+
+  “Is our customers’ data used to train your model?”                     No. Responses are processed to produce the structured output and stored as your survey data. Confirm contract specifics with your Services/security lead.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Housekeeping fix
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  At the top of the Convo-RTS page there is a leftover placeholder line reading “Video of the working survey and analytics:” with no link after it. Add the video URL or delete the line before publishing — an empty placeholder reads as unfinished.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. How do you demo it?
+
+Recommended internal demo flow:
+
+  1. Start with the pain: show a normal rating question followed by a generic open-ended question.
+
+  2. Explain that the score alone does not tell the team what happened, why it happened or what action should be taken.
+
+  3. Launch the AI Router conversational survey and answer as a detractor. Show how the next question adapts to the negative response.
+
+  4. Repeat with a promoter path to show that the same survey does not ask irrelevant complaint-style follow-ups.
+
+  5. Highlight the root cause and behavioral impact layers as the conversation progresses.
+
+  6. Show the final structured AI output with fields such as sentiment, dominant theme, experience stage and improvement signal.
+
+  7. Open the dashboard or reporting view and show how those AI fields become filters, segments or action triggers.
+
+  8. Close by positioning this as a way to turn survey feedback into operational intelligence without creating a long static questionnaire.
+
+Suggested demo talk track
+
+“Most surveys ask for a score and then leave the customer to explain everything in one open text box. AI Router changes that. It listens to what the customer says, asks the next best question, and then converts the conversation into structured fields that the CX team can actually use in dashboards, workflows and follow-up actions.”
+
+6. Pricing
+
+AI Router Conversational Surveys should be positioned as a usage-based AI capability with services-led implementation. Pricing should account for API call volume, conversation depth and setup complexity.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pricing item                Recommended commercial guidance                                 Notes
+  --------------------------- --------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------
+  AI Router usage             $0.20 per API call per response within conversational surveys   Estimate total call volume based on the number of AI Router prompts used per completed conversation.
+
+  Implementation services     Approximately $1.5k to $3k                                      Depends on survey complexity, routing logic, prompt design, languages, dashboards and integrations.
+
+  Prompt design               Scope as part of implementation                                 Includes tone, branching logic, low-signal handling, stop conditions and structured output definitions.
+
+  Dashboard/reporting setup   Scope separately when needed                                    Required if the customer wants router outputs configured as CX dashboard filters or operational views.
+
+  Integrations/workflows      Scope separately when needed                                    Required when AI outputs trigger tickets, alerts, case routing or external system updates.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pricing note: Be clear that the implementation cost can move beyond the suggested range when the customer needs many journey-specific prompts, multilingual optimization, external workflows or deep dashboard configuration.
+
+Recommended packaging
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Package         What is included                                                                                                       Commercial note
+  --------------- ---------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------
+  Starter         One conversational survey, basic score-based routing, final structured JSON output.                                    Best for proving value on one NPS, CSAT or CES use case.
+
+  Advanced        Multi-layer prompt framework, detractor/passive/promoter paths, dashboard-ready CV mapping and QA support.             Best for production CX programs across one journey or touchpoint.
+
+  Enterprise      Multiple journeys, multilingual handling, workflow integration, dashboard configuration and reusable prompt library.   Best for enterprise VoC programs and multi-market deployments.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Worked pricing example
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Worked example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| A customer wants one relationship-NPS conversation with detractor/passive/promoter paths and a final structured output, feeding one dashboard. At $0.20 per API call, estimate the calls per completed conversation (one per adaptive layer used) × expected responses, plus implementation in the ~$1.5k–$3k range — a Starter-to-Advanced engagement depending on routing depth. Adding multiple journeys, multilingual paths or workflow triggers moves it to Enterprise. Confirm final pricing with your Services lead. |
++=============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+7. Competitive angle
+
+  · Competitors such as Qualtrics and Medallia offer survey logic and text analytics, but these are often static, rules-based or disconnected from real-time survey conversations.
+
+  · AI Router adapts during the survey, not only after the response is submitted.
+
+  · The differentiator is not just text analysis; it is adaptive probing plus structured CX output plus dashboard/workflow usability.
+
+  · It delivers both depth and scale: deeper qualitative conversations that still become comparable, reportable data.
+
+  · Because outputs are stored alongside response data, teams can operationalize insights without moving to a separate analysis process.
+
+Sales positioning
+
+Lead with the business problem: “You already know the score, but you do not always know the real reason behind it.” Then show that AI Router helps uncover the story, classify it and make it usable for action.
+
+For executives, position it as faster diagnosis and better actionability. For research teams, position it as richer open-ended data without manual coding. For operations teams, position it as clearer drivers and improvement signals they can act on.
+
+Objection handling
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                                  Your response
+  ---------------------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “How is this different from survey skip logic we already have?”        Skip logic picks from pre-written branches. This reads the actual answer in real time and generates the next best probe, then structures the whole conversation into fields — adaptive, not just conditional.
+
+  “Qualtrics/Medallia already do text analytics.”                        Those analyse after submission. This adapts during the survey to dig into root cause, then still returns comparable structured data. It is probing plus analytics, not analytics alone.
+
+  “Won’t an AI conversation annoy respondents or make surveys longer?”   It usually feels shorter and more relevant — respondents are only asked what fits their previous answer. Stop conditions and depth limits are set in prompt design.
+
+  “What if the AI asks something odd or off-brand?”                      Tone, branching rules, low-signal handling and stop conditions are defined in the prompt framework and QA-tested on detractor, passive and promoter paths before launch.
+
+  “Is our customers’ data used to train your model?”                     No. Responses are processed to produce the structured output and stored as your survey data. Confirm contract specifics with your Services/security lead.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Enablement assets
+
+  · Conversational survey demo environments for detractor, passive and promoter paths.
+
+  · Prompt design frameworks and reusable templates for NPS, CSAT, CES and journey feedback.
+
+  · Industry-specific prompt variants for banking, hospitality, retail, airlines, B2B and support journeys.
+
+  · Dashboard examples showing sentiment, dominant theme, experience stage and improvement signal as filters.
+
+  · Example JSON output schema and CV mapping guide.
+
+  · QA checklist covering routing, low-signal answers, multilingual responses, sarcasm/intensity handling and dashboard validation.
+
+  · Sales talk track showing the difference between static survey logic and adaptive conversational probing.
+
+9. FAQ
+
+Does this replace traditional surveys?
+
+  No. It enhances traditional surveys by adding an adaptive conversational layer where deeper insight is needed.
+
+Does it increase survey length?
+
+  Not necessarily. It can reduce irrelevant questioning because the survey asks only the next question that makes sense based on the customer’s answer.
+
+How are insights stored and used?
+
+  AI Router structures outputs into predefined fields and stores them alongside response data for filtering, reporting, dashboards and workflows.
+
+Can this work with multilingual feedback?
+
+  Yes. It can process and structure multilingual feedback, but production deployments should include language-specific testing and prompt QA.
+
+Is this real-time?
+
+  Yes. Analysis and question routing happen during the survey experience, not only after data collection is complete.
+
+What are the main implementation risks?
+
+  The main risks are weak prompt design, unclear output fields, too many unnecessary router calls, poor QA of edge cases and dashboard mappings that are not planned before launch.

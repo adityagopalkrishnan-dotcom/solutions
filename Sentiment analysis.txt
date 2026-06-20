@@ -1,0 +1,444 @@
++-----------------------------------------------------------------------+
+| AI ROUTER                                                             |
+|                                                                       |
+| Sartorius                                                             |
+|                                                                       |
+| From Employee Survey to Real-Time AI Intelligence                     |
+|                                                                       |
+| QuestionPro CX | Internal Use                                         |
++=======================================================================+
++-----------------------------------------------------------------------+
+
+Sartorius
+
++-----------------------------------------------------------------------+
+| AI ROUTER                                                             |
+|                                                                       |
+| Sartorius                                                             |
+|                                                                       |
+| From Employee Survey to Real-Time AI Intelligence                     |
+|                                                                       |
+| QuestionPro CX | Internal Use                                         |
++=======================================================================+
++-----------------------------------------------------------------------+
+
+1. The Client & The Problem
+
++-----------------------------------+-----------------------------------------+
+| CLIENT                            | PLATFORM                                |
+|                                   |                                         |
+| Sartorius AG                      | QuestionPro Employee Experience Surveys |
+|                                   |                                         |
+| Germany | Life Sciences & Biotech | with XA Dashboard visualisation         |
++===================================+=========================================+
++-----------------------------------+-----------------------------------------+
+
+Background
+
+Sartorius AG is a leading international partner for the biopharmaceutical industry and research institutions. With over 14,000 employees globally, they run structured employee experience (EX) surveys through QuestionPro to measure engagement, satisfaction, and organisational health. Results are visualised using QuestionPro's XA dashboards, which the HR and People Analytics teams use for ongoing monitoring and leadership reporting.
+
+The Specific Problem
+
+Their EX survey includes 5 open-ended comment box questions designed to capture qualitative feedback across key dimensions of the employee experience:
+
+  -----------------------------------------------------------------------------------------
+  Q1   What does Sartorius do well that makes you proud to work here?
+  ---- ------------------------------------------------------------------------------------
+  Q2   What would make Sartorius a better place to work?
+
+  Q3   How would you describe the quality of communication from your direct manager?
+
+  Q4   What barriers, if any, prevent you from doing your best work?
+
+  Q5   Is there anything else you would like to share about your experience at Sartorius?
+  -----------------------------------------------------------------------------------------
+
+The insight team needed to do four things with these responses that were not possible out of the box:
+
+-   Show the sentiment (Positive, Neutral, or Negative) for each of the 5 comments as a widget inside the existing XA dashboard — one widget per question.
+
+-   Show the primary topic associated with each comment (e.g. Leadership Communication, Career Development, Workload) — also as a dashboard widget and as a filterable field.
+
+-   Generate a respondent-level executive summary — a concise paragraph synthesising all 5 open-ended answers from a single submission, so HR managers could read a summary rather than 5 raw comments per employee.
+
+-   Make all of the above available in the raw data export, so the structured AI output sits alongside standard survey responses in the same file.
+
+Why Existing Tools Could Not Solve This
+
+The natural first thought was to use QuestionPro's BI module. However, BI creates an entirely separate dashboard environment. The data it produces cannot interact with or filter the existing XA dashboard — they operate independently. This meant:
+
+-   The HR team would have had to maintain and switch between two separate dashboards.
+
+-   Filters applied in the XA dashboard (by department, location, tenure, etc.) would not carry over to BI-generated insights.
+
+-   Sentiment and topic data would not appear in the raw data export for the XA survey — they would live only inside BI.
+
+-   Leadership reports built on the XA dashboard would have no access to the AI-generated fields.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The core constraint
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The intelligence had to live inside the survey itself — as structured custom variables — so it could be used as filters, appear in widgets, show up in raw exports, and interact with everything else in the XA dashboard. It could not live in a separate system. This is exactly what AI Router makes possible.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What Success Looked Like
+
+From Sartorius's perspective, a successful implementation meant: an HR manager opening the XA dashboard, selecting a department or location filter, and immediately seeing — alongside NPS scores and rating scales — a sentiment distribution for each of the 5 open-ended questions, a breakdown of the most common topics raised, and the ability to click into any individual respondent row and read a one-paragraph AI-generated summary of that employee's full qualitative feedback. All without leaving the dashboard. All in real time as responses came in.
+
+2. The Solution: AI Router
+
+AI Router solved this by processing each open-ended response through a customized prompt at the point of submission. The output; structured sentiment, topics, and an executive summary, was saved back into the survey as custom variables. Those custom variables became native dashboard fields: filterable, reportable, and exportable alongside all other survey data.
+
+What We Delivered for Sartorius
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Deliverable                 Detail
+  --------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Sentiment per comment       Positive / Neutral / Negative for each of the 5 comment box questions, stored as individual custom variables and available as dashboard widgets and filters.
+
+  Primary topic per comment   Dominant theme extracted per response, mapped to Sartorius's own codebook and brand language — not a generic category list.
+
+  Executive summary           A concise, respondent-level summary of all 5 open-ended answers combined, generated per submission, viewable in dashboards and exported in raw data.
+
+  Dashboard filters           All sentiment and topic fields are available as live filters inside the existing XA dashboard — no separate BI environment required.
+
+  Raw data export             Every AI-generated field appears alongside standard survey columns in the data export file.
+
+  Extensibility               The same prompt structure can be expanded in future to include action items, improvement signals, personas, experience stage mapping, and retention risk flags.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. How the Workflow Works
+
+At a high level, the flow looks like this: a response comes into the survey, a webhook sends the relevant data to AI Router, AI Router processes that data using the customised prompt, the output comes back as JSON, that JSON is stored in a custom variable, and the values inside that JSON are split into separate custom variables for reporting and downstream use in the dashboard.
+
+  ---------------------------------------------------------------------------------------------
+  Survey       →   Webhook    →   AI Router   →   JSON       →   Custom      Dashboard
+  Submission       fires          processes       returned       Variables   Filters & Export
+  ------------ --- ---------- --- ----------- --- ---------- --- ----------- ------------------
+
+  ---------------------------------------------------------------------------------------------
+
+4. Step-by-Step Setup
+
+Step 1: Create a Consumer in AI Router
+
+Go to https://airouter.questionpro.com/ and click “Add consumer”. Treat the consumer as the workspace for all live projects you own. Each consumer has its own API key — copy it for use in the webhook later.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+  Best practice
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+  Name the consumer so ownership is obvious (e.g. Sartorius-EX-2024). This prevents other team members from accidentally editing a live setup.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 2: Create the Use Case and Prompt
+
+Inside the consumer, click Add a use case. The name must be in kebab-case — for example: sartorius-ex-sentiment or employee-comment-analysis.
+
+Select Prompt as the type. This gives the most control over both the instruction logic and the output format. For the Sartorius setup, the prompt was configured to:
+
+-   Accept 5 separate comment inputs as dynamic variables (e.g. {{Comment 1}} through {{Comment 5}}).
+
+-   Return sentiment (Positive, Neutral, or Negative) for each comment.
+
+-   Return the dominant theme for each comment, mapped to Sartorius's internal codebook.
+
+-   Return a concise executive summary across all 5 responses combined.
+
+-   Output everything as a stable JSON object with named keys.
+
+Prompt design rules that matter
+
+The prompt is the logic layer of the entire setup. A vague prompt produces vague output that will break dashboards and reporting. For the Sartorius prompt, we followed four rules:
+
+1.  Explain the AI's role and context — this is an employee experience survey for a life sciences company.
+
+2.  Define what each input variable means — which question it maps to.
+
+3.  Define the exact classification rules — what counts as Positive vs Neutral vs Negative in this context.
+
+4.  Define the exact output format — a JSON object with stable, pre-agreed key names.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Important
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Test the prompt in AI Router with real examples before connecting the survey. Use a mix: strong positive responses, mixed responses, vague text, and borderline cases. The goal is to confirm the model holds its rules consistently across all of them.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 3: Prepare the Survey Data
+
+Before the webhook can send anything to AI Router, the survey responses need to exist as custom variables that the webhook can reference.
+
+For Sartorius, each of the 5 open-ended comment responses was stored in a separate custom variable (custom1 through custom5). This is the safest approach — one response per variable, no concatenation, no risk of truncation.
+
+If a use case requires combining multiple selected options into one field (for example, building a persona input from a multi-select question), the following JavaScript template can be used:
+
+Template: Combine multiple selected options into one custom variable
+
+/* Post JS logic */
+
+  $('#SurveySubmitButtonElement').attr("type", "button");
+
+  $('#SurveySubmitButtonElement').on('click', function(e) {
+
+  e.preventDefault();
+
+  let selectedOptions = [];
+
+  // Change these numbers to match your question range
+
+  let startQuestion = 1;
+
+  let endQuestion = 8;
+
+  // Change this to the custom variable number you want
+
+  let customVariableNumber = 100;
+
+  for (let i = startQuestion; i <= endQuestion; i++) {
+
+  let qClass = '.Q' + i;
+
+  $(qClass + ' input:checked').each(function() {
+
+  let optionText = $(this).closest('label').text().trim();
+
+  if (!optionText) {
+
+  optionText = $(this).parent().text().trim();
+
+  }
+
+  if (optionText) {
+
+  selectedOptions.push(optionText);
+
+  }
+
+  });
+
+  }
+
+  let customValue = selectedOptions.join(', ');
+
+  $survey.updateCustomVariable(customVariableNumber, customValue);
+
+  document.forms.runForm.onsubmit();
+
+  });
+
+Step 4: Set Up the Webhook
+
+Go to Survey > Integrations > Webhooks and click Add new webhook. Create an outgoing webhook. Use the After survey trigger to ensure the full response is available before the webhook fires.
+
+  ------------------------------------------------------------------------------------------------------------
+  Setting                     Value
+  --------------------------- --------------------------------------------------------------------------------
+  Endpoint                    https://airouter-api.questionpro.com/v1/prompt-routes
+
+  Method                      POST
+
+  Header: api-key             Your API key from the AI Router consumer
+
+  Header: Content-Type        application/json
+
+  Request body                Copied from Consumer > Use Case > Code > Copy JSON (then modified — see below)
+  ------------------------------------------------------------------------------------------------------------
+
+Critical: add the response_format block
+
+After copying the JSON request body from AI Router, add the following to the end of the payload. Without this, the router may return free text instead of a parseable JSON object:
+
+  -----------------------------------------------------------------------
+  "response_format": {
+  -----------------------------------------------------------------------
+  "type": "json_object"
+
+  }
+  -----------------------------------------------------------------------
+
+Step 5: Save the AI Router Output as a Custom Variable
+
+Once the webhook returns data, map the output to a custom variable using custom mapping. Add a display name and use the following JSON selector key under the Code field:
+
+  -----------------------------------------------------------------------
+  result.documents[0].output[0].value
+  -----------------------------------------------------------------------
+
+  -----------------------------------------------------------------------
+
+This stores the full router response — as a raw JSON string — into a single custom variable. Plan which variable number this will be before setting up the mapping. For Sartorius, this was used once per prompt, with the raw JSON then extracted into individual fields in the next step.
+
+Example of what the saved output looks like
+
+  -----------------------------------------------------------------------------
+  {
+  -----------------------------------------------------------------------------
+  "comment_1_sentiment": "Negative",
+
+  "comment_1_theme": "Leadership Communication",
+
+  "comment_2_sentiment": "Positive",
+
+  "comment_2_theme": "Team Collaboration",
+
+  "comment_3_sentiment": "Neutral",
+
+  "comment_3_theme": "Workload & Capacity",
+
+  "comment_4_sentiment": "Negative",
+
+  "comment_4_theme": "Career Development",
+
+  "comment_5_sentiment": "Positive",
+
+  "comment_5_theme": "Recognition & Reward",
+
+  "executive_summary": "Employee highlights strong team culture but expresses
+
+  concern over leadership communication and limited growth opportunities."
+
+  }
+  -----------------------------------------------------------------------------
+
+Step 6: Extract JSON Values into Separate Custom Variables
+
+The raw JSON string is stored, but to make data usable in reporting and dashboard filters, each key must be extracted into its own custom variable using JavaScript. The script below is the general template used for this:
+
+Template: JSON parser script/* ============================
+
+  TEMPLATE: JSON Parser Script
+
+  ============================ */
+
+  /*
+
+  INSTRUCTIONS:
+
+  1. Replace CUSTOM_SOURCE with the custom variable where JSON is stored
+
+  Example: custom2 -> $survey.surveyResponseJson.custom2
+
+  2. Update JSON KEYS based on your AI/JSON output
+
+  Example: persona, confidence, reason
+
+  3. Update CUSTOM VARIABLE INDEXES where values should be stored
+
+  Example: custom11 -> $survey.updateCustomVariable(11, value)
+
+  */
+
+  // STEP 1: Get JSON string from a custom variable
+
+  let str = $survey.surveyResponseJson.CUSTOM_SOURCE; // replace CUSTOM_SOURCE
+
+  // STEP 2: Safety check to ensure valid JSON exists
+
+  if (str && str.indexOf('{') !== -1 && str.lastIndexOf('}') !== -1) {
+
+  // STEP 3: Extract only the JSON portion
+
+  let jsonOnly = str.substring(
+
+  str.indexOf('{'),
+
+  str.lastIndexOf('}') + 1
+
+  );
+
+  // STEP 4: Parse JSON into object
+
+  let jsonObj = JSON.parse(jsonOnly);
+
+  // STEP 5: Map JSON values -> Custom Variables
+
+  // Replace json keys + custom variable indexes below
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_1, jsonObj.KEY_1 || "");
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_2, jsonObj.KEY_2 || "");
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_3, jsonObj.KEY_3 || "");
+
+  }
+
+5. How to Test the Full Setup
+
+5.  Test the prompt directly in AI Router first — confirm the output structure is correct before involving the survey.
+
+6.  Test the request body in Postman — confirm the API key, endpoint, and returned JSON shape independently.
+
+7.  Preview the survey and submit test responses — verify that source custom variables are being populated before the webhook fires.
+
+8.  Check the mapped custom variable — confirm the raw router output is being stored correctly.
+
+9.  Check the extraction script output — confirm that each destination custom variable contains the expected value.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  When testing the prompt
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Do not test with only one clean example. Use strong positive comments, mixed comments, vague text, short one-word answers, and borderline cases. The goal is to see whether the model holds its classification rules consistently across all of them.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. Common Issues and Fixes
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Issue                             What to check
+  --------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+  Empty router output               Confirm the webhook fired, the API key is correct, and the dynamic variable names in the prompt match exactly what is being sent in the JSON payload.
+
+  Output is plain text, not JSON    Confirm the request body includes the response_format block with type set to json_object.
+
+  Mapped custom variable is blank   Confirm the selector key (result.documents[0].output[0].value) is correct and that the router is returning data at that path.
+
+  Parser script returns nothing     Confirm the raw custom variable actually contains JSON and that the key names in the script exactly match the keys in the router output.
+
+  Inconsistent classifications      Review the prompt. Most inconsistency comes from vague label definitions or missing rules. Tighten the classification criteria in the prompt.
+
+  Input data getting cut off        A custom variable may have hit its character limit. Split source data into separate variables rather than concatenating into one field.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. What Else Can Be Added
+
+The Sartorius setup focused on sentiment, topics, and executive summaries — a solid first production version. The same infrastructure supports additional analyses without changing the core architecture. The prompt is simply extended to return more keys.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Future capability            How it works
+  ---------------------------- -------------------------------------------------------------------------------------------------------------------------------------------
+  Action items                 The router returns a list of recommended actions based on the comment content. Useful for operational follow-up or case management.
+
+  Improvement signals          Detects whether the employee is signalling a mild, moderate, or urgent need for change. Useful for priority-based action routing.
+
+  Persona classification       Assigns the respondent to a defined employee persona (e.g. high-performer, disengaged, at-risk) based on their combined responses.
+
+  Retention risk flags         Returns a risk label (low, medium, high) based on language intensity and stated pain points. Can trigger alerts or manager notifications.
+
+  Journey stage mapping        Maps the comment to a stage in the employee lifecycle — Onboarding, Development, Retention, Exit — for root-cause trend analysis.
+
+  Translation                  Translates non-English responses before or alongside analysis. Useful when the survey runs across multiple regions.
+
+  Reasoning / explainability   Returns a short explanation for each classification so internal teams understand why the router chose a particular label.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Internal Recommendations
+
+-   Start with a small number of stable output fields (sentiment, topic, confidence, reason). Once those work consistently, layer on more.
+
+-   Always save the raw router output somewhere before splitting it. It is the easiest reference point when debugging.
+
+-   For dashboards, prefer fields with stable categories (Positive / Neutral / Negative) over free-text summaries for filters and trends. Use the summaries for reading.
+
+-   If multiple teams or clients will reuse similar prompts, maintain a small prompt library with documented input variables and expected output keys for each use case.
+
+-   Keep the prompt, webhook mapping, and extraction script aligned. If the JSON keys change in the prompt, the extraction script must be updated too.
+
++-----------------------------------------------------------------------------------------+
+| When this recipe is set up correctly, the survey stops being a passive collection tool. |
+|                                                                                         |
+| Responses are interpreted, structured, and made operational in near real time.          |
++=========================================================================================+
++-----------------------------------------------------------------------------------------+

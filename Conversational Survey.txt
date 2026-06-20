@@ -1,0 +1,455 @@
++------------------------------------------------------------------------------------------------------------------+
+| AI ROUTER                                                                                                        |
+|                                                                                                                  |
+| Conversational Survey                                                                                            |
+|                                                                                                                  |
+| Cookbook                                                                                                         |
+|                                                                                                                  |
+| How a static rating scale became a live AI conversation — built for 7-Eleven, Kapital Bank Azerbaijan, and ACCA. |
+|                                                                                                                  |
+| QuestionPro CX | Internal Use                                                                                    |
++==================================================================================================================+
++------------------------------------------------------------------------------------------------------------------+
+
+Conversational Survey
+
++------------------------------------------------------------------------------------------------------------------+
+| AI ROUTER                                                                                                        |
+|                                                                                                                  |
+| Conversational Survey                                                                                            |
+|                                                                                                                  |
+| Cookbook                                                                                                         |
+|                                                                                                                  |
+| How a static rating scale became a live AI conversation — built for 7-Eleven, Kapital Bank Azerbaijan, and ACCA. |
+|                                                                                                                  |
+| QuestionPro CX | Internal Use                                                                                    |
++==================================================================================================================+
++------------------------------------------------------------------------------------------------------------------+
+
+1. The Clients & The Problem
+
++----------------------------------+--------------------------------------+------------------------------------------------+
+| CLIENT 1                         | CLIENT 2                             | CLIENT 3                                       |
+|                                  |                                      |                                                |
+| 7-Eleven                         | Kapital Bank                         | ACCA                                           |
+|                                  |                                      |                                                |
+| Retail Convenience | In-store CX | Retail Banking | Branch & Digital CX | Association of Chartered Certified Accountants |
++==================================+======================================+================================================+
++----------------------------------+--------------------------------------+------------------------------------------------+
+
+Background
+
+All three clients were running QuestionPro surveys with a numerical rating scale. CSAT for 7-Eleven, NPS for Kapital Bank, and satisfaction scores for ACCA member and student feedback programs. The rating captured a number. That was the limit. The story behind the number - the specific frustration, the missed expectation, the reason a customer walked away disappointed or delighted - was either left uncaptured, or collected through a single static open-ended question that respondents often ignored or answered with a single word.
+
+Each client had a different context, but the same fundamental gap: the survey was a data collection form, not a conversation. It treated every respondent identically regardless of their score. It asked the same question whether the customer gave a 2 or a 9. It did nothing with the emotional signal embedded in the rating before asking the next question. And once the data landed in the dashboard, the open-ended responses sat as unstructured text — untagged, unsegmented, impossible to filter or trend.
+
+The Specific Gaps by Client
+
++---+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | 7-Eleven — In-store CSAT Surveys                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|   |                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|   | A customer rating the visit a 3 out of 10 was asked the same follow-up as a customer who gave 9. There was no adaptive questioning. A detractor who was frustrated about an out-of-stock item and a promoter who loved the checkout speed were treated identically in the survey flow. The result was shallow data: a score with no credible story behind it, and open-ended comments that were either too vague to act on or manually reviewed one by one. |
++===+=============================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++---+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
++---+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | Kapital Bank Azerbaijan — Branch & Digital NPS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|   | Azerbaijan's largest bank runs NPS surveys across both branch visits and digital banking interactions. A low NPS score from a branch customer could mean a long queue, an unhelpful teller, a confusing process, or an unresolved complaint. Without adaptive follow-up, the bank could only guess. Branch managers reviewing dashboards saw scores, not causes. The verbatim comments were in Azerbaijani and Russian, and there was no automated way to extract themes, detect recurring service failures, or flag at-risk customers for follow-up. |
++===+=======================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++---+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
++---+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | ACCA — Member & Student Satisfaction Surveys                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|   | ACCA runs global satisfaction surveys for both its student population and practicing members. Feedback spans exam experience, study support, member services, and regional office quality. A student in a low-resource market who gave a low satisfaction score had very different reasons to one in a well-serviced hub city — but the survey could not differentiate. Qualitative feedback across geographies was untranslated, unthemed, and unactionable at scale. The People and Quality teams needed structured insight that could be compared across regions without manual coding of open-ended responses. |
++===+====================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++---+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+The Common Problem
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  A rating captures a moment. It does not explain it.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Across all three clients, the core issue was the same: surveys were collecting a number without the story behind it. The open-ended question — when it existed at all — was generic, static, and produced responses too inconsistent to analyse at scale. There was no mechanism to ask a low scorer what specifically went wrong, to probe whether it was a one-time incident or a recurring pattern, or to understand whether the frustration changed their behaviour. The survey stopped exactly where the useful insight began.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. The Solution: AI Router as a Conversational Layer
+
+The solution was to replace the static question-and-answer structure with a dynamic AI-driven conversation — one that adapted in real time based on what the respondent said. Using the AI Router connected to the survey via webhook, each response to the rating question triggered a chain of up to 5 sequential AI prompts. Each prompt received the full conversation history so far and decided — based on tone, depth, and emotional signal — what to ask next.
+
+The survey was no longer a form. It became a dialogue. A detractor at 7-Eleven was asked what specifically felt frustrating. If they mentioned stock issues, the AI probed whether it was a recurring problem. If they said it had happened before, the next question explored whether it had changed their behaviour. A promoter at Kapital Bank was asked what made the visit stand out, then whether that consistency was the reason they kept coming back. Every path was different because every respondent was different.
+
+What Was Delivered
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Deliverable                        Detail
+  ---------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Adaptive opening question          The first AI question is tailored to the score. A respondent who gave 1-2 received a different opening to one who gave 9-10 — immediately signalling that this is a genuine conversation, not a checkbox exercise.
+
+  Root cause probe                   The second prompt read the first response and decided whether to probe for recurring pattern, one-time impact, or mixed signal — matching tone to the customer's emotional intensity.
+
+  Behavioural impact layer           The third prompt asked whether the experience changed what the customer did — whether they bought something else, came back less often, or adjusted their behaviour in some way.
+
+  Trust and confidence layer         The fourth prompt, triggered only when warranted, explored whether the experience had changed how the customer felt about the store, branch, or institution overall.
+
+  Forward signal                     The fifth prompt asked what would make the experience better next time — framed conversationally, not as a generic improvement question.
+
+  Structured analysis (Use Case 6)   After the conversation, a final AI prompt processed all responses and returned a JSON object containing dominant theme, secondary theme, sentiment, experience stage, and improvement signal — all saved back into the survey as custom variables for reporting and filtering.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. How the Workflow Works
+
+The setup uses 6 separate Use Cases in AI Router, each mapped to a different stage of the conversation. A webhook fires at each step, sending the relevant history to the router. The router processes it and the response is saved back into the survey as a custom variable — which then becomes the input for the next prompt.
+
+The 6-Use-Case Chain
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Use Case   Stage                       Input Sent to AI Router
+  ---------- --------------------------- ----------------------------------------------------------------------------------------------------------------------------------------
+  UC 1       Adaptive opening question   CSAT / NPS score only. The AI chooses the right opening question based on the score band.
+
+  UC 2       Root cause probe            UC1 question + respondent's first answer. The AI reads the response and decides how to probe further.
+
+  UC 3       Behavioural impact          UC1 question + answer 1 + UC2 question + answer 2. The AI explores what the experience caused the respondent to do.
+
+  UC 4       Trust & confidence layer    Full conversation to date (UC1–UC3). Triggered only if impact, strong emotion, or pattern exists. Explores confidence in the brand.
+
+  UC 5       Forward signal              Full conversation to date (UC1–UC4). Asks what would improve the experience — only if the conversation warrants it.
+
+  UC 6       Structured analysis         Full conversation (all questions and answers). Returns a JSON object with sentiment, themes, experience stage, and improvement signal.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Why does each use case get the full history?
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The AI has no memory between calls. Each webhook fires independently. Passing the full conversation history in the request body is what allows the AI to maintain context, avoid repeating itself, match the emotional tone established earlier in the conversation, and make a coherent decision about what to ask next. Without this, each response would be disconnected.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Prompt Logic: What Each Use Case Does
+
+Use Case 1 — Adaptive Opening Question
+
+Input: the CSAT or NPS score (integer). The prompt maps the score to a band and selects the appropriate opening question. There are 5 bands:
+
+  ------------------------------------------------------------------------------------------------------
+  Score Band                  Opening Question Logic
+  --------------------------- --------------------------------------------------------------------------
+  9–10 (Very satisfied)       Ask what worked particularly well during the visit.
+
+  7–8 (Generally satisfied)   Ask what stood out positively and where things could have been smoother.
+
+  5–6 (Neutral / mixed)       Ask what parts felt smooth and where things fell short.
+
+  3–4 (Dissatisfied)          Ask what part of the visit felt frustrating or inconvenient.
+
+  1–2 (Very dissatisfied)     Ask what was the most frustrating or inconvenient part of the visit.
+  ------------------------------------------------------------------------------------------------------
+
+The output is a single question. Nothing else. No explanation, no score reference, no preamble.
+
+Use Case 2 — Root Cause Probe
+
+Input: UC1 question + the customer's first response. The AI is instructed to:
+
+-   Detect whether the issue is recurring (language like 'often', 'usually', 'keeps happening') or one-time.
+
+-   Detect whether the response is positive, negative, or mixed.
+
+-   Acknowledge the emotional tone naturally — not with corporate language.
+
+-   Ask one targeted question. If recurring: probe consistency. If one-time: probe impact. If mixed: acknowledge both, then probe what matters more.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Tone rule
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The prompt explicitly bans phrases like 'We apologize for the inconvenience caused' or 'Thank you for bringing this to our attention.' The AI must sound like a calm, empathetic person — not a helpdesk script.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Use Case 3 — Behavioural Impact Layer
+
+Input: full conversation to date (UC1 Q+A, UC2 Q+A). The AI classifies answer depth (very short / short / detailed) and emotional tone (strong negative through strong positive), then selects the appropriate behavioural question:
+
+  ------------------------------------------------------------------------------
+  Customer State        Behaviour Question Asked
+  --------------------- --------------------------------------------------------
+  High frustration      When that happens, what do you usually end up doing?
+
+  Mild annoyance        Do you just work around it when it happens?
+
+  Downplayed impact     Does it change what you buy at all?
+
+  Strong praise         Does that make you more likely to come back?
+
+  Mild positive         Is that what keeps you choosing this place?
+
+  Mixed signal          Which sticks more — the good parts or the frustration?
+
+  Neutral / practical   Is convenience the main reason you stop by?
+  ------------------------------------------------------------------------------
+
+Use Case 4 — Trust & Confidence Layer
+
+Input: full conversation to date (UC1–UC3). This prompt only proceeds if there is genuine signal: behaviour changed, emotion remained strong, a pattern was confirmed, or a loyalty or confidence signal appeared. If the customer downplayed impact, the probe is softened. If no trust signal exists, a light validation question replaces any escalation.
+
+This is the layer that separates a transactional interaction from one that surfaces whether the brand relationship itself was affected — which is far more valuable for churn prediction and CX strategy.
+
+Use Case 5 — Forward Signal
+
+Input: full conversation to date (UC1–UC4). This prompt only asks a forward question if the conversation warrants it — trust shifted, friction persists, or a loyalty signal is present. It never asks a generic 'how can we improve?' question. The question is always framed relative to what the customer actually experienced.
+
+  -----------------------------------------------------------------------
+  State                 Forward Question
+  --------------------- -------------------------------------------------
+  Negative, recurring   What would make it feel smoother next time?
+
+  Negative, mild        What would make it easier for you?
+
+  Positive              What keeps this store ahead of others for you?
+
+  Mixed                 If one thing improved, what would matter most?
+
+  Escalation risk       What would make you feel confident coming back?
+
+  Neutral / practical   If location changed, would you still come here?
+  -----------------------------------------------------------------------
+
+Use Case 6 — Structured Analysis
+
+Input: full conversation (all questions and all answers, up to 5 exchanges). This is the analysis prompt. It processes everything and returns a JSON object with exactly 5 fields:
+
+  -------------------------------------------------------------------------------------------------------------
+  {
+  -------------------------------------------------------------------------------------------------------------
+  "dominant_theme": "Product availability",
+
+  "secondary_theme": "Staff interaction",
+
+  "sentiment": "Negative",
+
+  "experience_stage": "Browsing & product search",
+
+  "improvement_signal": "Improve replenishment of high-demand beverages to reduce out-of-stock substitutions"
+
+  }
+  -------------------------------------------------------------------------------------------------------------
+
+The prompt handles incomplete conversations gracefully. If the respondent dropped off after 1 exchange, it extracts what it can. If responses are empty or non-informational, it returns empty fields rather than fabricating insight. If the conversation was positive, the improvement signal reinforces the strength rather than manufacturing a problem.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Output Field         Allowed Values
+  -------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  dominant_theme       Speed & convenience | Queue & billing | Staff interaction | Product availability | Store layout & navigation | Cleanliness & maintenance | Consistency & reliability | Overall store experience
+
+  secondary_theme      Same list as dominant_theme, or empty string if not material
+
+  sentiment            Very Negative | Negative | Neutral | Positive | Very Positive
+
+  experience_stage     Entry & first impression | Browsing & product search | Checkout & payment | Staff interaction | Exit & overall impression
+
+  improvement_signal   Operationally specific, actionable, store-level recommendation — not generic
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. Step-by-Step Technical Setup
+
+Step 1: Create 6 Use Cases in AI Router
+
+Go to https://airouter.questionpro.com/ and open the relevant consumer (or create one if starting fresh). Create 6 use cases — one per conversational stage. Name them in kebab-case, for example:
+
+-   7eleven-csat-opening-question
+
+-   7eleven-csat-root-cause-probe
+
+-   7eleven-csat-behaviour-layer
+
+-   7eleven-csat-trust-layer
+
+-   7eleven-csat-forward-signal
+
+-   7eleven-csat-final-analysis
+
+Select Prompt as the type for all 6. Define the dynamic variables in each prompt to match what the webhook will send. For UC1, that is just {{CSAT_SCORE}}. For UC2, it is {{PREVIOUS_QUESTION_1}} and {{ANSWER_1}}. Continue this pattern through UC6, which receives all 5 question-answer pairs.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Important
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Set each use case to Production (Go live) before connecting the survey. Test each one individually in the AI Router interface using sample inputs first. A bad prompt in UC2 will corrupt UC3, UC4, and UC5 downstream.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 2: Set Up Custom Variables in the Survey
+
+Before building the webhooks, map out the custom variable structure. You need variables for:
+
+  --------------------------------------------------------------------------------------------------
+  Custom Variable   What it stores
+  ----------------- --------------------------------------------------------------------------------
+  custom1           The CSAT or NPS score (source input for UC1)
+
+  custom2           UC1 AI question (displayed to respondent as the first conversational question)
+
+  custom3           Respondent's answer to UC1 question
+
+  custom4           UC2 AI question
+
+  custom5           Respondent's answer to UC2 question
+
+  custom6           UC3 AI question
+
+  custom7           Respondent's answer to UC3 question
+
+  custom8           UC4 AI question (may be empty if trust layer not triggered)
+
+  custom9           Respondent's answer to UC4 question
+
+  custom10          UC5 AI question (may be empty if forward signal not warranted)
+
+  custom11          Respondent's answer to UC5 question
+
+  custom12          Raw JSON output from UC6 (the full analysis object)
+
+  custom13          Dominant theme (extracted from custom12)
+
+  custom14          Secondary theme (extracted from custom12)
+
+  custom15          Sentiment (extracted from custom12)
+
+  custom16          Experience stage (extracted from custom12)
+
+  custom17          Improvement signal (extracted from custom12)
+  --------------------------------------------------------------------------------------------------
+
+Step 3: Set Up 6 Webhooks
+
+Each use case requires its own webhook. All 6 use the same endpoint and method:
+
+  -----------------------------------------------------------------------
+  Endpoint: https://airouter-api.questionpro.com/v1/prompt-routes
+  -----------------------------------------------------------------------
+  Method: POST
+
+  Headers: api-key: YOUR_API_KEY
+
+  Content-Type: application/json
+  -----------------------------------------------------------------------
+
+Copy the JSON request body from each use case inside AI Router (Consumer > Use Case > Code > Copy JSON). Then modify each payload to:
+
+1.  Insert the correct dynamic variable values from the survey (e.g. the CSAT score from custom1 for UC1, the conversation history for UC2 onwards).
+
+2.  Add the response_format block at the end of the payload for UC6 (which must return JSON):
+
+  -----------------------------------------------------------------------
+  "response_format": {
+  -----------------------------------------------------------------------
+  "type": "json_object"
+
+  }
+  -----------------------------------------------------------------------
+
+Webhooks for UC1 through UC5 return a free-text question as plain text. UC6 must return structured JSON. Only UC6 requires the response_format block.
+
+Step 4: Save Each AI Response Back into the Survey
+
+After each webhook fires, use custom mapping to store the returned AI response into the correct custom variable. The selector key is:
+
+  -----------------------------------------------------------------------
+  result.documents[0].output[0].value
+  -----------------------------------------------------------------------
+
+  -----------------------------------------------------------------------
+
+For UC1 through UC5, this stores the AI-generated question text. That text is then displayed to the respondent as the next question. For UC6, this stores the raw JSON analysis object.
+
+Step 5: Extract the UC6 JSON into Separate Custom Variables
+
+Once the raw JSON is saved into custom12, use the following JavaScript to split it into the 5 reporting fields:
+
+  ---------------------------------------------------------------------------
+  let str = $survey.surveyResponseJson.custom12;
+  ---------------------------------------------------------------------------
+
+  if (str && str.indexOf('{') !== -1 && str.lastIndexOf('}') !== -1) {
+
+  let jsonOnly = str.substring(str.indexOf('{'), str.lastIndexOf('}') + 1);
+
+  let jsonObj = JSON.parse(jsonOnly);
+
+  $survey.updateCustomVariable(13, jsonObj.dominant_theme || "");
+
+  $survey.updateCustomVariable(14, jsonObj.secondary_theme || "");
+
+  $survey.updateCustomVariable(15, jsonObj.sentiment || "");
+
+  $survey.updateCustomVariable(16, jsonObj.experience_stage || "");
+
+  $survey.updateCustomVariable(17, jsonObj.improvement_signal || "");
+
+  }
+  ---------------------------------------------------------------------------
+
+6. How to Test the Full Setup
+
+3.  Test each use case individually in AI Router with real sample inputs before connecting the survey. For UC1, test scores across all 5 bands. For UC2–UC5, test positive, negative, mixed, and very short responses.
+
+4.  Test the UC6 analysis prompt with: a complete 5-exchange conversation, a 1-exchange conversation (dropped off early), empty or one-word responses, and a purely positive conversation. Confirm the JSON output is valid and the improvement signal is specific rather than generic.
+
+5.  Test each webhook in Postman before connecting it to the survey. Confirm the API key works, the payload maps correctly to the dynamic variables in the prompt, and the returned value is what you expect.
+
+6.  Preview the survey and submit test responses. After each step, check that the correct custom variable contains the right AI-generated question before the next webhook fires.
+
+7.  Submit a full end-to-end test response. Confirm that all 5 reporting custom variables (dominant theme through improvement signal) are populated correctly in the raw data.
+
+7. Common Issues and Fixes
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Issue                                            What to check
+  ------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  AI question looks wrong for the score            Check UC1 prompt score-band logic. Confirm the CSAT score is being passed correctly as an integer, not a string.
+
+  UC2+ question ignores the conversation history   Confirm the full conversation variables (PREVIOUS_QUESTION_1, ANSWER_1, etc.) are being inserted correctly into the webhook request body. Check variable names match the prompt placeholders exactly.
+
+  AI sounds robotic or corporate                   Review the prompt tone instructions. The empathy section should explicitly list banned phrases. Add example good/bad responses to the prompt.
+
+  UC6 returns plain text instead of JSON           Confirm the response_format block is present in the UC6 request body with type set to json_object.
+
+  Improvement signal is generic                    Tighten UC6 prompt with explicit examples of bad signals (e.g. 'Improve customer service') and good signals. Show the contrast directly in the prompt instructions.
+
+  Custom variables empty after extraction          Confirm the raw JSON in custom12 is valid. Check that the key names in the extraction script exactly match the keys in the UC6 prompt output definition.
+
+  Some respondents drop off early                  UC6 is designed to handle 1–5 responses gracefully. Confirm the prompt includes the instruction to ignore empty or null inputs rather than hallucinating insight.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. What Else Can Be Added
+
+The three deployments described here focused on the core conversational layer plus sentiment analysis. The same infrastructure supports significant extension without changing the underlying architecture.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Extension                     How it works
+  ----------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Persona classification        UC6 returns an additional persona field based on the respondent's combined answers — e.g. 'habitual visitor', 'service-recovery needed', 'brand advocate'.
+
+  Retention / churn risk flag   UC6 returns a risk label (low / medium / high) based on language intensity, stated behaviour change, and frequency of issue. Can trigger case management alerts.
+
+  Multi-language support        For Kapital Bank (Azerbaijani / Russian), a translation step can be added before UC6 so that the analysis always runs in English regardless of response language.
+
+  Action item generation        UC6 returns a specific recommended action alongside the improvement signal — targeted at the store, branch, or regional manager level.
+
+  Journey stage mapping         Map each respondent's dominant issue to a stage in the customer or member lifecycle for root-cause trend analysis across cohorts.
+
+  Real-time alerts              Combine the churn risk flag or sentiment field with a CRM webhook to trigger an immediate manager notification for Very Negative responses.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
++--------------------------------------------------------------------------------------+
+| A rating scale tells you a customer was unhappy.                                     |
+|                                                                                      |
+| A conversation tells you why — and what to do next.                                  |
+|                                                                                      |
+| That is what this setup delivers, at scale, in real time, inside the same dashboard. |
++======================================================================================+
++--------------------------------------------------------------------------------------+
+
+Video of the working survey and analytics:

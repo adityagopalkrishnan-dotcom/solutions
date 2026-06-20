@@ -1,0 +1,978 @@
+Purpose Mindset Cookbook
+
+Purpose Mindset
+
+Purpose Mindset Cookbook
+
+Purpose Mindset: From Survey Inputs to Personal Purpose Statements
+
+  -------------------------------------------------------------------------------------
+  Field                               Details
+  ----------------------------------- -------------------------------------------------
+  Client / Initiative                 Purpose Mindset Initiative
+
+  Led by                              Akhtar Badshah + QuestionPro
+
+  Prepared for                        QuestionPro RE | Internal Use
+
+  Primary platform                    QuestionPro Surveys, Communities, and AI Router
+  -------------------------------------------------------------------------------------
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Document purpose                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                    |
+| This cookbook documents the complete Purpose Mindset implementation: survey setup, Community mapping, JavaScript logic, AI Router webhook configuration, output display, report download logic, and pricing model. |
++====================================================================================================================================================================================================================+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+1. Client and Problem
+
+Client
+
+Purpose Mindset Initiative — Akhtar Badshah + QuestionPro.
+
+Platforms Used
+
+  · QuestionPro Surveys
+
+  · QuestionPro Communities
+
+  · AI Router using the OpenAI integration
+
+Background
+
+The Purpose Mindset exercise is designed to help individuals articulate their personal purpose by reflecting on two core areas: core strengths and foundational values.
+
+The experience needed to feel guided, reflective, premium, and personalized. The end goal was not just to collect survey responses, but to help each participant walk away with a generated personal purpose statement and a clear pathway for further engagement through a community and workshops.
+
+Specific Use Case
+
+The team wanted to create a simple but powerful survey-led flow where users could:
+
+  1. Select their top 3 strengths from a predefined list.
+
+  2. Select their top 3 values from a predefined list.
+
+  3. Receive a generated personal purpose statement.
+
+  4. Be classified as either Proactive or Responsive.
+
+  5. Be invited into a QuestionPro Community and future workshops.
+
+Key Requirements
+
+  · Work inside the QuestionPro survey flow.
+
+  · Generate the output in real time.
+
+  · Allow the prompt to be edited without engineering dependency.
+
+  · Deliver a premium and guided experience for the participant.
+
+  · Integrate with QuestionPro Community for panel recruitment and continued engagement.
+
+2. Solution Overview
+
+The solution combines QuestionPro Surveys, Communities, custom JavaScript, and AI Router.
+
+At a high level, the flow works as follows:
+
+  1. A QuestionPro Community is created for the Purpose Mindset initiative.
+
+  2. The survey collects participant profile information, strengths, and values.
+
+  3. Selected strengths and values are stored in custom variables.
+
+  4. A hidden survey question triggers a webhook to AI Router.
+
+  5. AI Router generates a purpose statement and classifies the participant as Proactive or Responsive.
+
+  6. The generated output is saved back into custom variables.
+
+  7. A final presentation/report screen displays the personalized purpose statement, purpose driver, golden nugget, strengths, and values.
+
+  8. The participant can download the report as an image.
+
+  9. The participant can be moved into the Purpose Mindset Community and invited to workshops.
+
+3. Implementation Steps
+
+Step 1: Create the Community
+
+Create a dedicated QuestionPro Community for the Purpose Mindset initiative.
+
+Community URL: https://purpose.questionpro.com
+
+Community Setup Requirements
+
+  · Follow the Purpose Mindset brand guidelines.
+
+  · Add all relevant survey questions as Community profile fields.
+
+  · Ensure that answers captured in the survey can be mapped and linked to members inside the Community.
+
+  · Use the Community as the engagement layer after the participant completes the purpose exercise.
+
+Why This Matters
+
+The Community is not just a destination after the survey. It becomes the engagement hub where participants can continue their purpose journey, join workshops, and be segmented based on their generated purpose profile.
+
+Step 2: Create the AI Router Consumer and Use Case
+
+Create a consumer and use case inside AI Router.
+
+The AI Router use case is responsible for receiving the participant’s selected strengths and values, generating the personal purpose statement, categorizing the participant as Proactive or Responsive, and returning the generated output back to the survey.
+
+Refer to the internal AI Router tools and technologies documentation for the detailed consumer and use case setup steps.
+
+Step 3: Create the Survey
+
+The survey was built from the following survey document:
+
+  --------------------------------------------------------------------------------------------------
+  Field                               Details
+  ----------------------------------- --------------------------------------------------------------
+  Survey document                     QuestionPro-SR-SurveyDoc-12931421-04-28-2026-T212847.046.pdf
+
+  Survey ID                           12931421
+  --------------------------------------------------------------------------------------------------
+
+Survey Setup Requirements
+
+  · Build the Purpose Mindset survey inside QuestionPro Surveys.
+
+  · Map survey questions to Community profile fields.
+
+  · Store selected strengths in custom variables.
+
+  · Store selected values in custom variables.
+
+  · Trigger the AI Router webhook through a hidden question.
+
+  · Save AI Router outputs back into custom variables.
+
+  · Display the final generated report using a presentation question.
+
+4. Strength Selection Logic
+
+Participants are asked to select their top 3 core strengths.
+
+Requirement
+
+The participant should only be allowed to select 3 strengths. If they select more than 3, the latest selection should be unchecked and the participant should see an alert.
+
+Custom Variable Mapping
+
+  -----------------------------------------------------------------------
+  Custom Variable                     Purpose
+  ----------------------------------- -----------------------------------
+  custom1                             Strength 1
+
+  custom2                             Strength 2
+
+  custom3                             Strength 3
+
+  custom91                            Strength 1 description
+
+  custom92                            Strength 2 description
+
+  custom93                            Strength 3 description
+  -----------------------------------------------------------------------
+
+Pre JS Script for Core Strength Question
+
++---------------------------------------------------------------------------------+
+| /* Pre JS "Q6" */                                                               |
+|                                                                                 |
+| $("input[name='m_148108000']").click(function(){                                |
+|                                                                                 |
+| var checkLen = $('input[name="m_148108000"]:checked').length;                   |
+|                                                                                 |
+| if (checkLen > 3) {                                                             |
+|                                                                                 |
+| var this_id = $(this).closest("label").attr('for');                             |
+|                                                                                 |
+| $('label[for='+this_id+'] > input[name="m_148108000"]').prop('checked', false); |
+|                                                                                 |
+| alert("Please select only 3 strengths");                                        |
+|                                                                                 |
+| }                                                                               |
+|                                                                                 |
+| });                                                                             |
++=================================================================================+
++---------------------------------------------------------------------------------+
+
+Post JS Script for Core Strength Question
+
++-----------------------------------------------------------------------------------------+
+| /* Post Script "Q6" */                                                                  |
+|                                                                                         |
+| var _cvar = 1;                                                                          |
+|                                                                                         |
+| var _cvar1 = 91;                                                                        |
+|                                                                                         |
+| $(".answer-options.other-option > label > .control-label").wrapInner("<b></b>");        |
+|                                                                                         |
+| $("input[name='m_148108000']:checked").each(function(){                                 |
+|                                                                                         |
+| var _selected = $(this).val();                                                          |
+|                                                                                         |
+| var _selected_option = $('label[for="'+_selected+'ID"] span.control-label > b').text(); |
+|                                                                                         |
+| $survey.updateCustomVariable(_cvar, _selected_option);                                  |
+|                                                                                         |
+| _cvar++;                                                                                |
+|                                                                                         |
+| var _selected_option1 = $('label[for="'+_selected+'ID"] span.control-label').text();    |
+|                                                                                         |
+| let description = _selected_option1 .split(' - ')[1];                                   |
+|                                                                                         |
+| $survey.updateCustomVariable(_cvar1, description);                                      |
+|                                                                                         |
+| _cvar1++;                                                                               |
+|                                                                                         |
+| });                                                                                     |
++=========================================================================================+
++-----------------------------------------------------------------------------------------+
+
+What This Script Does
+
+  1. Limits the participant to exactly three strength selections.
+
+  2. Stores the selected strength labels in custom variables 1, 2, and 3.
+
+  3. Extracts and stores the strength descriptions in custom variables 91, 92, and 93.
+
+5. Foundational Values Selection Logic
+
+Participants are asked to select their top 3 foundational values.
+
+Requirement
+
+The participant should only be allowed to select 3 values. If they select more than 3, the latest selection should be unchecked and the participant should see an alert.
+
+Custom Variable Mapping
+
+  -----------------------------------------------------------------------
+  Custom Variable                     Purpose
+  ----------------------------------- -----------------------------------
+  custom4                             Value 1
+
+  custom9                             Value 2
+
+  custom6                             Value 3
+
+  custom94                            Value 1 description
+
+  custom95                            Value 2 description
+
+  custom96                            Value 3 description
+  -----------------------------------------------------------------------
+
+Pre JS Script for Foundational Values Question
+
++---------------------------------------------------------------------------------+
+| /* Pre JS "Q7" **/                                                              |
+|                                                                                 |
+| $("input[name='m_148108001']").click(function(){                                |
+|                                                                                 |
+| var checkLen = $('input[name="m_148108001"]:checked').length;                   |
+|                                                                                 |
+| if (checkLen > 3) {                                                             |
+|                                                                                 |
+| var this_id = $(this).closest("label").attr('for');                             |
+|                                                                                 |
+| $('label[for='+this_id+'] > input[name="m_148108001"]').prop('checked', false); |
+|                                                                                 |
+| alert("Please select only 3 values");                                           |
+|                                                                                 |
+| }                                                                               |
+|                                                                                 |
+| });                                                                             |
++=================================================================================+
++---------------------------------------------------------------------------------+
+
+Post JS Script for Foundational Values Question
+
++-----------------------------------------------------------------------------------------+
+| /* Post Script "Q7" */                                                                  |
+|                                                                                         |
+| var _cvar = 4;                                                                          |
+|                                                                                         |
+| var _cvar1 = 94;                                                                        |
+|                                                                                         |
+| $(".answer-options.other-option > label > .control-label").wrapInner("<b></b>");        |
+|                                                                                         |
+| $("input[name='m_148108001']:checked").each(function(){                                 |
+|                                                                                         |
+| var _selected = $(this).val();                                                          |
+|                                                                                         |
+| var _selected_option = $('label[for="'+_selected+'ID"] span.control-label > b').text(); |
+|                                                                                         |
+| if (_cvar == 5) {                                                                       |
+|                                                                                         |
+| $survey.updateCustomVariable(9, _selected_option);                                      |
+|                                                                                         |
+| }else{                                                                                  |
+|                                                                                         |
+| $survey.updateCustomVariable(_cvar, _selected_option);                                  |
+|                                                                                         |
+| }                                                                                       |
+|                                                                                         |
+| _cvar++;                                                                                |
+|                                                                                         |
+| var _selected_option1 = $('label[for="'+_selected+'ID"] span.control-label').text();    |
+|                                                                                         |
+| let description = _selected_option1 .split(' - ')[1];                                   |
+|                                                                                         |
+| $survey.updateCustomVariable(_cvar1, description);                                      |
+|                                                                                         |
+| _cvar1++;                                                                               |
+|                                                                                         |
+| });                                                                                     |
++=========================================================================================+
++-----------------------------------------------------------------------------------------+
+
+What This Script Does
+
+  1. Limits the participant to exactly three value selections.
+
+  2. Stores the selected values in custom variables 4, 9, and 6.
+
+  3. Extracts and stores the value descriptions in custom variables 94, 95, and 96.
+
+Important Note on Custom Variable Mapping
+
+The values are intentionally stored in custom4, custom9, and custom6 rather than custom4, custom5, and custom6.
+
+The script checks whether _cvar == 5. If true, it stores that selected value in custom9 instead.
+
++-----------------------------------------------------------------------+
+| if (_cvar == 5) {                                                     |
+|                                                                       |
+| $survey.updateCustomVariable(9, _selected_option);                    |
+|                                                                       |
+| }else{                                                                |
+|                                                                       |
+| $survey.updateCustomVariable(_cvar, _selected_option);                |
+|                                                                       |
+| }                                                                     |
++=======================================================================+
++-----------------------------------------------------------------------+
+
+This means the second selected value is mapped to custom9.
+
+6. AI Router Webhook Trigger
+
+After the strengths and values are selected and stored in custom variables, add a hidden question in the survey. This hidden question is used to trigger the webhook to AI Router.
+
+Purpose of the Hidden Question
+
+The hidden question acts as the processing step between the survey inputs and the generated output. It sends the participant’s selected strengths and values to AI Router and receives the generated purpose output back.
+
+Webhook Output Storage
+
+The returned values from AI Router are saved into custom variables. In this implementation:
+
+  · Generated purpose statement is saved in custom30.
+
+  · Persona type is saved in custom31.
+
+7. AI Router Webhook Setup
+
+Set up the webhook to the AI Router consumer.
+
+API URL
+
+  -----------------------------------------------------------------------
+  https://airouter-api.questionpro.com/v1/prompt-routes
+  -----------------------------------------------------------------------
+
+  -----------------------------------------------------------------------
+
+Headers
+
++----------------------------------------------------------------------------------------+
+| Content-Type: application/json                                                         |
+|                                                                                        |
+| api-key: [REDACTED — use the active AI Router API key from the internal configuration] |
++========================================================================================+
++----------------------------------------------------------------------------------------+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Security note                                                                                                                                                               |
+|                                                                                                                                                                             |
+| The original source contained an API key. It has been replaced with a placeholder in this document to avoid storing or redistributing a live secret in a reusable cookbook. |
++=============================================================================================================================================================================+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Body
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "user_id": 3263959,                                                                                                                                                                                        |
+|                                                                                                                                                                                                            |
+| "prompt_version": 8,                                                                                                                                                                                       |
+|                                                                                                                                                                                                            |
+| "use_case_name": "generate-purpose-statement",                                                                                                                                                             |
+|                                                                                                                                                                                                            |
+| "organization_id": 3194440,                                                                                                                                                                                |
+|                                                                                                                                                                                                            |
+| "data_center": "US",                                                                                                                                                                                       |
+|                                                                                                                                                                                                            |
+| "input_data": {                                                                                                                                                                                            |
+|                                                                                                                                                                                                            |
+| "input": [                                                                                                                                                                                                 |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "content",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": "{\n \"custom1\": \"${custom1}\",\n \"custom2\": \"${custom2}\",\n \"custom3\": \"${custom3}\",\n \"custom4\": \"${custom4}\",\n \"custom9\": \"${custom9}\",\n \"custom6\": \"${custom6}\"\n}\n" |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom1",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom2",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom3",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom4",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom9",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| {                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "key": "custom6",                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| "value": null                                                                                                                                                                                              |
+|                                                                                                                                                                                                            |
+| }                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| ]                                                                                                                                                                                                          |
+|                                                                                                                                                                                                            |
+| },                                                                                                                                                                                                         |
+|                                                                                                                                                                                                            |
+| "meta": {}                                                                                                                                                                                                 |
+|                                                                                                                                                                                                            |
+| }                                                                                                                                                                                                          |
++============================================================================================================================================================================================================+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+What Is Sent to AI Router
+
+The webhook sends the selected strengths and values as custom variables:
+
++-----------------------------------------------------------------------+
+| {                                                                     |
+|                                                                       |
+| "custom1": "${custom1}",                                              |
+|                                                                       |
+| "custom2": "${custom2}",                                              |
+|                                                                       |
+| "custom3": "${custom3}",                                              |
+|                                                                       |
+| "custom4": "${custom4}",                                              |
+|                                                                       |
+| "custom9": "${custom9}",                                              |
+|                                                                       |
+| "custom6": "${custom6}"                                               |
+|                                                                       |
+| }                                                                     |
++=======================================================================+
++-----------------------------------------------------------------------+
+
+Expected AI Router Response
+
+The AI Router response should return the generated personal purpose statement and the participant classification: Proactive or Responsive. These returned values are then mapped back to the survey custom variables.
+
+8. Potential Iterations
+
+The same flow can be expanded into an iterative loop. For example, if the user is not satisfied with the generated purpose statement, the survey can ask for additional details, send those details back to AI Router, and generate a refined purpose statement.
+
+Iterative Flow Example
+
+  1. User receives generated purpose statement.
+
+  2. User is asked: “Are you happy with this statement?”
+
+  3. If no, user provides more details or feedback.
+
+  4. The additional feedback is sent back to AI Router.
+
+  5. AI Router generates a more accurate or personalized purpose statement.
+
+  6. Updated output is displayed in the final report.
+
+How to Set This Up
+
+  · Capture the new user input in a custom variable.
+
+  · Trigger AI Router again through another hidden question or webhook step.
+
+  · Pass the original strengths, values, and refinement input into AI Router.
+
+  · Save the refined purpose statement back into a custom variable.
+
+  · Display the final refined statement in the report.
+
+9. Displaying the Output
+
+Once the exercise is completed, the participant should see a personalized report. This report is created using a QuestionPro presentation question.
+
+Report Requirements
+
+  · Participant name
+
+  · Generated purpose statement
+
+  · Purpose driver
+
+  · One golden nugget
+
+  · Key strengths
+
+  · Foundational values
+
+  · Purpose Mindset branding
+
+  · QuestionPro branding
+
+  · Download Report button
+
+Presentation Question Setup
+
+Add a presentation question and create the HTML/CSS required for the report layout. In this implementation, the following code was used.
+
+10. Report HTML and CSS
+
+Code Used in the Question Text
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| <style type="text/css">                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| #report {                                                                                                                                                                                                                                                                 |
+|                                                                                                                                                                                                                                                                           |
+| border: 1px solid #808080;                                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| border-radius: 10px;                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| padding: 5px;                                                                                                                                                                                                                                                             |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| #report table {                                                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| width: 100%;                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                           |
+| text-align: left;                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| background: #FFFFFF;                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| #report td {                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                           |
+| border: 0px solid white;                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| padding: 2px 10px;                                                                                                                                                                                                                                                        |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .vtop {                                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| vertical-align: top;                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .vbottom {                                                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| vertical-align: bottom;                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .pbottom {                                                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| padding-bottom: 10px;                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .tblheader {                                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                           |
+| color: #000000;                                                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| font-size: 14px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .tblsubheader {                                                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| font-size: 14px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .tbpsubheader {                                                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| font-size: 16px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .title {                                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| font-size: 18px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| margin-bottom: 20px;                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| font-weight: bold;                                                                                                                                                                                                                                                        |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| .tblheader img {                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| width: 80%;                                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                           |
+| min-width: 80px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| max-width: 100px !important;                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                           |
+| vertical-align: middle;                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| margin: 0 5px;                                                                                                                                                                                                                                                            |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| @media screen and (max-width: 560px) {                                                                                                                                                                                                                                    |
+|                                                                                                                                                                                                                                                                           |
+| .tblheader img {                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| width: 40%;                                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                           |
+| min-width: 60px;                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| max-width: 100px !important;                                                                                                                                                                                                                                              |
+|                                                                                                                                                                                                                                                                           |
+| vertical-align: middle;                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| margin: 0 5px;                                                                                                                                                                                                                                                            |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| }                                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| </style>                                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| <div id="report">                                                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| <table cellspacing="0">                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| <tbody>                                                                                                                                                                                                                                                                   |
+|                                                                                                                                                                                                                                                                           |
+| <tr>                                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| <td class="vtop" rowspan="4" style="width:20%">                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| <div style="text-align: center;"><img height="380" src="https://www.questionpro.com/qp_userimages/sub-5/6100354/biglogo.png" style="max-height: 380px;" /></div>                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <tr style="height: 140px;">                                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                           |
+| <td class="vtop" colspan="3">                                                                                                                                                                                                                                             |
+|                                                                                                                                                                                                                                                                           |
+| <div class="title">${custom17} ${custom18}</div>                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tbpsubheader">Purpose Statement</div>                                                                                                                                                                                                                         |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tbpsubheader"><b><i>${custom10}</i></b></div>                                                                                                                                                                                                                 |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <tr>                                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| <td colspan="3">                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader">Purpose Driver</div>                                                                                                                                                                                                                               |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader pbottom" style="text-transform: capitalize;"><b>${custom30}</b></div>                                                                                                                                                                            |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader">One Golden Nugget</div>                                                                                                                                                                                                                            |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tbpsubheader"><b>${custom162}</b></div>                                                                                                                                                                                                                       |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <tr>                                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| <td class="vtop" style="width:20%">                                                                                                                                                                                                                                       |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader">Key Strengths</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom1}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom2}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom3}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <td class="vtop" colspan="2" style="width:35%">                                                                                                                                                                                                                           |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader">Foundational Values</div>                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom4}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom9}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblsubheader">${custom6}</div>                                                                                                                                                                                                                                |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <tr>                                                                                                                                                                                                                                                                      |
+|                                                                                                                                                                                                                                                                           |
+| <td colspan="4">                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| <hr style="width:98%" /></td>                                                                                                                                                                                                                                             |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <tr class="topborder">                                                                                                                                                                                                                                                    |
+|                                                                                                                                                                                                                                                                           |
+| <td colspan="3">                                                                                                                                                                                                                                                          |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader"><i>This is the first step to start your purpose journey.</i></div>                                                                                                                                                                                 |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| <td style="padding:0px">                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| <div class="tblheader" style="float:right;"><img src="https://www.questionpro.com/qp_userimages/sub-5/6100354/questionpro-logo.png" width="180" /><img src="https://www.questionpro.com/qp_userimages/sub-6/6063014/Updated_PurposeMindset_logo.png" width="180" /></div> |
+|                                                                                                                                                                                                                                                                           |
+| </td>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tr>                                                                                                                                                                                                                                                                     |
+|                                                                                                                                                                                                                                                                           |
+| </tbody>                                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| </table>                                                                                                                                                                                                                                                                  |
+|                                                                                                                                                                                                                                                                           |
+| </div>                                                                                                                                                                                                                                                                    |
+|                                                                                                                                                                                                                                                                           |
+| <div class="btn btn-primary export-pdf" style="margin: 10px auto;background: #2290ea;width: 130px;font-size: 14px;padding: 10px;">Download Report</div>                                                                                                                   |
++===========================================================================================================================================================================================================================================================================+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Custom Variables Used in the Report
+
+  --------------------------------------------------------------------------------
+  Custom Variable                     Purpose
+  ----------------------------------- --------------------------------------------
+  ${custom17}                         Participant first name or first name field
+
+  ${custom18}                         Participant last name or last name field
+
+  ${custom10}                         Generated purpose statement
+
+  ${custom30}                         Purpose driver
+
+  ${custom162}                        One golden nugget
+
+  ${custom1}                          Strength 1
+
+  ${custom2}                          Strength 2
+
+  ${custom3}                          Strength 3
+
+  ${custom4}                          Value 1
+
+  ${custom9}                          Value 2
+
+  ${custom6}                          Value 3
+  --------------------------------------------------------------------------------
+
+11. Download Report Logic
+
+The report includes a Download Report button. When the participant clicks this button, the report section is converted into an image and downloaded as report.png.
+
+JS Used in Pre Script
+
++--------------------------------------------------------------------------+
+| $(document).ready(function() {                                           |
+|                                                                          |
+| $(".export-pdf").click(function() {                                      |
+|                                                                          |
+| $("#report").css("border-radius", "0px");                                |
+|                                                                          |
+| window.scrollTo(0, 0);                                                   |
+|                                                                          |
+| const { jsPDF } = window.jspdf;                                          |
+|                                                                          |
+| html2canvas(document.querySelector("#report"), {                         |
+|                                                                          |
+| scale: 5, // Higher scale for better quality                             |
+|                                                                          |
+| useCORS: true,                                                           |
+|                                                                          |
+| allowTaint: true,                                                        |
+|                                                                          |
+| logging: false,                                                          |
+|                                                                          |
+| letterRendering: true,                                                   |
+|                                                                          |
+| onrendered: function(canvas) {                                           |
+|                                                                          |
+| var ctx = canvas.getContext('2d');                                       |
+|                                                                          |
+| ctx.webkitImageSmoothingEnabled = false;                                 |
+|                                                                          |
+| ctx.mozImageSmoothingEnabled = false;                                    |
+|                                                                          |
+| ctx.imageSmoothingEnabled = false;                                       |
+|                                                                          |
+| },                                                                       |
+|                                                                          |
+| }).then(canvas => {                                                      |
+|                                                                          |
+| let imgData = canvas.toDataURL("image/png", 1.0); // Highest quality PNG |
+|                                                                          |
+| let link = document.createElement('a');                                  |
+|                                                                          |
+| link.href = imgData;                                                     |
+|                                                                          |
+| link.download = "report.png";                                            |
+|                                                                          |
+| document.body.appendChild(link);                                         |
+|                                                                          |
+| link.click();                                                            |
+|                                                                          |
+| document.body.removeChild(link);                                         |
+|                                                                          |
+| });                                                                      |
+|                                                                          |
+| $("#report").css("border-radius", "10px");                               |
+|                                                                          |
+| });                                                                      |
+|                                                                          |
+| });                                                                      |
+|                                                                          |
+| setTimeout(function() {                                                  |
+|                                                                          |
+| //document.forms['run'].onsubmit();                                      |
+|                                                                          |
+| }, 120000);                                                              |
++==========================================================================+
++--------------------------------------------------------------------------+
+
+What This Script Does
+
+  1. Waits for the page to load.
+
+  2. Adds a click listener to the .export-pdf button.
+
+  3. Temporarily removes the report border radius for cleaner export.
+
+  4. Scrolls the participant to the top of the page.
+
+  5. Uses html2canvas to capture the #report element.
+
+  6. Uses a high scale value of 5 for better image quality.
+
+  7. Converts the captured canvas into a PNG image.
+
+  8. Creates a temporary download link.
+
+  9. Downloads the file as report.png.
+
+  10. Removes the temporary download link.
+
+  11. Restores the report border radius.
+
+Additional Note
+
+The script also includes a commented auto-submit section:
+
++-----------------------------------------------------------------------+
+| setTimeout(function() {                                               |
+|                                                                       |
+| //document.forms['run'].onsubmit();                                   |
+|                                                                       |
+| }, 120000);                                                           |
++=======================================================================+
++-----------------------------------------------------------------------+
+
+This can be enabled if the survey needs to auto-submit after a fixed duration.
+
+12. Pricing
+
+A solution like this mainly has two components.
+
+  -----------------------------------------------------------------------
+  Field                               Details
+  ----------------------------------- -----------------------------------
+  Managed services                    ~$3,000
+
+  AI Router credits                   $0.10 - $0.20 per response
+  -----------------------------------------------------------------------
+
+13. Summary
+
+This implementation turns a simple survey selection exercise into a guided AI-powered purpose journey.
+
+The participant selects their top strengths and values, AI Router generates a personalized purpose statement, and QuestionPro displays the output as a polished downloadable report.
+
+The full solution uses:
+
+  · QuestionPro Surveys for data collection.
+
+  · Custom JavaScript for selection limits and custom variable mapping.
+
+  · AI Router for purpose statement generation and participant classification.
+
+  · QuestionPro Communities for continued engagement.
+
+  · A presentation question for the final branded report.
+
+  · html2canvas for report download.
+
+This creates a premium, real-time, and repeatable Purpose Mindset experience while keeping prompt control flexible and outside of engineering dependency.
+
+Prepared as an internal QuestionPro cookbook-style implementation document.

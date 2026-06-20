@@ -1,0 +1,368 @@
+READY-TO-SELL (RTS)
+
+AI Router
+
+Real-time text intelligence for open-ended survey feedback
+
+  -----------------------------------------------------------------------------------------------------------
+  Solution type             Platform capability + services-led AI prompt/configuration implementation
+  ------------------------- ---------------------------------------------------------------------------------
+  Primary use case          Convert open-ended comments into structured sentiment, themes and summaries
+
+  Core platform             QuestionPro CX + Surveys + AI Router + Webhooks + Custom Variables + Dashboards
+
+  Released                  Ongoing CX platform capability
+  -----------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Internal positioning: Use this when a customer wants to unlock the value of open-ended comments without moving analysis into a separate text analytics tool. Position AI Router as the embedded intelligence layer that converts raw qualitative feedback into dashboard-ready fields inside QuestionPro CX.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+QuestionPro CX | Internal Use | Version 1.0 | May 2026
+
+1. What problem does this feature solve?
+
+Open-ended survey responses contain rich insight, but they are unstructured, inconsistent and difficult to analyze at scale. Most organizations either review comments manually or push the data into separate analytics tools that do not integrate cleanly with core CX dashboards.
+
+AI Router solves this by automatically converting qualitative responses into structured, actionable data - including sentiment, themes and summaries - directly within the survey and respondent dataset.
+
+2. What is the feature and how does it work?
+
+What it does
+
+AI Router processes open-ended responses in real time and transforms them into structured CX intelligence. It can extract sentiment, identify key themes, classify topics and generate respondent-level executive summaries mapped into predefined fields.
+
+How it fits into the existing product
+
+AI Router is fully embedded within QuestionPro CX surveys. Responses are sent to AI Router through a webhook or router call, and the returned JSON output is stored as custom variables within the same survey dataset. This makes the data immediately usable in dashboards, filters, reporting views, workflows and raw data exports.
+
+Core architecture
+
+  --------------------------------------------------------------------------------------------------------------------------
+  Component                     Role in the solution
+  ----------------------------- --------------------------------------------------------------------------------------------
+  Survey open-ended questions   Capture the raw qualitative feedback from customers, employees or respondents.
+
+  Webhook / AI Router call      Sends each open text response or combined respondent payload to AI Router in real time.
+
+  Prompt and codebook           Defines the classification rules, accepted themes, sentiment scale and summary format.
+
+  Structured JSON output        Returns normalized fields such as sentiment, theme, subtopic and executive summary.
+
+  Custom variables              Store AI-generated values in the same respondent record as the original response data.
+
+  CX dashboards and exports     Use router outputs as filters, widget dimensions, reporting fields and exportable columns.
+  --------------------------------------------------------------------------------------------------------------------------
+
+Core flow
+
+  --------------------------------------------------------------------------------------------------------------------------------------------
+  Stage                          How it works
+  ------------------------------ -------------------------------------------------------------------------------------------------------------
+  Response capture               Open-ended responses are collected within the survey experience.
+
+  AI processing                  Responses are sent to AI Router through a webhook or router configuration.
+
+  Structured output generation   AI Router returns a controlled JSON object with sentiment, theme, summary and any additional agreed fields.
+
+  Custom variable mapping        Each JSON field is mapped into a defined custom variable so it stays within the respondent record.
+
+  Dashboard integration          The AI fields become filterable dimensions, visual widgets, exportable columns or workflow triggers.
+
+  Operational action             CX, HR, research or operations teams use the structured insight to identify drivers and prioritize fixes.
+  --------------------------------------------------------------------------------------------------------------------------------------------
+
+Structured output model
+
+The exact output schema can be customized by use case, but the recommended baseline model should keep the output controlled, concise and dashboard-friendly.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------
+  Output field                What it captures
+  --------------------------- -------------------------------------------------------------------------------------------------------------
+  sentiment                   Overall sentiment of the comment or response, using an agreed scale such as Negative, Neutral and Positive.
+
+  theme                       The main topic or experience driver identified in the feedback.
+
+  subtopic                    A more specific category beneath the primary theme when needed.
+
+  summary                     A short respondent-level or comment-level summary written for executive readability.
+
+  quality / confidence flag   Optional flag for low-signal, unclear, irrelevant or incomplete responses.
+
+  recommended action          Optional operational signal that can guide follow-up, escalation or improvement work.
+  -----------------------------------------------------------------------------------------------------------------------------------------
+
+When/how a customer would use it
+
+Customers use AI Router when they need to analyze large volumes of qualitative feedback at scale while keeping insight directly embedded inside QuestionPro CX. It is strongest when open-ended comments must feed dashboards, filters, reporting and action instead of remaining as raw text in exports.
+
+Typical examples include employee experience surveys, CX open-ended feedback analysis, Voice-of-Employee programs, Voice-of-Customer programs, post-interaction comments, product feedback and qualitative insight reporting.
+
+3. What are the key benefits?
+
+  · Converts unstructured text into structured, dashboard-ready intelligence.
+
+  · Eliminates or reduces manual coding and review of open-ended responses.
+
+  · Keeps AI-generated insight inside the same CX dataset - no separate text analytics silo.
+
+  · Enables real-time filtering, segmentation and widgets using AI-generated fields.
+
+  · Improves decision-making with respondent-level summaries, sentiment and themes.
+
+4. Who is it for?
+
+Roles that care
+
+  · CX and VoC leaders
+
+  · HR and Employee Experience teams
+
+  · People Analytics teams
+
+  · Insights and Research teams
+
+  · Operations and service leaders
+
+  · Product and experience teams
+
+Workflows it improves
+
+  · Employee Experience (EX) surveys
+
+  · CX open-ended feedback analysis
+
+  · Voice-of-Customer and Voice-of-Employee programs
+
+  · Qualitative insight reporting
+
+  · Post-interaction, journey and relationship surveys
+
+  · Dashboard filtering and root-cause analysis
+
+Most useful when
+
+  · Surveys include multiple open-ended questions.
+
+  · Teams struggle to extract consistent insight from text responses.
+
+  · Dashboards need to reflect qualitative signals alongside scores and segments.
+
+  · Insights must be filterable by department, region, product, location or touchpoint.
+
+  · Stakeholders need respondent-level summaries without reading every verbatim response.
+
+Great fit vs. poor fit
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Strong fit                                                                                                   Poor fit / proceed with caution
+  ------------------------------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------
+  Surveys carry multiple open-ended questions and the team wants them analysed consistently at scale.          Only one or two free-text fields with low volume — manual review is genuinely cheaper than configuration.
+
+  The customer wants qualitative insight living inside their existing CX/XA dashboards, not a separate tool.   The customer has standardised on a dedicated text-analytics platform and has no appetite to move analysis.
+
+  They have, or will define, a theme taxonomy / codebook for their context.                                    No agreed taxonomy and no stakeholder willing to own one — output feels generic and trust drops.
+
+  Open-ended responses need to drive filters, widgets, exports or workflows.                                   Comments are collected but never acted on — no downstream use to justify the build.
+
+  Response volume is high enough that consistency and speed matter.                                            Very low volume where a human can read every verbatim in minutes.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Objection handling
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                    Your response
+  -------------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “We already use Qualtrics/Medallia text analytics.”      Those analyse in a separate layer. Here, sentiment, theme and summary land as fields on the same respondent record, usable directly as dashboard filters and export columns — no second platform to reconcile.
+
+  “Will the AI be accurate on our kind of feedback?”       Accuracy comes from the prompt and codebook, tuned to your taxonomy and tested against real examples — strong positives, mixed, vague and borderline — before go-live. It is your language, not a generic model.
+
+  “What about sarcasm, slang or multilingual responses?”   Handled in prompt design and QA. Multilingual handling and low-signal/irrelevant flags are part of the configuration; we test them explicitly rather than assuming.
+
+  “Is our data used to train your model?”                  No. Responses are processed to produce the structured output and stored as your survey data. Confirm contract specifics with your Services/security lead.
+
+  “Why not just have our analysts code it?”                Manual coding is slow, inconsistent across coders, and does not scale across regions or waves. This keeps classification consistent and live, freeing analysts to act rather than tag.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NOTE: The existing “Internal qualification checklist” at the bottom of this RTS is good — keep it. Fit vs. poor fit gives the quick go/no-go; the checklist gives the deeper discovery questions once it’s a go.
+
+5. Use cases / Examples
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Use case                          Example positioning
+  --------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Employee Experience - Sartorius   Analyze five open-ended questions per employee in real time, generate sentiment and topic per response, create a single executive summary per respondent and enable HR leaders to filter dashboards by sentiment and theme.
+
+  CX feedback programs              Convert customer comments into structured themes and sentiment so recurring issues can be identified across locations, journeys or segments.
+
+  VoC at scale                      Process thousands of responses without manual tagging while maintaining consistency in classification across regions, teams and time periods.
+
+  Service recovery                  Classify unresolved issues, emotional intensity and follow-up priority so operational teams can identify where intervention is needed.
+
+  Product feedback                  Separate usability issues, feature requests, pricing concerns, adoption signals and positive reinforcement themes.
+
+  Executive reporting               Generate short summaries that help leadership understand the story behind multiple open-ended answers for each respondent or segment.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sartorius EX example
+
+The Sartorius example is the strongest positioning proof point for this RTS. The customer needed per-comment sentiment and primary topic widgets for five open-ended questions, plus respondent-level executive summaries. AI Router was used to structure each comment and map outputs into custom variables so the insights could be filtered and viewed directly inside the existing dashboard experience.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Why this matters: The value is not just AI classification. The value is that AI outputs remain attached to the same respondent record and can be used as dashboard filters, widget dimensions and export fields without requiring a separate BI or text analytics process.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. How do you demo it?
+
+Recommended internal demo flow:
+
+  1. Start with a traditional survey that contains one or more open-ended questions.
+
+  2. Show the challenge: raw comments are useful but hard to summarize, segment or filter consistently.
+
+  3. Introduce AI Router processing in real time through the survey/webhook flow.
+
+  4. Submit example comments and show the structured output fields such as sentiment, theme and summary.
+
+  5. Show where the JSON outputs are stored as custom variables in the respondent record.
+
+  6. Open the CX dashboard and demonstrate how AI fields become filters, widgets or segments.
+
+  7. Show a respondent-level executive summary to make the output useful for leadership review.
+
+  8. Close with the operational value: faster insight, less manual coding and no separate analytics silo.
+
+7. Pricing
+
+AI Router should be positioned as a usage-based AI capability with implementation scoped based on response volume, prompt design complexity and the number of qualitative inputs being processed.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pricing item                Recommended commercial guidance    Notes
+  --------------------------- ---------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------
+  AI Router usage             Priced per API call                Estimate usage based on number of responses, number of open-ended fields and whether summaries are generated per comment or per respondent.
+
+  Prompt design               Scope as implementation services   Includes theme taxonomy, sentiment rules, output schema and low-signal response handling.
+
+  Custom variable mapping     Scope as implementation services   Required to store AI fields into the right CVs for dashboards, filters and exports.
+
+  Dashboard setup             Scope separately when needed       Required when the customer wants sentiment/theme widgets and filters configured in CX dashboards.
+
+  Webhook/integration setup   Scope separately when needed       Required when AI Router calls, external systems or custom scripts are part of the deployment.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pricing note: Usage should be estimated carefully when a survey has multiple open-ended questions. For example, five comment boxes can require five separate router calls if each comment is analyzed individually, plus an optional additional call for respondent-level summary.
+
+Worked pricing example
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Worked example                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| A customer runs one EX survey with five open-ended questions and wants per-comment sentiment plus a respondent-level summary. That is roughly five router calls per response for the comments, plus one optional summary call — six calls per completed response. With theme taxonomy, custom-variable mapping and dashboard filters, this is an Advanced engagement. A single-comment CSAT pilot with sentiment only would be Starter. Estimate total API volume as (open-ended fields + optional summary) × expected responses, and confirm final pricing with your Services lead. |
++======================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Recommended packaging
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Package         What is included                                                                                                        Commercial note
+  --------------- ----------------------------------------------------------------------------------------------------------------------- ---------------------------------------------------------------------
+  Starter         One open-ended field, sentiment/theme extraction and basic CV mapping.                                                  Best for a simple CX or EX proof of value.
+
+  Advanced        Multiple open-ended fields, codebook-driven themes, respondent summary and dashboard filters.                           Best for production survey programs with several comment questions.
+
+  Enterprise      Multi-survey program, reusable taxonomy, multilingual handling, dashboards, exports and workflow/integration support.   Best for large VoC, VoE or EX programs.
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Competitive angle
+
+  · Tools like Qualtrics and Medallia offer text analytics, but the analysis often sits in a separate layer or is not easily mapped back into survey-level dashboard filters.
+
+  · AI Router embeds intelligence inside the survey process itself, keeping structured outputs within the same respondent dataset.
+
+  · The core differentiator is operational usability: sentiment, theme and summary fields can be used immediately in dashboards, widgets, raw exports and workflows.
+
+  · Unlike generic text analytics, prompts and codebooks can be tailored to a customer’s business context, journey language and taxonomy.
+
+  · The solution is highly flexible because outputs can be adjusted to match CX, EX, VoC, VoE, research or product-feedback use cases.
+
+Objection handling
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  If the customer says…                                    Your response
+  -------------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  “We already use Qualtrics/Medallia text analytics.”      Those analyse in a separate layer. Here, sentiment, theme and summary land as fields on the same respondent record, usable directly as dashboard filters and export columns — no second platform to reconcile.
+
+  “Will the AI be accurate on our kind of feedback?”       Accuracy comes from the prompt and codebook, tuned to your taxonomy and tested against real examples — strong positives, mixed, vague and borderline — before go-live. It is your language, not a generic model.
+
+  “What about sarcasm, slang or multilingual responses?”   Handled in prompt design and QA. Multilingual handling and low-signal/irrelevant flags are part of the configuration; we test them explicitly rather than assuming.
+
+  “Is our data used to train your model?”                  No. Responses are processed to produce the structured output and stored as your survey data. Confirm contract specifics with your Services/security lead.
+
+  “Why not just have our analysts code it?”                Manual coding is slow, inconsistent across coders, and does not scale across regions or waves. This keeps classification consistent and live, freeing analysts to act rather than tag.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sales positioning
+
+Lead with the customer pain: “You have thousands of useful comments, but the team cannot reliably turn them into structured insight fast enough.” Then position AI Router as a way to make every verbatim response usable in dashboards and reporting, without forcing the customer into a separate analytics environment.
+
+9. Enablement assets
+
+  · Prompt templates for sentiment, topic extraction and executive summaries.
+
+  · Codebook design frameworks for themes, subtopics and journey-stage mapping.
+
+  · Dashboard configuration examples showing AI fields as filters and widgets.
+
+  · Integration and webhook setup guides.
+
+  · Example JSON output schemas for CX, EX, VoC and VoE use cases.
+
+  · QA checklist for prompt consistency, low-signal answers, sarcasm, multilingual responses and field mapping.
+
+  · Example demo dataset with raw comments, AI-generated sentiment, theme and summary fields.
+
+10. FAQ
+
+Does this require a separate analytics platform?
+
+  No. Outputs are embedded within the survey and available in the same CX dashboards, exports and respondent dataset.
+
+Can this handle multiple open-ended questions?
+
+  Yes. Each response can be processed individually, and the results can be combined into respondent-level summaries when needed.
+
+Is the output customizable?
+
+  Yes. Prompts can be tailored to return specific themes, classifications, summaries, confidence flags or action signals based on the customer’s business needs.
+
+Does this work in real time?
+
+  Yes. Responses can be processed as they are submitted, with outputs available immediately for downstream reporting or workflows.
+
+Can this data be exported?
+
+  Yes. AI-generated fields are stored as custom variables and can be included in raw data exports alongside standard survey responses.
+
+What should be scoped before selling it?
+
+  Confirm the number of open-ended fields, expected response volume, theme taxonomy, required output fields, dashboard needs, language requirements and whether respondent-level summaries are needed.
+
+Internal qualification checklist
+
+  -------------------------------------------------------------------------------------------------------------------------------
+  Question to qualify                                                Why it matters
+  ------------------------------------------------------------------ ------------------------------------------------------------
+  How many open-ended questions need analysis?                       Determines API call volume and CV mapping effort.
+
+  Do they need per-comment outputs, respondent summaries, or both?   Determines prompt design and output schema.
+
+  Do they already have a theme taxonomy/codebook?                    Improves consistency and reduces implementation ambiguity.
+
+  Where should the outputs appear?                                   Determines dashboard, export and workflow setup.
+
+  Are multilingual responses expected?                               Determines prompt QA and language testing effort.
+  -------------------------------------------------------------------------------------------------------------------------------

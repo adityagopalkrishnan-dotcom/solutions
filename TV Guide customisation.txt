@@ -1,0 +1,777 @@
++-----------------------------------------------------------------------------------------------------------+
+| Middleware                                                                                                |
+|                                                                                                           |
+| Dynamic TV Guide                                                                                          |
+|                                                                                                           |
+| Engine Cookbook                                                                                           |
+|                                                                                                           |
+| How We Built It for TRP Ireland                                                                           |
+|                                                                                                           |
+| A step-by-step guide: from static programme lists to a searchable TV guide experience inside QuestionPro. |
+|                                                                                                           |
+| QuestionPro CX | Internal Use                                                                             |
++===========================================================================================================+
++-----------------------------------------------------------------------------------------------------------+
+
+TRP - Ireland
+
++-----------------------------------------------------------------------------------------------------------+
+| Middleware                                                                                                |
+|                                                                                                           |
+| Dynamic TV Guide                                                                                          |
+|                                                                                                           |
+| Engine Cookbook                                                                                           |
+|                                                                                                           |
+| How We Built It for TRP Ireland                                                                           |
+|                                                                                                           |
+| A step-by-step guide: from static programme lists to a searchable TV guide experience inside QuestionPro. |
+|                                                                                                           |
+| QuestionPro CX | Internal Use                                                                             |
++===========================================================================================================+
++-----------------------------------------------------------------------------------------------------------+
+
+1. The Client & The Problem
+
++---------------------------------------+----------------------------------------------------------------------------+
+| CLIENT                                | PLATFORM                                                                   |
+|                                       |                                                                            |
+| TRP Research Ireland                  | QuestionPro Survey - Research Edition                                      |
+|                                       |                                                                            |
+| Media Research | Audience Measurement | Advanced JavaScript · CSV dataset · External API · Custom variable mapping |
++=======================================+============================================================================+
++---------------------------------------+----------------------------------------------------------------------------+
+
+Background
+
+TRP Research works in the media research space, providing media expertise, primary data, content monitoring, metadata management and reporting services to help media companies understand audiences, viewing behaviour and content consumption. For this project, the requirement was to build a weekly media survey that could capture what respondents watched, listened to and talked about across programmes, streaming platforms and podcasts — at scale, every week, without degrading the respondent experience.
+
+The survey needed to ask respondents which programmes they had watched in the last week, whether they watched other series or movies, which programmes they discussed, how they felt about selected programmes, how those conversations happened and which podcasts they listened to. The key requirement was not simply to ask these questions — it was to let the respondent search for content, select it, build a personal list and then answer follow-up questions about exactly those selected programmes, with the selections feeding downstream logic, loops, and exports.
+
+The Specific Problem
+
+The client wanted the survey to behave like a TV guide or streaming-service search page — not a form. A respondent should be able to search for a programme by title or synopsis, click a result, add it to a personal list, and then answer questions about those exact programmes. This created five distinct technical challenges:
+
++---+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | Large programme universe                                                                                                                                                                                                  |
+|   |                                                                                                                                                                                                                           |
+|   | The survey referenced a large dataset of programmes — with static placeholders up to Programme 118 and further dynamic search sections — making a standard multi-select list impractical and unusable.                    |
++===+===========================================================================================================================================================================================================================+
+|   | Respondent recall challenge                                                                                                                                                                                               |
+|   |                                                                                                                                                                                                                           |
+|   | People remember a partial title, an episode detail or a synopsis — not the exact programme name. The survey needed to support fuzzy search across title, episode title and synopsis.                                      |
++---+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | Multi-step downstream logic                                                                                                                                                                                               |
+|   |                                                                                                                                                                                                                           |
+|   | Selections had to feed later questions including ratings, discussion tracking and loop questions such as 'how many times did you talk about this programme?' — requiring clean, reusable values at every downstream step. |
++---+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | Hidden identifier tracking                                                                                                                                                                                                |
+|   |                                                                                                                                                                                                                           |
+|   | Every selected programme needed to carry an internal Content ID for analytics matching — without exposing that ID to the respondent in the visible survey.                                                                |
++---+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|   | Multiple content ecosystems                                                                                                                                                                                               |
+|   |                                                                                                                                                                                                                           |
+|   | The same engine had to support three separate datasets with different filtering rules: recorded/live content, BBC iPlayer and podcasts/S4C Clic.                                                                          |
++---+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Why Existing Survey Tools Could Not Solve This
+
+  • Static multi-select questions are too heavy for large programme catalogues and create a poor respondent experience — scrolling through 100+ options is not a TV guide.
+
+  • Standard survey answer options cannot query an external programme database in real time or update results based on partial title or synopsis text.
+
+  • Native survey logic does not support a 'My Programmes' basket where items can be added, removed, excluded from future search results and then reused in downstream loops.
+
+  • Piping requires clean display text, but analytics requires hidden identifiers. No native QuestionPro feature carries both simultaneously.
+
+  • Three different content ecosystems (live/recorded, BBC iPlayer, S4C/podcasts) each needed their own search filter and output range, requiring multiple reusable versions of the same engine.
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The core constraint
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The survey had to act like an interactive content discovery system — clean and natural for respondents — while still using QuestionPro's survey submission, custom-variable and piping infrastructure. The respondent-facing layer needed to feel like a streaming service. The backend layer needed to be structured, trackable and exportable.
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What Success Looked Like
+
+A respondent opens the survey, searches for a programme by title or synopsis, clicks a result, adds it to 'My Programmes', repeats the process for other content and then continues through the survey. Downstream survey pages ask ratings and behavioural questions about those exact selected programmes using clean piped text — with no technical identifiers visible. Meanwhile, the backend retains the Content ID for each selection so the data team can match every response back to the media catalogue.
+
+2. The Solution: Dynamic TV Guide Engine
+
+The solution was a custom JavaScript-powered TV guide engine built inside QuestionPro. It used two selection models: a CSV-driven grouped checkbox selector for the initial programme list, and an API-driven live search selector for dynamic 'other programme' and podcast flows. Both models feed a common storage architecture — structured custom variable ranges, CID tagging, global cleanup and pre-fill persistence.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Deliverable                          Detail
+  ------------------------------------ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  TV guide look and feel               Custom HTML/CSS rendered inside the survey so programme discovery feels like a guide or search experience rather than a long survey list.
+
+  CSV-based directory selector         A CSV file feeds grouped programme options into a QuestionPro checkbox question and stores selections into custom variables, with group structure preserved.
+
+  API-based live search selector       The survey calls a middleware dataset API with filters for title, episode title and synopsis — returning matching programmes in real time with a 250ms debounce.
+
+  My Programmes / My Podcasts basket   Respondents add search results to a selected list. Selected items are excluded from future search results to prevent duplicates. Items can be removed.
+
+  Content ID preservation              Hidden IDs are extracted from HTML comments in the API payload and appended as CID tags to the stored value for backend analytics matching.
+
+  Clean respondent display             A global cleanup script removes CID tags from visible DOM text nodes so respondents never see technical identifiers in piped questions or the UI.
+
+  Custom variable mapping              Selections are saved into fixed, non-overlapping custom variable ranges: custom51–100 (CSV), custom101–125 (Live/Other), custom126–150 (BBC iPlayer), custom151–175 (Podcasts).
+
+  Persistence and pre-fill             Pre-JS scripts auto-check non-isBlank values so selections persist through survey navigation, back-button use and downstream looping questions.
+
+  Validation and manual fallback       Submit is overridden to enforce selection limits and display a bilingual English/Welsh modal when respondents try to continue without selecting — with a path to manual entry.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Implementation principle
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The solution separates the survey into three layers: the experience layer that respondents see, the data lookup layer that retrieves programmes, and the storage layer that writes selections into custom variables for downstream logic. Each layer is independent — the experience can be updated without touching the storage logic, and the storage schema can be extended without changing the UI. With QuestionPro Middleware enabled, the data lookup layer becomes the Middleware Dataset API. In production, a secure proxy can sit between the browser and the Middleware endpoint so the API key is handled server-side.
+
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. How the Workflow Works
+
+The respondent journey and the technical workflow operate in parallel at every step. What the respondent experiences as a simple search and selection interface is underpinned by a sequence of JavaScript events, API calls, data transformations and custom variable writes.
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Respondent action              JavaScript / data action                                                                                 Survey outcome
+  ------------------------------ -------------------------------------------------------------------------------------------------------- --------------------------------------------------------------
+  User opens page                Pre-JS injects the search UI or builds CSV-based grouped options.                                        Question renders as a TV guide or search page.
+
+  User types title or synopsis   Debounced event waits 250ms then calls searchPrograms(), which calls the Middleware endpoint or proxy.   Middleware returns matching programmes from the dataset.
+
+  User clicks a result           Result receives .selected class; Add button becomes visible.                                             User can add selected item to My Programmes.
+
+  User clicks Add                Programme metadata stored in LI element with ContentID and encoded payload.                              Programme appears in selected list; disappears from results.
+
+  User removes an item           Selected LI is removed; search is refreshed.                                                             Programme becomes searchable again.
+
+  User submits the page          Native submit is blocked; script validates count and clears target CVs.                                  Only clean, current selections remain.
+
+  Script stores selections       Payload decoded; CID extracted; text + CID written into CV range.                                        Selections available for piping and export.
+
+  Downstream page loads          Pre-fill scripts auto-check non-isBlank values.                                                          Selected programmes reused in loops and follow-ups.
+
+  Global cleanup runs            Visible CID tags removed from all DOM text nodes.                                                        Respondent sees clean programme names only.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Step-by-Step Setup
+
+Step 1: Define the Survey Flow
+
+Map out the full survey structure before writing any JavaScript. The TRP survey flow breaks into six functional sections, each with a different selection mechanism and output destination:
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Survey section               Purpose                                                        How the solution supports it
+  ---------------------------- -------------------------------------------------------------- ----------------------------------------------------------------------------------------------
+  Initial watched programmes   Capture common programmes watched in the last week.            CSV-driven grouped checkbox selector, max 50, stores selected names into custom51–custom100.
+
+  Other series / movies        Let users find additional programmes not in the static list.   API-driven search with Add to My Programmes and manual entry fallback.
+
+  Could not find programme     Collect manual entries when search finds nothing.              Validation modal guides users to continue to manual-entry questions.
+
+  Programme rating             Ask how the respondent felt about a specific programme.        Piped text uses selected programme value with CID tag stripped.
+
+  Programme discussion         Ask which programmes were talked about and how.                Selected list feeds looped and follow-up logic.
+
+  Podcast listening            Capture podcasts listened to in the last week.                 Same API engine repurposed with ViewingType 3 and custom151+ range.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 2: Build the CSV-Based Programme Selector
+
+The first script — Qprog Dynamic CSV Options — converts a standard QuestionPro checkbox question into a CSV-powered grouped directory. It waits for the answer container to appear, loads an external CSV, groups records by Programs_Title, renders each Programs_List item as a checkbox option, and stores final selections into custom variables.
+
+  --------------------------------------------------------------------------------------------------------------------
+  Configuration       Value / Meaning
+  ------------------- ------------------------------------------------------------------------------------------------
+  CSV_URL             External CSV file (e.g. 19022026.csv) — can be updated without rebuilding the survey question.
+
+  QUESTION_CLASS      .Qprog — the question class where dynamic options are inserted.
+
+  MAX_SELECTION       50 — maximum number of initial programmes a respondent can select.
+
+  START_VAR           51 — first custom variable used to store selected programme names.
+
+  GROUP_JSON_VAR      50 — stores a JSON map of group names to custom variable numbers for downstream use.
+  --------------------------------------------------------------------------------------------------------------------
+
+  -----------------------------------------------------------------------
+  var CSV_URL = 'https://your-host/19022026.csv';
+  -----------------------------------------------------------------------
+  var QUESTION_CLASS = '.Qprog';
+
+  var MAX_SELECTION = 50;
+
+  var START_VAR = 51;
+
+  var GROUP_JSON_VAR = 50;
+  -----------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Why this matters
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The CSV can be updated externally each week without touching the survey structure. Grouping by Programs_Title gives the survey a guide-like structure instead of a flat list. The exclusive 'None of these' option is detached and re-attached after dynamic rendering so it remains functional.
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 3: Parse the CSV Safely
+
+The CSV parser removes the UTF-8 BOM, normalises line endings and handles quoted commas. This is important because programme names may contain commas that should not be treated as column separators.
+
+  • parseCSV() converts the raw CSV string into an array of row objects using the header row as keys.
+
+  • parseCSVRow() tracks whether the parser is inside quotes before splitting on commas.
+
+  • Header names are trimmed so column names like Programs_Title and Programs_List work reliably even if the CSV has spacing variations.
+
+Step 4: Build the API-Based Search Interface
+
+The second selection model is the API-based search selector — used for 'other programmes', BBC iPlayer and podcasts/S4C Clic. The UI is injected into the question text via JavaScript and includes all the components a search interface needs:
+
+  -----------------------------------------------------------------------------------------------------------------------------
+  UI component         Purpose
+  -------------------- --------------------------------------------------------------------------------------------------------
+  #filter_title        Search by programme title with Contains or Begins With mode.
+
+  #filter_synopsis     Search by synopsis or description — lets respondents search by what they remember, not just the title.
+
+  #program_select      List of API results, single-selectable.
+
+  #add_program         Moves the selected API result into My Programmes / My Podcasts.
+
+  #selected_programs   The respondent's personal basket of selected content.
+
+  #programCount        Shows how many results the current API query returned.
+  -----------------------------------------------------------------------------------------------------------------------------
+
+Step 5: Debounce Search Requests
+
+Every keystroke could otherwise trigger an API call. A 250ms debounce timer waits briefly after the respondent stops typing before sending the request. This prevents unnecessary API calls while keeping the interface feeling responsive.
+
+  -----------------------------------------------------------------------
+  let typingTimer;
+  -----------------------------------------------------------------------
+  const debounceTime = 250;
+
+  $("#filter_title, #filter_synopsis").on("keyup", function () {
+
+  clearTimeout(typingTimer);
+
+  typingTimer = setTimeout(function () {
+
+  searchPrograms();
+
+  }, debounceTime);
+
+  });
+  -----------------------------------------------------------------------
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Best practice
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Keep the debounce in place on every live-search question. Without it, fast typists can fire a request for every character typed, creating unnecessary API load and inconsistent result rendering.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 6: Configure the API Query by Content Type
+
+The API request should use the QuestionPro Middleware Dataset API endpoint, or a secure proxy that calls that endpoint server-side. The same search engine passes different ViewingType values and writes to different custom variable ranges depending on which content ecosystem is being searched. The field names must match the Middleware dataset columns exactly.
+
+  -----------------------------------------------------------------------------
+  Script / flow             ViewingType    START_VAR      Selected list label
+  ------------------------- -------------- -------------- ---------------------
+  CQ2TRP-LiveOther          2              101            My Programmes
+
+  CQ2 BBC iPlayer           1              126            My Programmes
+
+  CQ2 S4C Clic / Podcasts   3              151            My Podcasts
+  -----------------------------------------------------------------------------
+
+Step 6A: Connect the Search Script to QuestionPro Middleware
+
+In the Middleware screen recording, the dataset is created under Middleware > My Datasets and saved as a versioned dataset. Once saved, QuestionPro exposes a Dataset API Endpoint and API Key. This is the point where the survey search script should connect: searchPrograms() should call the Middleware dataset endpoint, or a secure proxy that calls it server-side.
+
+The Middleware dataset shown for Daily S4C Wednesday includes the exact fields the survey script needs for searching, filtering, display and analytics matching. Keep these column names unchanged because the JavaScript references them directly.
+
+  ---------------------------------------------------------------------------------------------------------------------------
+  Middleware item     How it is used in the script
+  ------------------- -------------------------------------------------------------------------------------------------------
+  Dataset name        Daily S4C Wednesday — the searchable programme source for this version of the survey.
+
+  Selected columns    ContentID, Title, Series, Episode, EpisodeTitle, Synopsis, SortOrder and ViewingType.
+
+  API Endpoint        Used as MIDDLEWARE_DATASET_ENDPOINT inside searchPrograms(), or called by a secure proxy.
+
+  API Key             Required for the dataset request. Do not expose the production key in browser-side survey JavaScript.
+
+  Uploaded CSV        The CSV updates the Middleware dataset without rebuilding the survey UI.
+  ---------------------------------------------------------------------------------------------------------------------------
+
+Add a small configuration block at the top of each API-search question script. Only START_VAR, VIEWING_TYPE and the selected-list label should change between Live/Other, BBC iPlayer and Podcasts/S4C Clic.
+
+  ----------------------------------------------------------------------------
+  var MIDDLEWARE_DATASET_ENDPOINT = "PASTE_DATASET_API_ENDPOINT_HERE";
+  ----------------------------------------------------------------------------
+  var MIDDLEWARE_API_KEY = "PASTE_API_KEY_HERE"; // proxy this in production
+
+  var VIEWING_TYPE = 3; // S4C Clic / Podcasts
+
+  var START_VAR = 151; // custom151 onwards
+
+  var MAX_SELECTION = 25;
+
+  var SELECTED_LIST_LABEL = "My Podcasts";
+  ----------------------------------------------------------------------------
+
+The section of the script to change is the AJAX/fetch block inside searchPrograms(). The rest of the survey logic — debounce, result rendering, basket add/remove, validation and $survey.updateCustomVariable() — should stay in QuestionPro.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  function searchPrograms() {                                                                                                                                                                                                                                                                                                                                                          
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------- --
+  var titleSearch = $("#filter_title").val().trim();                                                                                                                                                                                                                                                                                                                                   
+
+  var synopsisSearch = $("#filter_synopsis").val().trim();                                                                                                                                                                                                                                                                                                                             
+
+                                                                                                                                                                                                                                                                                                                                                                                       
+
+  var excludeList = [];                                                                                                                                                                                                                                                                                                                                                                
+
+  $("#selected_programs li").each(function () {                                                                                                                                                                                                                                                                                                                                        
+
+  excludeList.push($(this).attr("program-id"));                                                                                                                                                                                                                                                                                                                                        
+
+  });                                                                                                                                                                                                                                                                                                                                                                                  
+
+                                                                                                                                                                                                                                                                                                                                                                                       
+
+  $.ajax({                                                                                                                                                                                                                                                                                                                                                                             
+
+  url: MIDDLEWARE_DATASET_ENDPOINT,                                                                                                                                                                                                                                                                                                                                                    
+
+  method: "GET",                                                                                                                                                                                                                                                                                                                                                                       
+
+  headers: { "api-key": MIDDLEWARE_API_KEY },                                                                                                                                                                                                                                                                                                                                          
+
+  data: {                                                                                                                                                                                                                                                                                                                                                                              
+
+  Title: titleSearch,                                                                                                                                                                                                                                                                                                                                                                  
+
+  EpisodeTitle: titleSearch,                                                                                                                                                                                                                                                                                                                                                           
+
+  Synopsis: synopsisSearch,                                                                                                                                                                                                                                                                                                                                                            
+
+  ViewingType: VIEWING_TYPE,                                                                                                                                                                                                                                                                                                                                                           
+
+  Exclude: excludeList.join(",")                                                                                                                                                                                                                                                                                                                                                       
+
+  },                                                                                                                                                                                                                                                                                                                                                                                   
+
+  success: function (response) { renderPrograms(response); },                                                                                                                                                                                                                                                                                                                          
+
+  error: function (xhr) { console.log("Middleware search failed", xhr); }                                                                                                                                                                                                                                                                                                              
+
+  });                                                                                                                                                                                                                                                                                                                                                                                  
+
+  }                                                                                                                                                                                                                                                                                                                                                                                    
+
+  Important                                                                                                                                                                                                                                                                                                                                                                            
+
+                                                                                                                                                                                                                                                                                                                                                                                       
+
+  In production, prefer a secure proxy instead of placing the API key inside survey JavaScript. The survey sends title, synopsis, ViewingType and Exclude to the proxy; the proxy adds the Middleware API key server-side, calls the Dataset API, normalizes the response and returns clean JSON to the survey.                                                                        
+
+  []                                                                                                                                                                                                                                                                                                              []                                                                   
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[]
+
+[]
+
+Step 7: Exclude Already-Selected Programmes
+
+Before each Middleware/proxy call, the script reads the program-id from every item in the selected basket and passes it into the Exclude filter. This prevents respondents from adding the same programme twice.
+
+  -----------------------------------------------------------------------
+  let excludeList = [];
+  -----------------------------------------------------------------------
+  $("#selected_programs li").each(function () {
+
+  excludeList.push($(this).attr("program-id"));
+
+  });
+
+  let excludeStr = excludeList.join(",");
+  -----------------------------------------------------------------------
+
+Step 8: Override Submit, Clear Previous Values, and Store Selections
+
+The API search pages override the native submit button to control validation and custom-variable writes. Before writing current selections, the script clears the full destination range by writing isBlank into every slot. Only then does it write the current selections in order.
+
+  -----------------------------------------------------------------------
+  var MAX_SELECTION = 25;
+  -----------------------------------------------------------------------
+  var START_VAR = 101; // or 126 / 151 depending on content type
+
+  $('#SurveySubmitButtonElement').attr('type', 'button');
+
+  $('#SurveySubmitButtonElement').on('click', function () {
+
+  buildSelectedOptions();
+
+  });
+
+  function clearSurveyVars() {
+
+  for (var i = 0; i < MAX_SELECTION; i++) {
+
+  $survey.updateCustomVariable(START_VAR + i, 'isBlank');
+
+  }
+
+  }
+  -----------------------------------------------------------------------
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Why isBlank matters
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The survey reuses fixed custom variable slots. If a respondent previously selected 5 programmes and later reduces their list to 2, the 3 old values must be cleared. isBlank becomes the controlled empty state used by pre-fill scripts and all downstream logic. Never leave old values in the range.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 9: Extract the Content ID and Tag Stored Values
+
+On submit, each selected item's payload is decoded back to the original programme object. The script searches for an HTML comment in the Synopsis field, then falls back to the Title field. If found, the numeric ID inside the comment is extracted and appended to the stored value as a CID tag. This tag travels with the programme name into the custom variable — invisible to the respondent, trackable for analytics.
+
+  -----------------------------------------------------------------------
+  var payload = $(this).attr('program-data');
+  -----------------------------------------------------------------------
+  var program = JSON.parse(decodeURIComponent(escape(atob(payload))));
+
+  var comment = '';
+
+  if (program.Synopsis) {
+
+  var m1 = program.Synopsis.match(/<!--[\s\S]*?-->/);
+
+  if (m1) comment = m1[0];
+
+  }
+
+  if (!comment && program.Title) {
+
+  var m2 = program.Title.match(/<!--[\s\S]*?-->/);
+
+  if (m2) comment = m2[0];
+
+  }
+
+  if (comment) {
+
+  var idMatch = comment.match(/\d+/);
+
+  if (idMatch) text += ' *#CID:' + idMatch[0] + '#*';
+
+  }
+  -----------------------------------------------------------------------
+
+Step 10: Custom Variable Output Ranges
+
+Selections are written into fixed, non-overlapping custom variable ranges. Each content ecosystem has its own range so no selections can overwrite each other. The custom50 variable stores a JSON map of group names to CV numbers for the CSV selector.
+
+  ----------------------------------------------------------------------------------------------------
+  Range                 Script                    Max               Purpose
+  --------------------- ------------------------- ----------------- ----------------------------------
+  custom51–custom100    Qprog CSV selector        50                Initial watched programme list
+
+  custom101–custom125   CQ2TRP-LiveOther          25                Recorded / Live Other programmes
+
+  custom126–custom150   CQ2 BBC iPlayer           25                BBC iPlayer programmes
+
+  custom151–custom175   CQ2 S4C Clic / Podcasts   25                Podcast / S4C Clic items
+
+  custom50              Qprog CSV selector        —                 Group-to-CV JSON map
+  ----------------------------------------------------------------------------------------------------
+
+Step 11: Global CID Cleanup
+
+The CID tag must never be visible to respondents when values are piped into later questions. A global script recursively scans all body text nodes and strips any pattern matching *#CID:number#* from the visible DOM — without touching the stored custom variable values.
+
+  -----------------------------------------------------------------------
+  function removeCIDGlobally() {
+  -----------------------------------------------------------------------
+  $('body').contents().each(function scan() {
+
+  if (this.nodeType === 3) {
+
+  this.nodeValue = this.nodeValue.replace(/\*\#CID:\d+\#\*/g, '');
+
+  } else if (this.nodeType === 1) {
+
+  $(this).contents().each(scan);
+
+  }
+
+  });
+
+  }
+
+  $(document).ready(function () { removeCIDGlobally(); });
+  -----------------------------------------------------------------------
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Important
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  The global cleanup only changes visible DOM text. It does not remove the CID from stored custom variable values. That is exactly why the design works: the respondent sees clean programme names while the backend data retains the mapping ID for analytics.
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 12: Restore Selections with Pre-Fill Scripts
+
+Pre-JS scripts on downstream pages inspect visible label text for generated checkbox answers. If the label is not isBlank, the matching checkbox is checked automatically. This restores selected programmes when respondents navigate back or when selections feed downstream loop questions.
+
+  -----------------------------------------------------------------------------------------------------
+  $('.Qprog_sel > .multiple-choice-question > .answer-options > .control-selection > .control-label')
+  -----------------------------------------------------------------------------------------------------
+  .each(function () {
+
+  var labelText = $(this).text().trim();
+
+  if (labelText !== 'isBlank') {
+
+  $(this).closest('label').find('input[type="checkbox"]').prop('checked', true);
+
+  }
+
+  });
+  -----------------------------------------------------------------------------------------------------
+
+  -------------------------------------------------------------------------------------
+  Question class          Purpose
+  ----------------------- -------------------------------------------------------------
+  .Qprog_sel              Restores selected initial programmes from the CSV selector.
+
+  .CQ2TRP_Recorded_Extr   Restores selected recorded / live other programmes.
+
+  .Q8-CQ2_EXT             Restores selected programmes from Q8/CQ2 extension.
+
+  .Q14-CQ2_EXT            Restores selected programmes from Q14/CQ2 extension.
+
+  .QS1 / .QSS             Restores downstream selected-list and summary questions.
+  -------------------------------------------------------------------------------------
+
+5. How to Test the Full Setup
+
+Test 1: CSV Selector
+
+1.  Load the Qprog page and confirm the answer container is replaced with grouped CSV options.
+
+2.  Confirm Programs_Title appears as group headers and Programs_List as selectable labels.
+
+3.  Select a normal programme and confirm the exclusive option is unchecked.
+
+4.  Select the exclusive option and confirm all other selections are cleared.
+
+5.  Submit zero selections and confirm the 'Please select at least one programme' error appears.
+
+6.  Submit more than 50 selections and confirm max-selection validation blocks submit.
+
+7.  Submit valid selections and confirm custom51 onwards plus custom50 group JSON are populated correctly.
+
+Test 2: API Search Selector
+
+8.  Type a partial title and confirm API results appear after the 250ms debounce delay.
+
+9.  Switch between Contains and Begins With and confirm the result set changes.
+
+10. Search by synopsis and confirm matching programmes appear.
+
+11. Click one result and confirm the Add button becomes visible.
+
+12. Click Add and confirm the item moves to My Programmes and disappears from results.
+
+13. Remove the item and confirm it reappears after search refresh.
+
+14. Add more than 25 items and confirm max-selection validation triggers.
+
+Test 3: Data Storage and CID
+
+15. Submit selected API programmes and inspect the relevant CV range.
+
+16. Confirm values are written in order starting at custom101, custom126 or custom151 as appropriate.
+
+17. Confirm unused CVs are reset to isBlank.
+
+18. Confirm CID tags are appended when HTML comments exist in Synopsis or Title.
+
+19. Confirm the visible UI does not show CID tags after global cleanup runs.
+
+Test 4: Downstream Piping and Persistence
+
+20. Navigate to a downstream question using selected programme values and confirm piped text is clean.
+
+21. Navigate back and confirm pre-fill scripts re-check non-isBlank selections.
+
+22. Change a selection and confirm old values are cleared before new values are written.
+
+23. Run the manual fallback path and verify Q5/Q10 visibility behaviour works correctly.
+
+6. Common Issues and Fixes
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Issue                                          Likely cause                                                                                                      Fix
+  ---------------------------------------------- ----------------------------------------------------------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------
+  No options appear in Qprog                     Answer container not loaded or CSV unavailable.                                                                   Confirm .Qprog class, CSV URL and waitForQuestion timing.
+
+  CSV rows split incorrectly                     Programme text contains commas.                                                                                   Confirm quoted values are present and parseCSVRow handles them.
+
+  Exclusive option disappeared                   Not detached before clearing answer rows.                                                                         Use .exclusive-option detach and re-append after dynamic render.
+
+  API search returns nothing                     Filters too restrictive, wrong ViewingType, wrong Middleware endpoint, API key issue or mismatched field names.   Check encoded filters, endpoint, API key, ViewingType value and exact column names: ContentID, Title, EpisodeTitle, Synopsis and ViewingType.
+
+  Duplicate programmes can be added              Exclude list not sent or program-id missing.                                                                      Confirm selected LI has program-id and Exclude string is passed.
+
+  Add button never appears                       Result LI not receiving .selected class.                                                                          Check click handler for #program_select .select-option.
+
+  Stored values contain old selections           CV range not cleared before submit.                                                                               Confirm clearSurveyVars() runs before writing new selections.
+
+  CID visible in downstream question             Global cleanup did not run after dynamic piping.                                                                  Run removeCIDGlobally after page load and after any dynamic content changes.
+
+  Manual modal shows wrong language              languageID not mapped in MSG object.                                                                              Extend MSG object for the required language ID (0 = EN, 507 = CY, 508 = bilingual).
+
+  Piped checkbox is not checked                  Pre-fill class selector does not match question.                                                                  Update the class selector to match the actual QuestionPro question class.
+
+  API key visible in browser                     Client-side key exposed in JavaScript when the survey calls the Dataset API directly.                             Use a server-side proxy. The browser should call the proxy, and the proxy should add the Middleware API key server-side.
+
+  Middleware dataset works but survey does not   The script is using different field names from the uploaded dataset.                                              Match the exact Middleware column names: ContentID, Title, Series, Episode, EpisodeTitle, Synopsis, SortOrder and ViewingType.
+
+  Wrong content type appears in results          ViewingType is missing or set to the wrong value.                                                                 Use ViewingType 2 for Recorded/Live Other, 1 for BBC iPlayer and 3 for S4C Clic/Podcasts.
+
+  CID is missing from stored values              ContentID is not returned by Middleware or the script is still looking only for an HTML comment.                  Read program.ContentID directly from the Middleware response, then fall back to hidden comments in Synopsis or Title if needed.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. Reusable JavaScript Patterns
+
+The five patterns below are not TRP-specific. Any survey implementation that involves large datasets, search-based selection, hidden identifiers, reused custom variable ranges or manual fallback paths can use these patterns directly.
+
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern                                  When to use it
+  ---------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Pattern 1: Dynamic option generation     Use when a native QuestionPro option list is too large or must be managed externally. Wait for question → load external data → render answer-options → preserve native input name → validate → write to CVs.
+
+  Pattern 2: Search basket                 Use when respondents need to search a large dataset and build a personal selected list. Inject UI → debounce search → call API → render results → add to basket → exclude basket from future searches → write basket to CVs.
+
+  Pattern 3: Hidden identifier transport   Use when the respondent must see clean labels but analytics needs IDs. Preserve raw payload → extract internal ID → append technical marker to stored value → strip marker from visible DOM.
+
+  Pattern 4: isBlank reset and pre-fill    Use whenever a fixed range of CVs is reused. Always clear the full range first, then write current values. Downstream, treat isBlank as the empty sentinel and auto-check all non-isBlank values.
+
+  Pattern 5: Manual fallback               Use when search cannot guarantee 100% coverage. Instead of hard-blocking users with no selection, show a modal that explains how to continue to the manual entry path.
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. What Else Can Be Added
+
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Future capability             How it would work
+  ----------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Central config object         Replace repeated per-question scripts with one reusable engine where ViewingType, START_VAR and labels are passed as configuration parameters.
+
+  MutationObserver cleanup      Run CID cleanup whenever new DOM nodes appear — not only on document.ready — for more robust handling of dynamically injected content.
+
+  Server-side API proxy         Move the api-key away from browser-side JavaScript. Call the dataset through a secure server layer with auth handled server-side.
+
+  Keyboard accessibility        Improve tabindex, arrow-key selection and screen-reader labels for the custom result list so the experience works for all respondents.
+
+  Genre / channel grouping      Enhance API results with category headers or channel filters to make the guide more browsable for respondents who do not know an exact title.
+
+  AI Router enrichment          Use selected programme values and discussion comments to classify sentiment, conversation themes or viewing motivation using AI Router — adding an insight layer on top of the selection data.
+
+  Analytics dashboard layer     Use CID mappings to connect survey responses back to programme metadata in a BI dashboard or export, enabling title-level performance analysis.
+
+  Reusable internal component   Package the search basket engine as a standard QuestionPro implementation pattern for future media research clients.
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9. Internal Recommendations
+
+  • Do not hardcode large programme lists inside the survey when the list changes frequently. Use CSV or API datasets that can be updated without touching the survey structure.
+
+  • Always define custom variable ranges before development starts. The whole setup depends on stable, non-overlapping mapping — and changing ranges mid-project breaks downstream logic.
+
+  • Keep one source of truth for ViewingType, START_VAR, selected-list label and max-selection rules per content type. Inconsistency across scripts is the most common source of bugs.
+
+  • Always clear the destination CV range with isBlank before writing new selections. Never assume a slot is empty.
+
+  • Preserve the raw programme payload until submit. It is the only reliable way to recover metadata and internal IDs after the respondent has interacted with the UI.
+
+  • Keep CID tags out of visible text but do not remove them from stored values. The entire analytics matching model depends on them surviving in the raw data export.
+
+  • Test on mobile landscape mode. The survey explicitly instructs smaller-screen users to use landscape — confirm the search UI and basket are usable in this orientation.
+
+  • If this becomes a recurring implementation for media clients, package the search-basket engine as a reusable internal component so future teams do not rebuild from scratch each time.
+
++------------------------------------------------------------------------------------------+
+| When this recipe is implemented correctly, the survey stops behaving like a static form. |
+|                                                                                          |
+| It becomes a searchable, guide-like media selection experience.                          |
+|                                                                                          |
+| Clean for respondents. Structured for survey logic. Rich enough for backend analytics.   |
++==========================================================================================+
++------------------------------------------------------------------------------------------+
+
+Appendix A: Configuration Map
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Component                      Question / class   Data source                                         Max    CV output                      Notes
+  ------------------------------ ------------------ --------------------------------------------------- ------ ------------------------------ -------------------------------------------------------
+  CSV programme selector         .Qprog             19022026.csv                                        50     custom51–100 + custom50 JSON   Initial grouped programme selection.
+
+  Pre-fill selected programmes   .Qprog_sel         Stored CV values                                    —      Checks non-isBlank labels      Restores CSV selections on back-nav.
+
+  Recorded / Live Other search   CQ2TRP-LiveOther   QuestionPro Middleware Dataset API, ViewingType 2   25     custom101–125                  Search/Add to My Programmes through Middleware/proxy.
+
+  BBC iPlayer search             CQ2 BBC iPlayer    QuestionPro Middleware Dataset API, ViewingType 1   25     custom126–150                  Search/Add to My Programmes through Middleware/proxy.
+
+  S4C Clic / Podcasts search     CQ2 S4C Clic       QuestionPro Middleware Dataset API, ViewingType 3   25     custom151–175                  Search/Add to My Podcasts through Middleware/proxy.
+
+  CID cleanup                    Global JS          DOM text nodes                                      —      Visible text only              Removes *#CID:x#* from respondent UI.
+
+  Manual entry visibility        .Q5 / .Q10         First-row matrix inputs                             —      QuestionSectionVisibility      Controls visibility when first row is complete.
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Appendix B: Implementation Checklist
+
+  ----------------------------------------------------------------------------------------------------------------------------------------
+  Area         Checklist item                                                                                                      Done
+  ------------ ------------------------------------------------------------------------------------------------------------------- -------
+  Data         CSV or API dataset is updated and accessible.                                                                       ☐
+
+  Data         ContentID exists and is available in API payload or hidden HTML comments.                                           ☐
+
+  Survey       Question classes match the JavaScript selectors.                                                                    ☐
+
+  Survey       CV ranges are documented and not reused elsewhere in the survey.                                                    ☐
+
+  JS           Debounced search is active on all API search pages.                                                                 ☐
+
+  JS           Exclude list prevents duplicate selections.                                                                         ☐
+
+  JS           clearSurveyVars() runs before writing new selections on submit.                                                     ☐
+
+  JS           CID extraction works from Synopsis and falls back to Title.                                                         ☐
+
+  JS           Global CID cleanup runs on all downstream piped pages.                                                              ☐
+
+  Validation   Max-selection and no-selection behaviours are tested for all three content types.                                   ☐
+
+  Language     English/Welsh/bilingual modal copy is correct for language IDs 0, 507, 508.                                         ☐
+
+  Mobile       Search and selected list are usable on smaller screens in landscape orientation.                                    ☐
+
+  Export       Stored CV values include clean programme text plus hidden CID where applicable.                                     ☐
+
+  Data         Middleware dataset includes ContentID, Title, Series, Episode, EpisodeTitle, Synopsis, SortOrder and ViewingType.   ☐
+
+  JS           searchPrograms() points to the Middleware Dataset API endpoint or secure proxy.                                     ☐
+
+  JS           Production API key is not hardcoded in browser-side survey JavaScript.                                              ☐
+
+  QA           Middleware search has been tested for Title, EpisodeTitle, Synopsis, ViewingType and Exclude.                       ☐
+  ----------------------------------------------------------------------------------------------------------------------------------------

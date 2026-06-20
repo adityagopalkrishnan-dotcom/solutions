@@ -1,0 +1,393 @@
+AI Router
+
+AI Router
+
+The AI Router
+
+An internal step-by-step guide for turning survey responses into structured AI analysis using AI Router, webhooks, JSON mapping, and custom variables.
+
+This cookbook is meant to be followed like a recipe. The goal is not just to explain what the AI Router can do, but to show exactly how to set it up inside a real survey workflow so another team member can reproduce it without guesswork.
+
+You can use this pattern to pull contextual intelligence from survey responses at the respondent level. That intelligence can then be saved back into the platform as structured data and reused in dashboards, BI, filters, logic, routing, journey maps, exports, and closed-loop workflows.
+
+At a high level, the setup works like this: a response comes into the survey, a webhook sends the relevant data to AI Router, AI Router processes that data using a prompt, the output comes back as JSON, that JSON is stored in a custom variable, and the values inside that JSON are then split into separate custom variables for reporting and downstream actions.
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Important: This workflow is highly dependent on prompt quality. If the prompt is vague, the output will be vague. If the prompt is inconsistent, the reporting layer will be inconsistent too. Treat the prompt as the logic layer of the whole setup.
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What can this setup be used for?
+
+Below are examples of analyses that can be generated from survey responses using this pattern. These are not limitations of the router. They are examples of what has already been tested or what fits naturally into the same setup.
+
+Sentiment analysis. Classify open text into Positive, Neutral, or Negative and optionally return sentiment tags, intensity, and confidence. This is useful when you want a dashboard-friendly field rather than reading each comment manually.
+
+Topics and themes. Return a primary topic and secondary topic, or a broader dominant theme and supporting theme. This is helpful when a single response may mention more than one issue, such as service quality, delivery delays, or billing confusion.
+
+Data legitimacy. Flag gibberish, spam, copied filler text, or responses that are too vague to analyze properly. This is useful for cleaning data before you build insights on top of it.
+
+NPS versus sentiment correlation. Compare the score and the comment together. For example, identify whether a low score aligns with negative language, or whether a high score contains hidden dissatisfaction. This gives you a stronger quality check than reading score or text alone.
+
+Insights and action items. Move beyond classification and have the router summarize what the feedback implies and what should be done next. This can be turned into operational recommendations, action logs, or management summaries.
+
+Improvement signals. Detect what the customer is asking to be changed and whether the signal is mild, moderate, or urgent. This is useful for priority-based follow-up.
+
+Journey stage mapping. Map a comment or a survey response to a stage such as Awareness, Consideration, Booking, Delivery, Service, Retention, or Loyalty. This is especially useful for journey mapping or root-cause analysis.
+
+Persona classification. Assign the respondent to a defined persona category based on their answers. Examples include budget traveler, business traveler, high-touch support seeker, digital-first customer, or service-recovery respondent.
+
+Executive summaries. Generate a concise and polished summary that a leadership team can scan quickly without reading every response.
+
+Translations. Translate open-ended feedback into a working language before or alongside the analysis. This is useful for global programs.
+
+Reasoning and explainability. Return a short explanation for why the router chose that sentiment, topic, persona, or insight. This is useful when internal teams want transparency rather than black-box output.
+
+Experience gap studies. Compare customer-facing feedback with internal or employee-facing feedback to surface gaps. For example, sales may think onboarding is smooth while customers describe confusion or long wait times.
+
+Customer effort detection. Identify whether the experience felt easy or difficult, even when the respondent does not explicitly say 'high effort'. This is useful for reducing friction in service journeys.
+
+Retention or risk flags. Return an operational risk label such as low, medium, or high based on wording, intensity, and stated pain points. This can be used for alerts or case management.
+
+How the full workflow works
+
+The current setup uses webhooks. Each time a response comes in, either after a question, after a page, or after the survey, the webhook calls the AI Router API endpoint with a JSON request body.
+
+That request body must contain the input data that the router needs. In most cases, this means survey responses that have already been stored into custom variables. Those custom variable values are then dynamically inserted into the webhook request body.
+
+Once the request reaches AI Router, the router uses the selected prompt and the data you passed in. It processes the data and returns the output in a few seconds.
+
+The output should be returned as a JSON object. That JSON object is then saved in the survey platform using custom mapping. After that, JavaScript can be used to extract individual keys from the JSON and save those into separate custom variables.
+
+At that point, the data is no longer just text. It becomes structured reporting data that can be used in raw exports, data slicers, filters, BI dashboards, CX widgets, journey analysis, and any workflow that depends on a stable field rather than a raw comment.
+
+Before you start
+
+Plan the output before you build the prompt. Decide which fields you want returned and where each one will be stored. For example, if you want persona, confidence, reason, dominant theme, and improvement signal, decide the destination custom variable numbers before you build the API layer.
+
+Do not overstuff one custom variable with too much source content. Custom variables have character limits. If you expect long comments or multiple questions, it is usually better to store each response in a separate custom variable rather than concatenate everything into one field.
+
+Keep the JSON output stable. Once the reporting layer depends on keys such as sentiment, persona, or topic, changing those keys later will break the extraction script and downstream dashboards.
+
+Test the prompt inside AI Router before you wire the survey. It is much faster to fix prompt logic there than to debug a full survey-plus-webhook setup.
+
+Step 1: Create a consumer in AI Router
+
+1. Go to https://airouter.questionpro.com/.
+
+2. Do not edit existing consumers unless you are certain they belong to your project. Many consumers may already be tied to live internal or customer setups.
+
+3. Click Add consumer. Treat this as your own workspace or as the workspace for all live projects you own.
+
+4. Once the consumer is created, you will need to create a use case inside it. Click Add a use case.
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+  Best practice: Name the consumer in a way that makes ownership obvious. This avoids someone else using or editing the wrong workspace later.
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+
+[]
+
+Step 2: Create the use case and prompt
+
+When you create the use case, the name must be in valid kebab-case. Use lowercase letters separated by hyphens. For example: airline-persona-analysis or post-call-sentiment-routing.
+
+[]
+
+Select the prompt type carefully. The options typically include Prompt, Agent, and Translation. In most survey analysis situations, Prompt is the best option because it gives the most control over the instructions and the output format.
+
+Once the use case is created, you will reach the main prompt configuration screen. This is where you define the analysis logic, output structure, and dynamic variables that the router should expect.
+
+[]
+
+Define the dynamic variables correctly
+
+Before writing the prompt in full, decide exactly how many fields you are sending to the router. If you plan to send three open-ended responses, define three separate dynamic variables in the prompt rather than writing the instructions as if the data is coming in magically.
+
+For example, if three comment boxes are going to be analyzed, the prompt can include variables such as:
+
+  {{Comment 1}}
+
+  {{Comment 2}}
+
+  {{Comment 3}}
+
+These placeholders become the dynamic variables that the router expects. The JSON request body in the webhook must send values that align with these placeholders. If the naming or count does not match, the output will be inconsistent or empty.
+
+When possible, define all expected inputs explicitly. That makes the prompt easier to maintain and easier for another team member to understand later.
+
+Write the prompt with output in mind
+
+Do not write a prompt that only sounds smart. Write one that returns stable, reportable output.
+
+A good prompt for this use case should do four things: explain the role of the AI, define what the inputs mean, define the classification rules or analysis rules, and define the exact output format expected.
+
+If you need structured reporting, ask for JSON output with clearly named keys. Examples include sentiment, dominant_theme, confidence, reason, persona, experience_stage, or improvement_signal.
+
+If you need the router to be careful, explicitly tell it not to hallucinate, not to invent context, and to only use the information provided in the response.
+
+If you want explainability, add a short reason field. This is useful when internal teams need to understand why the router chose a label.
+
+Test the prompt before going live
+
+Use the input message box in AI Router to test sample data before connecting the survey.
+
+Do not test with only one perfect example. Test with strong positive feedback, mixed feedback, low-quality text, sarcastic comments, and borderline cases. The point is to see whether the model holds the rules consistently.
+
+Try different AI models if the router allows it. Some models may be faster while others may be more accurate. Choose based on the use case. For lightweight classification, speed may matter more. For richer executive summaries, quality may matter more.
+
+Once the prompt is stable, click Go live and select Production.
+
+Step 3: Prepare the survey data
+
+Before the webhook can send anything to AI Router, the survey responses need to exist in a form that the webhook can reference. In most setups, that means saving the responses into custom variables.
+
+The safest approach is to store each response in a separate custom variable. For example, custom1 may hold Comment 1, custom2 may hold Comment 2, and custom3 may hold NPS or another score.
+
+If multiple selected options or answers need to be combined into a single custom variable, JavaScript can be used. This is helpful for persona-building use cases or when the router needs one comma-separated snapshot of selections.
+
+Be careful with this approach because custom variables are limited in size. If the combined value becomes too long, it may get truncated.
+
+Template: combine multiple selected options into one custom variable
+
+The following post-JavaScript can be used to collect selected values from a question range and save them into a single comma-separated custom variable. This is useful when the router needs one combined input rather than many separate fields.
+
+  /* Post JS logic */
+
+  $('#SurveySubmitButtonElement').attr("type", "button");
+
+  $('#SurveySubmitButtonElement').on('click', function(e) {
+
+  e.preventDefault();
+
+  let selectedOptions = [];
+
+  // Change these numbers to match your question range
+
+  let startQuestion = 1;
+
+  let endQuestion = 8;
+
+  // Change this to the custom variable number you want
+
+  let customVariableNumber = 100;
+
+  for (let i = startQuestion; i <= endQuestion; i++) {
+
+  let qClass = '.Q' + i;
+
+  $(qClass + ' input:checked').each(function() {
+
+  let optionText = $(this).closest('label').text().trim();
+
+  if (!optionText) {
+
+  optionText = $(this).parent().text().trim();
+
+  }
+
+  if (optionText) {
+
+  selectedOptions.push(optionText);
+
+  }
+
+  });
+
+  }
+
+  let customValue = selectedOptions.join(', ');
+
+  $survey.updateCustomVariable(customVariableNumber, customValue);
+
+  document.forms.runForm.onsubmit();
+
+  });
+
+Change the question range to match your survey. The script above assumes questions are numbered sequentially and that the selected option text is what you want to send to the router.
+
+Change the destination custom variable number before using it in production. Do not assume custom100 is free in every project.
+
+If the survey is collecting open-ended comments rather than selected options, it is often cleaner to store each response separately and pass each one as its own variable instead of combining them.
+
+Step 4: Set up the webhook in the survey tool
+
+Go to Survey > Integrations > Webhooks and click Add new webhook.
+
+Create an outgoing webhook because the survey platform is pushing data out to AI Router.
+
+Choose the trigger carefully. After survey is the safest when you need the full response. After question or after page can be useful if you are building real-time conversational or progressive analysis, but they require more careful timing and testing.
+
+Configure the API request
+
+The endpoint for AI Router is:
+
+  https://airouter-api.questionpro.com/v1/prompt-routes
+
+Use POST as the method. The request headers should include the API key and content type:
+
+  api-key: YOUR_API_KEY
+
+  Content-Type: application/json
+
+You can find the API key inside the AI Router consumer. All use cases within the same consumer generally use the same API key, so make sure you are copying the key from the correct consumer.
+[]
+
+The request body should be copied from the AI Router use case. Go to Consumer > open the use case > Code > Copy JSON. This gives you the starting payload for that prompt.
+[]
+
+Important request-body change
+
+After copying the JSON request body from the router, modify the end of the payload so the router returns a JSON object rather than a free-text response.
+
+The end of the JSON should include the response_format block shown below:
+
+  "response_format": {
+
+  "type": "json_object"
+
+  }
+
+This detail is important because structured JSON is easier to map and parse inside the survey platform. Without it, you may receive text that is harder to extract reliably.
+
+When building the input array inside the request body, map each value to the right dynamic variable. The keys in the JSON payload should reflect the same fields expected by the prompt.
+
+Step 5: Save the AI Router output back into the survey
+
+Once the webhook returns data, the output needs to be stored as a custom variable using custom mapping.
+
+Add a display name for the mapped field and use a JSON selector key under the Code field. The selector key that pulls the router value is:
+
+  result.documents[0].output[0].value
+
+This selector stores the router response value into a custom variable. That value is usually the JSON string returned by the prompt.
+
+Only use this selector once per survey where required by the platform mapping rule. Plan ahead for where the raw router output will live.
+
+What the saved output can look like
+
+If one prompt is returning multiple analyses, the stored output may look like the following example:
+
+  { "text": "Very bad experience", "nps_score": 1, "nps_bucket": "detractor", "sentiment_tags": ["negative", "disappointment", "frustration"], "sentiment_score": -0.9, "confidence": 0.9, "alignment": "aligned", "legitimacy_flag": "legitimate", "drivers": ["service_quality", "customer_support", "overall_experience"], "correlation_notes": "NPS score of 1 (Detractor) aligns with highly negative sentiment expressed in the comment.", "notes": "Clear expression of dissatisfaction with multiple negative emotions; no sarcasm or mixed feelings detected." }
+
+Step 6: Extract JSON values into separate custom variables
+
+Saving the raw JSON is only the first half of the setup. To make the data usable in reporting, each key should be extracted and saved into its own custom variable.
+
+This can be done with JavaScript. The general pattern is to take the raw string, isolate the JSON portion, parse it, and then map the keys into destination custom variables.
+
+Template: JSON parser script
+
+  /* ============================
+
+  TEMPLATE: JSON Parser Script
+
+  ============================ */
+
+  /*
+
+  INSTRUCTIONS:
+
+  1. Replace CUSTOM_SOURCE with the custom variable where JSON is stored
+
+  Example: custom2 -> $survey.surveyResponseJson.custom2
+
+  2. Update JSON KEYS based on your AI/JSON output
+
+  Example: persona, confidence, reason
+
+  3. Update CUSTOM VARIABLE INDEXES where values should be stored
+
+  Example: custom11 -> $survey.updateCustomVariable(11, value)
+
+  */
+
+  // STEP 1: Get JSON string from a custom variable
+
+  let str = $survey.surveyResponseJson.CUSTOM_SOURCE; // replace CUSTOM_SOURCE
+
+  // STEP 2: Safety check to ensure valid JSON exists
+
+  if (str && str.indexOf('{') !== -1 && str.lastIndexOf('}') !== -1) {
+
+  // STEP 3: Extract only the JSON portion
+
+  let jsonOnly = str.substring(
+
+  str.indexOf('{'),
+
+  str.lastIndexOf('}') + 1
+
+  );
+
+  // STEP 4: Parse JSON into object
+
+  let jsonObj = JSON.parse(jsonOnly);
+
+  // STEP 5: Map JSON values -> Custom Variables
+
+  // Replace json keys + custom variable indexes below
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_1, jsonObj.KEY_1 || "");
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_2, jsonObj.KEY_2 || "");
+
+  $survey.updateCustomVariable(CUSTOM_INDEX_3, jsonObj.KEY_3 || "");
+
+  }
+
+This script should be placed before the survey is finally submitted or at the point in the flow where the router output is already available and needs to be broken out into separate variables.
+
+If the JSON keys change in the prompt, this script must be updated too. Keep the prompt, webhook mapping, and extraction script aligned.
+
+If a field may be missing sometimes, leave the fallback empty string in place so the script does not break on missing keys.
+
+How to test the full recipe
+
+Start by testing the prompt directly in AI Router. Make sure the output structure is correct before involving the survey.
+
+Next, test the request body in Postman. This helps confirm the API key, endpoint, request shape, and returned JSON independent of the survey platform.
+
+After that, preview the survey and submit known test responses. Check whether the source custom variables are being populated correctly before the webhook fires.
+
+Then check whether the mapped custom variable is storing the raw router output.
+
+Finally, check whether the extraction script is populating the destination custom variables. If the output is empty at this stage, compare the JSON keys in the script against the real JSON returned by the router.
+
+Common issues and what to check
+
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Issue                             What to check
+  --------------------------------- ------------------------------------------------------------------------------------------------------------------------------
+  Empty router output               Confirm the webhook fired, the API key is correct, and the prompt variables match the keys being sent in the JSON payload.
+
+  Router output is text, not JSON   Confirm that the request body includes response_format with type set to json_object.
+
+  Mapped custom variable is blank   Confirm the selector key is correct and that the router is returning data at that path.
+
+  Parser script returns nothing     Confirm the raw custom variable actually contains JSON and that the JSON keys in the script exactly match the router output.
+
+  Inconsistent classifications      Review the prompt. Most inconsistency comes from vague instructions or missing definitions for labels and rules.
+
+  Truncated input data              Check whether too much content was packed into one custom variable. Split the source data into separate variables if needed.
+  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Internal recommendations
+
+Start simple. A first production version should focus on a small number of stable fields such as sentiment, topic, confidence, and reason. Once that works consistently, add more layers such as persona, improvement signal, or executive summary.
+
+Always save the raw router output somewhere before splitting it. That raw value is the easiest reference point when debugging.
+
+When building dashboards, prefer fields with stable categories over free-text summaries. Use the summaries for reading, and the structured categories for filtering and trends.
+
+If multiple teams are going to reuse the same prompt, maintain a small prompt library and document the expected input variables and output keys for each use case.
+
+Keep screenshots or examples near the relevant steps in your internal version of this cookbook so new users can match what they see in the UI.
+
+Final thought
+
+If this recipe is set up correctly, the survey stops being a passive collection tool and becomes an active intelligence layer. Responses are no longer just stored. They are interpreted, structured, and made operational in near real time.
+
+The key to making this scalable is consistency: consistent prompt design, consistent JSON output, consistent custom-variable mapping, and consistent naming across the whole flow.
