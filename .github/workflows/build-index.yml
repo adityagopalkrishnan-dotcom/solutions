@@ -2,32 +2,33 @@ name: Build Knowledge Index
 
 on:
   push:
-      branches: [main]
-          paths:
-                - '**.txt'
-                      - 'build_index.py'
-                        workflow_dispatch:
+    paths:
+      - 'QuestionPro_*.txt'
+      - 'build_index.py'
+  workflow_dispatch:
 
-                        jobs:
-                          build:
-                              runs-on: ubuntu-latest
-                                  permissions:
-                                        contents: write
-                                            steps:
-                                                  - uses: actions/checkout@v4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-                                                        - name: Set up Python
-                                                                uses: actions/setup-python@v5
-                                                                        with:
-                                                                                  python-version: '3.11'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-                                                                                        - name: Run indexer
-                                                                                                run: python3 build_index.py
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-                                                                                                      - name: Commit index.json
-                                                                                                              run: |
-                                                                                                                        git config user.name "github-actions[bot]"
-                                                                                                                                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                                                                                                                                            git add index.json
-                                                                                                                                                      git diff --staged --quiet || git commit -m "Auto-update index.json"
-                                                                                                                                                                git push
+      - name: Run indexer
+        run: python3 build_index.py
+
+      - name: Commit index.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git diff --cached --quiet || git commit -m "Auto-update index.json"
+          git push
