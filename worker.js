@@ -143,7 +143,7 @@ export default {
         use_case_name,
         prompt_version:  2,
         data_center:     "US",
-        inputs: [
+        input_data: [
           { key: "content",              value: "" },
           { key: "QUESTION",             value: question },
           { key: "CONTEXT",              value: context },
