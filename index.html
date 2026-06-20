@@ -1280,7 +1280,7 @@ async function sendChat(override){
       let aiResponse_raw = null;
       if (data?.result?.documents?.[0]?.output) {
         const outputArr = data.result.documents[0].output;
-        const contentItem = outputArr.find(o => o.key === 'content');
+        const contentItem = outputArr.find(o => o.key === 'content' || o.key === 'responses');
         aiResponse_raw = contentItem?.value || outputArr[0]?.value;
       }
       aiResponse = aiResponse_raw
