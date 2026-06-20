@@ -4,10 +4,11 @@ Generates index.json from all .txt files in the repo root.
 
 Two modes:
   plaintext    -> one entry per file (cookbook, RTS, technical docs)
-  json_article -> one entry per article (scraped QP docs with "articles" array)
+  json_article -> one entry per article (scraped QP docs with articles array)
 """
 
 import json, os, re
+from urllib.parse import quote
 
 OUTPUT_FILE = "index.json"
 
@@ -25,33 +26,37 @@ STOPWORDS = {
 }
 
 # Human-readable names + extra search tags for plain-text cookbook files.
+# Keys are normalised filenames (lowercased, spaces->underscores, no .txt)
 PLAIN_TEXT_TITLES = {
-    "AI_Router_Technical":                ("AI Router Technical Setup Guide",
+    "ai_router_technical":                ("AI Router Technical Setup Guide",
                                            "ai router webhook json custom variable survey prompt setup technical cookbook"),
-    "Communities":                         ("Purpose Mindset and Communities Cookbook",
+    "communities":                         ("Purpose Mindset and Communities Cookbook",
                                            "communities purpose mindset personal statement fortune teller ai router"),
-    "Conversational_Survey":              ("Conversational Survey Cookbook",
+    "conversational_survey":              ("Conversational Survey Cookbook",
                                            "conversational survey sous chef adaptive ai router 7-eleven kapital bank acca nps csat ces"),
-    "Conversational_Survey_ready_to_sell":("Conversational Survey Ready to Sell",
+    "conversational_survey_ready_to_sell":("Conversational Survey Ready to Sell",
                                            "conversational survey sous chef adaptive ai router pricing rts sell benefits"),
-    "SalesForce_integration":             ("Salesforce Integration Cookbook",
+    "salesforce_integration":             ("Salesforce Integration Cookbook",
                                            "salesforce smoke alarm triggering survey crm flow named credential callout hpe hewlett packard"),
-    "SalesForce_ready_to_sell":           ("Salesforce Triggering Ready to Sell",
+    "salesforce_ready_to_sell":           ("Salesforce Triggering Ready to Sell",
                                            "salesforce smoke alarm trigger survey crm pricing rts sell benefits"),
-    "Sentiment_analysis":                 ("Sentiment Analysis Cookbook",
+    "sentiment_analysis":                 ("Sentiment Analysis Cookbook",
                                            "sentiment analysis prep cook open-ended text ai router sartorius themes summary dashboard"),
-    "Sentiment_analysis_ready_to_sell":   ("Sentiment Analysis Ready to Sell",
+    "sentiment_analysis_ready_to_sell":   ("Sentiment Analysis Ready to Sell",
                                            "sentiment analysis prep cook open-ended text pricing rts sell benefits"),
-    "TV_Guide_customisation":             ("Dynamic TV Guide Searchable List Cookbook",
+    "tv_guide_customisation":             ("Dynamic TV Guide Searchable List Cookbook",
                                            "tv guide the menu dynamic list middleware searchable catalogue proxy trp research ireland"),
-    "TV_Guide_Ready_to_sell":             ("Dynamic TV Guide Ready to Sell",
+    "tv_guide_ready_to_sell":             ("Dynamic TV Guide Ready to Sell",
                                            "tv guide the menu dynamic list searchable catalogue pricing rts sell benefits"),
-    "Solution_intro":                     ("Solutions Cookbook Overview Quick Reference",
+    "solution_intro":                     ("Solutions Cookbook Overview Quick Reference",
                                            "solutions overview pricing proof point sous chef prep cook fortune teller smoke alarm the menu"),
 }
 
-# Files to skip (not knowledge files)
 SKIP_FILES = {"build_index.py", "index.json", "index.html", "worker.js", "README.md"}
+
+def normalise_key(filename):
+    """Convert filename to lookup key: lowercase, spaces to underscores, no .txt"""
+    return filename.replace('.txt', '').replace(' ', '_').lower()
 
 def extract_keywords(text, max_kw=30):
     text = text.lower()
@@ -66,21 +71,23 @@ def extract_keywords(text, max_kw=30):
 def index_plain_text(filepath, filename):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
-    file_id = filename.replace('.txt', '')
-    meta = PLAIN_TEXT_TITLES.get(file_id)
-    title, extra_kw = meta if meta else (file_id.replace('_', ' ').title(), '')
+    key = normalise_key(filename)
+    meta = PLAIN_TEXT_TITLES.get(key)
+    title, extra_kw = meta if meta else (filename.replace('.txt', ''), '')
     kw = extract_keywords(content) + (' ' + extra_kw if extra_kw else '')
     clean = re.sub(r'[+|=\-]{2,}', ' ', content)
     clean = re.sub(r'\s+', ' ', clean).strip()
     fname_lower = filename.lower()
-    if 'ready_to_sell' in fname_lower:
+    if 'ready to sell' in fname_lower or 'ready_to_sell' in fname_lower:
         category = 'sales'
     elif any(x in fname_lower for x in ['technical', 'integration', 'customis']):
         category = 'technical'
     else:
         category = 'general'
-    return [{"id": file_id, "title": title, "category": category, "product": "CX Solutions",
-             "kw": kw, "summary": clean[:300], "path": filename,
+    # URL-encode path for use in GitHub raw URLs
+    encoded_path = quote(filename)
+    return [{"id": key, "title": title, "category": category, "product": "CX Solutions",
+             "kw": kw, "summary": clean[:300], "path": encoded_path,
              "type": "plaintext", "size": len(content)}]
 
 def index_json_articles(filepath, filename):
@@ -104,13 +111,13 @@ def index_json_articles(filepath, filename):
         )
         kw = extract_keywords(f"{title} {summary} {headings} {steps} {content}")
         entry_id = re.sub(r'[^a-z0-9\-_]', '-',
-                          f"{filename.replace('.txt', '')}-{art_id}".lower())
+                          f"{normalise_key(filename)}-{art_id}".lower())
         entries.append({
             "id": entry_id, "title": title,
             "category": 'api' if 'API' in filename else 'help',
             "product": product, "kw": kw,
             "summary": (summary or content)[:200],
-            "path": filename, "article_id": art_id,
+            "path": quote(filename), "article_id": art_id,
             "url": url, "type": "json_article", "word_count": word_count
         })
     return entries
@@ -140,7 +147,7 @@ def main():
         json.dump(index, f, separators=(',', ':'))
 
     size_kb = os.path.getsize(OUTPUT_FILE) // 1024
-    print(f"\n index.json: {len(index)} entries, {size_kb} KB")
+    print(f"\nindex.json: {len(index)} entries, {size_kb} KB")
 
 if __name__ == '__main__':
     main()
