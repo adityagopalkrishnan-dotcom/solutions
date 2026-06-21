@@ -81,7 +81,7 @@ function buildArticleText(article) {
 const CORS = {
   'Access-Control-Allow-Origin':  '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, api-key',
 };
 
 function jsonResponse(data, status) {
