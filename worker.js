@@ -1,171 +1,133 @@
 /**
- * Cloudflare Worker -- QP Insights Commons
- *
- * Handles two knowledge file types in index.json:
- *   plaintext    -> fetches entire file, truncated to MAX_CHARS
- *   json_article -> fetches file, extracts article by article_id
- *
- * Flow: question -> score index.json -> fetch top-N articles -> QP AI Router -> response
+ * QP Insights Commons Worker - Live Help Fetch
+ * Fetches live from questionpro.com/help/ on every question.
  */
 
-const GITHUB_RAW = "https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main";
-const INDEX_URL  = GITHUB_RAW + "/index.json";
+const GITHUB_RAW  = "https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main";
+const SITEMAP_URL = GITHUB_RAW + "/help-sitemap.json";
+const QP_ROUTER   = "https://airouter-api.questionpro.com/v1/prompt-routes";
+const QP_API_KEY  = "55e63ea5-e2a9-4c27-a5aa-d89b9da77db4";
+const QP_USER_ID  = 4379318;
+const QP_ORG_ID   = 4285979;
+const TOP_N = 5, MAX_ARTICLE = 4000, CACHE_SITEMAP = 3600;
 
-const QP_ROUTER  = "https://airouter-api.questionpro.com/v1/prompt-routes";
-const QP_API_KEY = "55e63ea5-e2a9-4c27-a5aa-d89b9da77db4";
-const QP_USER_ID = 4379318;
-const QP_ORG_ID  = 4285979;
-
-const TOP_N         = 6;
-const MAX_CHARS     = 12000;
-const CACHE_SECONDS = 300;
-
-function scoreEntry(entry, queryWords) {
-  const titleL = entry.title.toLowerCase();
-  const kw     = (entry.kw || '').toLowerCase();
-  const summ   = (entry.summary || '').toLowerCase();
-  const prod   = (entry.product || '').toLowerCase();
-
-  let score = 0;
-  for (const w of queryWords) {
-    if (titleL.includes(w))  score += 4;
-    else if (kw.includes(w)) score += 2;
-    else if (summ.includes(w) || prod.includes(w)) score += 1;
+function scoreEntry(entry, words) {
+  const slug = entry.slug.toLowerCase(), title = entry.title.toLowerCase(), prod = entry.product.toLowerCase();
+  let s = 0;
+  for (const w of words) {
+    if (title.includes(w)) s += 4;
+    if (slug.includes(w))  s += 3;
+    if (prod.includes(w))  s += 2;
   }
-  // Boost CX Solutions cookbook/RTS entries
-  if (entry.product === 'CX Solutions') score += 2;
-  return score;
+  return s;
 }
 
-async function fetchContent(entry) {
-  const url = GITHUB_RAW + "/" + entry.path;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Fetch failed for " + entry.path + ": HTTP " + res.status);
-  const raw = await res.text();
+function extractArticle(html) {
+  let clean = html
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<nav[\s\S]*?<\/nav>/gi, '')
+    .replace(/<header[\s\S]*?<\/header>/gi, '')
+    .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
 
-  if (entry.type === 'plaintext') {
-    return raw.slice(0, MAX_CHARS);
-  }
+  const titleM = clean.match(/<title>([^<]+)<\/title>/);
+  const title  = titleM ? titleM[1].replace(/\s*[|\-]\s*QuestionPro.*$/i, '').trim() : '';
 
-  if (entry.type === 'json_article') {
-    let data;
-    try { data = JSON.parse(raw); } catch { return raw.slice(0, MAX_CHARS); }
-    const articles = data.articles || [];
-    const article  = articles.find(a => a.id === entry.article_id) || articles[0];
-    return article ? buildArticleText(article) : '';
-  }
+  const idx  = clean.indexOf('class="right-section-wrapper"');
+  let body = idx >= 0 ? clean.substring(idx, idx + 40000) : clean;
 
-  return raw.slice(0, MAX_CHARS);
-}
+  body = body
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ').trim();
 
-function buildArticleText(article) {
-  const parts = [];
-  if (article.title)   parts.push("# " + article.title);
-  if (article.url)     parts.push("Source: " + article.url);
-  if (article.summary && article.summary !== article.title) parts.push(article.summary);
-
-  if (article.headings && article.headings.length) {
-    const hh = article.headings.map(h => h.text || h).filter(Boolean).join(' | ');
-    if (hh) parts.push("Sections: " + hh);
-  }
-  if (article.steps && article.steps.length) {
-    const ss = article.steps
-      .map((s, i) => (i+1) + ". " + (typeof s === 'string' ? s : (s.text || '')))
-      .filter(s => s.trim().length > 3);
-    if (ss.length) parts.push(ss.join('\n'));
-  }
-  if (article.content) parts.push(article.content);
-  return parts.join('\n\n').slice(0, MAX_CHARS);
+  return (title ? title + "\n\n" : '') + body.slice(0, MAX_ARTICLE);
 }
 
 const CORS = {
-  'Access-Control-Allow-Origin':  '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, api-key',
+  "Access-Control-Allow-Origin":  "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, api-key",
 };
-
-function jsonResponse(data, status) {
-  return new Response(JSON.stringify(data), {
-    status: status || 200,
-    headers: Object.assign({ 'Content-Type': 'application/json' }, CORS)
-  });
+function jres(d, s) {
+  return new Response(JSON.stringify(d), { status: s || 200, headers: Object.assign({ "Content-Type": "application/json" }, CORS) });
 }
 
 export default {
   async fetch(request) {
-    if (request.method === 'OPTIONS') return new Response(null, { headers: CORS });
-    if (request.method !== 'POST') return jsonResponse({ error: 'Method not allowed' }, 405);
+    if (request.method === "OPTIONS") return new Response(null, { headers: CORS });
+    if (request.method !== "POST")    return jres({ error: "Method not allowed" }, 405);
+    let body; try { body = await request.json(); } catch { return jres({ error: "Invalid JSON" }, 400); }
 
-    let body;
-    try { body = await request.json(); }
-    catch { return jsonResponse({ error: 'Invalid JSON body' }, 400); }
-
-    const question      = body.question;
-    const historyStr    = body.historyStr || '';
-    const use_case_name = body.use_case_name || 'insights_commons';
-
-    if (!question) return jsonResponse({ error: 'Missing question' }, 400);
+    let question = "", inputs = [];
+    if (body.input_data && body.input_data.input) {
+      inputs = body.input_data.input;
+      const qe = inputs.find(i => i.key === "QUESTION");
+      question = qe ? qe.value : "";
+    } else {
+      question = body.question || "";
+    }
+    if (!question) return jres({ error: "Missing question" }, 400);
 
     try {
-      const indexRes = await fetch(INDEX_URL, {
-        cf: { cacheTtl: CACHE_SECONDS, cacheEverything: true }
-      });
-      if (!indexRes.ok) throw new Error("Index fetch failed: " + indexRes.status);
-      const index = await indexRes.json();
+      // 1. Load sitemap index (cached 1hr)
+      const smRes = await fetch(SITEMAP_URL, { cf: { cacheTtl: CACHE_SITEMAP, cacheEverything: true } });
+      if (!smRes.ok) throw new Error("Sitemap fetch failed: " + smRes.status);
+      const sitemap = await smRes.json();
 
-      const queryWords = question.toLowerCase().split(/\s+/).filter(w => w.length >= 2);
-
-      const scored = index
-        .map(e => ({ e, s: scoreEntry(e, queryWords) }))
+      // 2. Score articles
+      const qWords = question.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length >= 3);
+      const scored = sitemap
+        .map(e => ({ e, s: scoreEntry(e, qWords) }))
         .filter(x => x.s > 0)
         .sort((a, b) => b.s - a.s)
         .slice(0, TOP_N);
 
-      const contentParts = await Promise.all(
+      // 3. Fetch live articles in parallel (cached 30min by Cloudflare)
+      const articleTexts = await Promise.all(
         scored.map(async ({ e }) => {
           try {
-            const text = await fetchContent(e);
-            if (!text || text.trim().length < 50) return null;
-            return "--- [" + e.title + " | " + e.product + "] ---\n" + text;
-          } catch (err) {
-            console.error("Content fetch error for " + e.id + ":", err.message);
-            return null;
-          }
+            const r = await fetch(e.url, {
+              headers: { "User-Agent": "QP-Insights-Commons/1.0" },
+              cf: { cacheTtl: 1800, cacheEverything: true }
+            });
+            if (!r.ok) return null;
+            const text = extractArticle(await r.text());
+            if (!text || text.length < 100) return null;
+            return "--- [" + e.title + " | " + e.product + "]\nSource: " + e.url + "\n" + text;
+          } catch { return null; }
         })
       );
 
-      const context = contentParts.filter(Boolean).join('\n\n')
-                      || 'No relevant knowledge found for this query.';
+      const context = articleTexts.filter(Boolean).join("\n\n") || "No relevant help articles found.";
 
-      const payload = {
-        user_id:         QP_USER_ID,
-        organization_id: QP_ORG_ID,
-        use_case_name,
-        prompt_version:  2,
-        data_center:     "US",
-        input_data: [
-          { key: "content",              value: "" },
-          { key: "QUESTION",             value: question },
-          { key: "CONTEXT",              value: context },
-          { key: "CONVERSATION_HISTORY", value: historyStr }
-        ]
-      };
+      // 4. Forward to QP AI Router
+      const newInputs = [
+        ...inputs.filter(i => i.key !== "CONTEXT"),
+        { key: "CONTEXT", value: context }
+      ];
+      if (!newInputs.find(i => i.key === "QUESTION")) newInputs.unshift({ key: "QUESTION", value: question });
 
-      const routerRes = await fetch(QP_ROUTER, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'api-key': QP_API_KEY },
-        body:    JSON.stringify(payload)
+      const payload = Object.assign({}, body, {
+        user_id: body.user_id || QP_USER_ID,
+        organization_id: body.organization_id || QP_ORG_ID,
+        input_data: { input: newInputs }
       });
-      const routerData = await routerRes.json();
+      delete payload.question; delete payload.historyStr;
 
-      return jsonResponse(Object.assign({}, routerData, {
-        _sources: scored.map(({ e, s }) => ({
-          title: e.title, product: e.product, score: s, url: e.url || null
-        }))
+      const apiKey = request.headers.get("api-key") || QP_API_KEY;
+      const routerRes = await fetch(QP_ROUTER, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "api-key": apiKey },
+        body: JSON.stringify(payload)
+      });
+      const rd = await routerRes.json();
+
+      return jres(Object.assign({}, rd, {
+        _sources: scored.map(({ e, s }) => ({ title: e.title, product: e.product, score: s, url: e.url }))
       }));
 
-    } catch (err) {
-      return jsonResponse({ error: err.message }, 500);
-    }
+    } catch (err) { return jres({ error: err.message }, 500); }
   }
 };
