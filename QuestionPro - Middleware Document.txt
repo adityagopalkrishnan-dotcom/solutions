@@ -1,0 +1,294 @@
+﻿Custom Integrations Middleware
+________________
+
+
+
+
+Middleware Playbook
+
+
+Latest update: July 17, 2025
+
+
+  
+
+Overview
+Pricing
+Minimum requirements for Middleware
+ARR
+Minimum commitment
+Charges
+Setup fee
+Change requests
+Server Charges
+Usecases:
+1. ETL Integrations (Extract, Transform, Load)
+What it does:
+Common Scenarios:
+Key Features:
+2. SMS Integrations
+Common Scenarios:
+3.  WhatsApp Integrations
+What it does:
+Common Scenarios:
+Internal Process for Raising a TechOps Request for Middleware
+Important note
+Implementation Process Flow
+What can be done
+Sample Scenarios
+Net new requirements
+Change requests/Feature Enhancements
+Implementations done for the clients
+
+
+
+
+Overview
+Middleware is designed to seamlessly integrate third-party systems with QuestionPro. This solution will act as a centralized hub that enables secure, scalable, and customizable data interactions between external systems and the QuestionPro platform.
+
+
+Pricing
+Minimum requirements for Middleware
+
+
+ARR
+$30K ARR
+
+
+Minimum commitment 
+3 years
+Charges
+
+
+Setup fee
+$15k on cost basis for ARR below $50K
+$30k on cost basis for ARR above $50K
+
+
+(For a deal of $60k, the charges for middleware will be $15k in that $60k)
+
+
+Change requests
+Between $1000 to $5000 [For any changes required after initial implementation]
+
+
+Server Charges
+As per scope of the project (Recurring annually)
+________________
+Usecases:
+At QuestionPro, middleware requests typically fall into four categories: ETL integrations for syncing data with external systems, SMS integrations for sending surveys or running conversational surveys, WhatsApp integrations for interactive surveys using CMILES, and change requests, often involving updates to logic or providers—most commonly, requests for log data dumps for audit or debugging.
+
+
+1. ETL Integrations (Extract, Transform, Load)
+What it does:
+Facilitates the movement of data to and from QuestionPro, enabling customers to keep their internal systems in sync with survey data or to trigger surveys based on business events.
+
+
+Common Scenarios:
+
+
+* Exporting survey responses to CRMs (e.g., Salesforce, HubSpot) or data warehouses 
+* Importing contact lists, transactions or metadata from internal databases into QuestionPro for targeted surveys.
+* Scheduled or event-driven sync jobs / Automated daily or weekly ETL pipelines.
+Key Features:
+* Custom data mapping and transformation
+* Scheduled or real-time pipelines
+* Logging, retries, and audit trails
+2. SMS Integrations
+What it does:
+Enables survey distribution and conversational surveys via third-party SMS providers.
+Common Scenarios:
+* Sending transactional or post-interaction surveys via SMS.
+* Full conversational SMS surveys (one question per message).
+* Automating reminders and follow-ups via SMS.
+________________
+3.  WhatsApp Integrations
+What it does:
+Leverages WhatsApp Business APIs via CMILES to enable both survey invites and conversational surveys via the world's most used messaging app.
+Common Scenarios:
+   * Trigger-based WhatsApp surveys (e.g., case closed, delivery completed).
+   * Running NPS or CSAT surveys inside WhatsApp.
+   * Interactive survey flows using buttons, quick replies, and templates.
+
+
+4. Change Requests and Enhancements
+What it covers:
+Ongoing modifications and refinements to existing integrations, often requested post-deployment to better align with evolving business needs or to improve reliability.
+Common Scenarios:
+   * Updating field mappings or workflows in ETL jobs
+   * Switching SMS/WhatsApp providers
+   * Adding custom logic (e.g., conditional triggers, language preferences)
+   * Generate and share data dumps of integration logs (frequent request for audit, compliance, or debugging)
+
+
+
+
+
+
+
+
+
+
+
+
+________________
+Internal Process for Raising a TechOps Request for Middleware
+
+
+   * The Account Manager (AM) or Customer Success Manager (CSM) is responsible for creating a new TechOps ticket for any Middleware-related requests with a detailed process flow.
+   * Once the ticket is created, the Middleware team is responsible for sharing the timeline required for the implementation after gathering all the necessary requirements and implementing it.
+
+
+Important note
+
+
+The implementation is handled by QuestionPro. Based on the level of effort required, the process typically takes 2 to 3 months to complete for a new implementation/integration from scratch and 7 to 30 days for enhancements on existing implementation.
+
+
+
+
+________________
+Implementation Process Flow
+   1. Requirement Gathering
+   * Initial discussion to understand business objectives and desired outcomes.
+   * Define scope and platform integration needs (if any).
+   * Middleware team would need to come back with the process flow design based on requirements.
+   2. Configuration & Setup
+   * The QuestionPro team sets up the necessary configurations in the platform. (Survey design, webhooks etc.)
+   * For any third party systems or integrations required, QuestionPro team needs to be provided with the required technical details (Credentials, API documentation etc.)
+   3. Development
+   * After technical review, an ETA will be shared by Pavan or Priyesh
+   * Any requirement changes may effect the ETA and will be shared accordingly.
+   4. Review & Feedback
+   * A preliminary version is shared with the client for review.
+   * The client provides feedback or requests changes if needed.
+   5. Revisions & Finalization
+   * The QuestionPro team incorporates revisions.
+   * The final version is reviewed and approved by the client.
+   6. Testing & Quality Assurance
+   * Internal testing is performed to ensure functionality and data accuracy.
+   * A test run may be provided for client verification.
+   7. Go-Live
+   * Once approved, the implementation will be deployed.
+   * Monitoring and support are provided post-launch as needed.
+________________
+What can be done
+On a high level middleware addresses the following:
+      1. Data exchange between external systems (client’s FTP servers, SalesForce etc) and QuestionPro.
+      2. Integration with external systems to pull and push data.
+      3. Data transformation
+Sample Scenarios
+Below are some examples of different requirements that are handled by the middleware team. Depending on whether it’s a net new requirement or change request for existing middleware, the timeline and costs vary.
+Net new requirements
+      1. The client wants contacts to be fetched from the SFTP server, which needs to be processed in middleware and then surveys to be triggered via WhatsApp and SMS.
+      2. The client wants to integrate with SMS provider for two-way SMS communication to collect the feedback and push the response into the QuestionPro system
+      3. Send WhatsApp messages to users on upload of data and a reminder after 24 hours to participants who did not respond.
+      4. The client wants a setup where surveys are automatically triggered from Salesforce via Outbound Messages based on flow criteria (e.g., case closed or opportunity won).
+      5. The client needs the survey responses to be stored in an SQL database, which will be used by their BI tool for data visualization.
+Change requests/Feature Enhancements
+      1. The client wants the “Last name” to be fetched from Salesforce and passed to the survey as a custom variable.
+      2. Implementation of duplicate SMS prevention functionality to avoid sending multiple SMS messages to the same mobile number during survey distribution campaigns.
+      3. In addition to the existing surveys being sent via WhatsApp and SMS, the client needs to start sending the new surveys as well.
+
+
+
+
+Implementations done for the clients
+
+
+S.No
+	Client
+	Implementation
+	Requirement document
+	1
+	ADIB
+	      1. ADIB pushes encrypted GPG files in their SFTP, and QuestionPro decrypts them and sends daily email surveys.
+      2. QuestionPro middleware fetches transactions sent for the day using email engagement API and triggers WhatsApp surveys and in-app notifications using ADIB APIs.
+
+
+	Link
+	2
+	Alamaar
+	      1. The Alamaar team uses QuestionPro CX for their VOC program and requires a custom escalation matrix for unresolved detractor tickets based on priority levels tied to ticket age (under 24, 48, and 72 hours). 
+      2. Escalation emails should be automatically triggered to different managers depending on the ticket's priority and unresolved status
+	Link
+	3
+	Alghanim
+	      1. Alghanim uses CX, and based on priority of tickets, Middleware sends surveys via email and SMS
+      2. Custom logic to send SMS only when WhatsApp is unavailable.
+	Link
+	4
+	AVBOB
+	      1. The QuestionPro middleware runs a daily cron job to fetch transaction files from the AVBOB FTP directory and categorizes them into SMS and email transactions. 
+      2. Based on contact details and transaction type, it sends personalized survey invites using SMS or email with predefined templates.
+	Link
+	5
+	AVME
+	      1. AVME generates a daily transaction file and places it in an SFTP directory, which QuestionPro picks up to handle email deployments. 
+      2. The middleware then filters these transactions for WhatsApp delivery and sends survey messages to customers using Gupshup APIs.
+	Link
+	
+
+S.No
+	Client
+	Implementation
+	Requirement document
+	6
+	Brenntag
+	      1. Brenntag integrates QuestionPro CX with the SAP C4C platform to send surveys in real time based on completed transactions. Due to limitations in C4C, master customer data is maintained and updated in QuestionPro via webhooks and weekly syncs.
+      2. When a transaction is completed, C4C sends only the transaction ID, which QuestionPro uses to fetch full details, validate, and trigger the correct survey. Completed responses are sent back to C4C using its root and item collections.
+
+
+	Link
+	7
+	Delta Airlines
+	      1. Delta Airlines uses QuestionPro to manage global asset and repair audits, where each asset is tagged with a QR code linked to an Asset ID and Location Code.
+      2. Auditors scan QR codes to complete audits, and each response is pushed into a custom SQL database in real time.
+      3. This database is integrated with Delta’s BI tools to enable advanced data visualization and reporting.
+	Link
+	8
+	DHRE
+	      1. DHRE processes survey transactions via API imports and SFTP file dumps, which are then handled by QuestionPro CX to send email surveys. 
+      2. Every 15 minutes, the middleware fetches deployed transactions, filters them by brand name, and selects the appropriate SMS templates. SMS survey invites are then sent to customers using the DuCont API. (SMS provider)
+	Link
+	
+
+
+
+
+
+
+
+S.No
+	Client
+	Implementation
+	Requirement document
+	9
+	EWE
+	      1. EWE uses the QuestionPro Community platform for member engagement and collecting customer feedback. They have classified their customers as electricity customers and telephone customers. 
+      2. As they have a CRM (K3), they want to validate the customer on the profiling survey and update their profile status on the Community platform as “Verified,” “Non-verified,” and “Partially verified.”
+
+
+	Link
+	10
+	Momentum
+	      1. Momentum plans to import contacts into QuestionPro CX through middleware, where contact data is first cleaned based on predefined rules. 
+      2. Contacts are then categorized by communication preference. Email contacts receive surveys via QuestionPro CX, while SMS contacts are sent targeted survey questions through Infobip using a ping-pong flow managed by the middleware. SMS responses are then captured and pushed back to QuestionPro CX for analysis.
+	Link
+	11
+	United Rentals
+	      1. United Rental fetches data from Smartsheet into their survey using Middleware
+      2. This enables key details to be prefilled from the data in Smartsheet. They are also integrated with Salesforce
+	Link
+	
+
+
+
+
+
+
+
+FAQ
+
+
+1. What happens at renewal?
