@@ -357,7 +357,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
     <div class="nav-bottom">
       <a class="nav-item" onclick="showView('settings')" id="nav-settings"><i class="ti ti-adjustments"></i><span>Settings</span></a>
     </div>
-    <div class="nav-workspace">Hub: Insights Commons ÃÂ· Public</div>
+    <div class="nav-workspace">Hub: Insights Commons · Public</div>
   </nav>
 
   <!-- MAIN -->
@@ -399,13 +399,13 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
           <div class="repo-tag"          id="pill-communities"onclick="pinProduct(this,'communities')"><i class="ti ti-world"></i> Communities</div>
         </div>
         <div class="chat-input-box">
-          <textarea id="chatInput" placeholder="Ask the community knowledge base anythingÃ¢ÂÂ¦" rows="1"
+          <textarea id="chatInput" placeholder="Ask the community knowledge base anything…" rows="1"
             onkeydown="handleChatKey(event)" oninput="autoResize(this)"></textarea>
           <div class="chat-input-actions">
             <button class="send-btn" id="sendBtn" onclick="sendChat()" disabled><i class="ti ti-arrow-up"></i></button>
           </div>
         </div>
-        <div class="input-hint">Enter to send ÃÂ· Shift+Enter for new line ÃÂ· Answers grounded in community knowledge</div>
+        <div class="input-hint">Enter to send · Shift+Enter for new line · Answers grounded in community knowledge</div>
       </div>
     </div>
 
@@ -426,7 +426,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
       </div>
       <div class="repo-view-inner">
         <div class="repo-toolbar">
-          <div class="search-box"><i class="ti ti-search"></i><input id="repoSearch" type="text" placeholder="Search knowledgeÃ¢ÂÂ¦" oninput="renderEntries()"/></div>
+          <div class="search-box"><i class="ti ti-search"></i><input id="repoSearch" type="text" placeholder="Search knowledge…" oninput="renderEntries()"/></div>
           <div class="filter-chips" id="filterChips">
             <div class="filter-chip active" onclick="setFilter(this,'all')">All</div>
             <div class="filter-chip" onclick="setFilter(this,'tip')">Tips</div>
@@ -594,10 +594,10 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
       <div class="settings-inner">
         <div class="settings-section">
           <h3>Ã°ÂÂ¤Â AI Router Configuration</h3>
-          <p style="font-size:13px;color:var(--qp-light);margin-bottom:14px;line-height:1.6">Connected to <strong>airouter-api.questionpro.com</strong> ÃÂ· use case: <code style="background:var(--qp-surface);padding:1px 5px;border-radius:3px;font-size:12px">knowledge-base</code> ÃÂ· model: <strong>GPT-5 mini</strong></p>
+          <p style="font-size:13px;color:var(--qp-light);margin-bottom:14px;line-height:1.6">Connected to <strong>airouter-api.questionpro.com</strong> · use case: <code style="background:var(--qp-surface);padding:1px 5px;border-radius:3px;font-size:12px">knowledge-base</code> · model: <strong>GPT-5 mini</strong></p>
           <div class="setting-row">
             <div class="setting-info"><div class="setting-label">API Key</div><div class="setting-desc">Your QuestionPro AI Router api-key</div></div>
-            <input class="setting-input mono" type="password" id="cfg-apikey" placeholder="qp-router-key-Ã¢ÂÂ¦"/>
+            <input class="setting-input mono" type="password" id="cfg-apikey" placeholder="qp-router-key-…"/>
           </div>
           <div class="setting-row">
             <div class="setting-info"><div class="setting-label">User ID</div><div class="setting-desc">Your QP user_id (numeric)</div></div>
@@ -787,7 +787,7 @@ function entryCardHTML(e){
   const cls=TAG_CLASS[e.tag]||'tag-guide';
   const lbl=TAG_LABEL[e.tag]||e.tag;
   const voted=votes[e.id];
-  const excerpt=e.content.slice(0,140).replace(/\n/g,' ')+(e.content.length>140?'Ã¢ÂÂ¦':'');
+  const excerpt=e.content.slice(0,140).replace(/\n/g,' ')+(e.content.length>140?'…':'');
   const dateStr=new Date(e.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   const authorColor=e.author==='Insights Commons Team'?'blue':e.isFile?'green':'';
   return`<div class="entry-card${e.isFile?' uploaded':''}" onclick="openEntry('${e.id}')">
@@ -798,9 +798,9 @@ function entryCardHTML(e){
     <div class="entry-excerpt">${esc(excerpt)}</div>
     <div class="entry-meta">
       <div class="entry-author"><div class="author-av ${authorColor}">${(e.author||'A')[0].toUpperCase()}</div>${esc(e.author||'Anonymous')}</div>
-      <span style="color:var(--qp-border)">ÃÂ·</span>
+      <span style="color:var(--qp-border)">·</span>
       <div class="entry-meta-chip"><i class="ti ti-calendar"></i>${dateStr}</div>
-      ${e.isFile?'<span style="color:var(--qp-border)">ÃÂ·</span><div class="entry-meta-chip"><i class="ti ti-file"></i>File</div>':''}
+      ${e.isFile?'<span style="color:var(--qp-border)">·</span><div class="entry-meta-chip"><i class="ti ti-file"></i>File</div>':''}
     </div>
     <div class="vote-row">
       <button class="vote-btn${voted?' voted':''}" onclick="event.stopPropagation();vote('${e.id}')"><i class="ti ti-arrow-big-up"></i>${e.votes||0}</button>
@@ -817,7 +817,7 @@ function renderNotes(){
   empty.style.display='none';
   grid.innerHTML=notes.map((n,i)=>`<div class="note-card">
     <div class="note-card-q">"${esc(n.question)}"</div>
-    <div class="note-card-a">${esc(n.answer.slice(0,300))}${n.answer.length>300?'Ã¢ÂÂ¦':''}</div>
+    <div class="note-card-a">${esc(n.answer.slice(0,300))}${n.answer.length>300?'…':''}</div>
     <div class="note-card-meta"><span>${new Date(n.date).toLocaleDateString()}</span><span class="note-del" onclick="deleteNote(${i})">Remove</span></div>
   </div>`).join('');
   updateBadges();
@@ -833,7 +833,7 @@ function openEntry(id){
   const dated=new Date(e.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   const bodyHTML=`<span class="entry-tag ${cls}" style="margin-bottom:12px;display:inline-block">${lbl}</span>
     <h2 style="font-size:18px;font-weight:500;color:var(--qp-text);margin-bottom:12px">${esc(e.title)}</h2>
-    <div style="font-size:13px;color:var(--qp-light);margin-bottom:16px">By ${esc(e.author||'Anonymous')} ÃÂ· ${dated}</div>
+    <div style="font-size:13px;color:var(--qp-light);margin-bottom:16px">By ${esc(e.author||'Anonymous')} · ${dated}</div>
     <div style="font-size:14px;line-height:1.8;color:var(--qp-text);white-space:pre-wrap">${esc(e.content)}</div>
     <div style="margin-top:20px;display:flex;gap:8px">
       <button class="btn btn-primary" style="font-size:12px;padding:7px 14px" onclick="askAbout('${id}');closeModal()"><i class="ti ti-sparkles"></i>Ask AI about this</button>
@@ -991,7 +991,7 @@ function renderBulkQueue() {
 }
 
 function buildQueueCardHTML(item) {
-  const statusLabel = { pending:'Pending', extracting:'ExtractingÃ¢ÂÂ¦', ready:'Ready', error:'Error', done:'Saved Ã¢ÂÂ' }[item.status] || '';
+  const statusLabel = { pending:'Pending', extracting:'Extracting…', ready:'Ready', error:'Error', done:'Saved Ã¢ÂÂ' }[item.status] || '';
   const iconClass = item.status === 'error' ? 'err' : item.status === 'done' || item.status === 'ready' ? 'ok' : '';
   const iconName = item.status === 'error' ? 'ti-alert-circle' : item.status === 'extracting' ? 'ti-loader-2' : item.status === 'done' ? 'ti-check' : 'ti-file-text';
   const sizeKB = (item.file.size / 1024).toFixed(0);
@@ -1011,7 +1011,7 @@ function buildQueueCardHTML(item) {
       <div class="qc-icon ${iconClass}"><i class="ti ${iconName}${item.status==='extracting'?' spinning':''}"></i></div>
       <div class="qc-name">
         <div class="qc-filename">${esc(item.file.name)}</div>
-        <div class="qc-filemeta">${sizeKB}KB ÃÂ· ${charCount}</div>
+        <div class="qc-filemeta">${sizeKB}KB · ${charCount}</div>
       </div>
       <span class="qc-status ${item.status}">${statusLabel}</span>
       ${item.status!=='done'?`<button class="qc-remove" onclick="event.stopPropagation();removeQueueItem('${item.id}')" title="Remove"><i class="ti ti-x"></i></button>`:''}
@@ -1100,7 +1100,7 @@ function updateBulkProgress() {
   const badge = document.getElementById('bulk-queued-badge');
   if (badge) { badge.textContent = ready + ' ready'; badge.style.display = ready ? '' : 'none'; }
   const prog = document.getElementById('bulkProgress');
-  if (prog) prog.textContent = `${total} file${total!==1?'s':''} ÃÂ· ${ready} ready ÃÂ· ${extracting ? extracting+' extracting ÃÂ· ' : ''}${done} saved${errs?' ÃÂ· '+errs+' error':''}`;
+  if (prog) prog.textContent = `${total} file${total!==1?'s':''} · ${ready} ready · ${extracting ? extracting+' extracting · ' : ''}${done} saved${errs?' · '+errs+' error':''}`;
   const btn = document.getElementById('bulkSubmitBtn');
   if (btn) btn.disabled = ready === 0;
 }
@@ -1237,7 +1237,7 @@ function buildContext(question){
     const start = Math.max(0, bestStart - 400);
     const end = Math.min(txt.length, bestStart + 1600);
     const chunk = txt.slice(start, end);
-    return (start > 0 ? '[Ã¢ÂÂ¦] ' : '') + chunk + (end < txt.length ? ' [Ã¢ÂÂ¦]' : '');
+    return (start > 0 ? '[…] ' : '') + chunk + (end < txt.length ? ' […]' : '');
   }
 
   return top.map((e,i)=> {
@@ -1449,7 +1449,7 @@ function savePrefs(){
   save();toast('Preferences saved Ã¢ÂÂ');
 }
 async function testConnection(){
-  toast('Testing connection to QP AI RouterÃ¢ÂÂ¦');
+  toast('Testing connection to QP AI Router…');
   const key = document.getElementById('cfg-apikey').value.trim() || '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4';
   const uid = parseInt(document.getElementById('cfg-userid').value.trim() || '4379318');
   const oid = parseInt(document.getElementById('cfg-orgid').value.trim() || '4285979');
