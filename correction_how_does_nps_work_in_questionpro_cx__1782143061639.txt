@@ -1,0 +1,21 @@
+CORRECTION FOR: How does NPS work in QuestionPro CX?
+PRODUCT: general
+KEYWORDS: how does nps work questionpro
+CORRECT ANSWER / ADDITIONAL CONTEXT:
+Test correction: NPS in QuestionPro CX requires setting the benchmark question in CX Survey Settings under the workspace configuration.
+PREVIOUS WRONG ANSWER:
+In QuestionPro CX, NPS works as a rating question that asks respondents to score their likelihood to recommend on a numeric scale, usually 0–10.
+
+Here’s how it works in the knowledge base:
+
+1. **Question setup**
+   - Add it from **Surveys → Edit → Workspace → Add Question**
+   - Choose **Advanced question types**
+   - Select **Net Promoter Score** under **Customer Satisfaction**
+
+2. **How responses are grouped**
+   - **Promoters**
+   - **Passives**
+   - **Detractors**
+
+   By default on a **0–10*
