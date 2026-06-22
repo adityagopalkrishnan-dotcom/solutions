@@ -1,0 +1,360 @@
+The Dashboard Chef
+CUSTOM CX DASHBOARD WIDGETS
+Cookbook
+Turning QuestionPro's native CX dashboards into interactive, insight-driven experiences — built for Qatar Rail and Miral Destinations.
+Step-by-step: Source Widget → Custom HTML Widget → Filter Sync → AI Insights
+QuestionPro CX  │  Internal Use
+1. The Client & The Problem
+Background
+Qatar Rail and Miral Destinations both run active CX programmes on QuestionPro, collecting post-experience feedback across customer touchpoints. Their teams log into the QuestionPro dashboard regularly to review scores, track trends, and share insights across the organisation. The platform gives them the data — but not in a form that works for every audience.
+Executives need a single number and a clear signal. CX managers need trends and segment breakdowns. Analysts need to drill into distributions and drivers. The out-of-the-box QuestionPro dashboard serves all of them with the same layout: raw gauges, static bar charts, and no interactivity. Filters update the numbers, but they don't explain what changed or what to do about it.
+The Specific Gaps
+Dashboard widgets were designed for generic use, not the specific survey structure or KPI definitions each organisation cared about.
+Non-analyst stakeholders — executives and operations leads — saw charts, not decisions. There was no plain-English signal explaining what the data meant.
+No interactivity: a manager could not drill into a segment, compare periods, or pivot between views without leaving the dashboard entirely.
+Source widgets that existed only to feed data showed as blank white boxes on screen, making the dashboard look unfinished.
+After filters were applied, the dashboard updated silently with no indication of what changed or whether the numbers were meaningfully different.
+What Success Looked Like
+A CX manager opens the dashboard and immediately sees: the current CSAT score with a plain-English status (On track / Near benchmark), a CX Health Score combining CSAT, effort, and resolution data, and an anomaly banner if anything has moved significantly. She applies a filter for a specific support channel. Every widget updates simultaneously. She clicks a year bar in the effort tracker and the quarterly breakdown expands inline. She clicks the AI Insights widget and reads three prioritised actions generated from the live data. The entire experience happens without leaving the dashboard or opening a spreadsheet.
+2. The Solution: Custom JavaScript Widgets on QuestionPro CX
+The solution uses QuestionPro's built-in Custom Widget (HTML widget) to inject JavaScript directly into dashboard tiles. Each custom widget reads live data from the native QuestionPro source widget sitting on the same dashboard, renders a bespoke UI, and re-renders automatically whenever a dashboard filter is applied.
+No external platform. No separate tool. No data exports. Everything runs inside the QuestionPro dashboard the teams already use.
+3. Prerequisites
+QuestionPro Requirements
+Source Widget Setup
+Before adding any custom widget, the following native QuestionPro widgets must be present on the dashboard. These act as the data source — the custom widget reads from them and hides them from the user.
+4. Step-by-Step Setup
+Step 1: Add Source Widgets to the Dashboard
+Log into the QuestionPro CX dashboard. Click Add Widget and add each source widget listed in Section 3. Configure each one to point at the correct survey question. Position them on the dashboard — they will be hidden from users later, but they must be present and rendering correctly before the custom widget can read from them.
+Step 2: Note the Source Widget IDs
+Each widget on a QuestionPro dashboard has a unique numeric ID visible in the HTML. Right-click any source widget on the dashboard, click Inspect, and look for the element with id="dashboardWidget_XXXXXX". Note the six-digit number for each source widget — you will need these in Step 5.
+Example: id="dashboardWidget_160007" → the widget ID is 160007
+Step 3: Add a Custom HTML Widget
+Click Add Widget on the dashboard. Select Custom Widget (or HTML Widget, depending on your plan label). Give it a title. Click Save to place it on the dashboard. Repeat for each custom widget you are adding.
+Step 4: Note the Target Widget IDs
+For each custom widget you just added, inspect the element in the same way as Step 2. Look for id="CustomizedWidget_XXXXXX". Note the ID for each — these are the target IDs where the custom JavaScript will render its output.
+Example: id="CustomizedWidget160012" → the target widget ID is 160012
+Step 5: Paste the Widget Code
+For each custom widget, click the three-dot menu (⋮) on the widget tile and select Edit. An HTML/JavaScript editor opens. Paste the full widget script into the editor. At the top of the script, update the two ID variables to match the IDs you noted in Steps 2 and 4:
+var SOURCE_ID = 'dashboardWidget_160007';   // ← your source widget ID
+var TARGET_ID = 'CustomizedWidget160012';   // ← your custom widget ID
+Click Save. The widget renders immediately. The source widget disappears from view (hidden by the script) and the custom UI appears in its place.
+Step 6: Configure the AI Insights Widget
+The AI Insights widget requires additional configuration at the top of the script. Update the following values before saving:
+var TARGET_ID      = 'CustomizedWidget160064';  // ← your AI widget ID
+var API_KEY        = 'your-qp-api-key-here';
+var USER_ID        = 0000000;                   // ← your QP user ID
+var ORG_ID         = 0000000;                   // ← your QP organisation ID
+The widget automatically reads data from all four other Canvas Widgets on the dashboard, assembles the full context, and sends it to the QuestionPro AI Router. No additional source widgets are required.
+Step 7: Arrange the Dashboard Layout
+Resize and reposition the Canvas Widgets to fill the dashboard. The source widgets are invisible to users but still occupy grid space — move them to a corner or stack them beneath the Canvas Widgets. The dashboard should show only Canvas Widgets in the visible area.
+5. How It Works: Architecture
+The Three-Layer Pattern
+Every custom widget follows the same architecture regardless of what it displays:
+Filter Detection
+When a user applies a dashboard filter, QuestionPro re-fetches data and Highcharts silently re-renders the source widget. The custom widget detects this through:
+A MutationObserver watching the source widget DOM for any structural change.
+A 750ms polling loop that takes a data snapshot and compares it to the previous state — re-rendering only if something changed.
+An observer re-attachment running every five seconds to survive React re-mounts that would otherwise disconnect the observer.
+Source Widget Hiding
+The script hides the native QuestionPro source widget so users see only the custom UI. The hiding must be done correctly — the wrong method causes the widget to stop receiving data updates:
+The hide function runs at the end of every render() call, then again at 500ms, 1500ms, and 3000ms via setTimeout, and every two seconds via setInterval — ensuring it survives React re-mounts that clear inline styles.
+Reading Highcharts Data
+All chart-based source widgets (gauge, tracker, trend comparison) use the following function to find the live Highcharts chart instance. The "last match wins" approach handles stale destroyed instances that accumulate in Highcharts.charts[] after filter changes:
+function findChart(widgetId) {
+var widget = document.getElementById(widgetId);
+if (!widget || !window.Highcharts) return null;
+var chart = null;
+Highcharts.charts.forEach(function(c) {
+if (!c || !c.renderTo) return;
+if (!document.body.contains(c.renderTo)) return; // skip destroyed
+if (!widget.contains(c.renderTo)) return;         // must be in our widget
+chart = c; // last match wins
+});
+return chart;
+}
+6. Testing the Full Setup
+7. Common Issues and Fixes
+8. What Else Can Be Built This Way
+The five widgets above are the current suite, but the same pattern — custom JS reading from a native QP widget, rendering a bespoke UI, syncing with filters — works for any QuestionPro widget type. The same architecture can support:
+LLM Template for New Widgets
+Any new widget can be generated using an LLM (Claude, ChatGPT, Gemini, Copilot) by providing the following prompt template. Fill in the bracketed fields and the LLM will produce a working widget following the correct architecture:
+Appendix: Widget Template Code
+How to use it
+Copy the entire code block below.
+Paste it into your LLM chat window.
+Update the four variables at the top (SOURCE_ID, TARGET_ID, WIDGET_PURPOSE, SOURCE_TYPE).
+Send with the instruction above.
+Paste the generated script into the QuestionPro HTML Widget editor (⋮ → Edit on the widget tile).
+The widget renders immediately. No other changes needed.
+Template
+// ================================================================
+// STEP 1 — Fill in these four values. Everything else is automatic.
+// ================================================================
+var SOURCE_ID = 'dashboardWidget_XXXXXX';  // native QP widget you are reading from
+var TARGET_ID = 'CustomizedWidget_XXXXXX'; // blank HTML widget where output renders
+// Describe your widget so the LLM knows what to build:
+var WIDGET_PURPOSE = 'Show [what] for [who] — e.g. NPS breakdown by segment with drill-down';
+var SOURCE_TYPE    = '[gauge | stacked-bar tracker | line trend | html-table | pie]';
+// ================================================================
+// STEP 2 — Paste this entire file into your LLM with this prompt:
+//
+// "Build a QuestionPro custom widget using the architecture in this
+//  template. SOURCE_ID, TARGET_ID, WIDGET_PURPOSE, and SOURCE_TYPE
+//  are already set above. Replace every [PLACEHOLDER] in the
+//  template with working code for my widget."
+// ================================================================
+// ----------------------------------------------------------------
+// ARCHITECTURE — do not change the structure below, only fill it in
+// ----------------------------------------------------------------
+(function () {
+// 1. HIDE SOURCE WIDGET
+//    Must use visibility:hidden on .react-grid-item
+//    NEVER use display:none (QP stops updating) or width:0/height:0 (React unmounts)
+function hideSources() {
+var el = document.getElementById(SOURCE_ID);
+if (!el) return;
+var gi = el.closest ? el.closest('.react-grid-item') : null;
+if (gi) {
+gi.style.visibility   = 'hidden';
+gi.style.opacity      = '0';
+gi.style.pointerEvents = 'none';
+}
+el.style.visibility = 'hidden';
+el.style.opacity    = '0';
+}
+// 2. FIND CHART  (use for Highcharts source widgets)
+//    last-match-wins skips stale destroyed instances
+function findChart(id) {
+var w = document.getElementById(id);
+if (!w || !window.Highcharts) return null;
+var c = null;
+Highcharts.charts.forEach(function (ch) {
+if (!ch || !ch.renderTo) return;
+if (!document.body.contains(ch.renderTo)) return;
+if (!w.contains(ch.renderTo)) return;
+c = ch;
+});
+return c;
+}
+// 3. READ DATA
+//    For Highcharts: use findChart(SOURCE_ID) then read series[n].data[i].y
+//    For DOM tables: use document.getElementById(SOURCE_ID).querySelectorAll("table tr")
+//    Always return null if data is not ready (widget will retry every 500ms)
+function readSource() {
+// [PLACEHOLDER] — read from source widget and return a plain data object
+// Example for a gauge:
+//   var chart = findChart(SOURCE_ID);
+//   if (!chart || !chart.series[0]) return null;
+//   return { positive: chart.series[0].data[0].y, ... };
+return null;
+}
+// 4. SHOW LOADING STATE
+//    Shown immediately on page load and after every filter change
+function showLoading() {
+var t = document.getElementById(TARGET_ID);
+if (!t) return;
+t.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:Inter,Arial,sans-serif;color:#94a3b8;font-size:13px;">Loading…</div>';
+}
+// 5. SNAPSHOT — skip re-render if data has not changed
+var _lastSnap = '';
+function snap(d) {
+// [PLACEHOLDER] — return a string that changes when data changes
+// Example: return d.positive + '|' + d.negative + '|' + d.total;
+return JSON.stringify(d);
+}
+// 6. RENDER
+//    Write your custom UI to target.innerHTML
+//    Call hideSources() at the END, after reading
+//    Return true on success, false if data not ready
+function render(force) {
+var target = document.getElementById(TARGET_ID);
+if (!target) return false;
+var data = readSource();
+if (!data) return false;
+var s = snap(data);
+if (!force && s === _lastSnap && target.querySelector('[data-widget]')) return true;
+_lastSnap = s;
+// [PLACEHOLDER] — write your HTML here
+// Rules:
+//   • target.style.cssText = "height:100%;overflow:hidden;box-sizing:border-box;"
+//   • Outer div must have data-widget attribute
+//   • Font: Inter, Arial, sans-serif
+//   • All styles inline — no external CSS
+//   • Layman-first: plain-English headline before numbers
+//   • Dynamic y-axis: calculate min/max from data, never hardcode
+target.style.cssText = 'height:100%;overflow:hidden;box-sizing:border-box;';
+target.innerHTML = '<div data-widget style="...">...</div>';
+// Wire click handlers here (after innerHTML is set)
+// var btn = document.getElementById('...');
+// if (btn) btn.onclick = function() { ... };
+// Hide source AFTER reading — always last
+hideSources();
+setTimeout(hideSources, 500);
+setTimeout(hideSources, 1500);
+setTimeout(hideSources, 3000);
+return true;
+}
+// 7. FILTER DETECTION
+//    MutationObserver fires when QP updates source widget DOM
+//    750ms poll is the fallback
+//    trySettle waits for data to be non-null before re-rendering
+var _obs = null, _settle = null, _waiting = false, _lastSnap2 = '', _start = 0;
+function trySettle() {
+var elapsed = Date.now() - _start;
+var data    = readSource();
+// [PLACEHOLDER] — update hasData check to match your readSource() output
+var hasData = data !== null;
+if ((hasData && elapsed >= 600) || elapsed >= 8000) {
+_waiting  = false;
+_lastSnap = '';
+render(true);
+} else {
+_settle = setTimeout(trySettle, 300);
+}
+}
+function onMut() {
+if (!_waiting) { _waiting = true; _start = Date.now(); }
+clearTimeout(_settle);
+_settle = setTimeout(trySettle, 400);
+}
+function attachObs() {
+if (_obs) _obs.disconnect();
+_obs = new MutationObserver(onMut);
+var src = document.getElementById(SOURCE_ID);
+if (src) _obs.observe(src, { childList: true, subtree: true, characterData: true });
+}
+function poll() {
+if (_waiting) return;
+var data = readSource();
+var s    = snap(data);
+if (s !== _lastSnap2) {
+_lastSnap2 = s;
+_lastSnap  = '';
+render(true);
+attachObs();
+}
+}
+setInterval(poll,       750);   // data change detector
+setInterval(hideSources, 2000); // re-hide after React re-mounts
+setInterval(attachObs,  5000);  // re-attach observer after React re-mounts
+// 8. BOOTSTRAP
+//    showLoading() immediately, then retry render() every 500ms up to 20 times
+showLoading();
+var _att = 0;
+function tryRender() {
+if (render(true)) { attachObs(); return; }
+if (++_att < 20) setTimeout(tryRender, 500);
+}
+tryRender();
+})();
+Internal Recommendations
+Set up source widgets in a separate dashboard row or off-screen area so they do not interfere with the visual layout, even though they are hidden.
+Keep one reference widget visible (not hidden) per dashboard for QA purposes — this lets you confirm the source data is correct when debugging.
+Use the AI Insights widget's console.log output ([AI Router] Metrics collected) to verify what data is being sent to the router before troubleshooting AI response quality.
+When rolling out to a new customer, duplicate the Bill.com widget scripts and update only the SOURCE_ID and TARGET_ID variables — the architecture is identical across deployments.
+Document the widget ID mapping (source → target) for every dashboard you deploy. Widget IDs are not visible from the QuestionPro UI — you need the browser inspector to retrieve them.
+CLIENT
+PLATFORM
+Qatar Rail  ·  Miral Destinations Enterprise CX | Transport & Hospitality | UAE
+QuestionPro CX Dashboard Custom HTML Widgets + JavaScript + QuestionPro AI Router
+The core requirement: Transform the QuestionPro CX dashboard from a chart display into an interactive, insight-driven experience — one that a CEO can read in 30 seconds and an analyst can drill into for 30 minutes. Same platform. Same data. Radically better signal.
+Widget
+What it does
+CSAT Overview
+Gauge + four clickable metric cards (Top Box, Neutral, Negative, CX Health Score) + forecast trend line with year-on-year toggle + automatic anomaly detection banner.
+Resolution vs Effort
+FCR × CES cross-tab with a visual funnel, a manager/analyst view toggle, and clickable rows that expand plain-English interpretations and recommended actions.
+CES Tracker
+Customer Effort Score trend with a plain-English signal headline, year bars that expand to quarterly detail on click, and a score distribution overlay toggle.
+CSAT by Segment
+All segments ranked by score — active segments with trend arrows and year-by-year drill-down on click, inactive segments shown clearly as "No responses".
+AI Insights
+Reads live data from all four widgets, calls the QuestionPro AI Router, and renders a headline, executive summary, top three prioritised actions, anomalies, positive signals, and forecast risk — auto-refreshing when filters change.
+Item
+Detail
+QuestionPro CX licence
+Canvas Widgets (HTML widgets) are available on CX plans. Confirm with your account team if the feature is enabled on the customer's plan.
+Dashboard access
+The person setting up the widgets needs edit access to the CX dashboard. View-only users cannot add or edit HTML widgets.
+Source widgets on the dashboard
+Each custom widget reads from a native QuestionPro widget on the same dashboard. The source widgets must be added first: Overall Score / Gauge, Tracker, Cross-Tab, Trend Comparison.
+AI Router access (Insights widget only)
+The AI Insights widget calls the QuestionPro AI Router API. Confirm the customer's organisation has AI Router enabled and obtain the api-key, user_id, and organization_id.
+Custom widget
+Required source widget type
+CSAT Overview
+Overall Score / Gauge widget + Trend widget (both pointing at the CSAT/satisfaction question)
+Resolution vs Effort
+Cross-Tab widget (FCR question × CES/effort question)
+CES Tracker
+Tracker widget (CES/effort question, stacked bar format)
+CSAT by Segment
+Trend Comparison widget (CSAT question, split by Segment dimension)
+AI Insights
+No source widget required — reads from all four Canvas Widgets above
+Important: do not delete source widgets after setup. The custom widget reads live data from them on every page load and every filter change. If the source widget is removed, the custom widget will stop updating.
+Tip: position the AI Insights widget in a wide slot at the bottom of the dashboard. It renders a headline, three action items, anomaly flags, and a forecast risk statement — it needs enough vertical space to be readable without scrolling.
+Layer
+What it does
+Read
+Reads live data from the QuestionPro source widget using the Highcharts JavaScript API (for chart widgets) or direct DOM table parsing (for Cross-Tab). The read happens after every filter change.
+Render
+Writes a fully custom HTML and SVG interface into the target widget div — gauges, bars, cards, interactive panels. All layout is inline; no external CSS or libraries are required except Chart.js for the trend line.
+Sync
+A MutationObserver watches the source widget for changes. A 750ms polling loop runs as a fallback. When either detects updated data, the widget re-renders automatically.
+Method
+Outcome
+visibility:hidden on .react-grid-item  ✓
+Correct. Hides the card shell and content. Widget stays in the DOM, React keeps it alive, QuestionPro keeps updating it on filter changes.
+display:none  ✗
+Wrong. QuestionPro stops updating the widget. Custom widget shows stale data permanently.
+width:0 / height:0 on grid cell  ✗
+Wrong. React unmounts the widget entirely. It disappears from the DOM and cannot be read.
+Checkpoint
+What to verify
+Widget renders on load
+After pasting the script and saving, the custom widget should render within 2–3 seconds of the dashboard loading. If it shows "Loading…" indefinitely, check that the SOURCE_ID matches the actual source widget ID.
+Source widget is hidden
+The native QuestionPro widget should be invisible. If a white box remains visible, the script may be using display:none — check the hideSources() function targets .react-grid-item with visibility:hidden.
+Filter updates the data
+Apply any dashboard filter. All Canvas Widgets should update within 1–2 seconds. If they do not update, check that the source widget is still in the DOM (not removed) and that the observer is attaching correctly.
+Interactivity works
+Click a metric card, year bar, or segment row. The drill-down panel should expand inline. Toggle buttons should switch between views. Check browser console for JavaScript errors if interactions do not respond.
+AI Insights generates
+Click the AI Insights widget Refresh button. The widget should show a loading state then render the headline and action items within 5–10 seconds. If it shows an error, check the API key, user_id, and org_id are correct.
+AI Insights auto-refreshes on filter
+Apply a filter and wait 3 seconds. The AI Insights widget should automatically re-call the router with updated data and re-render the insights.
+Issue
+What to check
+Widget renders with default/placeholder data
+SOURCE_ID does not match the actual source widget ID. Inspect the source widget in the browser and copy the exact ID from the id attribute.
+Source widget reappears after filter change
+React re-mounted the grid item and cleared the inline style. Confirm setInterval(hideSources, 2000) is present at the bottom of the script.
+Widget stops updating after filters are applied
+The source widget may have been hidden with display:none. Replace with visibility:hidden on the .react-grid-item element only.
+AI Insights shows "Could not load" error
+Check the api-key, user_id, and organization_id values. Confirm the AI Router use_case_name matches the prompt configured in the QuestionPro AI Router admin.
+Gauge shape changes on filter
+The gauge SVG is reading live Highcharts path attributes mid-animation. Ensure the gauge is calculated mathematically from data values, not copied from DOM paths.
+Trend line goes outside chart bounds
+The y-axis min/max is hardcoded. Calculate yMin and yMax dynamically from the actual data range, and filter out partial-period outliers (values below 30%) before scaling.
+Chart.js not loading
+The CDN script tag is blocked. Host the Chart.js file internally or use a CDN URL that is whitelisted in the organisation's content security policy.
+Widget idea
+What it would do
+NPS Breakdown
+Reads from a native NPS gauge. Shows Promoter / Passive / Detractor split with a calculated NPS score, zone label, and benchmark comparison.
+Response Volume Monitor
+Reads from a Tracker widget. Shows response counts over time with a warning badge when n < 30 — flagging when scores are statistically unreliable.
+Driver Priority Matrix
+Reads from a Priority Matrix widget. Plots drivers on a 2×2 (importance vs performance) and labels quadrants: Fix First, Keep Doing, Low Priority, Don't Over-Invest.
+Verbatim Sentiment Feed
+Reads from a text response widget. Surfaces the most recent open-text responses with AI-tagged sentiment, filterable by positive / neutral / negative.
+Period Comparison Panel
+Reads from two Trend widgets (current vs prior period). Shows metric deltas side-by-side with directional arrows and statistical significance flags.
+You are building a custom JavaScript widget for a QuestionPro CX dashboard.  SOURCE_ID: [dashboardWidget_XXXXXX] TARGET_ID: [CustomizedWidget_XXXXXX] Source widget type: [Highcharts gauge | stacked bar tracker | line trend | HTML table] Widget purpose: [describe what this widget should show] Interactivity required: [list any click / toggle / drill-down behaviours]  Follow this mandatory architecture: 1. IIFE wrapper — (function() { ... })(); 2. hideSources() using visibility:hidden on .react-grid-item — never display:none 3. findChart() with document.body.contains() + widget.contains() — last match wins 4. readSource() — read data BEFORE hiding the source widget 5. render(force) — snapshot guard, write to target.innerHTML, call hideSources() at the end 6. Filter detection — MutationObserver + setInterval(poll, 750) + setInterval(attachObs, 5000) 7. Bootstrap — showLoading(), then tryRender() retrying up to 20 times at 500ms intervals  Now build the widget for: [your specific widget description]
+"Build a QuestionPro custom widget using the architecture in this template. SOURCE_ID, TARGET_ID, WIDGET_PURPOSE, and SOURCE_TYPE are already set. Replace every [PLACEHOLDER] comment with working code for my widget. Do not change the structure — only fill in readSource(), snap(), render(), and the HTML inside render()."
+To find SOURCE_ID and TARGET_ID: right-click the relevant widget on the dashboard, click Inspect, and look for id="dashboardWidget_XXXXXX" (source) and id="CustomizedWidget_XXXXXX" (target).
+The [PLACEHOLDER] comments mark the only three sections an LLM needs to fill in: readSource() (how to read your specific widget data), snap() (what counts as a data change), and the HTML inside render() (what to display). The architecture — hiding, filter detection, retry loop — is correct and complete as written. The LLM should not modify it.
+A dashboard that shows charts is a reporting tool. A dashboard that surfaces signals, explains what changed, and tells you what to do next is a decision tool. That is the difference these widgets make.
