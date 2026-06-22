@@ -1,0 +1,42 @@
+CORRECTION SUBMITTED: 2026-06-22T20:08:30.994Z
+
+QUESTION: What are some AI features available under the CX umbrella of products in QuestionPro?
+
+WRONG ANSWER: Under the CX umbrella, the knowledge base explicitly mentions these AI or AI-assisted capabilities:
+
+- **Sentiment analysis** in CX dashboards, used to qualify text and focus on interaction quality.
+- **Narrative Science / Widget Insights**, which automatically generates insights for dashboard widgets using AI and natural language processing.
+- **Journey AI – Interviews**, which turns interview transcripts into structured journey maps automatically.
+- **QuestionPro AI for survey building**, wher
+
+CORRECT ANSWER / MISSING CONTEXT:
+
+AI Persona Creator / AI Persona Generator under Journey Management in the Customer Experience area.
+
+It lets you automatically create data-driven customer personas from:
+- customer feedback
+- behavioral patterns
+- demographic data
+
+How to use it:
+1. Select the workspace
+2. Go to Persona in the left navigation
+3. Click QuestionPro AI next to Add Persona
+4. Enter a brief segment description
+5. Choose sections to include, like goals, frustrations, and tools
+6. Toggle demographics on or off
+7. Click Generate
+
+The generated persona is editable, so you can revise any card after creation.
+
+AI feature in Enhanced Closed Loop called AI Response Assist.
+
+From the AI Response Assist entry, it:
+- automates customer response management
+- analyzes incoming feedback and survey responses
+- identifies sentiment and priority
+- generates response drafts
+- lets users refine the draft or choose an intent before inserting it into the ticket
+
+It’s accessed in:
+Customer Experience → Closedloop → Workspace → Ticket → Actions
