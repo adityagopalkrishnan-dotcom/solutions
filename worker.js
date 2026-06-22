@@ -216,11 +216,7 @@ function extractRelevantSection(text, queryWords, maxLen) {
     if (score > bestScore) { bestScore = score; bestPos = i; }
   }
   // Always include a small intro (first 300 chars) for context
-  const intro = bestPos > 300 ? text.slice(0, 300) + '
-
-[...]
-
-' : '';
+  const NL=String.fromCharCode(10); const intro = bestPos > 300 ? text.slice(0, 300) + NL+NL+'[...]'+NL+NL : '';
   const section = text.slice(bestPos, bestPos + maxLen - intro.length);
   return intro + section;
 }
