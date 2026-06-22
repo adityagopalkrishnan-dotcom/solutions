@@ -11,7 +11,7 @@ const SITEMAP_URL = GITHUB_RAW + "/help-sitemap.json";
 const QP_ROUTER   = "https://airouter-api.questionpro.com/v1/prompt-routes";
 const QP_USER_ID  = 4379318;
 const QP_ORG_ID   = 4285979;
-const TOP_REPO=5, TOP_HELP=3, MAX_REPO=5000, MAX_HELP=3000, CACHE_IDX=60, CACHE_HELP=1800;
+const TOP_REPO=5, TOP_HELP=3, MAX_REPO=12000, MAX_HELP=3000, CACHE_IDX=60, CACHE_HELP=1800;
 const ISOLATE_TTL = 300_000; // 5 min
 
 // ── Global isolate cache ───────────────────────────────────────────────────
