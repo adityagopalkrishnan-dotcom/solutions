@@ -1,0 +1,3 @@
+Understanding Data Layer Rule
+
+The Data Layer is a way for your website to store information in the background (like customer type, product details, or page categories). Our intercept tool can "read" this information to decide when to show a survey.
