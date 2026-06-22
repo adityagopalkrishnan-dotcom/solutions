@@ -10,7 +10,7 @@ const QP_ROUTER   = "https://airouter-api.questionpro.com/v1/prompt-routes";
 const QP_API_KEY  = "55e63ea5-e2a9-4c27-a5aa-d89b9da77db4";
 const QP_USER_ID  = 4379318;
 const QP_ORG_ID   = 4285979;
-const TOP_REPO=3, TOP_HELP=3, MAX_REPO=5000, MAX_HELP=3000, CACHE_IDX=3600, CACHE_HELP=1800;
+const TOP_REPO=5, TOP_HELP=3, MAX_REPO=5000, MAX_HELP=3000, CACHE_IDX=3600, CACHE_HELP=1800;
 
 const SYNONYMS = {
   "ai router":      ["webhook","integration","custom variable","api","trigger","prompt","sentiment","classification","sous chef","prep cook"],
@@ -23,6 +23,7 @@ const SYNONYMS = {
   "cx":             ["customer experience","nps","csat","ces","touchpoint","workspace"],
   "workforce":      ["employee","engagement","hr","pulse"],
   "communities":    ["panel","portal","members","community"],
+  "intercept":      ["widget","trigger","popup","overlay","survey","cx","rule","display","embed"],
 };
 
 function expandQuery(q) {
@@ -40,7 +41,7 @@ function scoreRepo(e, words) {
   for (const w of words) {
     if (title.includes(w)) s += e.type==='plaintext' ? 6 : 4;
     if (kw.includes(w))    s += e.type==='plaintext' ? 4 : 2;
-    if (summ.includes(w))  s += 1;
+    if (summ.includes(w))  s += (e.type==="json_article" ? 2 : 1);
   }
   return s;
 }
