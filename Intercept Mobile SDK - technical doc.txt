@@ -1,0 +1,779 @@
+﻿Setting up the Intercept
+Setting up the Intercept
+
+
+What is a Mobile Intercept?
+Mobile Intercept lets you create, manage, and trigger intercepts within your mobile apps using the Intercept platform in QuestionPro. Whether you’re looking to gather feedback, promote a new feature, or check user sentiment at key app moments, this feature makes it possible natively within your mobile environment.
+
+
+Demo video  Intercept rules demonstration  - Recording
+
+
+
+
+How to create a mobile Intercept? 
+Please visit the help file https://www.questionpro.com/help/customer-experience/mobile-intercept.html
+
+
+Android
+Android
+
+
+
+
+To create an Intercept for your mobile app, you need to create a Mobile Intercept using your QuestionPro account. 
+
+
+Requirement
+
+
+The minimum Android version required is 21.  Also, the compile SDK version for Android is 34 (But you should generally compile with the latest version)
+
+
+
+
+
+
+
+
+
+Install the QuestionPro SDK Via Gradle
+
+
+        Integration from the Maven Repository. The SDK is available on the central Maven repository. Add it to your root settings.gradle
+
+
+
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }//This line in required
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+QuestionPro’s SDK is published using the GitHub repository.  Add a reference to the latest version of QuestionPro SDK in your app's build.gradle
+
+
+dependencies {
+  implementation 'com.github.surveyanalyticscorp:android-cx:2.2.6'
+  implementation 'com.google.code.gson:gson:2.10.1'//If not already added
+}
+
+Please check the latest version of QuestionPro SDK here.
+
+
+
+
+
+
+
+
+
+
+
+
+Modify Manifest 
+        You need to modify your app’s Manifest file and add a few permissions, if not already added, which are required for the SDK.
+
+
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+
+
+Add the API key in the meta-data tag inside the manifest file.
+
+
+<meta-data 
+android:name="cx_manifest_api_key" 
+android:value="your api key here"/>
+
+
+
+
+
+Add the following activity to show the feedback screen
+
+
+
+
+<activity 
+android:name="com.questionpro.cxlib.InteractionActivity"                                     android:theme="@android:style/Theme.Translucent.NoTitleBar"
+      android:configChanges="keyboardHidden"
+      android:windowSoftInputMode="adjustPan"/>
+
+
+
+
+
+How to get the API key?
+
+Select the project in which you have created the intercept. Then, from the left navigation, select the Code option and copy the API key.
+
+
+  
+
+
+
+
+
+  
+
+
+
+Helpfile
+                           
+
+
+Usage 
+
+
+        The SDK initialisation should be done in the Application class. To configure the QuestionPro SDK into your application, use the code below.
+        
+
+
+import com.questionpro.cxlib.QuestionProCX;
+import com.questionpro.cxlib.enums.DataCenter;
+import com.questionpro.cxlib.interfaces.IQuestionProInitCallback;
+import com.questionpro.cxlib.model.TouchPoint;
+
+
+TouchPoint touchPoint = new TouchPoint.Builder(DataCenter.US).build();
+
+
+QuestionProCX.getInstance().init(activity, touchPoint, new IQuestionProInitCallback() {
+        @Override
+        public void onInitializationSuccess(String message) {
+                Log.d(TAG, "onInitializationSuccess: "+message);
+        }
+        @Override
+        public void onInitializationFailure(String error) {
+                Log.d(TAG, "onInitializationFailure: "+error);
+        }
+});
+
+
+
+While creating the instance of TouchPoint, you have to pass the Data centre in it. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Callback functions
+
+
+1: On successful installation of the SDK
+
+
+
+
+public void onInitializationSuccess(String message) {
+        Log.d(TAG, "onInitializationSuccess: "+message);
+}
+
+
+
+
+
+
+
+2: If SDK initialisation fails, you will get the error message in the below callback function.
+
+
+public void onInitializationFailure(String error) {
+        Log.d(TAG, "onInitializationFailure: "+error);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View Count rule 
+        The 'View Count' rule, found in the 'Rules set-up' section of the admin dashboard, allows administrators to control when an intercept is displayed to users based on their mobile application navigation. This rule uses two parameters: screen_name to specify the screen(s) to monitor, and count to set the view threshold before the intercept is triggered. 
+
+
+
+
+Set up the rule:
+* Select the rule ‘view count’ from the mobile intercept settings.
+* Set ‘screen name’ for example ‘checkout_screen’.
+* Set the count (After how many events you want to launch the survey) 
+  
+
+
+
+
+
+
+
+Configure it in the mobile application:
+Add the below line of code to the app where you have to record the count. SDK will log and maintain the count and launch the survey once it satisfies the rule setup for the intercept.
+
+
+import com.questionpro.cxlib.QuestionProCX;
+
+
+QuestionProCX.getInstance().setScreenVisited("checkout_screen");
+
+
+
+
+
+
+
+
+
+
+
+Get Survey URL 
+If you set up the Intercept interaction type to ‘Survey URL’, this callback function will return the survey URL instead of launching it. 
+The consumer app will use this survey URL as per their requirement.
+
+
+import com.questionpro.cxlib.QuestionProCX;
+import com.questionpro.cxlib.interfaces.IQuestionProCallback;
+
+
+
+
+QuestionProCX.getInstance().gerSurveyUrl(new IQuestionProCallback() {
+    @Override
+    public void getSurveyUrl(String s) {
+        Log.d(TAG,"Survey url: "+s);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Where do you set up the Intercept Interaction type?
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to pass custom variables or Data Mapping?
+The Mobile Intercept SDK leverages Custom Variables to enrich the context and user details associated with an intercept. 
+
+
+How to Set Data Mapping for an Intercept -
+* Navigate to the intercept for which you want to configure data mapping.
+* Click on the Add button to begin setting up the data mapping.
+  
+
+
+
+How to Set Data Mapping in SDK - 
+Data mapping is structured as a HashMap, where each entry consists of a String key and a String value. 
+
+After initializing the SDK, your application can set data from anywhere within the app.
+
+
+
+
+import com.questionpro.cxlib.QuestionProCX;
+import java.util.HashMap;
+
+
+
+
+HashMap<String, String> customVars = new HashMap<>();
+customVars.put("firstName", "First Name");
+customVars.put("surname", "Last Name");
+customVars.put("emailAddress", "+918977234");
+
+
+QuestionProCX.getInstance().setDataMappings(customVars);
+
+
+
+
+
+
+
+Close the survey window
+If you want to close the survey window/screen programmatically before completing the survey, you can use the following
+
+
+
+
+import com.questionpro.cxlib.QuestionProCX;
+
+
+QuestionProCX.getInstance().closeSurveyWindow();
+
+
+
+iOS
+iOS
+
+
+Requirement
+
+
+The minimum iOS version required is 15.0
+Xcode 16.1 and above
+Supported Swift versions 4.2 and above
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Configuration
+The SDK is available on the Swift Package Manager and pod. 
+Pod - 
+
+
+1: Open your project in Xcode.
+2: Add the below pod entry into podfile -
+pod 'QuestionProCXFramework', :git => 'https://github.com/surveyanalyticscorp/ios-cx'
+3: Run pod install command in ios directory. (Verify the latest version 2.2.8)
+
+
+
+SPM -  To link the SDK to your app, simply follow the steps below
+
+
+1: Open your project in Xcode.
+2: Go to File > Add Packages.
+3: Paste the SDK’s GitHub URL -> https://github.com/surveyanalyticscorp/ios-cx.
+4: Select Dependancy Rule -> Exact Version which is 2.2.8
+5: Click Add Package.
+6: Once downloaded, XCode will ask you to link this package to your app, select the appropriate target and click Add Package.
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usage 
+
+
+        The SDK initialisation should be done in the AppDelegate or SceneDelegate of the application. To configure the QuestionPro SDK into your application, use the code below.
+
+
+
+
+
+
+import QuestionProCXFramework
+
+
+let touchPoint = TouchPoint().initTouchPoint(dataCenter:  TouchPoint.DataCenter.DATA_CENTER_US);
+
+
+QuestionProCX.getinstance().configure(
+      apiKey: apiKey,
+      touchPoint: touchPoint,
+      withWindow: window,
+      initCallbackDelegate: self
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Callback functions
+
+
+
+
+Extend the below callback delegate, QuestionProInitDelegate, to verify the initialisation process.
+
+
+1: On successful installation of the SDK
+
+
+
+
+func initSDKSuccess(){
+        // SDK successfully initialized
+}
+
+
+
+
+
+
+
+2: If SDK initialisation fails, you will get the error message in the below callback function.
+
+
+func initSDKFailed(error: String){
+        //Return the error if the SDK failed to initialize
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+View Count rule 
+        The 'View Count' rule, found in the 'Rules set-up' section of the admin dashboard, allows administrators to control when an intercept is displayed to users based on their mobile application navigation. This rule uses two parameters: screen_name to specify the screen(s) to monitor, and count to set the view threshold before the intercept is triggered. 
+
+
+Set up the rule:
+* Select the rule ‘view count’ from the mobile intercept settings.
+* Set ‘screen name’ for example ‘checkout_screen’.
+* Set the count (After how many events you want to launch the survey) 
+  
+
+
+
+
+
+
+
+Configure it in the mobile application:
+Add the below line of code to the app where you have to record the count. SDK will log and maintain the count and launch the survey once it satisfies the rule setup for the intercept.
+
+
+import QuestionProCXFramework
+
+
+QuestionProCX.getinstance().setScreenName(screenName: "SecondScreen")
+
+
+
+
+
+
+
+
+
+
+
+
+
+Get Survey URL 
+If you set up the Intercept interaction type to the ‘Survey URL’, then this callback function will return the URL of the survey instead of launching the survey. The consumer app will use this survey URL as per their requirement in any ViewController.
+
+
+import UIKit
+import QuestionProCXFramework
+
+
+class ViewController: UIViewController, QuestionProCallbackDelegate {
+    func getSurveyURL(surveyURL: String) {
+        print("launch survey URL inside ViewController: \(surveyURL)")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+  QuestionProCX.getinstance()
+.setQuestionProCallbackDelegate(questionProCallbackDelegate: self)
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to pass custom variables or Data Mapping?
+The Mobile Intercept SDK leverages Custom Variables to enrich the context and user details associated with an intercept. 
+
+
+How to Set Data Mapping for an Intercept -
+* Navigate to the intercept for which you want to configure data mapping.
+* Click on the Add button to begin setting up the data mapping.
+  
+
+
+
+How to Set Data Mapping in SDK - 
+
+
+
+
+
+let customVariables = ["firstName: "First Name", 
+"surname": "Last Name", 
+"emailAddress", "+918977234"]   
+   
+QuestionProCX.getinstance().setDataMappings(dataMappings:customVariables)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Close the survey window
+If you want to close the survey window/screen programmatically before completing the survey, you can use the following
+
+
+
+
+import QuestionProCXFramework
+
+
+QuestionProCX.getinstance().closeSurveyWindow();
+
