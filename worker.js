@@ -3,6 +3,9 @@
  * Secrets injected via Cloudflare env vars:
  *   QP_API_KEY, GITHUB_TOKEN
  * Other config is non-secret and hardcoded for simplicity.
+ *
+ * FIX: Global in-memory cache for index.json and help-sitemap.json
+ * so cold-start latency doesn't cause empty CONTEXT on first request.
  */
 const GITHUB_RAW   = "https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main";
 const GITHUB_API   = "https://api.github.com/repos/adityagopalkrishnan-dotcom/solutions";
@@ -13,6 +16,37 @@ const QP_ROUTER    = "https://airouter-api.questionpro.com/v1/prompt-routes";
 const QP_USER_ID   = 4379318;
 const QP_ORG_ID    = 4285979;
 const TOP_REPO=5, TOP_HELP=3, MAX_REPO=5000, MAX_HELP=3000, CACHE_IDX=3600, CACHE_HELP=1800;
+
+// ── Global isolate-level cache ──────────────────────────────────────────────
+// Cloudflare Workers reuse the same isolate across requests on the same edge
+// node. Storing parsed JSON here means the second+ request on a warm isolate
+// gets index data instantly instead of re-fetching and re-parsing 1MB of JSON.
+let _repoIndexCache = null;   // parsed array
+let _repoIndexTs    = 0;
+let _helpSitemapCache = null; // parsed array
+let _helpSitemapTs    = 0;
+const ISOLATE_TTL = 300_000;  // 5 min in ms — refresh from edge cache periodically
+
+async function getRepoIndex() {
+  const now = Date.now();
+  if (_repoIndexCache && (now - _repoIndexTs) < ISOLATE_TTL) return _repoIndexCache;
+  const r = await fetch(INDEX_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
+  if (!r.ok) return _repoIndexCache || [];
+  _repoIndexCache = await r.json();
+  _repoIndexTs = now;
+  return _repoIndexCache;
+}
+
+async function getHelpSitemap() {
+  const now = Date.now();
+  if (_helpSitemapCache && (now - _helpSitemapTs) < ISOLATE_TTL) return _helpSitemapCache;
+  const r = await fetch(SITEMAP_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
+  if (!r.ok) return _helpSitemapCache || [];
+  _helpSitemapCache = await r.json();
+  _helpSitemapTs = now;
+  return _helpSitemapCache;
+}
+// ────────────────────────────────────────────────────────────────────────────
 
 const PRODUCT_SIGNALS = {
   cx:          ["nps","csat","ces","workspace","touchpoint","closed loop","detractor","promoter","customer experience","ticket","feedback"],
@@ -162,7 +196,11 @@ async function handleContribute(body,env){
     body:JSON.stringify({ref:"main"})
   }).catch(()=>{});
 
-  return jres({success:true,message:"Contributed! Knowledge base updates in ~60 seconds.",filename:safeName});
+  // Invalidate isolate cache so next request picks up the new file
+  _repoIndexCache = null;
+  _helpSitemapCache = null;
+
+  return jres({success:true,message:"Contributed! Knowledge base updates in ~60 seconds."});
 }
 
 export default {
@@ -195,9 +233,10 @@ export default {
     const allWords=[...questionWords,...historyWords];
 
     try{
+      // Use cached getters instead of raw fetch — avoids cold-start re-parse on warm isolates
       const [repoIndex,helpSitemap]=await Promise.all([
-        fetch(INDEX_URL,  {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}}).then(r=>r.ok?r.json():[]),
-        fetch(SITEMAP_URL,{cf:{cacheTtl:CACHE_IDX,cacheEverything:true}}).then(r=>r.ok?r.json():[]),
+        getRepoIndex(),
+        getHelpSitemap(),
       ]);
 
       const topRepo=repoIndex.map(e=>({e,s:scoreRepo(e,allWords,inferredProduct)}))
