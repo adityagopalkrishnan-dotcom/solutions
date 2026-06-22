@@ -1,286 +1,379 @@
 /**
- * QP Insights Commons Worker
- * Secrets injected via Cloudflare env vars:
- *   QP_API_KEY, GITHUB_TOKEN
- * Other config is non-secret and hardcoded for simplicity.
- *
- * FIX: Global in-memory cache for index.json and help-sitemap.json
- * so cold-start latency doesn't cause empty CONTEXT on first request.
+ * QP Insights Commons Worker — v2
+ * Scoring engine: TF-IDF weighted, phrase-boosted, stopword-filtered
+ * Secrets: QP_API_KEY, GITHUB_TOKEN (Cloudflare env vars)
  */
-const GITHUB_RAW   = "https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main";
-const GITHUB_API   = "https://api.github.com/repos/adityagopalkrishnan-dotcom/solutions";
-const WORKFLOW_ID  = "298863246";
-const INDEX_URL    = GITHUB_RAW + "/index.json";
-const SITEMAP_URL  = GITHUB_RAW + "/help-sitemap.json";
-const QP_ROUTER    = "https://airouter-api.questionpro.com/v1/prompt-routes";
-const QP_USER_ID   = 4379318;
-const QP_ORG_ID    = 4285979;
+const GITHUB_RAW  = "https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main";
+const GITHUB_API  = "https://api.github.com/repos/adityagopalkrishnan-dotcom/solutions";
+const WORKFLOW_ID = "298863246";
+const INDEX_URL   = GITHUB_RAW + "/index.json";
+const SITEMAP_URL = GITHUB_RAW + "/help-sitemap.json";
+const QP_ROUTER   = "https://airouter-api.questionpro.com/v1/prompt-routes";
+const QP_USER_ID  = 4379318;
+const QP_ORG_ID   = 4285979;
 const TOP_REPO=5, TOP_HELP=3, MAX_REPO=5000, MAX_HELP=3000, CACHE_IDX=3600, CACHE_HELP=1800;
+const ISOLATE_TTL = 300_000; // 5 min
 
-// ── Global isolate-level cache ──────────────────────────────────────────────
-// Cloudflare Workers reuse the same isolate across requests on the same edge
-// node. Storing parsed JSON here means the second+ request on a warm isolate
-// gets index data instantly instead of re-fetching and re-parsing 1MB of JSON.
-let _repoIndexCache = null;   // parsed array
-let _repoIndexTs    = 0;
-let _helpSitemapCache = null; // parsed array
-let _helpSitemapTs    = 0;
-const ISOLATE_TTL = 300_000;  // 5 min in ms — refresh from edge cache periodically
+// ── Global isolate cache ───────────────────────────────────────────────────
+let _repoIndex = null, _repoIndexTs = 0;
+let _helpSitemap = null, _helpSitemapTs = 0;
+let _idfTable = null; // computed once from index
 
 async function getRepoIndex() {
   const now = Date.now();
-  if (_repoIndexCache && (now - _repoIndexTs) < ISOLATE_TTL) return _repoIndexCache;
+  if (_repoIndex && (now - _repoIndexTs) < ISOLATE_TTL) return _repoIndex;
   const r = await fetch(INDEX_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
-  if (!r.ok) return _repoIndexCache || [];
-  _repoIndexCache = await r.json();
+  if (!r.ok) return _repoIndex || [];
+  _repoIndex = await r.json();
   _repoIndexTs = now;
-  return _repoIndexCache;
+  _idfTable = null; // invalidate IDF on index refresh
+  return _repoIndex;
 }
 
 async function getHelpSitemap() {
   const now = Date.now();
-  if (_helpSitemapCache && (now - _helpSitemapTs) < ISOLATE_TTL) return _helpSitemapCache;
+  if (_helpSitemap && (now - _helpSitemapTs) < ISOLATE_TTL) return _helpSitemap;
   const r = await fetch(SITEMAP_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
-  if (!r.ok) return _helpSitemapCache || [];
-  _helpSitemapCache = await r.json();
+  if (!r.ok) return _helpSitemap || [];
+  _helpSitemap = await r.json();
   _helpSitemapTs = now;
-  return _helpSitemapCache;
+  return _helpSitemap;
 }
-// ────────────────────────────────────────────────────────────────────────────
 
+// ── TF-IDF table (built once per isolate lifetime) ────────────────────────
+// Includes 2-char meaningful acronyms: ai, cx, hr, ux, ui, id, qr, nps, ces
+const SHORT_KEEP = new Set(['ai','cx','hr','ux','ui','id','qr','vr','ar']);
+const STOPWORDS  = new Set([
+  'the','and','for','are','was','were','will','our','you','your','its',
+  'this','that','with','have','has','had','not','but','also','from',
+  'into','any','more','all','get','set','new','one','two','per','via',
+  'use','can','how','what','why','who','when','where','using','used',
+  'their','they','them','then','than','been','being','does','did',
+  'could','would','should','each','some','very','just','now','may',
+  'about','only','such','both','here','too','same','other'
+]);
+
+function tokenize(text) {
+  // Extract words of 3+ chars OR short acronyms we want to keep
+  const raw = (text||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/);
+  return raw.filter(w =>
+    w.length >= 3 && !STOPWORDS.has(w) ||
+    (w.length === 2 && SHORT_KEEP.has(w))
+  );
+}
+
+function buildIDF(index) {
+  if (_idfTable) return _idfTable;
+  const docCount = index.length;
+  const df = {};
+  for (const e of index) {
+    const words = new Set(tokenize([e.title, e.kw, e.summary].join(' ')));
+    for (const w of words) df[w] = (df[w]||0) + 1;
+  }
+  const table = {};
+  for (const [w, count] of Object.entries(df)) {
+    table[w] = Math.log(docCount / count);
+  }
+  _idfTable = table;
+  return table;
+}
+
+function getIDF(idf, word) {
+  return idf[word] ?? 3.5; // unknown word = treat as very distinctive
+}
+
+// ── Improved repo scoring ─────────────────────────────────────────────────
+function scoreRepo(entry, queryWords, idf, product) {
+  const title   = tokenize(entry.title   || '');
+  const kw      = tokenize(entry.kw      || '');
+  const summ    = tokenize(entry.summary || '');
+  const titleS  = (entry.title   || '').toLowerCase();
+  const kwS     = (entry.kw      || '').toLowerCase();
+  const summS   = (entry.summary || '').toLowerCase();
+  const titleSet = new Set(title);
+  const kwSet    = new Set(kw);
+  const summSet  = new Set(summ);
+  const isPlain  = entry.type === 'plaintext';
+
+  let s = 0;
+  for (const w of queryWords) {
+    const w_idf = getIDF(idf, w);
+    if (titleSet.has(w)) s += 8  * w_idf;
+    if (kwSet.has(w))    s += 3  * w_idf;
+    if (summSet.has(w))  s += 1.5 * w_idf;
+  }
+
+  // Phrase boost: consecutive query words found verbatim in fields
+  const sigWords = queryWords.filter(w => !STOPWORDS.has(w));
+  for (let n = 3; n >= 2; n--) {
+    for (let i = 0; i <= sigWords.length - n; i++) {
+      const phrase = sigWords.slice(i, i+n).join(' ');
+      if (titleS.includes(phrase)) s += 20 * n;
+      if (kwS.includes(phrase))    s += 10 * n;
+      if (summS.includes(phrase))  s +=  5 * n;
+    }
+  }
+
+  // Plaintext (cookbook/RTS) boost
+  if (isPlain && s > 0) s *= 1.5;
+
+  // Product filter
+  if (product && s > 0) {
+    const prod = (entry.product||'').toLowerCase();
+    const match = prod.includes(product)
+      || (product==='cx' && (prod.includes('cx')||prod.includes('customer')))
+      || (product==='workforce' && prod.includes('workforce'))
+      || (product==='communities' && prod.includes('communities'));
+    s = match ? s * 1.3 : s * 0.8;
+  }
+
+  return s;
+}
+
+// ── Improved help sitemap scoring ─────────────────────────────────────────
+function scoreHelp(entry, queryWords, idf, product) {
+  const slug    = tokenize(entry.slug  || '');
+  const title   = tokenize(entry.title || '');
+  const prod    = tokenize(entry.product || '');
+  const titleS  = (entry.title || '').toLowerCase();
+  const slugS   = (entry.slug  || '').toLowerCase();
+  const slugSet  = new Set(slug);
+  const titleSet = new Set(title);
+  const prodSet  = new Set(prod);
+
+  let s = 0;
+  for (const w of queryWords) {
+    const w_idf = getIDF(idf, w);
+    if (titleSet.has(w)) s += 8 * w_idf;
+    if (slugSet.has(w))  s += 5 * w_idf;
+    if (prodSet.has(w))  s += 2 * w_idf;
+  }
+
+  // Phrase boost on title and slug
+  const sigWords = queryWords.filter(w => !STOPWORDS.has(w));
+  for (let n = 3; n >= 2; n--) {
+    for (let i = 0; i <= sigWords.length - n; i++) {
+      const phrase = sigWords.slice(i, i+n).join(' ');
+      if (titleS.includes(phrase)) s += 25 * n;
+      if (slugS.includes(phrase))  s += 15 * n;
+    }
+  }
+
+  if (product && s > 0) {
+    const prodLow = (entry.product||'').toLowerCase();
+    const match = prodLow.includes(product)
+      || (product==='cx' && (prodLow.includes('cx')||prodLow.includes('customer')))
+      || (product==='workforce' && prodLow.includes('workforce'))
+      || (product==='communities' && prodLow.includes('communities'));
+    s = match ? s * 1.3 : s * 0.8;
+  }
+
+  return s;
+}
+
+// ── Product detection ─────────────────────────────────────────────────────
 const PRODUCT_SIGNALS = {
-  cx:          ["nps","csat","ces","workspace","touchpoint","closed loop","detractor","promoter","customer experience","ticket","feedback"],
-  workforce:   ["pulse","engagement","heatmap","employee","department","hr","workforce","manager","360"],
-  communities: ["panel","members","portal","community","discussion","forum","recruit"],
-  surveys:     ["survey","question","branch","logic","skip","template","quota","block","distribution"],
+  cx:          ['nps','csat','ces','workspace','touchpoint','closed loop','detractor','promoter','customer experience','ticket','feedback'],
+  workforce:   ['pulse','engagement','heatmap','employee','department','workforce','manager','360'],
+  communities: ['panel','members','portal','community','discussion','forum','recruit'],
+  surveys:     ['survey','question','branch','logic','skip','template','quota','block','distribution'],
 };
 
 function inferProduct(text) {
-  const lower=(text||'').toLowerCase();
-  const scores={cx:0,workforce:0,communities:0,surveys:0};
+  const lower = (text||'').toLowerCase();
+  const scores = {cx:0,workforce:0,communities:0,surveys:0};
   for (const [prod,signals] of Object.entries(PRODUCT_SIGNALS))
-    for (const s of signals) if(lower.includes(s)) scores[prod]++;
-  const top=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
-  return top[0][1]>0?top[0][0]:null;
+    for (const s of signals) if (lower.includes(s)) scores[prod]++;
+  const top = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  return top[0][1] > 0 ? top[0][0] : null;
 }
 
-const SYNONYMS={
-  "ai router":      ["webhook","integration","custom variable","api","trigger","prompt","sentiment","classification","sous chef","prep cook"],
-  "webhook":        ["ai router","integration","trigger","callback","endpoint"],
-  "sentiment":      ["ai router","open-ended","text analysis","classification","theme","prep cook"],
-  "conversational": ["sous chef","adaptive survey","ai survey","ai router"],
-  "create survey": ["survey builder","build survey","ai survey","new survey","template"],
-  "build survey": ["survey builder","ai survey","create survey","new survey","questionpro ai"],
-  "survey builder": ["build survey","create survey","ai survey","questionpro ai","new survey"],
-  "questionpro ai": ["survey builder","build survey","ai survey","create survey"],
-  "salesforce":     ["smoke alarm","crm","trigger","integration"],
-  "tv guide":       ["the menu","dynamic list","middleware","searchable"],
-  "nps":            ["net promoter","cx","customer experience","score","loyalty"],
-  "cx":             ["customer experience","nps","csat","ces","touchpoint","workspace"],
-  "workforce":      ["employee","engagement","hr","pulse"],
-  "communities":    ["panel","portal","members","community"],
-  "intercept":      ["widget","trigger","popup","overlay","rule","display","embed","cx","tracking"],
-};
-
-function expandQuery(q){
-  const lower=q.toLowerCase().replace(/[^a-z0-9\s]/g,' ');
-  const words=new Set(lower.split(/\s+/).filter(w=>w.length>=3));
-  for(const [phrase,syns] of Object.entries(SYNONYMS))
-    if(lower.includes(phrase)) syns.forEach(s=>s.split(' ').forEach(w=>{if(w.length>=3)words.add(w);}));
-  return [...words];
-}
-
-function scoreRepo(e,words,activeProduct){
-  const title=(e.title||'').toLowerCase(),kw=(e.kw||'').toLowerCase(),summ=(e.summary||'').toLowerCase();
-  let s=0;
-  for(const w of words){
-    if(title.includes(w)) s+=e.type==='plaintext'?6:4;
-    if(kw.includes(w))    s+=e.type==='plaintext'?4:2;
-    if(summ.includes(w))  s+=e.type==='json_article'?2:1;
-  }
-  if(activeProduct&&s>0){
-    const prod=(e.product||'').toLowerCase();
-    const match=prod.includes(activeProduct)||
-      (activeProduct==='cx'&&(prod.includes('cx')||prod.includes('customer')))||
-      (activeProduct==='workforce'&&prod.includes('workforce'))||
-      (activeProduct==='communities'&&prod.includes('communities'));
-    s=match?Math.round(s*1.5):Math.round(s*0.7);
-  }
-  return s;
-}
-
-function scoreHelp(e,words,activeProduct){
-  const slug=(e.slug||'').toLowerCase(),title=(e.title||'').toLowerCase(),prod=(e.product||'').toLowerCase();
-  let s=0;
-  for(const w of words){if(title.includes(w))s+=4;if(slug.includes(w))s+=3;if(prod.includes(w))s+=2;}
-  if(activeProduct&&s>0){
-    const match=prod.includes(activeProduct)||
-      (activeProduct==='cx'&&(prod.includes('cx')||prod.includes('customer')))||
-      (activeProduct==='workforce'&&prod.includes('workforce'))||
-      (activeProduct==='communities'&&prod.includes('communities'));
-    s=match?Math.round(s*1.5):Math.round(s*0.7);
-  }
-  return s;
-}
-
-const fileCache={};
-async function getFile(path){
-  if(fileCache[path]) return fileCache[path];
-  const url=GITHUB_RAW+"/"+path.split('/').map(encodeURIComponent).join('/');
-  const r=await fetch(url,{cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
-  if(!r.ok) return null;
-  fileCache[path]=await r.text();
+// ── File fetching ─────────────────────────────────────────────────────────
+const fileCache = {};
+async function getFile(path) {
+  if (fileCache[path]) return fileCache[path];
+  const url = GITHUB_RAW + '/' + path.split('/').map(encodeURIComponent).join('/');
+  const r = await fetch(url, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
+  if (!r.ok) return null;
+  fileCache[path] = await r.text();
   return fileCache[path];
 }
 
-async function fetchRepoEntry(e){
-  const raw=await getFile(e.path);
-  if(!raw) return null;
-  if(e.type==='plaintext') return raw.slice(0,MAX_REPO);
-  if(e.type==='json_article'){
-    let data;try{data=JSON.parse(raw);}catch{return raw.slice(0,MAX_REPO);}
-    const art=(data.articles||[]).find(a=>a.id===e.article_id);
-    if(!art) return null;
-    const parts=[];
-    if(art.title) parts.push("# "+art.title);
-    if(art.url)   parts.push("Source: "+art.url);
-    if(art.summary&&art.summary!==art.title) parts.push(art.summary);
-    if(art.content) parts.push(art.content);
-    return parts.join("\n\n").slice(0,MAX_REPO);
+async function fetchRepoEntry(e) {
+  const raw = await getFile(e.path);
+  if (!raw) return null;
+  if (e.type === 'plaintext') return raw.slice(0, MAX_REPO);
+  if (e.type === 'json_article') {
+    let data; try { data = JSON.parse(raw); } catch { return raw.slice(0, MAX_REPO); }
+    const art = (data.articles||[]).find(a => a.id === e.article_id);
+    if (!art) return null;
+    const parts = [];
+    if (art.title)   parts.push('# ' + art.title);
+    if (art.url)     parts.push('Source: ' + art.url);
+    if (art.summary && art.summary !== art.title) parts.push(art.summary);
+    if (art.content) parts.push(art.content);
+    return parts.join('\n\n').slice(0, MAX_REPO);
   }
-  return raw.slice(0,MAX_REPO);
+  return raw.slice(0, MAX_REPO);
 }
 
-function extractHelpPage(html,url){
-  let c=html.replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'')
-           .replace(/<nav[\s\S]*?<\/nav>/gi,'').replace(/<header[\s\S]*?<\/header>/gi,'')
-           .replace(/<footer[\s\S]*?<\/footer>/gi,'').replace(/<!--[\s\S]*?-->/g,'');
-  const tm=c.match(/<title>([^<]+)<\/title>/);
-  const title=tm?tm[1].replace(/\s*[|\-]\s*QuestionPro.*$/i,'').trim():'';
-  const idx=c.indexOf('class="right-section-wrapper"');
-  let body=idx>=0?c.substring(idx,idx+40000):c;
-  body=body.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&')
-           .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/\s+/g,' ').trim();
-  return (title?"# "+title+"\nSource: "+url+"\n\n":"Source: "+url+"\n\n")+body.slice(0,MAX_HELP);
+function extractHelpPage(html, url) {
+  let c = html
+    .replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<style[\s\S]*?<\/style>/gi,'')
+    .replace(/<nav[\s\S]*?<\/nav>/gi,'').replace(/<header[\s\S]*?<\/header>/gi,'')
+    .replace(/<footer[\s\S]*?<\/footer>/gi,'').replace(/<!--[\s\S]*?-->/g,'');
+  const tm = c.match(/<title>([^<]+)<\/title>/);
+  const title = tm ? tm[1].replace(/\s*[|\-]\s*QuestionPro.*$/i,'').trim() : '';
+  const idx = c.indexOf('class="right-section-wrapper"');
+  let body = idx >= 0 ? c.substring(idx, idx+40000) : c;
+  body = body.replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&')
+             .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
+             .replace(/\s+/g,' ').trim();
+  return (title ? '# '+title+'\nSource: '+url+'\n\n' : 'Source: '+url+'\n\n') + body.slice(0, MAX_HELP);
 }
 
-const CORS={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Methods":"POST, OPTIONS","Access-Control-Allow-Headers":"Content-Type, api-key"};
-function jres(d,s){return new Response(JSON.stringify(d),{status:s||200,headers:Object.assign({"Content-Type":"application/json"},CORS)});}
+// ── CORS + response helpers ───────────────────────────────────────────────
+const CORS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, api-key'
+};
+function jres(d, s) {
+  return new Response(JSON.stringify(d), {status:s||200, headers:{'Content-Type':'application/json',...CORS}});
+}
 
-async function handleContribute(body,env){
-  const {filename,content,contributor}=body;
-  if(!filename||!content) return jres({error:"filename and content required"},400);
-  const ghToken=env.GITHUB_TOKEN;
-  if(!ghToken) return jres({error:"GitHub token not configured"},500);
+// ── Contribute handler ────────────────────────────────────────────────────
+async function handleContribute(body, env) {
+  const {filename, content, contributor} = body;
+  if (!filename || !content) return jres({error:'filename and content required'}, 400);
+  const ghToken = env.GITHUB_TOKEN;
+  if (!ghToken) return jres({error:'GitHub token not configured'}, 500);
 
-  const safeName=filename.replace(/[/\\<>:"|?*]/g,'').replace(/\s+/g,'_').trim();
-  if(!safeName) return jres({error:"Invalid filename"},400);
+  const safeName = filename.replace(/[/\\<>:"|?*]/g,'').replace(/\s+/g,'_').trim();
+  if (!safeName) return jres({error:'Invalid filename'}, 400);
 
-  const checkRes=await fetch(GITHUB_API+"/contents/"+encodeURIComponent(safeName),{
-    headers:{"Authorization":"token "+ghToken,"Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"}
+  const checkRes = await fetch(GITHUB_API+'/contents/'+encodeURIComponent(safeName), {
+    headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github+json','User-Agent':'QP-Insights-Commons/1.0'}
   });
-  let sha=null;
-  if(checkRes.ok){const d=await checkRes.json();sha=d.sha;}
+  let sha = null;
+  if (checkRes.ok) { const d = await checkRes.json(); sha = d.sha; }
 
-  const encoded=btoa(unescape(encodeURIComponent(content)));
-  const writeBody={message:"Community contribution: "+safeName+(contributor?" by "+contributor:""),content:encoded};
-  if(sha) writeBody.sha=sha;
+  const encoded = btoa(unescape(encodeURIComponent(content)));
+  const writeBody = {message:'Community contribution: '+safeName+(contributor?' by '+contributor:''), content:encoded};
+  if (sha) writeBody.sha = sha;
 
-  const writeRes=await fetch(GITHUB_API+"/contents/"+encodeURIComponent(safeName),{
-    method:"PUT",
-    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"},
+  const writeRes = await fetch(GITHUB_API+'/contents/'+encodeURIComponent(safeName), {
+    method:'PUT',
+    headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github+json','User-Agent':'QP-Insights-Commons/1.0'},
     body:JSON.stringify(writeBody)
   });
-  if(!writeRes.ok){const err=await writeRes.text();return jres({error:"Write failed: "+err.substring(0,100)},500);}
+  if (!writeRes.ok) { const err = await writeRes.text(); return jres({error:'Write failed: '+err.slice(0,100)}, 500); }
 
-  // Trigger index rebuild
-  await fetch(GITHUB_API+"/actions/workflows/"+WORKFLOW_ID+"/dispatches",{
-    method:"POST",
-    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"},
-    body:JSON.stringify({ref:"main"})
+  await fetch(GITHUB_API+'/actions/workflows/'+WORKFLOW_ID+'/dispatches', {
+    method:'POST',
+    headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github+json','User-Agent':'QP-Insights-Commons/1.0'},
+    body:JSON.stringify({ref:'main'})
   }).catch(()=>{});
 
-  // Invalidate isolate cache so next request picks up the new file
-  _repoIndexCache = null;
-  _helpSitemapCache = null;
+  // Invalidate caches
+  _repoIndex = null; _helpSitemap = null; _idfTable = null;
 
-  return jres({success:true,message:"Contributed! Knowledge base updates in ~60 seconds."});
+  return jres({success:true, message:'Contributed! Knowledge base updates in ~60 seconds.'});
 }
 
+// ── Main fetch handler ────────────────────────────────────────────────────
 export default {
-  async fetch(request,env){
-    if(request.method==="OPTIONS") return new Response(null,{headers:CORS});
-    const url=new URL(request.url);
+  async fetch(request, env) {
+    if (request.method === 'OPTIONS') return new Response(null, {headers:CORS});
+    const url = new URL(request.url);
 
-    if(url.pathname.endsWith("/contribute")){
-      if(request.method!=="POST") return jres({error:"Method not allowed"},405);
-      let body;try{body=await request.json();}catch{return jres({error:"Invalid JSON"},400);}
-      return handleContribute(body,env);
+    if (url.pathname.endsWith('/contribute')) {
+      if (request.method !== 'POST') return jres({error:'Method not allowed'}, 405);
+      let body; try { body = await request.json(); } catch { return jres({error:'Invalid JSON'}, 400); }
+      return handleContribute(body, env);
     }
 
-    if(request.method!=="POST") return jres({error:"Method not allowed"},405);
-    let body;try{body=await request.json();}catch{return jres({error:"Invalid JSON"},400);}
+    if (request.method !== 'POST') return jres({error:'Method not allowed'}, 405);
+    let body; try { body = await request.json(); } catch { return jres({error:'Invalid JSON'}, 400); }
 
-    let question="",inputs=[],historyStr="";
-    if(body.input_data&&body.input_data.input){
-      inputs=body.input_data.input;
-      const qe=inputs.find(i=>i.key==="QUESTION");question=qe?qe.value:"";
-      const he=inputs.find(i=>i.key==="CONVERSATION_HISTORY");historyStr=he?he.value:"";
-    } else {question=body.question||"";historyStr=body.historyStr||"";}
-    if(!question) return jres({error:"Missing question"},400);
+    let question='', inputs=[], historyStr='';
+    if (body.input_data?.input) {
+      inputs = body.input_data.input;
+      const qe = inputs.find(i=>i.key==='QUESTION'); question = qe?.value || '';
+      const he = inputs.find(i=>i.key==='CONVERSATION_HISTORY'); historyStr = he?.value || '';
+    } else {
+      question = body.question || ''; historyStr = body.historyStr || '';
+    }
+    if (!question) return jres({error:'Missing question'}, 400);
 
-    const pinnedProduct=body.pinned_product||null;
-    const historyTurns=(historyStr||"").split(/\[User\]/i).slice(-4).join(' ');
-    const inferredProduct=pinnedProduct||inferProduct(question+' '+historyTurns);
-    const questionWords=expandQuery(question);
-    const historyWords=expandQuery(historyTurns).filter(w=>!questionWords.includes(w)).slice(0,15);
-    const allWords=[...questionWords,...historyWords];
+    const pinnedProduct  = body.pinned_product || null;
+    const historyTurns   = (historyStr||'').split(/\[User\]/i).slice(-4).join(' ');
+    const inferredProduct = pinnedProduct || inferProduct(question+' '+historyTurns);
 
-    try{
-      // Use cached getters instead of raw fetch — avoids cold-start re-parse on warm isolates
-      const [repoIndex,helpSitemap]=await Promise.all([
-        getRepoIndex(),
-        getHelpSitemap(),
+    // Tokenize with new engine (handles 'ai', 'cx', etc.)
+    const questionWords = tokenize(question);
+    const historyWords  = tokenize(historyTurns).filter(w => !questionWords.includes(w)).slice(0, 15);
+    const allWords = [...new Set([...questionWords, ...historyWords])];
+
+    try {
+      const [repoIndex, helpSitemap] = await Promise.all([getRepoIndex(), getHelpSitemap()]);
+
+      // Build IDF from current index
+      const idf = buildIDF(repoIndex);
+
+      const topRepo = repoIndex
+        .map(e => ({e, s:scoreRepo(e, allWords, idf, inferredProduct)}))
+        .filter(x => x.s > 0).sort((a,b) => b.s-a.s).slice(0, TOP_REPO);
+
+      const topHelp = helpSitemap
+        .map(e => ({e, s:scoreHelp(e, allWords, idf, inferredProduct)}))
+        .filter(x => x.s > 0).sort((a,b) => b.s-a.s).slice(0, TOP_HELP);
+
+      const [repoTexts, helpTexts] = await Promise.all([
+        Promise.all(topRepo.map(async ({e}) => {
+          try {
+            const t = await fetchRepoEntry(e);
+            return t && t.length > 80 ? '=== '+(e.type==='plaintext'?'SOLUTION':'DOC')+': '+e.title+' ===\n'+t : null;
+          } catch { return null; }
+        })),
+        Promise.all(topHelp.map(async ({e}) => {
+          try {
+            const r = await fetch(e.url, {headers:{'User-Agent':'QP-Insights-Commons/1.0'}, cf:{cacheTtl:CACHE_HELP,cacheEverything:true}});
+            if (!r.ok) return null;
+            const t = extractHelpPage(await r.text(), e.url);
+            return t && t.length > 80 ? '=== HELP: '+e.title+' ['+e.product+'] ===\n'+t : null;
+          } catch { return null; }
+        }))
       ]);
 
-      const topRepo=repoIndex.map(e=>({e,s:scoreRepo(e,allWords,inferredProduct)}))
-        .filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,TOP_REPO);
-      const topHelp=helpSitemap.map(e=>({e,s:scoreHelp(e,allWords,inferredProduct)}))
-        .filter(x=>x.s>0).sort((a,b)=>b.s-a.s).slice(0,TOP_HELP);
+      const context = [...repoTexts.filter(Boolean), ...helpTexts.filter(Boolean)].join('\n\n')
+        || 'No relevant documentation found.';
 
-      const [repoTexts,helpTexts]=await Promise.all([
-        Promise.all(topRepo.map(async({e})=>{
-          try{const t=await fetchRepoEntry(e);return t&&t.length>80?"=== "+(e.type==='plaintext'?'SOLUTION':'DOC')+": "+e.title+" ===\n"+t:null;}
-          catch{return null;}
-        })),
-        Promise.all(topHelp.map(async({e})=>{
-          try{
-            const r=await fetch(e.url,{headers:{"User-Agent":"QP-Insights-Commons/1.0"},cf:{cacheTtl:CACHE_HELP,cacheEverything:true}});
-            if(!r.ok) return null;
-            const t=extractHelpPage(await r.text(),e.url);
-            return t&&t.length>80?"=== HELP: "+e.title+" ["+e.product+"] ===\n"+t:null;
-          }catch{return null;}
-        })),
-      ]);
+      const newInputs = [...inputs.filter(i=>i.key!=='CONTEXT'), {key:'CONTEXT', value:context}];
+      if (!newInputs.find(i=>i.key==='QUESTION')) newInputs.unshift({key:'QUESTION', value:question});
 
-      const context=[...repoTexts.filter(Boolean),...helpTexts.filter(Boolean)].join("\n\n")||"No relevant documentation found.";
-      const newInputs=[...inputs.filter(i=>i.key!=="CONTEXT"),{key:"CONTEXT",value:context}];
-      if(!newInputs.find(i=>i.key==="QUESTION")) newInputs.unshift({key:"QUESTION",value:question});
-
-      const qpKey=env.QP_API_KEY||request.headers.get("api-key");
-      const payload=Object.assign({},body,{
-        user_id:body.user_id||QP_USER_ID,
-        organization_id:body.organization_id||QP_ORG_ID,
-        input_data:{input:newInputs}
+      const qpKey = env.QP_API_KEY || request.headers.get('api-key');
+      const payload = Object.assign({}, body, {
+        user_id: body.user_id || QP_USER_ID,
+        organization_id: body.organization_id || QP_ORG_ID,
+        input_data: {input: newInputs}
       });
-      delete payload.question;delete payload.historyStr;delete payload.pinned_product;
+      delete payload.question; delete payload.historyStr; delete payload.pinned_product;
 
-      const rd=await fetch(QP_ROUTER,{method:"POST",headers:{"Content-Type":"application/json","api-key":qpKey},body:JSON.stringify(payload)}).then(r=>r.json());
+      const rd = await fetch(QP_ROUTER, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','api-key':qpKey},
+        body:JSON.stringify(payload)
+      }).then(r=>r.json());
 
-      return jres(Object.assign({},rd,{
-        _sources:[...topRepo.map(({e,s})=>({title:e.title,type:e.type,score:s})),...topHelp.map(({e,s})=>({title:e.title,type:'help',score:s,url:e.url}))],
-        _detected_product:inferredProduct,
+      return jres(Object.assign({}, rd, {
+        _sources: [
+          ...topRepo.map(({e,s})=>({title:e.title, type:e.type, score:Math.round(s)})),
+          ...topHelp.map(({e,s})=>({title:e.title, type:'help', score:Math.round(s), url:e.url}))
+        ],
+        _detected_product: inferredProduct,
       }));
-    }catch(err){return jres({error:err.message},500);}
+
+    } catch(err) { return jres({error:err.message}, 500); }
   }
 };
