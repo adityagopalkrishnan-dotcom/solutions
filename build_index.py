@@ -49,7 +49,7 @@ COOKBOOK_META = {
     "questionpro___middleware_document":   ("QuestionPro Middleware Document",
                                             "middleware proxy api integration custom"),
     "questionpro____intercept____setup_guide":("Intercept Setup Guide",
-                                            "intercept setup guide cx survey popup widget trigger"),
+                                            "intercept setup guide cx survey popup widget trigger data layer rule targeting datalayer"),
 }
 
 SKIP_FILES = {"build_index.py","index.json","index.html","worker.js",
