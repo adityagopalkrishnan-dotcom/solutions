@@ -22,7 +22,8 @@ let _idfTable = null; // computed once from index
 async function getRepoIndex() {
   const now = Date.now();
   if (_repoIndex && (now - _repoIndexTs) < ISOLATE_TTL) return _repoIndex;
-  const r = await fetch(INDEX_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
+  const bust = Math.floor(Date.now()/60000); // bust cache every minute
+  const r = await fetch(INDEX_URL + "?v=" + bust, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
   if (!r.ok) return _repoIndex || [];
   _repoIndex = await r.json();
   _repoIndexTs = now;
@@ -33,7 +34,8 @@ async function getRepoIndex() {
 async function getHelpSitemap() {
   const now = Date.now();
   if (_helpSitemap && (now - _helpSitemapTs) < ISOLATE_TTL) return _helpSitemap;
-  const r = await fetch(SITEMAP_URL, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
+  const bust2 = Math.floor(Date.now()/60000);
+  const r = await fetch(SITEMAP_URL + "?v=" + bust2, {cf:{cacheTtl:CACHE_IDX,cacheEverything:true}});
   if (!r.ok) return _helpSitemap || [];
   _helpSitemap = await r.json();
   _helpSitemapTs = now;
