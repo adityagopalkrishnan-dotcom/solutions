@@ -173,7 +173,7 @@ async function handleContribute(body,env){
   if(!safeName) return jres({error:"Invalid filename"},400);
 
   const checkRes=await fetch(GITHUB_API+"/contents/"+encodeURIComponent(safeName),{
-    headers:{"Authorization":"token "+ghToken,"Accept":"application/vnd.github+json"}
+    headers:{"Authorization":"token "+ghToken,"Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"}
   });
   let sha=null;
   if(checkRes.ok){const d=await checkRes.json();sha=d.sha;}
@@ -184,7 +184,7 @@ async function handleContribute(body,env){
 
   const writeRes=await fetch(GITHUB_API+"/contents/"+encodeURIComponent(safeName),{
     method:"PUT",
-    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json"},
+    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"},
     body:JSON.stringify(writeBody)
   });
   if(!writeRes.ok){const err=await writeRes.text();return jres({error:"Write failed: "+err.substring(0,100)},500);}
@@ -192,7 +192,7 @@ async function handleContribute(body,env){
   // Trigger index rebuild
   await fetch(GITHUB_API+"/actions/workflows/"+WORKFLOW_ID+"/dispatches",{
     method:"POST",
-    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json"},
+    headers:{"Authorization":"token "+ghToken,"Content-Type":"application/json","Accept":"application/vnd.github+json","User-Agent":"QP-Insights-Commons/1.0"},
     body:JSON.stringify({ref:"main"})
   }).catch(()=>{});
 
