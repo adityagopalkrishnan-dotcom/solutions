@@ -1652,12 +1652,25 @@ async function submitCorrection(btn) {
   try {
     const cfg = JSON.parse(localStorage.getItem('qpic_config_v1') || '{}');
     const proxyUrl = cfg.proxyUrl || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev/';
-    const feedbackUrl = proxyUrl.replace(/\/$/, '') + '/feedback';
+    const contributeUrl = proxyUrl.replace(/\/$/, '') + '/contribute';
 
-    const res = await fetch(feedbackUrl, {
+    // Format as a dated correction file for the knowledge base
+    const ts = new Date().toISOString().slice(0,10).replace(/-/g,'');
+    const safeQ = question.slice(0,40).replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+    const filename = 'correction_' + safeQ + '_' + ts + '.txt';
+    const fileContent = [
+      'CORRECTION SUBMITTED: ' + new Date().toISOString(),
+      'QUESTION: ' + question,
+      'WRONG ANSWER: ' + wrongAnswer.slice(0, 500),
+      'CORRECT ANSWER / MISSING CONTEXT:',
+      correction,
+      detectedProduct ? 'PRODUCT: ' + detectedProduct : ''
+    ].filter(Boolean).join('\n\n');
+
+    const res = await fetch(contributeUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question, wrong_answer: wrongAnswer, correction, product: detectedProduct })
+      body: JSON.stringify({ filename, content: fileContent, contributor: 'correction' })
     });
     const data = await res.json();
 
