@@ -1,0 +1,711 @@
+﻿About
+What is Intercept?
+The Art of the Digital "Tap on the Shoulder"
+
+
+Intercept is the intelligence layer that sits between your website and your visitors. It is not just a tool for showing pop-ups; it is a decision engine that determines the perfect moment to engage with a user.
+
+
+Instead of showing a generic survey to every person who lands on your homepage (which can be annoying), Intercept watches, waits, and listens. It analyzes who the visitor is, where they came from, and what they are doing right now.
+
+
+What are we achieving?
+The goal of Intercept is to move from "Broadcasting" to "Conversing."
+
+
+* Relevance: Only ask questions that matter to that specific user.
+* Precision: Target users based on deep data (like their cart value or membership level).
+* Experience: Improve customer satisfaction by offering help or asking for feedback exactly when it makes sense—not when it interrupts.
+
+
+
+
+
+
+________________
+
+
+
+
+A Real-World Example: The "Frustrated Shopper"
+
+
+
+
+The Scenario:
+
+
+Imagine a customer named Sarah. She is browsing your online store on her iPhone. She has added items to her cart but has been stuck on the "Checkout Payment" page for over 2 minutes without buying anything.
+
+
+Without Intercept:
+
+
+Sarah gets frustrated, closes the tab, and you lose the sale. You never know why.
+
+
+With Intercept:
+
+
+You have set up a "Cart Rescue" rule. The system detects:
+
+
+1. Device: Mobile (She might be having trouble typing).
+2. Page: Checkout.
+3. Time Spent: > 120 seconds (She is stuck).
+
+
+The Result:
+Intercept triggers a friendly, non-intrusive popup:
+🛖 Overview
+Overview 
+
+
+
+
+
+
+Rules type for website (Engine)
+
+
+Country
+* Understanding: Target or exclude visitors based on their physical location.
+* Example Scenario: Show a survey only to visitors in Canada.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Canada from the list.
+* Result: Only visitors accessing the site from a Canadian IP address will see the intercept.
+Browser Type
+* Understanding: Target visitors based on the web browser they are using (Chrome, Safari, Firefox, etc.).
+* Example Scenario: Test a new feature that only works on Google Chrome.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Chrome.
+* Result: Visitors using Safari or Edge will not see the survey.
+Device Type
+* Understanding: Distinguish between visitors on Desktop, Mobile, or Tablet.
+* Example Scenario: Show a shorter, mobile-friendly survey to phone users.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Mobile.
+* Result: Desktop users are ignored; only smartphone users see the intercept.
+OS (Operating System)
+* Understanding: Target the underlying system of the device (Windows, macOS, iOS, Android).
+* Example Scenario: Ask for feedback on your new iPhone App.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select iOS.
+* Result: Only users on Apple mobile devices will match.
+User Type
+* Understanding: Differentiates between someone visiting for the first time versus someone coming back.
+* Example Scenario: Offer a "Welcome" discount only to new people.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select New Visitor.
+* Result: If the system recognizes the user's cookie from a previous visit, the rule fails.
+IP Address
+* Understanding: Target a specific network address, often used for internal testing.
+* Example Scenario: Test the survey live, but only for people in your office.
+* How to Configure:
+   * Operand: Equals
+   * Value: 192.168.1.50 (Your specific IP).
+* Result: The general public cannot see the survey; only your specific network matches.
+
+
+Page URL
+* Understanding: Checks the specific web address the visitor is currently looking at.
+* Example Scenario: Show a survey only on the "Thank You" page after a purchase.
+* How to Configure:
+   * Key: (Not needed, automatic)
+   * Operand: Contains
+   * Value: thank-you
+* Result: Matches www.site.com/checkout/thank-you but ignores www.site.com/home.
+Time Spent (On Page)
+* Understanding: Checks how long the user has been looking at the current page.
+* Example Scenario: Offer help only if a user has been stuck on the checkout page for more than 60 seconds.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 60 (Seconds)
+* Result: The survey waits 60 seconds before appearing.
+Session Duration (Total Time)
+* Understanding: Checks the total time the user has been on your website across all pages combined.
+* Example Scenario: Target highly engaged users who have been browsing your site for over 5 minutes.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 300 (Seconds)
+* Result: Triggers only after 5 minutes of total browsing.
+Page Visited (History)
+* Understanding: Checks how many pages the user has clicked on during this visit.
+* Example Scenario: Show a survey only after the user has browsed 3 different pages.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 3
+* Result: The user browses Page A, then Page B, then Page C. On Page D, the survey appears.
+Button Click
+* Understanding: Triggers the intercept when a user clicks a specific button or link on your page.
+* Example Scenario: Show a popup when someone clicks "Unsubscribe".
+* How to Configure:
+   * Key: You need the "ID" of the button from your website code.
+   * Operand: Equals
+   * Value: unsubscribe-btn (The ID of the button).
+* Result: The survey triggers immediately upon clicking that specific button.
+HTML Selector
+* Understanding: An advanced rule that checks if a specific HTML element exists on the page.
+* Example Scenario: Trigger a survey only when an "Error Message" box appears on the screen.
+* How to Configure:
+   * Key: The CSS selector (e.g., .error-message-box).
+   * Operand: Exists
+* Result: The intercept watches the page. If that error box appears, the rule matches.
+Query Param
+* Understanding: Checks for marketing codes or tracking IDs in the website link (after the ?).
+* Example Scenario: Target users coming from a specific newsletter. URL: site.com?source=newsletter.
+* How to Configure:
+   * Key: source
+   * Operand: Equals
+   * Value: newsletter
+* Result: Matches visitors who clicked your specific newsletter link.
+Total Visits (Website Entry Count)
+* Understanding: Checks how many times the visitor has entered (or re-entered) the website across all sessions. Each page load, refresh, or new tab counts as one visit. SPA navigation and internal link clicks do not count.
+* Example Scenario: Show a survey only after the user has visited the website 3 or more times.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 2
+* Result: The visitor opens the website on Monday (Visit 1), returns on Wednesday (Visit 2), comes back on Friday (Visit 3). On the Friday visit, the survey appears.
+Scroll Depth (Vertical)
+* Understanding: Checks how far down the user has scrolled a specific page, typically expressed as a percentage of the page content's height.
+* Example Scenario: Show a survey only after the user has scrolled at least 50% down the article content.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 50
+   * Unit: Percent (%)
+
+
+
+
+Rules type for Mobile Sdk (In Progress)
+For Mobile Rules refer the video - https://drive.google.com/file/d/1EQJH3WMjdC59j-PWuHNXiU5rEM71GK-A/view?usp=drive_link
+Mobile Intercept setup -
+https://docs.google.com/document/d/1ZhJ9sRZ9aMmIrZQRmcTiXfhdODMMSmEsFKL7A6mXDlk/edit?tab=t.t3ga0gdv7vot#heading=h.vfyuyni7obtz
+Types of Intercept
+ A stylized graphic showing three distinct computer screen mockups, each displaying a different type of user interface element: a small feedback button, a non-intrusive popup, and a full-screen exit intent overlay. The screen elements are labeled clearly. 
+
+Intercept Types Showcase: Maximizing UX for Feedback Collection
+This document provides a template for showcasing the three primary Intercept types, focusing on their unique characteristics, optimal use cases, and how each ensures a positive User Experience (UX).
+
+
+The Intercept decision engine determines the perfect moment to engage a visitor, moving from disruptive "Broadcasting" to timely "Conversing."
+1. Feedback Popup (The Conversational Tap)
+The Feedback Popup is a highly controlled, non-intrusive modal that appears within the context of the page. It is designed for specific, in-the-moment feedback tied to an action or time spent on the page.
+Key UX Characteristic: Contextual and Low-Interruption
+* Behavior: Appears after a rule is met (e.g., 60 seconds on a page, 3 pages visited).
+* Design: Typically small or center-aligned, allowing the user to still view the page content behind it.
+* Goal: Capture feedback while the memory of the experience is fresh, minimizing disruption to the user's task flow.
+
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Product Detail Review
+	Time Spent (On Page) > 30 seconds and Page URL Includes /product-details/
+	Asks the user if they found the information they needed right when they are most engaged with the product.
+	Post-Checkout Rating
+	Page URL Equals thank-you.html and User Type Equals Returning Visitor
+	Collects a quick satisfaction score immediately after a completed transaction.
+	
+
+ A mockup of a website page with a small, clean, centrally located popup window containing a short survey. The main page content is visible but slightly dimmed in the background. 
+
+2. Exit Intercept (The Last-Chance Rescue)
+The Exit Intercept triggers only when the user's mouse movement suggests they are about to leave the website (mouse movement tracked towards the browser's top bar). It is the final opportunity to engage a disengaged visitor.
+Key UX Characteristic: Non-Disruptive to Active Browsing
+* Behavior: Only triggers upon an "Exit Intent" action, ensuring it never interrupts active browsing.
+* Design: Can be a full-screen overlay to draw maximum attention to the rescue offer or question.
+* Goal: Recover an abandoned shopping cart, capture the reason for leaving, or offer a final incentive (like a discount).
+
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Cart Abandonment Rescue
+	Exit Intent Exists and Data Layer Includes cart_value > 0
+	Offers a discount code or free shipping to a customer who is about to leave with items still in their cart.
+	Reason for Leaving
+	Exit Intent Exists and Page URL Includes /home
+	Asks a simple, one-question survey about why they are leaving the site so quickly.
+	
+
+ A screenshot of a full-screen overlay that has appeared over a shopping cart page, showing a compelling message like "Wait! Don't go." and a field for a coupon code. 
+
+3. Feedback Button (The Passive, Always-Available Option)
+The Feedback Button (often a small tab or icon anchored to the side of the screen) is a passive intercept. It remains visible on the page, allowing the user to initiate the survey or feedback form entirely on their own schedule.
+Key UX Characteristic: User-Initiated and Passive
+* Behavior: The button loads upon page initialization and remains available. The survey only appears upon the user's click.
+* Design: Minimalist design, usually a non-intrusive tab on the left or right edge of the viewport.
+* Goal: Serve as a persistent channel for unsolicited or general feedback without interrupting the user's journey at all.
+
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Always-On Site Feedback
+	Country Equals Canada
+	A persistent "Feedback" tab is only shown to users in a specific region for ongoing data collection.
+	Reporting a Bug
+	Device Type Equals Desktop
+	Provides a quick way for desktop users to report technical issues they encounter without leaving the current page.
+	
+
+ A screenshot of a website with a small, vertical "Feedback" tab located on the right side of the browser window. 
+
+
+
+Code
+ A person's hand pasting a code snippet into a text editor on a laptop, illustrating website implementation. 
+
+Intercept Snippet: Implementation Guide & Best Practices
+This document provides a clear, step-by-step guide on how to integrate the Intercept JavaScript snippet into your website. Proper implementation is crucial for ensuring the Intercept engine can correctly track user behavior, evaluate rules, and display surveys at the optimal moment.
+1. Where to Place the Code Snippet
+The JavaScript snippet must be placed in a location where it executes on every single page load of your website.
+
+
+Site Type
+	Placement Location
+	Rationale
+	Traditional HTML Site
+	Within the <head> section of your global template (header/footer).
+	Ensures the script is loaded and initialized before the page content to track early user behavior (like the first page URL and session start).
+	Single Page Application (SPA)
+	In the main index.html file, inside the <head> section.
+	The script persists across all soft navigations (internal route changes)
+	
+
+
+
+Best Practice: Always place the script as high as possible within the <head> tag.
+2. How to Implement the Snippet (Step-by-Step)
+The following steps explain how to copy the unique snippet provided for your Intercept and paste it correctly.
+Step 1: Copy the Snippet
+1. Navigate to the Intercept Setup tab.
+2. Click the Copy button to get the entire code block.
+
+
+Standard Snippet Example (Use your unique API key)
+
+    <!-- Start of async Intercept tracking code -->
+    <script type="text/javascript" src="https://intercept-widget.questionpro.com/static/js/loader.js"></script>
+    <script type="text/javascript"> 
+       var Intercept = { apiKey: [YOUR_API_KEY] };
+    </script>
+    <!-- End of async Intercept tracking code -->
+  
+
+Step 2: Access Your Website's Code
+You will need access to your website's main template files. This is usually done via your Content Management System (CMS), e-commerce platform's theme editor, or direct access to your site files.
+
+
+Platform Example
+	How to Access the Code
+	Shopify
+	Online Store > Themes > Actions > Edit Code > theme.liquid
+	WordPress
+	Appearance > Theme File Editor > header.php
+	Custom Site
+	Access the shared template file that contains the opening <head> tag.
+	Step 3: Paste the Code
+1. Open the correct template file for editing.
+2. Locate the closing </head> tag.
+3. Paste the Intercept snippet immediately before the </head> tag.
+
+
+    <!-- Start of async Intercept tracking code -->
+    <script type="text/javascript" src="https://intercept-widget.questionpro.com/static/js/loader.js"></script>
+    <script type="text/javascript"> 
+       var Intercept = { apiKey: [YOUR_API_KEY] };
+    </script>
+    <!-- End of async Intercept tracking code -->
+
+
+</head> <!-- The snippet is placed immediately above this tag -->
+Step 4: Save and Verify
+1. Save the changes to your website's template file.
+2. Open your website in a new browser tab.
+3. Press F12 to open Developer Tools, and check the Console tab. You should see a message confirming the Intercept Engine has initialized.
+
+
+
+
+Special Considerations for Next.js (Client-Side Navigation)
+
+
+For Next.js, traditional <script> tags can fail on internal route changes. To ensure the script loads on every page view, you must use the built-in next/script component.
+
+
+Place the following code in your main layout file (e.g., _app.js or layout.js):
+import Script from 'next/script'
+
+
+<Script
+  src="https://intercept-widget.questionpro.eu/static/js/loader.js"
+  strategy="afterInteractive"
+/>
+
+
+<Script id="intercept-init" strategy="afterInteractive">
+  {`
+    window.Intercept = { apiKey: 'YOUR_API_KEY' }; 
+  `}
+</Script>
+
+Note on strategy="afterInteractive": This ensures the script is loaded and executed after the page becomes interactive, minimizing impact on critical page performance.
+Troubleshooting Checklist
+If your intercept is not appearing, check the following:
+
+
+* Placement: Is the snippet correctly placed in the <head> section of the global template?
+* Unique ID: Was the unique ID in the snippet (e.g., <YOUR_UNIQUE_INTERCEPT_ID>) copied correctly and not edited?
+* Rules: Do your Total Visits or Time Spent rules require the user to wait or visit multiple pages before the intercept triggers?
+* Console Errors: Are there any errors in the browser console preventing the script from loading?
+
+
+Operands
+Operands
+
+
+We support the following operands for matching the assigned rules. Note that not all operands are utilized for every rule type.
+
+
+
+
+Operand
+	What it does
+	Equals to
+	Exact Match. The data must be exactly identical to your value, character for character.
+	Not Equals To
+	Exclusion. Triggers for anything except the value you provide.
+	Includes
+	Partial Match. Looks for a specific word or phrase anywhere inside the data.
+	Excludes
+	Exclude Phrase. Triggers only if the specific word is missing.
+	Starts With
+	Prefix. Checks only the beginning of the data.
+	Ends With
+	Suffix. Checks only the very end of the data.
+	Greater than
+	More than. Checks if a number is larger than the value.        
+	Less Than        
+	Fewer than. Checks if a number is smaller than the value.        
+	Between        
+	Range. Checks if a number falls between two specific values.        
+	Exists        
+	Data is Present. Checks if the specific data point exists at all (is not empty).        
+	
+
+Behaviour on Different Sites
+Intercept widget deployment varies between traditional HTML sites and Single Page Applications (SPAs).
+
+
+Traditional HTML Websites:
+Each page load is a full server request and DOM reload. The JavaScript snippet must be included in a shared template (header/footer) to ensure it runs on every physical page load, as it is destroyed when the page unloads.
+
+
+Single Page Applications (SPAs):
+A single HTML file loads once. Subsequent navigation is handled by JavaScript ("soft navigation") without a full page reload, so the snippet, injected once in the main index.html, persists across the entire session. The challenge is ensuring the widget re-evaluates or re-triggers on these soft route changes, often requiring custom events or integration with the SPA's routing lifecycle.
+Rule - Button
+Understanding Button Rule
+
+
+The Button rule helps to show an intercept (like a survey or message) upon the click of a specific HTML button or link, identified by its unique id. This is a crucial rule for capturing immediate, in-the-moment feedback tied to a user's critical action (e.g., submitting a form, clicking "Buy Now," or unsubscribing).
+
+
+
+
+
+
+  ________________
+Example Scenario
+Imagine you want to show a short survey immediately after a customer clicks a "Download Report" button, whose ID in your website's code is download-report-button.
+
+
+
+
+How to Configure the Rule
+
+
+To check for a button click, you need to isolate and use the button's unique id attribute from your website's code.
+1. Identify the Element: Use your browser's developer tools (Right-Click -> Inspect) to find the button or link you want to target.
+2. Find the Key-Value pair: You will find the unique ID in the element's HTML tag, e.g., <button id="download-report-button"> Download Report </button>.
+3. Select the Key: The key is the ID itself.
+The Rule Setup:
+* Rule: Button
+* Operand: Equals
+* Id: download-report-button
+________________
+
+
+Screenshots Flow :
+
+
+
+
+Demo Site 
+  
+
+  
+
+
+
+Intercept
+  
+
+Rule - Data Layer
+Understanding Data Layer Rule
+
+
+The Data Layer is a way for your website to store information in the background (like customer type, product details, or page categories). Our intercept tool can "read" this information to decide when to show a survey.
+
+
+To set up a rule based on this data, you need to tell the system exactly where to look. We do this using a "Key" that points to the specific piece of information you want.
+
+
+  
+
+
+
+________________
+Example Scenario
+Imagine your website has the following code running in the background. It defines a data layer with some information about an animal:
+
+
+<script>
+ var dataLayer = {
+   animal : {
+     name : "Lion",
+   },
+   seg: "data_",
+ }
+</script>
+
+In this example, we want to target the name of the animal, which is "Lion".
+
+
+How to Configure the Rule
+To check if the animal name is "Lion", you need to provide the path to that specific value.
+
+
+1. Identify the starting point: The main container is called dataLayer.
+2. Find the category: Inside that, there is a category called animal.
+3. Find the specific item: Inside animal, there is the specific item name
+
+
+The Rule Key:
+You combine these steps with dots (.) to create the key:
+dataLayer.animal.name
+
+
+The Rule Setup:
+* Key: dataLayer.animal.name
+* Operand: Equals (or Contains)
+* Value: Lion
+
+
+
+
+Screenshots Flow : 
+
+
+Demo Site 
+  
+
+
+
+Intercept
+  
+
+
+
+Result:
+When a visitor comes to your site, the intercept will look at dataLayer, find animal, then find name. If it finds the word "Lion", the rule is a match
+
+
+
+
+Limitations:
+We do not support dynamic keys. The keys must be exact to retrieve the required data, even if the element's position (e.g., its index in a window object) changes from one instance (like the 1st index) to another (like the 5th index).
+
+
+Rule - URL Parameter
+Understanding URL Parameter Rule
+
+
+URL Parameters (also known as Query Strings) are specific codes added to the end of your website link, usually after a question mark (?). They are commonly used in marketing emails, ad campaigns, or referral links to track where a visitor came from. Our intercept tool can "read" these parameters to target specific visitors.
+
+
+To set up a rule based on this, you simply need to know the name of the parameter you want to track
+
+
+  
+.
+
+
+________________
+Example Scenario
+
+
+Imagine you have sent out a marketing email. When a customer clicks the link in that email, they land on your site with a URL that looks like this:
+
+
+
+
+https://www.myshop.com/home?campaign=summer_sale&source=newsletter
+
+In this example, we want to target visitors who came specifically from the newsletter.
+
+
+How to Configure the Rule
+
+
+To check if the visitor came from the newsletter, you need to isolate that specific part of the URL.
+1. Identify the Parameter: Look at the URL after the ?.
+2. Find the Key-Value pair: You will see pairs separated by an equals sign (=). In our example, we have source=newsletter.
+3. Select the Key: The left side of the equals sign is the key (source).
+The Rule Key:
+
+
+You use the parameter name exactly as it appears in the URL:
+
+
+source
+
+
+The Rule Setup:
+* Key: source
+* Operand: Equals
+* Value: newsletter
+________________
+Screenshots Flow :
+
+
+Demo Site
+  
+
+Intercept
+  
+
+
+
+
+
+Result:
+
+
+When a visitor arrives at your site, the intercept will check the address bar. If it finds the parameter source and sees that it equals newsletter, the rule is a match and the survey will trigger.
+
+
+Limitations:
+* Rule will be checked only when website is completely loaded
+
+
+
+
+Rule - HTML Selector
+What is the HTML Selector Rule?
+
+
+The HTML Selector is a powerful targeting rule that allows you to display an intercept (like a survey or a feedback button) based on the content of your web page. It works by checking for the presence, absence, or content of specific HTML elements on the page a visitor is currently viewing.
+
+
+Think of it as a way to target users based on what they are seeing and interacting with on your site, even if that information isn't in the URL.
+
+
+  
+
+
+
+________________
+
+
+How to set up
+
+
+Setting up the rule involves two main steps: Finding the Selector and Choosing the Operand.Step A: Finding the CSS Selector (The Element's Address)
+
+
+
+
+
+
+The CSS Selector is the unique "address" you use to tell the rule exactly which element to look for. You do not need to know how to code.
+
+
+Your Goal: Find the element's unique ID or Class in your browser's developer tools.
+1. Go to the Page: Visit the exact web page where you want the rule to apply.
+2. Right-Click & Inspect: Find the element you want to target (e.g., a "Buy Now" button). Right-click on it and select "Inspect."
+3. Find the Code: A window (Developer Tools) will open, highlighting the element's code.
+
+
+
+
+If you see...
+	Use this Selector
+	Reliability
+	id="submit-button"
+	The ID with a hash sign: \#submit-button
+	Best: IDs are unique and most reliable.
+	class="primary-action"
+	The Class with a period sign: .primary-action
+	Good: Use a descriptive class name.
+	
+
+Example: If the code is <button id="buy-now-btn" class="product-purchase-button">, the best selector is \#buy-now-btn.Step B: Configuring the Operand (The Rule's Action)
+
+
+
+
+Verify: Check if the element is accessible in the developers console. 
+
+
+Example:
+
+
+document.querySelectorAll("#submit-button").textContains
+ 
+Note : A text value is required for the rule to match; it cannot return undefined.
+________________
+
+
+Best Practices & Tips
+* Use IDs Whenever Possible: An id is meant to be unique on a page, making it the most reliable selector.
+* Be Specific with Classes: Avoid generic class names like .button or .row. Look for more descriptive classes that are less likely to be used elsewhere.
+* Test Your Selector: Before saving your rule, you can test your selector in the browser's developer console. Press F12, go to the "Console" tab, type document.querySelector("your-selector-here"), and press Enter. If it returns the HTML element, your selector is correct!
+* Website Changes: If your website's design or code is updated, your selectors might break. If a rule suddenly stops working, the first thing to check is if the selector is still valid.
+Rule - Total Visits
+What is the Total Visits Rule?
+
+
+This rule allows the intercept to be triggered when a user revisits the site, either by reloading the page or navigating from an external source. This metric counts multiple user visits within a single session, which is tied to the use of cookies.
+
+
+  
+
+
+
+Limitations:
+The rule will only function if an intercept script is globally implemented within the application. For Single Page Applications (SPAs), this presents no issue as all scripts are placed in a single location. However, for traditional HTML sites where page navigation involves a full reload, all APIs and related resources are reloaded, which consequently increases the count.
+Data Mapping
+Understanding Data Mapping
+
+
+Data mapping captures website visitor information and attaches it to their survey responses, providing additional context about the survey taker and their site activity. It extracts values from the site using a custom variable in the intercept and transmits that data to CX.
+
+
+Types
+
+
+* HTML element (which has id selector): Text from any part of the webpage
+* Url parameter: Technical data stored in the browser
+* Data layer: Information from the website address
+
+
+  
+
+________________
