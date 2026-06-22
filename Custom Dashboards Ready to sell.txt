@@ -1,0 +1,133 @@
+READY-TO-SELL (RTS)
+The Dashboard Chef
+Custom CX Dashboard Widgets
+Turning QuestionPro's native CX dashboards into interactive, insight-driven experiences for every audience in the organisation.
+QuestionPro CX  |  Internal Use  |  Version 1.0
+1. What problem does this solve?
+QuestionPro CX gives teams the data. The Dashboard Chef gives them the signal.
+Out-of-the-box QuestionPro dashboards show gauges, bars, and numbers — but they don't explain what the numbers mean, what changed after a filter was applied, or what to do next. For organisations with a mixed audience — executives who want one number, managers who want trends, analysts who want distributions — a single static layout serves none of them well.
+Custom CX Dashboard Widgets replace the native QuestionPro tiles with interactive, audience-aware visualisations that read the same live data, respond to the same filters, and surface plain-English insights alongside the charts — including AI-generated action items from the QuestionPro AI Router.
+2. What is the solution and how does it work?
+What it does. JavaScript widgets injected into QuestionPro's Custom HTML Widget tile read live data from native QuestionPro source widgets on the same dashboard, render a bespoke UI, and re-render automatically when any dashboard filter is applied. No page reload. No data export. No separate tool.
+How it fits the product. The entire solution runs inside the QuestionPro CX dashboard the customer already uses. Custom widgets sit on top of native QuestionPro widgets, reading from them and hiding them. The native widgets keep doing their job — receiving data from QuestionPro's backend on every filter change — while the custom widgets handle the visual layer.
+Core components
+Core flow
+3. Key benefits
+Every audience gets what they need from the same dashboard: executives get a CX Health Score and plain-English status; managers get interactive trends and segment drill-downs; analysts get distributions, year-on-year comparisons, and raw breakdowns.
+Filters update every widget simultaneously — and the AI Insights widget re-generates its recommendations based on the filtered view automatically.
+The dashboard looks finished. Native source widgets are hidden; users see only the custom UI. No blank white boxes, no duplicate charts.
+Built entirely inside QuestionPro. No external platforms, no middleware, no additional licences beyond what the customer already has.
+The widget pattern is reusable. Once the architecture is understood, any new widget for any QuestionPro source widget type can be generated using an LLM prompt template in minutes.
+4. Who is it for?
+Roles that care: CX directors and VoC programme leads, operations and service managers, data analysts and CX specialists, executive sponsors who receive dashboard links.
+Workflows it improves: monthly CX review meetings, real-time operational monitoring, post-filter segment analysis, executive reporting, and board-level CX storytelling.
+Most useful when:
+The customer has QuestionPro CX and uses the dashboard regularly but finds it hard to communicate insights to non-analyst stakeholders.
+Different audiences need different views from the same data — executives, managers, and analysts all use the dashboard but want different levels of detail.
+The CX team wants to move from reporting scores to recommending actions — and wants that to happen automatically, not through a manual analysis process.
+The dashboard is used in live meetings or presentations and needs to be interactive, not a static screenshot.
+5. Great fit vs. poor fit
+6. Use cases / examples
+7. How do you demo it?
+Recommended demo flow
+Open the dashboard — show the clean layout with no white boxes or raw native charts visible. Point out the five custom widgets.
+Click the Top Box metric card on the CSAT Overview — show the year-by-year trend panel expanding inline. Click CX Health to show the CSAT 50% + FCR 30% + CES 20% score breakdown.
+Apply a dashboard filter (e.g. Support Channel: Chat) — show all four data widgets updating simultaneously within 1–2 seconds.
+Click a year bar in the CES Tracker — show the quarterly breakdown expanding inline. Toggle the score distribution overlay to show the effort band split.
+Click a segment card in CSAT by Segment — show the year-by-year CSAT trend for that segment expanding below it.
+Switch Resolution vs Effort to Manager view — click the "Not resolved" row to show the plain-English interpretation and recommended action.
+Point at the AI Insights widget — hit Refresh and walk through the headline, top three actions, and forecast risk statement generated from the current filtered data.
+8. Pricing
+Position this as a services-led customisation. The commercial value is in the build, configuration, and deployment — the widget scripts are bespoke to each dashboard and require setup time. Scope by the number of widgets, the complexity of the source widget configuration, and whether the AI Insights widget is included.
+9. Competitive angle
+Other BI tools (Tableau, Power BI, Looker) can build interactive dashboards from QuestionPro data — but they require a data extract, a separate licence, and a separate login. This solution makes the QuestionPro dashboard itself the interactive tool, keeping the team in one place.
+QuestionPro's own AI features generate insights at the question level. The Dashboard Chef aggregates all widget data — CSAT, effort, resolution, segments — into a single AI prompt that produces cross-metric insights and prioritised actions, not per-question breakdowns.
+Custom dashboard vendors typically require a separate SaaS tool. This pattern requires only the QuestionPro CX licence the customer already has, plus a services engagement to set it up.
+Because the widgets are JavaScript running inside QuestionPro, they respond to the same filters, date ranges, and segments as every other dashboard widget — no separate filter logic to maintain.
+Sales positioning. Lead with what they already have: "You're already paying for QuestionPro CX and collecting the data. We're not asking you to add another tool or another login. We're making the dashboard you already open every week into something your CEO can read in 30 seconds and your analyst can drill into for 30 minutes."
+10. Objection handling
+11. Enablement assets
+Full technical cookbook: The Dashboard Chef — Custom CX Dashboard Widgets (source widget setup → ID mapping → script configuration → testing → troubleshooting).
+Five production widget scripts: CSAT Overview, Resolution vs Effort, CES Tracker, CSAT by Segment, AI Insights — ready to configure and deploy.
+LLM prompt template for generating new widgets — paste into Claude, ChatGPT, or Gemini with your widget specification to produce a compliant script.
+Widget ID mapping guide — how to find SOURCE_ID and TARGET_ID from the browser inspector.
+Testing checklist — render on load, source widget hidden, filter update, interactivity, AI generation, AI auto-refresh on filter.
+Deployment notes from Qatar Rail and Miral Destinations — gotchas, lessons learned, and recommended dashboard layout.
+Solution type
+Services-led customisation (QuestionPro-native, no external tools)
+Proof point
+Built for Qatar Rail and Miral Destinations — interactive dashboards used live by CX, operations, and executive teams
+Core platform
+QuestionPro CX Dashboard + Custom HTML Widgets + JavaScript + QuestionPro AI Router
+Released
+Ongoing CX customisation pattern
+Internal positioning: Use this when a customer already has QuestionPro CX and is getting the data but not the signal. Their dashboard works — they can see scores — but executives don't know what to do with a gauge, managers can't drill into segments without exporting to Excel, and the filter button changes numbers with no explanation of what changed. Position The Dashboard Chef as turning the dashboard they already have into the decision tool they actually need.
+Component
+Role in the solution
+Source widget (QP native)
+The real QuestionPro widget — gauge, tracker, cross-tab, trend comparison. Kept on the dashboard and hidden from users. QuestionPro updates it on every filter change.
+Custom HTML Widget (target)
+The blank QuestionPro tile where the JavaScript renders the custom UI. This is what the user sees.
+JavaScript widget script
+Self-contained script pasted into the Custom HTML Widget editor. Reads data, renders UI, detects filter changes, and re-renders automatically.
+findChart() pattern
+The function that reads live Highcharts data from source widgets, skipping stale destroyed instances correctly.
+MutationObserver + poll loop
+Detects filter changes and triggers re-render. Observer catches DOM changes; 750ms poll catches anything the observer misses.
+QuestionPro AI Router
+Called by the AI Insights widget to generate plain-English insights, prioritised actions, and forecast risk from live dashboard data.
+User applies filter  →  QP updates source widget  →  Observer / poll detects change  →  Custom widget reads new data  →  Custom widget re-renders  →  User sees updated signal  →  AI Insights auto-refreshes with new context
+Strong fit
+Poor fit / proceed with caution
+Customer is on QuestionPro CX and actively uses the dashboard.
+Customer is on Research (non-CX) plan — Custom HTML Widgets may not be available; confirm with account team.
+They have a mixed audience: executives, managers, and analysts all view the dashboard.
+Single analyst using the dashboard for personal analysis — the interactivity adds less value than for a shared team dashboard.
+They want insights surfaced automatically, not produced manually after each data refresh.
+No appetite for a services engagement — they expect out-of-the-box functionality without customisation work.
+They use dashboard filters regularly to slice by segment, channel, or time period.
+Very simple dashboard with one or two static metrics and no filter usage — the complexity is not justified.
+They want AI-generated insights tied to their live dashboard data.
+They want AI insights from text / verbatim data rather than numeric KPIs — a different solution applies.
+Use case
+Example positioning
+Executive CX review
+CEO wants one number and a status. CSAT Overview shows 67.9%, CX Health Score 66 (Fair), and a plain-English anomaly banner if anything has moved. No chart reading required.
+Filter-driven segment analysis
+Operations manager applies a Support Channel filter. All five widgets update simultaneously. CSAT by Segment shows which segment drove the change. AI Insights regenerates with channel-specific actions.
+Effort and resolution diagnosis
+CX manager wants to understand why CSAT is declining. Resolution vs Effort shows 77% of unresolved cases rated effort as Very Difficult. Manager view surfaces the plain-English action: prioritise callback for high-effort unresolved tickets.
+Quarterly business review preparation
+CX analyst opens CES Tracker, clicks 2024 bar to expand quarterly detail, toggles score distribution overlay to show effort band breakdown. Copies the key insight directly from the AI Insights headline.
+New segment onboarding
+Three new business units added to the dashboard. CSAT by Segment shows them immediately as 'No responses' with dashed borders — making clear they are tracked but have no data yet, rather than appearing broken.
+Suggested talk track: "The data is already in QuestionPro — you are collecting it, it is in the dashboard, it is being filtered. What we are adding is the layer that turns those numbers into a signal. A CEO can read this dashboard in 30 seconds. An analyst can drill into it for 30 minutes. And when you apply a filter, the AI tells you what changed and what to do about it."
+Package
+What is included
+Commercial note
+Starter
+One custom widget on one dashboard. Source widget setup, ID mapping, script configuration, and testing.
+Best for a proof of value on a single KPI. Recommended starting point for new customers.
+Standard
+Up to four custom widgets (CSAT Overview, Resolution vs Effort, CES Tracker, CSAT by Segment) on one dashboard. Full source widget setup and filter sync testing.
+Best for a production CX dashboard used by a mixed audience of executives, managers, and analysts.
+Premium
+Full Standard suite plus the AI Insights widget with QuestionPro AI Router integration, customised prompt configuration, and auto-refresh on filter change.
+Best for customers who want AI-generated insights surfaced live in the dashboard.
+Multi-dashboard rollout
+Premium suite replicated across multiple dashboards (e.g. by region, by business unit, by survey programme). Per-dashboard configuration and testing.
+Best for enterprise customers with multiple CX programmes running on QuestionPro.
+Worked example: Qatar Rail started with Standard (four widgets, one dashboard). After three months they added the AI Insights widget (moving to Premium) and then requested a second dashboard for a separate survey programme (multi-dashboard). Scope Services time per dashboard; confirm final pricing with your Services lead.
+If the customer says…
+Your response
+"We can build this ourselves — we have developers."
+You can — and we can hand you the architecture. But the hard part isn't the HTML. It's knowing exactly how QuestionPro's Highcharts API works, which hiding method causes React to unmount the widget, and how to detect filter changes without an event hook. That took weeks of live debugging. We give you the working result, not the learning curve.
+"Does this break when QuestionPro updates?"
+The widgets read from Highcharts series data and DOM table structures — both stable, documented interfaces. They do not rely on internal QuestionPro API calls or undocumented endpoints. We also offer a maintenance tier that monitors and updates scripts if anything changes.
+"We already use Power BI / Tableau for our dashboards."
+Great — those are excellent analysis tools. This is different: it makes the QuestionPro dashboard itself the presentation layer, so your CX team gets live, filter-responsive insights without exporting data or switching tools mid-meeting.
+"Is the AI trustworthy? What if it says something wrong?"
+The AI Insights widget shows exactly what data it used (response count, CSAT %, CES mean, segment scores) in the metric pills at the top. The insights are grounded in the live dashboard data — not generated from general knowledge. If the data is right, the insights are directionally right.
+"Can we customise what the widgets show?"
+Yes. Each widget has configuration variables at the top of the script (benchmark threshold, colour scheme, segment labels). More significant changes — different chart types, different KPIs — can be generated from the LLM template in the solution cookbook.
+A dashboard that shows charts is a reporting tool. A dashboard that surfaces signals, explains what changed, and tells you what to do next is a decision tool. That is the difference The Dashboard Chef makes.
