@@ -1,0 +1,119 @@
+Targeting Rules
+===============
+
+Rules type for website (Engine)
+
+Country
+* Understanding: Target or exclude visitors based on their physical location.
+* Example Scenario: Show a survey only to visitors in Canada.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Canada from the list.
+* Result: Only visitors accessing the site from a Canadian IP address will see the intercept.
+Browser Type
+* Understanding: Target visitors based on the web browser they are using (Chrome, Safari, Firefox, etc.).
+* Example Scenario: Test a new feature that only works on Google Chrome.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Chrome.
+* Result: Visitors using Safari or Edge will not see the survey.
+Device Type
+* Understanding: Distinguish between visitors on Desktop, Mobile, or Tablet.
+* Example Scenario: Show a shorter, mobile-friendly survey to phone users.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select Mobile.
+* Result: Desktop users are ignored; only smartphone users see the intercept.
+OS (Operating System)
+* Understanding: Target the underlying system of the device (Windows, macOS, iOS, Android).
+* Example Scenario: Ask for feedback on your new iPhone App.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select iOS.
+* Result: Only users on Apple mobile devices will match.
+User Type
+* Understanding: Differentiates between someone visiting for the first time versus someone coming back.
+* Example Scenario: Offer a "Welcome" discount only to new people.
+* How to Configure:
+   * Operand: Equals
+   * Value: Select New Visitor.
+* Result: If the system recognizes the user's cookie from a previous visit, the rule fails.
+IP Address
+* Understanding: Target a specific network address, often used for internal testing.
+* Example Scenario: Test the survey live, but only for people in your office.
+* How to Configure:
+   * Operand: Equals
+   * Value: 192.168.1.50 (Your specific IP).
+* Result: The general public cannot see the survey; only your specific network matches.
+
+Page URL
+* Understanding: Checks the specific web address the visitor is currently looking at.
+* Example Scenario: Show a survey only on the "Thank You" page after a purchase.
+* How to Configure:
+   * Key: (Not needed, automatic)
+   * Operand: Contains
+   * Value: thank-you
+* Result: Matches www.site.com/checkout/thank-you but ignores www.site.com/home.
+Time Spent (On Page)
+* Understanding: Checks how long the user has been looking at the current page.
+* Example Scenario: Offer help only if a user has been stuck on the checkout page for more than 60 seconds.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 60 (Seconds)
+* Result: The survey waits 60 seconds before appearing.
+Session Duration (Total Time)
+* Understanding: Checks the total time the user has been on your website across all pages combined.
+* Example Scenario: Target highly engaged users who have been browsing your site for over 5 minutes.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 300 (Seconds)
+* Result: Triggers only after 5 minutes of total browsing.
+Page Visited (History)
+* Understanding: Checks how many pages the user has clicked on during this visit.
+* Example Scenario: Show a survey only after the user has browsed 3 different pages.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 3
+* Result: The user browses Page A, then Page B, then Page C. On Page D, the survey appears.
+Button Click
+* Understanding: Triggers the intercept when a user clicks a specific button or link on your page.
+* Example Scenario: Show a popup when someone clicks "Unsubscribe".
+* How to Configure:
+   * Key: You need the "ID" of the button from your website code.
+   * Operand: Equals
+   * Value: unsubscribe-btn (The ID of the button).
+* Result: The survey triggers immediately upon clicking that specific button.
+HTML Selector
+* Understanding: An advanced rule that checks if a specific HTML element exists on the page.
+* Example Scenario: Trigger a survey only when an "Error Message" box appears on the screen.
+* How to Configure:
+   * Key: The CSS selector (e.g., .error-message-box).
+   * Operand: Exists
+* Result: The intercept watches the page. If that error box appears, the rule matches.
+Query Param
+* Understanding: Checks for marketing codes or tracking IDs in the website link (after the ?).
+* Example Scenario: Target users coming from a specific newsletter. URL: site.com?source=newsletter.
+* How to Configure:
+   * Key: source
+   * Operand: Equals
+   * Value: newsletter
+* Result: Matches visitors who clicked your specific newsletter link.
+Total Visits (Website Entry Count)
+* Understanding: Checks how many times the visitor has entered (or re-entered) the website across all sessions. Each page load, refresh, or new tab counts as one visit. SPA navigation and internal link clicks do not count.
+* Example Scenario: Show a survey only after the user has visited the website 3 or more times.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 2
+* Result: The visitor opens the website on Monday (Visit 1), returns on Wednesday (Visit 2), comes back on Friday (Visit 3). On the Friday visit, the survey appears.
+Scroll Depth (Vertical)
+* Understanding: Checks how far down the user has scrolled a specific page, typically expressed as a percentage of the page content's height.
+* Example Scenario: Show a survey only after the user has scrolled at least 50% down the article content.
+* How to Configure:
+   * Operand: Greater Than
+   * Value: 50
+   * Unit: Percent (%)
+
+Rules type for Mobile Sdk (In Progress)
+For Mobile Rules refer the video - https://drive.google.com/file/d/1EQJH3WMjdC59j-PWuHNXiU5rEM71GK-A/view?usp=drive_link
+Mobile Intercept setup -
+https://docs.google.com/document/d/1ZhJ9sRZ9aMmIrZQRmcTiXfhdODMMSmEsFKL7A6mXDlk/edit?tab=t.t3ga0gdv7vot#heading=h.vfyuyni7obtz

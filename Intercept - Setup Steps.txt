@@ -1,0 +1,93 @@
+Setup Steps
+===========
+
+Intercept Snippet: Implementation Guide & Best Practices
+This document provides a clear, step-by-step guide on how to integrate the Intercept JavaScript snippet into your website. Proper implementation is crucial for ensuring the Intercept engine can correctly track user behavior, evaluate rules, and display surveys at the optimal moment.
+1. Where to Place the Code Snippet
+The JavaScript snippet must be placed in a location where it executes on every single page load of your website.
+
+Site Type
+	Placement Location
+	Rationale
+	Traditional HTML Site
+	Within the <head> section of your global template (header/footer).
+	Ensures the script is loaded and initialized before the page content to track early user behavior (like the first page URL and session start).
+	Single Page Application (SPA)
+	In the main index.html file, inside the <head> section.
+	The script persists across all soft navigations (internal route changes)
+
+Best Practice: Always place the script as high as possible within the <head> tag.
+2. How to Implement the Snippet (Step-by-Step)
+The following steps explain how to copy the unique snippet provided for your Intercept and paste it correctly.
+Step 1: Copy the Snippet
+1. Navigate to the Intercept Setup tab.
+2. Click the Copy button to get the entire code block.
+
+Standard Snippet Example (Use your unique API key)
+```
+    <!-- Start of async Intercept tracking code -->
+    <script type="text/javascript" src="https://intercept-widget.questionpro.com/static/js/loader.js"></script>
+    <script type="text/javascript">
+       var Intercept = { apiKey: [YOUR_API_KEY] };
+    </script>
+    <!-- End of async Intercept tracking code -->
+
+```
+Step 2: Access Your Website's Code
+You will need access to your website's main template files. This is usually done via your Content Management System (CMS), e-commerce platform's theme editor, or direct access to your site files.
+
+Platform Example
+	How to Access the Code
+	Shopify
+	Online Store > Themes > Actions > Edit Code > theme.liquid
+	WordPress
+	Appearance > Theme File Editor > header.php
+	Custom Site
+	Access the shared template file that contains the opening <head> tag.
+	Step 3: Paste the Code
+1. Open the correct template file for editing.
+2. Locate the closing </head> tag.
+3. Paste the Intercept snippet immediately before the </head> tag.
+
+```
+    <!-- Start of async Intercept tracking code -->
+    <script type="text/javascript" src="https://intercept-widget.questionpro.com/static/js/loader.js"></script>
+    <script type="text/javascript">
+       var Intercept = { apiKey: [YOUR_API_KEY] };
+    </script>
+    <!-- End of async Intercept tracking code -->
+
+</head> <!-- The snippet is placed immediately above this tag -->
+```
+Step 4: Save and Verify
+1. Save the changes to your website's template file.
+2. Open your website in a new browser tab.
+3. Press F12 to open Developer Tools, and check the Console tab. You should see a message confirming the Intercept Engine has initialized.
+
+Special Considerations for Next.js (Client-Side Navigation)
+
+For Next.js, traditional <script> tags can fail on internal route changes. To ensure the script loads on every page view, you must use the built-in next/script component.
+
+Place the following code in your main layout file (e.g., _app.js or layout.js):
+```
+import Script from 'next/script'
+
+<Script
+  src="https://intercept-widget.questionpro.eu/static/js/loader.js"
+  strategy="afterInteractive"
+/>
+
+<Script id="intercept-init" strategy="afterInteractive">
+  {`
+    window.Intercept = { apiKey: 'YOUR_API_KEY' };
+  `}
+</Script>
+```
+Note on strategy="afterInteractive": This ensures the script is loaded and executed after the page becomes interactive, minimizing impact on critical page performance.
+Troubleshooting Checklist
+If your intercept is not appearing, check the following:
+
+* Placement: Is the snippet correctly placed in the <head> section of the global template?
+* Unique ID: Was the unique ID in the snippet (e.g., <YOUR_UNIQUE_INTERCEPT_ID>) copied correctly and not edited?
+* Rules: Do your Total Visits or Time Spent rules require the user to wait or visit multiple pages before the intercept triggers?
+* Console Errors: Are there any errors in the browser console preventing the script from loading?

@@ -1,0 +1,27 @@
+Operands
+========
+
+We support the following operands for matching the assigned rules. Note that not all operands are utilized for every rule type.
+
+Operand
+	What it does
+	Equals to
+	Exact Match. The data must be exactly identical to your value, character for character.
+	Not Equals To
+	Exclusion. Triggers for anything except the value you provide.
+	Includes
+	Partial Match. Looks for a specific word or phrase anywhere inside the data.
+	Excludes
+	Exclude Phrase. Triggers only if the specific word is missing.
+	Starts With
+	Prefix. Checks only the beginning of the data.
+	Ends With
+	Suffix. Checks only the very end of the data.
+	Greater than
+	More than. Checks if a number is larger than the value.
+	Less Than
+	Fewer than. Checks if a number is smaller than the value.
+	Between
+	Range. Checks if a number falls between two specific values.
+	Exists
+	Data is Present. Checks if the specific data point exists at all (is not empty).

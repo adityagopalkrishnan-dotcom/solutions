@@ -1,0 +1,50 @@
+Data Layer Rule
+===============
+
+The Data Layer is a way for your website to store information in the background (like customer type, product details, or page categories). Our intercept tool can "read" this information to decide when to show a survey.
+
+To set up a rule based on this data, you need to tell the system exactly where to look. We do this using a "Key" that points to the specific piece of information you want.
+
+------------------------------
+Example Scenario
+Imagine your website has the following code running in the background. It defines a data layer with some information about an animal:
+
+```
+<script>
+ var dataLayer = {
+   animal : {
+     name : "Lion",
+   },
+   seg: "data_",
+ }
+</script>
+```
+In this example, we want to target the name of the animal, which is "Lion".
+
+How to Configure the Rule
+To check if the animal name is "Lion", you need to provide the path to that specific value.
+
+1. Identify the starting point: The main container is called dataLayer.
+2. Find the category: Inside that, there is a category called animal.
+3. Find the specific item: Inside animal, there is the specific item name
+
+The Rule Key:
+You combine these steps with dots (.) to create the key:
+dataLayer.animal.name
+
+The Rule Setup:
+* Key: dataLayer.animal.name
+* Operand: Equals (or Contains)
+* Value: Lion
+
+Screenshots Flow :
+
+Demo Site
+
+Intercept
+
+Result:
+When a visitor comes to your site, the intercept will look at dataLayer, find animal, then find name. If it finds the word "Lion", the rule is a match
+
+Limitations:
+We do not support dynamic keys. The keys must be exact to retrieve the required data, even if the element's position (e.g., its index in a window object) changes from one instance (like the 1st index) to another (like the 5th index).

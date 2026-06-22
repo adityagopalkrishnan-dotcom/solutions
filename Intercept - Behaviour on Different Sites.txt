@@ -1,0 +1,10 @@
+Behaviour on Different Sites
+============================
+
+Intercept widget deployment varies between traditional HTML sites and Single Page Applications (SPAs).
+
+Traditional HTML Websites:
+Each page load is a full server request and DOM reload. The JavaScript snippet must be included in a shared template (header/footer) to ensure it runs on every physical page load, as it is destroyed when the page unloads.
+
+Single Page Applications (SPAs):
+A single HTML file loads once. Subsequent navigation is handled by JavaScript ("soft navigation") without a full page reload, so the snippet, injected once in the main index.html, persists across the entire session. The challenge is ensuring the widget re-evaluates or re-triggers on these soft route changes, often requiring custom events or integration with the SPA's routing lifecycle.

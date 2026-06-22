@@ -1,0 +1,39 @@
+What Is Intercept
+=================
+
+The Art of the Digital "Tap on the Shoulder"
+
+Intercept is the intelligence layer that sits between your website and your visitors. It is not just a tool for showing pop-ups; it is a decision engine that determines the perfect moment to engage with a user.
+
+Instead of showing a generic survey to every person who lands on your homepage (which can be annoying), Intercept watches, waits, and listens. It analyzes who the visitor is, where they came from, and what they are doing right now.
+
+What are we achieving?
+The goal of Intercept is to move from "Broadcasting" to "Conversing."
+
+* Relevance: Only ask questions that matter to that specific user.
+* Precision: Target users based on deep data (like their cart value or membership level).
+* Experience: Improve customer satisfaction by offering help or asking for feedback exactly when it makes sense—not when it interrupts.
+
+------------------------------
+
+A Real-World Example: The "Frustrated Shopper"
+
+The Scenario:
+
+Imagine a customer named Sarah. She is browsing your online store on her iPhone. She has added items to her cart but has been stuck on the "Checkout Payment" page for over 2 minutes without buying anything.
+
+Without Intercept:
+
+Sarah gets frustrated, closes the tab, and you lose the sale. You never know why.
+
+With Intercept:
+
+You have set up a "Cart Rescue" rule. The system detects:
+
+1. Device: Mobile (She might be having trouble typing).
+2. Page: Checkout.
+3. Time Spent: > 120 seconds (She is stuck).
+
+The Result:
+Intercept triggers a friendly, non-intrusive popup:
+🛖 Overview

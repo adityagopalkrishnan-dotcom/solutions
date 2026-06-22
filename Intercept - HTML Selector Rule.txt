@@ -1,0 +1,47 @@
+HTML Selector Rule
+==================
+
+The HTML Selector is a powerful targeting rule that allows you to display an intercept (like a survey or a feedback button) based on the content of your web page. It works by checking for the presence, absence, or content of specific HTML elements on the page a visitor is currently viewing.
+
+Think of it as a way to target users based on what they are seeing and interacting with on your site, even if that information isn't in the URL.
+
+------------------------------
+
+How to set up
+
+Setting up the rule involves two main steps: Finding the Selector and Choosing the Operand.Step A: Finding the CSS Selector (The Element's Address)
+
+The CSS Selector is the unique "address" you use to tell the rule exactly which element to look for. You do not need to know how to code.
+
+Your Goal: Find the element's unique ID or Class in your browser's developer tools.
+1. Go to the Page: Visit the exact web page where you want the rule to apply.
+2. Right-Click & Inspect: Find the element you want to target (e.g., a "Buy Now" button). Right-click on it and select "Inspect."
+3. Find the Code: A window (Developer Tools) will open, highlighting the element's code.
+
+If you see...
+	Use this Selector
+	Reliability
+	id="submit-button"
+	The ID with a hash sign: \#submit-button
+	Best: IDs are unique and most reliable.
+	class="primary-action"
+	The Class with a period sign: .primary-action
+	Good: Use a descriptive class name.
+
+Example: If the code is <button id="buy-now-btn" class="product-purchase-button">, the best selector is \#buy-now-btn.Step B: Configuring the Operand (The Rule's Action)
+
+Verify: Check if the element is accessible in the developers console.
+
+Example:
+
+```
+document.querySelectorAll("#submit-button").textContains
+```
+Note : A text value is required for the rule to match; it cannot return undefined.
+------------------------------
+
+Best Practices & Tips
+* Use IDs Whenever Possible: An id is meant to be unique on a page, making it the most reliable selector.
+* Be Specific with Classes: Avoid generic class names like .button or .row. Look for more descriptive classes that are less likely to be used elsewhere.
+* Test Your Selector: Before saving your rule, you can test your selector in the browser's developer console. Press F12, go to the "Console" tab, type document.querySelector("your-selector-here"), and press Enter. If it returns the HTML element, your selector is correct!
+* Website Changes: If your website's design or code is updated, your selectors might break. If a rule suddenly stops working, the first thing to check is if the selector is still valid.

@@ -1,0 +1,57 @@
+Intercept Types
+===============
+
+Intercept Types Showcase: Maximizing UX for Feedback Collection
+This document provides a template for showcasing the three primary Intercept types, focusing on their unique characteristics, optimal use cases, and how each ensures a positive User Experience (UX).
+
+The Intercept decision engine determines the perfect moment to engage a visitor, moving from disruptive "Broadcasting" to timely "Conversing."
+1. Feedback Popup (The Conversational Tap)
+The Feedback Popup is a highly controlled, non-intrusive modal that appears within the context of the page. It is designed for specific, in-the-moment feedback tied to an action or time spent on the page.
+Key UX Characteristic: Contextual and Low-Interruption
+* Behavior: Appears after a rule is met (e.g., 60 seconds on a page, 3 pages visited).
+* Design: Typically small or center-aligned, allowing the user to still view the page content behind it.
+* Goal: Capture feedback while the memory of the experience is fresh, minimizing disruption to the user's task flow.
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Product Detail Review
+	Time Spent (On Page) > 30 seconds and Page URL Includes /product-details/
+	Asks the user if they found the information they needed right when they are most engaged with the product.
+	Post-Checkout Rating
+	Page URL Equals thank-you.html and User Type Equals Returning Visitor
+	Collects a quick satisfaction score immediately after a completed transaction.
+
+2. Exit Intercept (The Last-Chance Rescue)
+The Exit Intercept triggers only when the user's mouse movement suggests they are about to leave the website (mouse movement tracked towards the browser's top bar). It is the final opportunity to engage a disengaged visitor.
+Key UX Characteristic: Non-Disruptive to Active Browsing
+* Behavior: Only triggers upon an "Exit Intent" action, ensuring it never interrupts active browsing.
+* Design: Can be a full-screen overlay to draw maximum attention to the rescue offer or question.
+* Goal: Recover an abandoned shopping cart, capture the reason for leaving, or offer a final incentive (like a discount).
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Cart Abandonment Rescue
+	Exit Intent Exists and Data Layer Includes cart_value > 0
+	Offers a discount code or free shipping to a customer who is about to leave with items still in their cart.
+	Reason for Leaving
+	Exit Intent Exists and Page URL Includes /home
+	Asks a simple, one-question survey about why they are leaving the site so quickly.
+
+3. Feedback Button (The Passive, Always-Available Option)
+The Feedback Button (often a small tab or icon anchored to the side of the screen) is a passive intercept. It remains visible on the page, allowing the user to initiate the survey or feedback form entirely on their own schedule.
+Key UX Characteristic: User-Initiated and Passive
+* Behavior: The button loads upon page initialization and remains available. The survey only appears upon the user's click.
+* Design: Minimalist design, usually a non-intrusive tab on the left or right edge of the viewport.
+* Goal: Serve as a persistent channel for unsolicited or general feedback without interrupting the user's journey at all.
+
+Use Case
+	Trigger Rules (Example)
+	Description
+	Always-On Site Feedback
+	Country Equals Canada
+	A persistent "Feedback" tab is only shown to users in a specific region for ongoing data collection.
+	Reporting a Bug
+	Device Type Equals Desktop
+	Provides a quick way for desktop users to report technical issues they encounter without leaving the current page.

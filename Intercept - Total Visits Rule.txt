@@ -1,0 +1,7 @@
+Total Visits Rule
+=================
+
+This rule allows the intercept to be triggered when a user revisits the site, either by reloading the page or navigating from an external source. This metric counts multiple user visits within a single session, which is tied to the use of cookies.
+
+Limitations:
+The rule will only function if an intercept script is globally implemented within the application. For Single Page Applications (SPAs), this presents no issue as all scripts are placed in a single location. However, for traditional HTML sites where page navigation involves a full reload, all APIs and related resources are reloaded, which consequently increases the count.

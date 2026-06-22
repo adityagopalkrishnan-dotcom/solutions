@@ -1,0 +1,12 @@
+Data Mapping
+============
+
+Data mapping captures website visitor information and attaches it to their survey responses, providing additional context about the survey taker and their site activity. It extracts values from the site using a custom variable in the intercept and transmits that data to CX.
+
+Types
+
+* HTML element (which has id selector): Text from any part of the webpage
+* Url parameter: Technical data stored in the browser
+* Data layer: Information from the website address
+
+------------------------------

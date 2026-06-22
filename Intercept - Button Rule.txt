@@ -1,0 +1,26 @@
+Button Rule
+===========
+
+The Button rule helps to show an intercept (like a survey or message) upon the click of a specific HTML button or link, identified by its unique id. This is a crucial rule for capturing immediate, in-the-moment feedback tied to a user's critical action (e.g., submitting a form, clicking "Buy Now," or unsubscribing).
+
+------------------------------
+Example Scenario
+Imagine you want to show a short survey immediately after a customer clicks a "Download Report" button, whose ID in your website's code is download-report-button.
+
+How to Configure the Rule
+
+To check for a button click, you need to isolate and use the button's unique id attribute from your website's code.
+1. Identify the Element: Use your browser's developer tools (Right-Click -> Inspect) to find the button or link you want to target.
+2. Find the Key-Value pair: You will find the unique ID in the element's HTML tag, e.g., <button id="download-report-button"> Download Report </button>.
+3. Select the Key: The key is the ID itself.
+The Rule Setup:
+* Rule: Button
+* Operand: Equals
+* Id: download-report-button
+------------------------------
+
+Screenshots Flow :
+
+Demo Site
+
+Intercept

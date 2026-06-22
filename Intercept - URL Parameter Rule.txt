@@ -1,0 +1,48 @@
+URL Parameter Rule
+==================
+
+URL Parameters (also known as Query Strings) are specific codes added to the end of your website link, usually after a question mark (?). They are commonly used in marketing emails, ad campaigns, or referral links to track where a visitor came from. Our intercept tool can "read" these parameters to target specific visitors.
+
+To set up a rule based on this, you simply need to know the name of the parameter you want to track
+
+.
+
+------------------------------
+Example Scenario
+
+Imagine you have sent out a marketing email. When a customer clicks the link in that email, they land on your site with a URL that looks like this:
+
+```
+https://www.myshop.com/home?campaign=summer_sale&source=newsletter
+```
+In this example, we want to target visitors who came specifically from the newsletter.
+
+How to Configure the Rule
+
+To check if the visitor came from the newsletter, you need to isolate that specific part of the URL.
+1. Identify the Parameter: Look at the URL after the ?.
+2. Find the Key-Value pair: You will see pairs separated by an equals sign (=). In our example, we have source=newsletter.
+3. Select the Key: The left side of the equals sign is the key (source).
+The Rule Key:
+
+You use the parameter name exactly as it appears in the URL:
+
+source
+
+The Rule Setup:
+* Key: source
+* Operand: Equals
+* Value: newsletter
+------------------------------
+Screenshots Flow :
+
+Demo Site
+
+Intercept
+
+Result:
+
+When a visitor arrives at your site, the intercept will check the address bar. If it finds the parameter source and sees that it equals newsletter, the rule is a match and the survey will trigger.
+
+Limitations:
+* Rule will be checked only when website is completely loaded
