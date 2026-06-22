@@ -201,10 +201,34 @@ async function getFile(path) {
   return fileCache[path];
 }
 
-async function fetchRepoEntry(e) {
+// Extract the most relevant section of a plaintext file based on query words
+// Finds the paragraph/window with the highest query-word density
+function extractRelevantSection(text, queryWords, maxLen) {
+  if (!queryWords || queryWords.length === 0 || text.length <= maxLen) return text.slice(0, maxLen);
+  const lower = text.toLowerCase();
+  // Find best starting position: scan in 500-char steps, score each window
+  let bestPos = 0, bestScore = -1;
+  const step = 500, winSize = maxLen;
+  for (let i = 0; i < text.length - 200; i += step) {
+    const window = lower.slice(i, i + winSize);
+    let score = 0;
+    for (const w of queryWords) { if (w.length >= 3) score += (window.split(w).length - 1); }
+    if (score > bestScore) { bestScore = score; bestPos = i; }
+  }
+  // Always include a small intro (first 300 chars) for context
+  const intro = bestPos > 300 ? text.slice(0, 300) + '
+
+[...]
+
+' : '';
+  const section = text.slice(bestPos, bestPos + maxLen - intro.length);
+  return intro + section;
+}
+
+async function fetchRepoEntry(e, queryWords) {
   const raw = await getFile(e.path);
   if (!raw) return null;
-  if (e.type === 'plaintext') return raw.slice(0, MAX_REPO);
+  if (e.type === 'plaintext') return extractRelevantSection(raw, queryWords, MAX_REPO);
   if (e.type === 'json_article') {
     let data; try { data = JSON.parse(raw); } catch { return raw.slice(0, MAX_REPO); }
     const art = (data.articles||[]).find(a => a.id === e.article_id);
@@ -334,7 +358,7 @@ export default {
       const [repoTexts, helpTexts] = await Promise.all([
         Promise.all(topRepo.map(async ({e}) => {
           try {
-            const t = await fetchRepoEntry(e);
+            const t = await fetchRepoEntry(e, allWords);
             return t && t.length > 80 ? '=== '+(e.type==='plaintext'?'SOLUTION':'DOC')+': '+e.title+' ===\n'+t : null;
           } catch { return null; }
         })),
