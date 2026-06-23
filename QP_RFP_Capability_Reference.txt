@@ -1,0 +1,247 @@
+QuestionPro CX Platform - RFP & RFI Capability Reference
+============================================================
+Source: Compiled from QuestionPro CX Platform RFP responses
+Purpose: Reference answers for sales reps completing RFPs/RFIs
+Note: Client-specific details removed. Answers reflect QP capabilities.
+
+CAPABILITIES & ANSWERS
+----------------------------------------
+
+Q: How does your solution integrate with existing applications and systems, such as contact center systems, Salesforce, Adobe, etc.?
+A: QuestionPro integrates with existing applications and systems through 400+ integrations. These include (CRM) tools like Salesforce, as well as customer engagement and BI platforms. The integrations enable native bidirectional connectivity, ensuring seamless data exchange between QuestionPro and the connected systems. QuestionPro supports integration with applications such as Salesforce for CRM, and collaborates with tools like Office 365 and Teams for enhanced productivity and collaboration. We integrate with Zapier, which expands its connectivity options to various third-party applications
+
+Q: How does your solution link feedback and operational/transactional data from any channel to provide a 360 view of the customer?
+A: The QuestionPro platform is able to import operational & transactional data from various sources into the system using manual, automated and API driven processes. This data is available within the same workspace along with the survey & sample data, allowing users to create dashboards and analytics that combine all of these elements. For example, we can analyze survey responses alongside CLV or Transaction Tiers to understand the link between customer spend and CX. Our offline analytics team can conduct advanced analytics to understand how customer satisfaction/NPS drives financial outcomes.
+
+Q: How does your solution capture both solicited and unsolicited customer feedback?
+A: Our platform captures both solicited and unsolicited customer feedback through a variety of methods. Solicited Feedback includes asking customers for their opinions through a multiple channels - email, SMS, IVR, kiosks, phone interviews, in-app feedback, WA surveys. These methods target specific touchpoints and are designed to gather qual & quant insights directly from customers. Unsolicited Feedback includes passive or indirect feedback obtained through digital intercepts, social media interactions, customer care exchanges, and social reviews.
+
+Q: Does your solution allow organizations to be able to perform cross-channel sampling natively? How easy is it to alter the cross-channel sampling rules based on business needs?
+A: Yes, we offer different ways to capture data, even offline, with the help of an app we provide (each key is priced separately). We can offer web intercepts, surveys sent through email, QR code surveys, SMS (each SMS would have an extra cost), and WhatsApp integration (added cost). Also, we offer a panel integration for collecting sample (added cost).
+
+Q: Can survey logic be based on survey questions, meta data, device type, language, and geographic location?
+A: Yes, survey logic can be based on various criteria, including survey questions, metadata, device type, language, and geographic location. This allows for the creation of intelligent surveys that tailor the respondent's experience based on their previous answers and contextual information.
+
+Q: Does your solution provide a branded look and feel survey template with the ability to make changes using HTML or CSS?
+A: Yes, the solution provides the ability to apply custom design templates, ensuring a branded look and feel for surveys. Users can utilize HTML and CSS for customization, giving full control over the survey design.
+
+Q: Does your solution support an SMTP or SPF option for distributing emails through our servers or for authorizing distributions from our domain?
+A: Yes, QuestionPro supports SMTP for distributing emails, and it requires an SPF record to authorize distributions from your domain. You need to ensure the proper SPF records are in place to indicate that QuestionPro servers are allowed to send emails on your behalf.
+
+Q: Does your solution generate a unique link for each respondent for save and continue, preventing ballot box stuffing, and connecting the respondent to stored metadata?
+A: Yes, QuestionPro offer unique links and generic links as well, and the option to save and continue and the passing of stored metadata on the response
+
+Q: Does your solution capture partial survey responses from abandoned surveys and report on where they abandoned?
+A: Yes, the solution captures partial survey responses from abandoned surveys and reports on where the respondents abandoned the survey. You can find the analysis of abandonment by logging in, selecting "Surveys," and then "Reports," where you'll see a table listing the questions where respondents left off.
+
+Q: Can surveys, questions, messages and invitations be stored in a library for easy reuse?
+A: Yes, surveys, questions, messages, and invitations can be stored in a library for easy reuse. The context mentions that there is a question and scale library that allows for the standardization and quality assurance of surveys across companies. Additionally, users can create a question database with reusable questions and can reuse their own questions when adding them to new surveys.
+
+Q: Can your solution enable client to import participant lists, including demographic and other operational data?
+A: Yes, the solution has the capability to import participant lists, including demographic and other operational data, as indicated by the out-of-box capability for importing or uploading new panelist data.
+
+Q: Can email invitations be branded and customized with logos, rich text, and HTML?
+A: Yes, email invitations can be branded and customized with logos, rich text, and HTML. You can use HTML in your invitation text, insert images, and customize various elements like the email subject, email body, and sender information to enhance brand recognition and improve response rates. Additionally, you can add custom variables to personalize the invitations further.
+
+Q: Are email messages and subject lines self-configurable and customizable within the platform?
+A: Yes, you can customize the email subject line and body when sending emails through the platform. You can manage these settings by going to Login » Surveys » Distribute » Email » Compose, where you can edit or update the subject, email body, and from name and email address. However, the subject line of the admin confirmation email is a system default and cannot be changed directly; instead, a new notification can be created to customize those emails.
+
+Q: Does your solution support A/B testing various email messages and subject lines to optimize response rates without requiring vendor engagement?
+A: Yes, the solution supports A/B testing for various email messages and subject lines to optimize response rates, allowing for independent testing without needing vendor engagement.
+
+Q: How does your solution allow customers to give feedback during an event or at a location?
+A: The QuestionPro platform enables customers to provide feedback during an event or at a location through various mechanisms such as digital intercept surveys, passive feedback links and QR codes, and embedded feedback capabilities in mobile applications. These tools facilitate immediate feedback collection from attendees, allowing for real-time insights and responses based on their experiences at the event. This can include structured survey questions or more open-ended responses, and can be tailored to specific touchpoints within the event for better engagement.
+
+Q: Are survey responses ingested and available to the dashboard in real-time?
+A: Yes, survey responses are ingested and available to the dashboard in real-time. The platform moves a new response record into the reporting platform and renders it in the dashboards within a few seconds of a completed response from a respondent.
+
+Q: Is your solution source agnostic? Are there their limitations to what 3rd party sources of data can be ingested and analyzed by your solution?
+A: Yes, there are some limitations on the outside data we can bring from external sources. We provide empty data spaces (beside the questions), where we can preload information. We offer 100 custom variables; each one can store up to 255 characters. As long as we are provided with access to the data, and this data can be classified as customer feedback / contact center conversations, we can analyze and unify it.
+
+Q: Does your solution monitor social networks real-time?
+A: Currently, QuestionPro does not have the capability to do this; however, we are working on building out our Zapier app to collect reviews from a wide range of sources in real time. More information in the product roadmap can be made available upon request
+
+Q: Can you track billions of conversations in 160+ languages on all major social networks, news sites, blogs, and forums?
+A: Currently, QuestionPro does not have the capability to do this; however, we are working on building out our Zapier app to collect reviews from a wide range of sources in real time. More information in the product roadmap can be made available upon request
+
+Q: Are you able to route messages to the right internal team both automatically through rules as well as manually?
+A: Yes, the solution can route messages to the right internal team both automatically through rules and manually. The platform uses a no-code rules builder that allows for the creation of various routing and case assignment rules, which can handle automatic routing based on predefined criteria. Additionally, messages can be manually reassigned through a drop-down assignment screen accessible to the current ticket owner.
+
+Q: Can you engage with mobile devices? Do you have an app for iOS and Android?
+A: Yes, the system is mobile-enabled, and there are native applications available for both iOS and Android devices. Users can download the applications from the Apple App Store and Google Play Store
+
+Q: What language are supported by your solution?
+A: Currently, the QuestionPro survey engine supports roughly 100 different languages. Some of the supported languages include: English (US and UK), Spanish (Spain and Latin America), French (European and Canadian), German, Portuguese (Brazilian and European), Russian, Chinese (Simplified and Traditional), Japanese, Korean, Arabic, Hindi, and Italian. Additionally, the platform includes a variety of other languages such as Dutch, Bulgarian, Czech, Danish, Greek, Hungarian, and many more, including "Klingon" as an Easter Egg feature.
+
+Q: Are responses from different languages aggregated into the same data set for reporting?
+A: Yes. Depending on the requirement, the reports can aggregate quantitative data from different languages. Yes, we automatically translate all text into English and unify the analysis across sources and languages in this way.
+
+Q: Does your NLP understand context, slang, or language-specific idiosyncrasies across all sources?
+A: Yes. Thematic recognizes repeating themes based on the context in which they are used rather than exact wording. No training is required to pick up slang or nuances. Thematic also provides human oversight to capture anything that AI might have missed.
+
+Q: Are your surveys able to be access via mobile device without the need to re-size and/or zoom in?
+A: Yes, all surveys are optimized for mobile devices and can be accessed without the need to resize or zoom in. The surveys are designed to adapt to the corresponding end device and automatically resize elements as needed.
+
+Q: Does your solution support mobile app feedback through in-app messages?
+A: Yes, QuestionPro CX mobile SDK allows clients to integrate QuestionPro CX surveys with their mobile app. The process is easy to set up and allows clients to trigger surveys based on user interactions, prompt business app reviews in strategic moments, and activate rewards, offers, or messages tailored to survey responses.
+
+Q: Are we able to send reminder messages to customers?
+A: Yes, the platform allows for sending reminders via SMS, so you can send reminder messages to mobile customers. You can send reminder messages to customers based on their email address status. If respondents have used the "Save and Continue" option and their responses are incomplete, reminder emails will be sent to those email addresses. Additionally, you can schedule reminders or choose to send them manually as per the features available in your survey platform.
+
+Q: Can your solution gather and report on data from both individual stakeholders and at the aggregated institutional client level simultaneously?
+A: Yes, the solution can gather and report on data from both individual stakeholders and at the aggregated institutional client level simultaneously. It allows for detailed reporting that can be broken down to respond at both the respondent level and account level, facilitating insights that cater to both individual data points and broader aggregated metrics.
+
+Q: Can your solution manage all of Prudential’s customer experience data in one place and help us improve and optimize key experiences?
+A: Yes, QuestionPro CX is designed to manage all of a client's customer experience data in one unified platform. It provides tools for customer experience management that allow teams to analyze and optimize key experiences through a comprehensive methodology. By integrating various data sources and insights, the platform supports the creation of strategies to continually enhance the customer experience. This includes sharing insights with employees and frontline managers, which can drive improvements across all interactions a customer has with a brand.
+
+Q: Is the full survey record and all relevant information to the record available on one screen for easy viewing?
+A: Yes, there are multiple reports where this is made available, including click-through reports
+
+Q: What are your capabilities for ad-hoc customer research and how does this allow us to build a more holistic view of our customers?
+A: Our capabilities for ad-hoc customer research include the ability to collect data through anonymous or personalized online surveys, in-depth interviews, focus groups, and offline methods using dedicated kiosks or tablets. We can reach respondents via various channels such as email, text, WhatsApp, and phone. This flexibility allows designated teams to send surveys on a more ad-hoc basis, enabling them to gain comprehensive localized customer insights. With timely and relevant research, organizations can improve the overall customer experience & develop a more holistic view of their customers
+
+Q: Can your solution link CX data to other data sets (operational, financial, and customer data)?
+A: Yes, the solution can link CX data to other data sets, including operational, financial, and customer data.
+
+Q: Can your solution display a company comparison for internal benchmarking?
+A: Yes, our solution can display a company comparison for internal benchmarking allowinhg businesses to compare their performance metrics against industry standards or competitors. Users can visualize these comparisons through various chart types and dashboards that highlight key performance indicators. Our driver-analysis and heatmap tools further enable organizations to identify areas for improvement and track fluctuations in key metrics such as NPS, eNPS, CES, and CSAT in real-time. This benchmarking capability helps organizations make informed decisions to enhance performance & CX
+
+Q: Does the dashboard show trends of data across time?
+A: Yes, the dashboard shows trends of data across time, particularly through the trend analysis feature, which allows users to look at data over time for long-running surveys. This can be useful for comparing scores or identifying trends in satisfaction surveys distributed regularly.
+
+Q: Is the dashboard able to take data from other surveys or from external data sources for reporting?
+A: Yes, the dashboard can ingest data from external sources, including data from third-party vendors, for reporting purposes. The QuestionPro CX platform supports this capability, allowing for the processing and reporting of data alongside the survey data
+
+Q: How does your solution handle respondent management including customer communication preferences and frequency rules?
+A: Our platform offers a robust survey deployment ‘rules management’ process that can be set up for automated import of customer data, cleaning and handling rules including duplicates and incomplete info, resting periods, unsubscribe lists, and frequency of communication. The digital intercept survey tool also offers additional administrative rules with IP-based controls, proportional survey delivery, device-based delivery, and unique visit controls
+
+Q: Can your solution track multiple metrics from multiple surveys in a single view?
+A: Yes, the solution allows for the merging of data from multiple surveys into one survey, enabling an aggregated response view. By using the Merge Data 2.0 feature, users can consolidate responses from different surveys, which helps in tracking multiple metrics in a single view.
+
+Q: How does your solution proactively surface key insights for all users?
+A: QuestionPro’s entire platform is geared towards generating insights for clients. These tools include real-time management of journey touchpoints using our Journey Mapping Software, AI recommendations, reputation management top recommendations based on social data, Priority Matrices to help identify areas that need immediate attention, and closed loop feedback reporting.
+
+Q: How easy is it for your users to perform advanced analytics in your platform without vendor support?
+A: The QuestionPro platform allows users to perform advanced analytics with ease, thanks to its user-friendly interface and a variety of analytical tools available directly within the platform. Users can conduct driver analyses, correlation studies, priority matrix reporting, and more advanced techniques such as Maxdiff and Discrete Choice analyses without requiring vendor support. The platform is designed to enable users to build complex reports and utilize pre-built templates with minimal training, making the analytical process accessible to users across different skill levels.
+
+Q: How can your solution allow Prudential to predict future customer behavior? Please see attachment (600 character limit)
+
+124. How does your solution allow for complex statistical analysis?
+A: The platform offers a suite of in-platform, native analysis tools that range from simple crosstabs to priority matrices, ad-hoc trend analysis, various modeling approaches, MaxDiff and Conjoint analysis, amongst others. In addition, it can output a native SPSS file if the Avid team would prefer to use a purpose-built statistical software for more advanced analysis.
+
+Q: Are your statistical analyses fully integrated into your solution? Yes (600 character limit)
+
+126. Can your solution add weights to different segments when calculating statistics?
+A: Yes, the solution allows you to customize the weights for rank order analysis, which means you can assign different weights to different segments when calculating statistics. You can do this by logging into the platform, selecting your survey, going to the analytics section, and using the settings icon for your rank order question to either inverse weights or add custom weights. All charts will then use the updated weights for calculations and charting.
+
+Q: Does your solution have the ability to create topics through an algorithmic approach as well as a manual approach?
+A: QuestionPro natively offers both manual and algorithmic approaches to creating topics; however, we are partnering with Thematic to integrate AI-powered text analytics in our tool. We also have our native Pathos AI tool that uses industry taxonomies to classify unstructured data and analyze sentiment. Based on your needs, QuestionPro will offer integrated reporting with Thematic for your organization. More information can be made available upon request.
+
+Q: Does the solution allow text analytics to be embedded within the dashboard so that insights are widely usable and readily actionable?
+A: Yes, the solution allows text analytics to be embedded within the dashboard, making insights widely usable and readily actionable. The native in-platform text analytics is available in the QuestionPro live analysis portal as well as dashboards for broad distribution and access to results.
+
+Q: Can text analysis be used in comparison to other metrics of interest, or does that data live in a silo?
+A: Yes, text analysis can be used in comparison to other metrics of interest. The context suggests that various analyses, including sentiment analysis and topic identification, can be performed alongside statistical methods like regression or correlation analysis. This indicates that the text data is not isolated and can be integrated with other metrics for comprehensive insights
+
+Q: How will your solution allow integration with Prudential’s call center systems to analyze phone conversations?
+A: Currently, QuestionPro does not offer direct integration with your call center; however, based on requirements, we will partner with the call center and transcription services to be able to ingest text data/transcripts into our reporting system.
+
+Q: Can we calculate our own custom metrics easily?
+A: Yes, clients can calculate their own custom metrics easily. The platform allows for the inclusion of customer variables and enables the combination of those variables mathematically into an index measurement.
+
+Q: Do you have the ability to tune the analytics engine to specific business requirements during both implementation and on as-needed, ad-hoc basis?
+A: Yes, we offer white glove service to review themes and make sure they match business needs.
+
+Q: Does your NLP tag all parts of speech/words and extract linguistic relationships without coding?
+A: Yes, Thematic does not require training or coding. Instead, users can review intermediate outbound by the AI and tweak it to ensure accuracy.
+
+Q: How do you handle biased feedback questions? For example, a survey question “What could we have done better?" Does your solution understand these responses are implicitly negative?
+A: Yes, Thematic's sentiment model has been trained on vast amounts of customer feedback. It's versed in nuances typical for responses to customer survey questions.
+
+Q: How does your sentiment model measure granularity - what scale?
+A: Our default sentiment scoring ranges from -1 (negative) through 0 (neutral) to +1 (positive). In addition, our themes capture nuanced sentiment and emotions, such as "disappointed with X" and "great/amazing" vs. "good/not bad." In addition, we can provide custom synthetic scoring to capture sentiment-related metrics such as customer effort, likelihood to churn, etc.
+
+Q: Can business users add additional sentiment rules and exceptions for advanced tuning?
+A: Yes. We have a themes editor where users can tweak themes, rename, reorganize, merge, delete, and create manually. In Thematic, users can also change sentiment assigned to any sentence or phrase.
+
+Q: What languages do you offer sentiment analysis for?
+A: We can analyze sentiment across many different languages. While it's not a native analysis, we have customers who have successfully used this feature over many years and across languages as diverse as Japanese and English. Here is a full list of languages we support: https://cloud.google.com/translate/docs/languages
+
+Q: Do you have the ability to simultaneously support different types of classification – rules based, machine learning, and automatic classification?
+A: QuestionPro natively does support different types of classification - rules based, machine learning, and automatic classification, in addition to AI-based tools. However, these are not simultaneous applications. With the Questionpro Thematic interface, we will make it easy to quickly refine themes as needed.
+
+Q: Does your solution include and support industry vertical and horizontal specific classification rule templates?
+A: Our Pathos AI analytics allows you to choose an industry, and the solution applies the relevant industry classification to the entire set of unstructured data.With the Questionpro Thematic interface, themes will be generated using AI
+
+Q: Can your system automatically detect themes and create a category model based on data with, with no input from the analyst/user?
+A: Yes. QuestionPro is partnering with Thematic to use NLP and AI for classification and sentiment analysis.
+
+Q: Do users have the ability to create unlimited categorization models? Yes (600 character limit)
+
+163. Do you support nested categories? Is there a limit to how many levels?
+A: Yes, our AI automatically produces a 2-level taxonomy. A 3rd level is available in the Analysis tools, where you can see groupings within any themes.
+
+Q: Do you offer the ability to automatically extend existing rules-based categories based on machine learning algorithms?
+A: Our solution is not rules-based. It uses a mixture of unsupervised Machine Learning techniques
+
+Q: What level of speech to text accuracy does your solution provide? How do you measure that? What is your experience with regard to recommended accuracy for use with various analytics platforms?
+A: QuestionPro does not currently offer any productized speech-to-text (ASR) capability natively, but rather we can integrate with other 3rd party systems that have been highly optimized for use cases such as yours. We have elected to focus our platform on other engagement channels than voice for the near term; however, native voice is on our midterm roadmap for future consideration and application.
+
+Q: How does your solution help a client drive conversion rates? Please see attachment (800 character limit)
+
+203. Can your solution monitor Prudential’s online brand reputation?
+A: Yes. Our CX Reputation Module can monitor your organization's brand reputation and take action on Public Ratings and reviews. It offers a single platform for reputation management, the ability to reply to reviews, real-time analysis, AI sentiment analysis, and action alerts. Combined with QuestionPro CX, taking action using CX Reputation gives you a central source for the Voice of the Customer.
+
+Q: Would your employees have access to our customer data?
+A: Yes, QuestionPro employees or contractors may access client data as needed to provide technical support, development, and account management, particularly from offshore locations such as India.
+
+Q: What is the method for integrating your software with our website API, Widgets, iframe and how is the authentication works for each integration?
+A: Our intercept surveys use an embedded code that triggers the intercept loader secured through an API key.For Single-Sign on, we use SAML SSO.If it is simply about data movement, we use header-secured (https) API keys to prompt for both inbound and webhook outbound calls organized around REST transfer-generating JSON-formatted outputs.
+
+Q: Do you have APIs with Oracle, Workday, Conga or any other platforms (or any out of the box connectors available with other tools)?
+A: Yes, QuestionPro offers over 400 out-of-the-box integrations with various tools and platforms, including popular CRM, BI, and CSM tools
+
+Q: Based upon your evaluation, what immediate cost savings opportunities for technology or process improvements could you provide to Prudential?
+A: Currently, your organization's is using various systems to analyze and report different types of data. Consolidating that reporting within the QuestionPro CX platform will allow for efficiencies of scale (more data, lower cost per unit). QuestionPro’s robust Advisory, Change Management, and Implementation approach makes it very easy for clients to work with us. This way of working also allows your organization's to use internal resources for high priority internal initiatives, saving precious resources and time
+
+Q: Options for capture and analysis of digital website behaviors?
+A: QuestionProUX allows users to capture and analyze digital website behaviors using Online Usability Testings, UX Benchmarking, Prototype Testing, A/B testing, Mobile and Tablet UX testing, Information Architecture Testing, True Intent studies, Search Engine Findability and Moderated+Unmoderated Usability Testing. The platform also offers AI INsights, Clickstream Analytics, Heatmap Analysis and User Session Recording and Replay.
+
+Q: Can these be updated/altered during survey fielding?
+A: Yes, questions and/or answer options on a live survey can be updated or altered during survey fielding. However, it is important to note that such changes will affect the flow of the survey, and if there is branching involved, it will need to be updated as well. Additionally, reordering or altering questions may impact the collected data, so it is strongly advised to make these changes only if absolutely necessary and at your own risk.
+
+Q: If so, does that diligence cover this new work?
+A: QuestionPro, Inc., is not an existing provider for your organization yet.
+
+
+REQUIREMENTS MATRIX
+----------------------------------------
+Requirement: Procurement System
+QP Response: -   Prudential uses electronic procurement ordering and payment Systems to acquire Services and make payments to vendors (the “Procurement System”).
+
+Requirement: Category/Sub Category
+QP Response: Requirements
+
+Requirement: 1. Contract Term
+QP Response: -   Please provide the following contract term options:
+
+Requirement: 2. Pricing
+QP Response: -   Fees for the services and deliverables will be fixed during the initial term. For a renewal term, any such price increase is limited to no more than two percent (2%) above the rates charged Prudential during the preceding year if approved by Prudential.
+
+Requirement: 3. National Account Manager & Support Staff
+QP Response: -   Enterprise Account Manager assigned to PRUDENTIAL available 8:30AM – 5:30PM ET, Monday – Friday or mutually agreed upon hours.
+
+Requirement: 4. Reporting
+QP Response: -   PRUDENTIAL requires a web or cloud-based reporting platform that provides real-time access to current and historical feedback data, dashboards and analytical tools. We assume single-sign on access.
+
+Requirement: 5. Technical Specifications
+QP Response: -   Please answer the technical specification questions below while providing as much detail as possible.
+
+Requirement: 6. International
+QP Response: -   Prudential has customers of varying origins, we will need the selected platform to be able to cater to different scenarios detailed in the below questions.
+
+Requirement: 7. Mobile Capability
+QP Response: -   The selected solution must be able to be access via mobile device. The user should also be able to do many of the required functions on a mobile device to avoid having to use a desktop computer.
+
+Requirement: 8. Additional Technical Questions
+QP Response: -   Please answer the technical questions provided below. If you are a current supplier, some may not be applicable to you. Please answer as appropriate.
