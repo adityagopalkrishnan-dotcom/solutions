@@ -368,8 +368,21 @@ export default {
         }))
       ]);
 
-      const context = [...repoTexts.filter(Boolean), ...helpTexts.filter(Boolean)].join('\n\n')
+      const rawContext = [...repoTexts.filter(Boolean), ...helpTexts.filter(Boolean)].join('\n\n')
         || 'No relevant documentation found.';
+
+      // Bridge the gap between how the user asks and how the documents describe it.
+      // Prepending a "seeking" statement helps the AI connect the question to the right
+      // section of the retrieved content without having to infer the link itself.
+      const contextHeader = [
+        'The user is asking about: ' + question,
+        inferredProduct ? 'Product context: ' + inferredProduct : '',
+        topRepo.length > 0 ? 'Most relevant sources found: ' + topRepo.slice(0,3).map(({e})=>e.title).join(', ') : '',
+        'Use ONLY the following sources to answer. Do not supplement from general knowledge.',
+        '---',
+      ].filter(Boolean).join('\n');
+
+      const context = contextHeader + '\n\n' + rawContext;
 
       const newInputs = [...inputs.filter(i=>i.key!=='CONTEXT'), {key:'CONTEXT', value:context}];
       if (!newInputs.find(i=>i.key==='QUESTION')) newInputs.unshift({key:'QUESTION', value:question});
