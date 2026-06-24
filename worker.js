@@ -348,18 +348,22 @@ export default {
       } else {
         // SALES/DEAL SITUATION — apply element count gate
 
-        // Element 1: named company type or specific industry (not just the word "customer" as object)
-        const hasCustomer = /\b(company|compan|industry|firm|client|bank|insurance|retail|logistics|healthcare|airline|hotel|telco|telecom|fintech|startup|enterprise|government|ngo|agency|brand|manufacturer|provider|vendor|corp|organisation|organization|group|plc|ltd)\b/.test(sit);
+        // Element 1: named company type or specific industry
+        const hasCustomer = /\b(company|compan|industry|industries|firm|client|bank|banking|insurance|retail|logistics|healthcare|health|pharma|airline|hotel|hospitality|telco|telecom|telecomm|fintech|startup|enterprise|government|ngo|agency|brand|manufacturer|provider|vendor|corp|organisation|organization|group|plc|ltd|university|education|media|energy|utility|utilities|automotive|real estate|property|construction|consulting|professional services|it company|tech company|software|saas)\b/.test(sit);
 
-        // Element 2: sales-specific requirement — not generic technical verbs
-        const hasRequirement = /\b(integrat|rfp|rfi|tender|proposal|migrat|replac|displace|closed.loop|salesforce|servicenow|zendesk|jira|sso|gdpr|voc|nps|csat|ces|cx\b|closed loop|data layer|benchmark|compet|medallia|qualtrics|surveymonkey|hubspot|dynamics)\b/.test(sit);
+        // Element 2: requirement — broader to catch policy, compliance, data, workflow needs
+        const hasRequirement = /\b(integrat|rfp|rfi|tender|proposal|migrat|replac|displace|closed.loop|salesforce|servicenow|zendesk|jira|sso|gdpr|voc|nps|csat|ces|cx\b|closed loop|data layer|benchmark|compet|medallia|qualtrics|surveymonkey|hubspot|dynamics|retention|policy|compliance|security|data|workflow|automat|report|dashboard|ticketing|survey|feedback|insight|analytics|employee|workforce|community|panel|intercept|segmentation|targeting|notification|alert|escalat|root cause|follow.up|followup|close the loop|relationship|transactional|touchpoint)\b/.test(sit);
 
-        // Element 3: explicit sales use case
-        const hasUseCase = /\b(rfp|rfi|demo|proposal|pilot|poc|proof of concept|objection|compet|displace|displacement|renewal|upsell|cross.sell|presentation|evaluation|tender|bid|closing|negotiat|contract)\b/.test(sit);
+        // Element 3: explicit sales/deal use case
+        const hasUseCase = /\b(rfp|rfi|demo|proposal|pilot|poc|proof of concept|objection|compet|displace|displacement|renewal|upsell|cross.sell|presentation|evaluation|tender|bid|closing|negotiat|contract|meeting|call|deadline|next week|this week|due date|submission)\b/.test(sit);
 
         const elementCount = [hasCustomer, hasRequirement, hasUseCase].filter(Boolean).length;
 
-        if (elementCount < 2) {
+        // CONVERSATION BYPASS: if previous turn was a clarification request,
+        // the user is now answering it — proceed to full analysis
+        const prevTurnWasClarification = historyStr && historyStr.includes('Before I analyse this, I need');
+
+        if (elementCount < 2 && !prevTurnWasClarification) {
           const missing = [];
           if (!hasCustomer) missing.push('What type of company or industry is this for?');
           if (!hasRequirement) missing.push('What is the specific challenge or requirement the customer has?');
