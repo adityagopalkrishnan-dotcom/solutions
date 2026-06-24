@@ -333,36 +333,47 @@ export default {
     const questionMode = isSituationMode ? 'problem-solving' : 'qa';
 
     // CLARIFICATION GATE — mechanical check before hitting the AI Router
-    // Count how many of the 4 required elements are present in the situation
     if (isSituationMode) {
       const sit = question.toLowerCase();
 
-      // Element 1: customer type or industry signal
-      const hasCustomer = /\b(company|compan|industry|firm|client|customer|bank|insurance|retail|logistics|healthcare|airline|hotel|telco|telecom|fintech|startup|enterprise|government|ngo|agency|brand|manufacturer|provider|vendor)\b/.test(sit);
+      // TECHNICAL BYPASS: if this looks like a "how do I" technical question
+      // rather than a sales/deal situation, drop back to standard Q&A mode
+      const isTechnical = /^situation:\s*(how\b|what\s+is\b|what\s+are\b|how\s+can\s+i\b|how\s+do\s+i\b|how\s+to\b|i\s+want\s+to\b|i\s+need\s+to\b|can\s+i\b|is\s+there\b|does\s+qp\b|does\s+questionpro\b)/i.test(question.trim());
 
-      // Element 2: specific requirement or pain point signal
-      const hasRequirement = /\b(need|require|want|integrat|rfp|rfi|tender|proposal|implement|deploy|migrat|replac|problem|challenge|issue|pain|gap|feature|capabilit|support|handle|automat|track|ticket|report|dashboard|survey|feedback|nps|csat|ces|cx|voc|closed.loop|salesforce|servicenow|zendesk|jira|sso|gdpr|api|webhook|segment|target|distribut|analysis|benchmark)\b/.test(sit);
+      if (isTechnical) {
+        // Route as standard Q&A — strip the SITUATION: prefix so the AI treats it normally
+        question = question.replace(/^situation:\s*/i, '').trim();
+        // Reset mode flags so context header and scoring use Q&A mode
+        Object.assign(arguments[0] || {}, {}); // no-op, just use local reassignment
+      } else {
+        // SALES/DEAL SITUATION — apply element count gate
 
-      // Element 4: use case type signal
-      const hasUseCase = /\b(rfp|rfi|demo|proposal|pilot|poc|proof|objection|compet|displace|displacement|renewal|upsell|cross.sell|presentation|meeting|call|evaluation|tender|bid|closing|negotiat|contract|implement|onboard|setup|configure)\b/.test(sit);
+        // Element 1: named company type or specific industry (not just the word "customer" as object)
+        const hasCustomer = /\b(company|compan|industry|firm|client|bank|insurance|retail|logistics|healthcare|airline|hotel|telco|telecom|fintech|startup|enterprise|government|ngo|agency|brand|manufacturer|provider|vendor|corp|organisation|organization|group|plc|ltd)\b/.test(sit);
 
-      const elementCount = [hasCustomer, hasRequirement, hasUseCase].filter(Boolean).length;
+        // Element 2: sales-specific requirement — not generic technical verbs
+        const hasRequirement = /\b(integrat|rfp|rfi|tender|proposal|migrat|replac|displace|closed.loop|salesforce|servicenow|zendesk|jira|sso|gdpr|voc|nps|csat|ces|cx\b|closed loop|data layer|benchmark|compet|medallia|qualtrics|surveymonkey|hubspot|dynamics)\b/.test(sit);
 
-      if (elementCount < 2) {
-        // Not enough context — build targeted questions based on what's missing
-        const missing = [];
-        if (!hasCustomer) missing.push('What type of company or industry is this for?');
-        if (!hasRequirement) missing.push('What is the specific requirement or pain point they have?');
-        if (!hasUseCase) missing.push('What is the context — an RFP, a demo, a live implementation, or an objection you need to handle?');
+        // Element 3: explicit sales use case
+        const hasUseCase = /\b(rfp|rfi|demo|proposal|pilot|poc|proof of concept|objection|compet|displace|displacement|renewal|upsell|cross.sell|presentation|evaluation|tender|bid|closing|negotiat|contract)\b/.test(sit);
 
-        const questions = missing.slice(0, 2);
-        const clarification = 'Before I analyse this, I need a couple of details:\n' + questions.map(q => '• ' + q).join('\n');
+        const elementCount = [hasCustomer, hasRequirement, hasUseCase].filter(Boolean).length;
 
-        return jres({
-          result: { documents: [{ output: [{ key: 'content', value: clarification }] }] },
-          _clarification_requested: true,
-          _elements_found: elementCount
-        });
+        if (elementCount < 2) {
+          const missing = [];
+          if (!hasCustomer) missing.push('What type of company or industry is this for?');
+          if (!hasRequirement) missing.push('What is the specific challenge or requirement the customer has?');
+          if (!hasUseCase) missing.push('What is the context — an RFP, a demo, a competitive displacement, or an objection you need to handle?');
+
+          const questions = missing.slice(0, 2);
+          const clarification = 'Before I analyse this, I need a couple of details:\n' + questions.map(q => '• ' + q).join('\n');
+
+          return jres({
+            result: { documents: [{ output: [{ key: 'content', value: clarification }] }] },
+            _clarification_requested: true,
+            _elements_found: elementCount
+          });
+        }
       }
     }
 
