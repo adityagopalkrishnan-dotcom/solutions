@@ -1,0 +1,199 @@
+QuestionPro ISO & Compliance Certifications
+============================================
+Source: Internal QP Wiki (Security & Compliance page) + Google Drive certificate files
+Owners: Aniket Ranjan / Rohan Pagare
+Contact: security-compliance@questionpro.com
+
+
+===========================================================
+SECTION 1: QUESTIONPRO INC. — ISO CERTIFICATIONS
+===========================================================
+
+--- ISO/IEC 27001:2022 (Information Security Management System) ---
+
+Certified Organization : QuestionPro Inc.
+Address                : 9450 SW Gemini Dr #62790, Beaverton, OR 97008-7105, United States
+Certification Body     : INTERCERT INC (2001 Timberloch Place – Suite 500, The Woodlands, Texas 77380, US)
+Standard               : ISO/IEC 27001:2022
+Registration Number    : ICI-IS-2501018
+SOA Version            : 2.1
+Scope                  : The Information Security Management System applies to Software Designing
+                         and Development supported by IT, HR, Training, Admin, and Compliance.
+Initial Certification  : January 07, 2025
+Certificate Issue Date : January 07, 2025
+Current Validity       : January 07, 2026 → January 06, 2027
+Surveillance Validity  : January 06, 2027
+Recertification Due    : January 06, 2028
+Verify at             : www.intercert.com | info@intercert.com
+
+Wiki note: Listed under QuestionPro Inc. as "ISO 27001:2022 Certification (2027-01-06)"
+
+Supporting docs on Drive:
+- ISO 27001:2022 Certificate PDF (file: SIPL_ISO0_01152 E-COPY-QuestionPro Inc.-ISMS-SA1.pdf)
+- ISO 27001:2022 - Statement of Applicability (SOA)
+- ISO/IEC 27001:2022 - Standards (Requirements)
+
+
+--- ISO/IEC 42001:2023 (Artificial Intelligence Management System) ---
+
+Certified Organization : QuestionPro Inc.
+Address                : 9450 Southwest Gemini Drive, 62790, Beaverton, OR, 97008, US
+Certification Body     : SIS Certifications Pvt. Ltd.
+                         Unit No. 514, 5th Floor, Vipul Business Park, Sector-48,
+                         Sohna Road, Gurgaon-122018, Haryana, India
+                         Email: support@siscertifications.com | Tel: +91-9643073391
+Standard               : ISO/IEC 42001:2023 (Artificial Intelligence Management System)
+Certificate Number     : SIS011025S099
+Scope                  : The Artificial Intelligence Management System covers Design, Development,
+                         Deployment, and Operation of QuestionPro's AI-enabled Capabilities
+                         including Prompt Orchestration, Inference, Monitoring and
+                         Vendor-managed LLM (Large Language Model) Services.
+Date of Initial Reg.   : 01.11.2025
+Date of Issue          : 01.11.2025
+Next Surveillance Due  : 01.10.2026
+Expiry Date            : 31.10.2028
+Recertification Due    : 01.10.2028
+
+Wiki note: Listed as "ISO 42001:2023 Certification (Valid Till 1st June 2029)"
+Certificate file: QuestionPro - ISO 42001 - Compliance Certificate.pdf (owned by rohan.pagare@questionpro.com)
+Verify at: https://siscertifications.com
+
+
+===========================================================
+SECTION 2: DATA CENTER / INFRASTRUCTURE — ISO CERTIFICATIONS
+===========================================================
+
+--- US Data Center (Evocative / Internap) ---
+- SSAE / SOC2 (valid till 2025-04-30)
+- Bridge Letter (dated 2024-09-10)
+- PCI DSS Report on Compliance (valid till 2025-06-30)
+- SOC3 (valid till 2025-04-30)
+- Azure ISO-27001 Certificate (valid till 2026-06-17)
+
+--- EU Data Center (Azure) ---
+Status note from wiki: "With ISO 27001 now expired, the following three documents serve as
+compensating compliance evidence. Updated certificates expected by Q2-3 2026."
+- Assurance Letter (dated 2025-12-12)
+- Cyber Hygiene Verification (dated 2025-12-12)
+- Statement of Applicability – SoA (dated 2025-05-25)
+- Azure ISO-27001 Certificate (valid till 2026-06-17)
+- Azure SOC 2 Report (valid till 2026-03-31)
+- Bridge Letter (dated 2025-04-01) — to be sent alongside SOC 2 report
+- EU Azure Data Protection Agreement – German DPA (valid till 2026-04-01)
+- EU Azure Data Protection Agreement – English DPA (valid till 2026-09-01)
+
+--- CA Data Center (Azure) ---
+- Azure SOC 2 Report (valid till 2025-03-31)
+- Azure HiTrust Certificate (valid till 2023-06-30)
+- Azure ISO-27001 Certificate (valid till 2026-06-17)
+- Azure ISO-27018 Certificate (valid till 2025-12-18)
+- Bridge Letter (2025) — to be sent with SOC 2 report
+
+--- MENA Data Center (Azure) ---
+- Azure SOC 2 Report (valid till 2025-03-31)
+- Bridge Letter (2025) — to be sent with SOC 2 report
+- DESC Certificate (valid till 2025-09-22)
+
+--- KSA Data Center (Oracle Cloud) ---
+- Hosting Confirmation – Oracle Cloud (KSA Data Center)
+- Technical Architecture Diagram
+- Compliance Documents/Reports folder (download and open in PDF reader; accept terms to view)
+
+--- AU Data Center (Azure) ---
+- Azure SOC 2 Report (valid till 2025-03-31)
+- Bridge Letter (2025) — to be sent with SOC 2 report
+- Azure ISO-27001 Certificate (valid till 2026-06-17)
+
+--- US-Gov Data Center (AWS) ---
+- NIST SP 800-171
+- CSA STAR Level 2 (valid till 2025-11-30)
+- Cyber Essentials Plus (valid till 2024-03-28)
+- FedRAMP Customer Package
+- HECVAT Full v3.05
+- HITRUST Certification Letter
+- ISO 22301 (Business Continuity Management) – valid till 2025-11-30
+  (AWS certificate, standard: ISO 22301:2019, certified by CertifyPoint B.V., Rotterdam)
+- ISO 27001:2022 (valid till 2025-11-30)
+  (AWS certificate, standard: ISO/IEC 27001:2022, certified by CertifyPoint B.V., Rotterdam)
+- ISO 27001:2022 SOA (Statement of Applicability)
+- SOC Type II Report (valid till 2024-03-31)
+
+Note on AWS ISO certificates:
+  - Certification Body: CertifyPoint B.V. (Vivaldistraat 150, 1083 HP, Amsterdam, Netherlands)
+  - Auditor: Ernst & Young (EY)
+  - The AWS ISO 27001 certificate number: 2013-009
+  - The AWS ISO 22301 certificate number: 2022-012
+  - Certificates must not be altered; validity is subject to ongoing surveillance audits
+
+
+===========================================================
+SECTION 3: OTHER COMPLIANCE CERTIFICATIONS (QUESTIONPRO INC.)
+===========================================================
+
+SOC 2:
+- SOC 2 Type II Report (Valid Till 28th February 2027)
+- Certificate of SOC 2 Type II (Valid Till 28th February 2027)
+  Note: Current audit covers 1st March 2025 – 28th February 2026.
+        Next cycle: March 2026 – February 2027.
+
+TX-RAMP (Texas Risk and Authorization Management Program):
+- Product: QuestionPro Survey software (Research Suite)
+  URL: https://www.questionpro.com/research-edition-survey-software/
+  Certification Level: Level 2
+  Certificate Granted: 06/01/2026
+  Certificate Expiration: 06/01/2029
+  Certificate ID: TX1000677
+
+PCI DSS:
+- Certificate of PCI DSS Merchant Compliance (9th Aug, 2025)
+- Self-Assessment Questionnaire (SAQ) & Attestation of Compliance (January 2025)
+- ASV Scan Report Attestation of Scan Compliance (4th April, 2026)
+
+HIPAA:
+- HIPAA Certificate
+- Business Associate Agreement (BAA)
+- HIPAA Brochure
+
+GDPR (Data Protection Agreements):
+- QuestionPro Inc. (US) DPA
+- QuestionPro Inc. (EU) DPA
+- QuestionPro GmbH (DACH) DPA
+- QuestionPro GmbH (EU) DPA
+- QuestionPro UK Ltd. (UK – EU Data Center) DPA
+- QuestionPro UK Ltd. (UK – US Data Center) DPA
+- Cheat Sheet for DPAs (internal quick reference)
+- Transfer Impact Assessment (TIA) – internal
+- Transfer Risk Assessment (TRA) – EU and UK versions
+- QuestionPro UK Ltd. ICO Registration: ICO:00010759510
+
+Other Standards:
+- FERPA compliance documentation
+- FWA – Federal Wide Assurance (valid till 2023-08-31)
+- Public SBOM (Software Bill of Materials / Tech Stack)
+
+
+===========================================================
+SECTION 4: KEY NOTES FOR SALES / SE USE
+===========================================================
+
+1. ISO 27001:2022 for QuestionPro Inc. is ACTIVE (valid Jan 2026 – Jan 2027, recert Jan 2028).
+   Cert body: INTERCERT. Registration No.: ICI-IS-2501018.
+
+2. ISO 42001:2023 (AI Management System) is ACTIVE (expires Oct 2028).
+   Covers QuestionPro's AI products including LLM/prompt orchestration.
+   Cert body: SIS Certifications. Cert No.: SIS011025S099.
+
+3. EU Data Center ISO 27001 has EXPIRED. Use the Assurance Letter + Cyber Hygiene
+   Verification + SoA as compensating evidence. Updated cert expected Q2-3 2026.
+
+4. AWS-hosted US-Gov data center carries ISO 27001:2022 and ISO 22301:2019 (BCP standard),
+   both certified by CertifyPoint/EY (AWS). Valid till Nov 2025 — check for renewal status.
+
+5. All compliance certificate PDFs are stored in Google Drive (linked from Security Wiki).
+   Use the Compliance Documents/Reports Drive folder for client sharing:
+   https://drive.google.com/drive/folders/1gBxtYG7ozXi6dMzVRXZ30ixzMMfq7mQp
+
+6. RFP/questionnaire rule: Use RFP Buddy first (https://gemini.google.com/gem/05edfa53b275).
+   InfoSec only engages on accounts with ACV ≥ $25K/year.
+
+IMPORTANT: Never share internal documents directly with clients. If in doubt, ask a supervisor first.
