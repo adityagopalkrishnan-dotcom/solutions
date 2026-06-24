@@ -1,0 +1,72 @@
+QuestionPro Sales Engineering (SE) — Roles, Process & Engagement Guide
+=========================================================================
+Source: Internal QP Wiki (sales/sales-architect-se + sales/sales-architect-se/process-guide)
+Global SE Lead: Kartik Bhat
+
+WHAT IS AN SE?
+--------------
+A Sales Engineer (SE) is someone with deep understanding of QuestionPro systems who helps bridge the technical gap for Account Executives (AEs) and Account Managers (AMs). Learning the entire software typically takes 6–12 months; SEs accelerate this for sales reps.
+
+SE TEAM & COVERAGE:
+- Kartik Bhat — Global Lead
+- Yogeshwar Lagad — Research & Insights (APAC, Rest of World) | 9 AM – 6 PM IST
+- Debashish Gahan — Research & Insights (US, EU, MENA) | 6 PM – 3 AM IST
+- Aditya Gopalkrishnan — Customer Experience (Global) | 12 PM – 12 AM IST
+  (For CX, only one resource — request 72 hours to 1 week in advance for non-standard hours)
+
+WHEN TO LOOP IN AN SE:
+- Commercial accounts: Must be a Team Edition lead AFTER 1 demo completed
+- Research, CX, and EX: Any research lead qualifies
+- Discovery call notes are MANDATORY before SE engagement
+- A dedicated Slack channel for the deal is MANDATORY
+
+WHAT THE SE WILL DO:
+- Lead the product demo
+- Answer follow-up technical questions
+- Assist with COMPLEX parts of RFPs only (Sharon Nau is primary RFP POC)
+
+WHAT THE SE WILL NOT DO:
+- Pricing negotiations
+- Follow-ups with leads
+- POC work over 1 hour of effort (that follows the Services process, not SE)
+
+AE RESPONSIBILITIES BEFORE AN SE CALL:
+- 10-minute briefing call with SE for complex deals
+- Set floor and agenda for the meeting
+- Share notes to the Slack channel at least 24 hours before the meeting
+- Record the meeting and share it on the Slack channel
+
+HOW TO ENGAGE AN SE:
+1. Create a Slack channel and add all notes and key deal details
+2. Invite se@questionpro.com to the meeting
+3. Keep se@questionpro.com in CC until deal is won or lost
+
+DISCOVERY CALL — INFORMATION TO SHARE WITH SE:
+Customer Details:
+- Company Name, Industry/Vertical, Number of Employees, Geography
+
+Business Needs:
+- Primary Goal (what does the customer want to achieve with QuestionPro?)
+- Pain Points (low response rates, lack of analytics, ineffective research?)
+
+Technical Requirements:
+- Integrations needed (CRM, email marketing, etc.)
+- Data security/compliance needs (GDPR, HIPAA?)
+- Customization needs (white-labelling, custom surveys?)
+- Target audience (employees, customers, buyers?)
+
+Competitive Context:
+- Current tools in use and their limitations
+
+Demo Focus:
+- Key features to highlight (reporting, audience segmentation, custom surveys?)
+
+SE DEMO PREPARATION CHECKLIST:
+- Review discovery call notes and understand pain points
+- Identify key decision-makers and their technical level
+- Set up demo environment with customer-specific config (branding, templates)
+- Test any integrations or third-party systems
+- Prepare responses to technical objections (security, integration, scalability)
+- Prepare customer-specific use cases
+- Have relevant case studies or success stories ready
+- Post-demo: prepare follow-up documentation and track via Slack

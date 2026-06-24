@@ -1,0 +1,32 @@
+QuestionPro CX — Satellite Products
+=====================================
+Source: Internal QP Wiki (cx-product-page sub-pages)
+Stakeholder: Ken Peterson | Owner: Gargi Ghamandi
+
+CX DIGITAL INTERCEPT
+---------------------
+What it does: Captures feedback at specific moments in a customer's digital journey — on websites, mobile apps, or other digital touchpoints. Surveys pop up contextually based on user behaviour (e.g., on exit intent, time on page, specific pages visited).
+
+Use cases: Website experience feedback, digital journey understanding, conversion optimization, UX research.
+
+Team: Gargi Ghamandi (PM), Samsul Alam, Asif Ribath, Shakil Ahmed (Dev), Ankita Yadav (QA)
+
+CX REPUTATION
+--------------
+What it does: Monitors and manages online reputation by aggregating reviews from platforms like Google, Yelp, TripAdvisor, etc. Enables teams to respond to reviews, identify trends, and take action on reputation signals.
+
+Use cases: Multi-location businesses, hospitality, retail, healthcare — any org that cares about online review presence.
+
+Team: Gargi Ghamandi (PM), Samsul Alam, Asif Ribath, Shakil Ahmed (Dev), Ankita Yadav (QA)
+
+CX OUTERLOOP (Strategic CLF)
+-----------------------------
+What it does: The Outerloop is the strategic counterpart to the Closed Loop. Where eCLF resolves individual customer issues (tactical), Outerloop identifies systemic themes across feedback and drives strategic product/process improvements at the organizational level.
+
+Think of it as: eCLF = fix this customer's problem; Outerloop = fix the root cause so it doesn't happen again.
+
+CX CORE METRICS SUPPORTED:
+- NPS (Net Promoter Score)
+- CSAT (Customer Satisfaction Score)
+- CES (Customer Effort Score)
+- Custom KPIs

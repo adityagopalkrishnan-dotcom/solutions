@@ -1,0 +1,70 @@
+QuestionPro CX — Sales & Competitive Intelligence
+===================================================
+Source: Internal QP Wiki (sales/cx-sales)
+Stakeholder: Ken Peterson | Owner: Jesus Marfil
+Last Updated: February 20, 2026
+
+ELEVATOR PITCH:
+QuestionPro CX is a feedback management platform that transforms insights into actionable data, empowering companies to build stronger customer relationships. Understand customer journeys and take meaningful action. Delight your customers at every touchpoint and turn them into brand advocates.
+
+DEMO PLATFORM:
+- URL: www.questionpro.com
+- Login: cxdemo@questionpro.com | Password: questionpro
+- Documentation review is MANDATORY before showing to any client or prospect
+- The platform contains industry-specific use-cases: survey language, intercept demos, action tools
+
+KEY SALES MATERIALS AVAILABLE:
+- QuestionPro CX Reference Guide (Presentation Materials)
+- About QuestionPro Customer Experience (overview)
+- QuestionPro Customer Experience Brochure
+- QuestionPro CX Core — Gathering insights on all your VoC touchpoints
+- QuestionPro Action — Tactical actions and strategic initiative solutions
+- Enhanced CLF Intro Videos (2024, 2025)
+- Outerloop Intro Video
+- QuestionPro Reputation — Take action with your online reputation
+- QuestionPro Intercept — Understand customers' digital journey
+- QuestionPro CX AI — Where AI Supports CX Workflows
+- Journey Management slide deck
+- Path-to-Purchase — Understand consumer needs in specific industries
+
+COMPETITORS (DO NOT SHARE EXTERNALLY):
+QuestionPro CX competes primarily against:
+- Qualtrics
+- Medallia
+- SMG (Service Management Group)
+- Verint
+- NICE
+- SurveyMonkey
+- Pisano
+
+(Competitive comparison documents exist in the wiki — AI-generated templates, team contributions encouraged)
+
+CASE STUDIES AVAILABLE:
+- NISA
+- Kleen-Tech
+- LegalShield
+- Delta Airlines
+- Thales
+- Emirates
+- Kotak Life Insurance
+- Qatar Airways
+- Dubai Airports
+- YOKO Sizzlers
+- VistaPrint
+- Brenntag (2023)
+
+PRODUCT FEATURE VIDEOS (2025-2026):
+- Layers 2026
+- Journey Management 2026
+- Intercept 2026
+- Product Overview 2025 & Enhancements 2026
+- ClosedLoop 1.1
+- AskWhy Feature
+- WinBack Survey
+- CX Outerloop
+- SMS in CX Workflow
+- Intercept Overview
+- Anonymous Tokens
+- Text Smart Logic
+- Distribution Widget Options
+- Dashboard Alternatives

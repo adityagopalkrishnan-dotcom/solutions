@@ -1,0 +1,55 @@
+QuestionPro CX — Enhanced Closed Loop (eCLF)
+=============================================
+Source: Internal QP Wiki (product/customer-experience-home/cx-product-page/closedloop)
+Stakeholder: Ken Peterson | Owner: Anmol Sahetya
+
+WHAT IS IT?
+-----------
+The Enhanced Closed Loop (eCLF) is QuestionPro's ticket-based customer issue resolution system. When a customer gives low feedback scores or negative responses, the eCLF automatically creates a ticket and routes it to the appropriate team for follow-up and resolution.
+
+KEY FEATURE HIGHLIGHTS BY QUARTER:
+
+Q2 2026:
+- CLF Root Cause Actions
+
+Q1 2026:
+- Automatic Escalation Workflows — Time-bound rules to automatically escalate tickets once elapsed time is reached. Supports multi-tiered escalation setups.
+
+Q4 2025:
+- Intuitive Ticket Status Board — Interactive Kanban-style view where agents drag and drop tickets between status columns (New, Open, Escalated, Resolved). Streamlines ticket status management.
+
+Q3 2025:
+- Mandatory Ticket Resolution Checklist — Enforces completion of critical validation steps before a ticket can be resolved. Ensures reliability, consistency, and auditability of resolutions. Improves internal accountability.
+- AI Generated Tags in Tickets — AI automatically classifies new support tickets based on content using LLMs. Reduces manual effort, improves triage speed and accuracy, and aids trend identification.
+
+Q2 2025:
+- AI Response Assist — Automates customer response management. Provides intelligent, personalized replies to customer feedback. Enables faster responses and improved support quality.
+
+Q4 2024:
+- Notifications Revamp
+- Disabled manual sync option for managers
+- Activity History log enhancement (shows managers/admins who made updates)
+
+Q3 2024:
+- PathosAI integration for Sentiment Analysis
+- Custom variable filter
+- Bulk ticket import for external tickets
+- Feature locks
+- Updated From email (cxtickets@cx-email.com)
+
+Q2 2024:
+- Activity logs added per ticket (under each ticket and under Manage tab)
+- Ticket URL added to email notifications
+- Sorting for tickets on ticket list page
+- Search tickets by ID, email, name, description
+
+Q1 2024:
+- Ticket and Survey information in all notification emails
+- Customer Phone number added to Customer Details
+- Overdue filter added in default eCLF filters
+- SMTP enhancement (From Email Address and Name)
+- Winback Surveys
+
+TEAM:
+- Anmol Sahetya — Product Manager
+- Samsul Alam, Ilias Shah, Abu Mohammad Musa — Developers

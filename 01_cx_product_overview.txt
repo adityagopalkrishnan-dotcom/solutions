@@ -1,0 +1,51 @@
+QuestionPro Customer Experience (CX) — Product Overview
+=========================================================
+Source: Internal QP Wiki (product/customer-experience-home)
+Stakeholder & Owner: Ken Peterson
+Last Updated: February 20, 2026
+
+WHAT IS QuestionPro CX?
+------------------------
+QuestionPro CX is a feedback management platform that transforms insights into actionable data, empowering companies to build stronger customer relationships.
+
+Core philosophy: "Understanding Journeys & Taking Action"
+- Understand customer journeys and take meaningful action
+- Delight customers at every touchpoint and turn them into brand advocates
+- Make data-driven decisions to exceed experiences
+
+THE WHY (Product Vision):
+Customers are the lifeblood of a business. Customer experience shapes opinions — not just of the customer, but everyone they share with, physically and virtually. These opinions dictate when, where, why, and how often customers spend money. CX is the foundation of profitability and business health.
+
+Customers deserve to be heard. Listening shows you care, laying the groundwork for loyalty. A little empathy goes a long way — apologies and thank-yous are too rare. We believe in empowering all employees to resolve issues quickly and efficiently.
+
+Great CX software doesn't require digging through data — it brings opportunities to your attention. It learns, predicts, and helps you deliver great experiences.
+
+PRODUCTS IN THE CX SUITE:
+- Customer Experience (CX Core) — Surveys, NPS, CSAT, CES
+- Enhanced Closed Loop (eCLF) — Ticket-based issue resolution
+- Outerloop (Strategic CLF) — Strategic initiative tracking
+- CX Reputation — Online reputation management
+- CX Digital Intercept — Website/digital feedback capture
+- Customer Journey Management (CJM/CJO) — Journey mapping & management
+- BI in CX (Coming Soon)
+
+DEMO ACCOUNT:
+- URL: www.questionpro.com
+- Login: cxdemo@questionpro.com | Password: questionpro
+
+REGULAR MEETINGS:
+- CX Townhall: Second Thursday of every month (mandatory for CX employees)
+- CX Open Office Hours: Tuesdays 10:30–11:30 AM PT (drop-in, optional)
+- CX Product Discussion: Tuesdays 9:00–9:30 AM PT (invitation only)
+- Weekly CX Sales/Marketing Sync: Mondays 10:30–11:00 AM PT (invitation only)
+
+CX PRODUCT QUARTERLY HIGHLIGHTS:
+Q1 2023: Disposition Metrics 2.0, NPS+ Delight, Grid dashboard layout, Hierarchical segments
+Q2 2023: Push metrics, Notifications revamp, Comments list widget, Weighted mean widget
+Q3 2023: Enhanced closed-loop integration, Word cloud widget, Cross Tab widget, Outerloop integration
+Q4 2023: API responses in timezone, Custom SMS, Sentiment score trend chart, Dashboard PDF download
+Q1 2024: Heatmap enhancements, CSV export email report, Survey tokens revamp, Restricted PII access
+Q2 2024: KPI comparison widget, Centralized root causes, FTP enhancements, Comment list widget update
+Q3 2024: Notification enhancements, AskWhy edit & retake, Overall UI cleanup, Updated Overall widget
+Q4 2024: Survey Tokens from survey questions, CLF 1.0 deprecation, Bulk QR download, Centralized Rootcauses & AskWhy
+Q1 2025: (Video available — link in Product Atlas)

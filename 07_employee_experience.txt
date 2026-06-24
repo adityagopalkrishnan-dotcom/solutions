@@ -1,0 +1,98 @@
+QuestionPro Employee Experience (Workforce/EX)
+===============================================
+Source: Internal QP Wiki (product/employee-experience + sales/employee-experience)
+Stakeholder: Sanja Licina | Product Manager: Utkarsh Awasthi
+
+TAGLINE: "Exceptional Cultures, Growing Businesses"
+
+WHAT IS IT?
+-----------
+QuestionPro Employee Experience is a Culture and Employee Experience survey and analytics platform that provides meaningful analytics and insights about your people, helping you drive the best kind of change.
+
+PRODUCTS INCLUDED:
+1. Lifecycle Surveys — Automate onboarding, exit, and milestone surveys triggered by HRIS events
+2. 360 Development Feedback — Multi-rater feedback for leadership development
+3. Empower — Action planning module to drive organizational change from insights
+
+KEY FEATURE HIGHLIGHTS BY QUARTER:
+
+Q3 2025 (In Progress):
+- Auto Translate Open Comments in Dashboard
+- Share Dashboard access with custom groups
+
+Q2 2025:
+- Conversations V1
+- Ideation Insights
+
+Q1 2025:
+- Sticky Filters in Dashboard
+- Upstream and Downstream Initiatives in Empower
+
+Q4 2024:
+- Collectors & Anonymous Surveys
+- Sentiment Analysis / Pathos.ai integration
+
+Q3 2024:
+- 360 Spider Chart
+- Slack integration for survey distribution
+
+Q2 2024:
+- 360 Distribution — Multilingual
+- Share Dashboard
+- Trend Analysis v2
+
+Q1 2024:
+- Survey questions as filters
+- Trend analysis v1
+- Text Analysis / Pathos.ai
+
+INTEGRATIONS:
+- HRIS Integration (automate survey triggers from HR systems)
+- Slack Integration (distribute surveys via Slack)
+- MarketCulture MRI Benchmark (built-in benchmarking)
+
+SALES DECKS AVAILABLE:
+- QuestionPro EX Master Deck (Updated March 2025)
+- QuestionPro EX 360 Degree Feedback Sales Deck
+- QuestionPro EX AI Features Deck (Updated January 2026)
+
+ONE PAGERS AVAILABLE:
+- QuestionPro Workforce
+- QuestionPro Workforce 360 Feedback
+- QuestionPro Workforce Empower Action Planning
+- Maximize the value of AHRQ with EX
+- QuestionPro Workforce Analytics Portal
+- QuestionPro Workforce HRIS Integration
+
+COMPETITIVE COMPARISON:
+Features comparison available vs Glint, Gallup, Qualtrics
+
+CASE STUDIES:
+- OPTM 360
+- World Market
+- Cornelsen
+- Sartorius
+- SERO EMS Group
+- PCI Talent Assessment Solutions
+
+ANALYST RECOGNITION:
+- SPARK Matrix for Employee Experience Management Platform Q4 2022 (Quadrant Knowledge Solutions)
+- Forrester, Q1 2020
+
+RESEARCH REPORTS AVAILABLE:
+- The Employee Energy Crisis: New Data on Burnout, Energy, and Retention (2025)
+- AI adoption or AI chaos? Making it work for everyone — Infographic (2025)
+- Employee Net Promoter Score (eNPS) Industry Benchmarks 2025
+- Action Planning Guide (2024)
+- Diversity, Equity and Inclusion as a key retention strategy (2023)
+- Creating a Remarkable Employee Journey (2023)
+
+DEMO ACCOUNT:
+- Step-by-step guide available internally (Lifecycle Surveys & Empower)
+- QuestionPro Workforce Certification available
+
+TEAM:
+- Utkarsh Awasthi — Product Delivery Manager
+- Ravi Kumar — Lead Developer
+- Shubham Satpute, Rhythm Sehgal, Rashmi Pillai, Kratika Jain — Developers
+- Kishor Subudhi — Quality Analyst

@@ -1,0 +1,67 @@
+QuestionPro — Special Programs & Licensing
+===========================================
+Source: Internal QP Wiki (sales/startups + sales/academic + sales/non-profit)
+
+STARTUP PROGRAM
+---------------
+Eligibility:
+1. Startup less than 36 months old (or under 5 years if associated with an accelerator/incubator/VC)
+2. Raised less than $10 million USD
+3. Incorporated and has a domain name
+
+Offer:
+- Direct signup: Free Research License + 5,000 responses included (stays free while eligible)
+- Via Incubator/Accelerator/VC: Free Research License + 10,000 responses included
+
+Regional Contacts:
+- DACH: Mira (mira.roth@questionpro.com)
+- LATAM: Andres (andres.muguira@questionpro.com)
+
+Current Partners: FiiRE India, SOSV, Athera Ventures, Naari Pads, Givetoget, Welfund.org, Medoo.life, Fresh.xyz
+
+
+ACADEMIC PROGRAM
+----------------
+Products offered:
+- Research Suite / Surveys
+- Communities
+- Business Intelligence (BI)
+- CX for Higher Education
+
+Key Sales Assets:
+- University Solutions Deck
+- University Research Solutions Deck
+- QuestionPro CX for Higher Education deck
+- BI Deck
+
+Onboarding:
+- University Onboarding Playbook
+- Academic Onboarding Checklist 2026
+- Academic Training
+
+Demo Account: edu@questionpro.com | Password: Questionpro@123
+
+Case Studies:
+- University of Tennessee
+
+Available across: US, UK/EU, Australia, South Africa (global team with separate holiday calendars)
+
+
+NON-PROFIT PROGRAM
+------------------
+QuestionPro offers special discounts to Non-Profit Organizations and NGOs.
+
+Path 1 — Direct (Single User):
+Requirements:
+- 501(C)(3) certificate (US) / CRA (Canada) / Charity Commission (UK)
+- Backlink on homepage with specified HTML text linking to questionpro.com
+- Complete a G2 Review (mandatory — no other review sites accepted)
+
+After requirements met: Contact non-profit@questionpro.com for verification and account creation.
+Renewal: New G2 review + backlink confirmation required every year.
+
+Path 2 — Via TechSoup:
+- QuestionPro donation program provides survey software to eligible US nonprofits, charities, and public libraries
+- 2 separate user accounts per organization via TechSoup
+- TechSoup sends email with coupon code; user creates free QP account and applies coupon
+- TechSoup link: https://www.techsoup.org/products/questionpro-nonprofit-g-49997-

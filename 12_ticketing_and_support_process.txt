@@ -1,0 +1,35 @@
+QuestionPro — Internal Ticketing & Support Process
+====================================================
+Source: Internal QP Wiki (other-departments/customers/operations/ticketing-systems)
+
+TYPES OF TICKETS:
+
+1. CLIENT ISSUE TICKET (Radar)
+   Purpose: Track work done for the client — justifies subscription cost and provides transparency.
+   Exposure: These tickets ARE visible to clients under "My Account" section.
+   Use for: Any issue, feature gap, or task directly related to a client's experience.
+
+2. INTERNAL INFORMATION TICKET (RE-Ticket)
+   Purpose: Store and pass internal information between CSM and AM teams.
+   Exposure: These are INTERNAL ONLY — not exposed to clients.
+   Use for: Internal notes, crucial information that only the team needs.
+
+3. BUG REPORTS
+   Definition: When the product is not doing what it is advertised to do.
+   Types: Feature issue, annoyance (too many clicks/too slow), UX issue, UI issue.
+   Who reports: CSMs must report bugs of any magnitude to the product team.
+   Timeline: Bugs requiring a build take at least 15 days to fix.
+   How to report: Follow the "Report Bug" process document.
+
+4. FEATURE REQUESTS
+   Definition: Enhancements to existing functions/features or new capabilities.
+   Process:
+   1. Raise on IdeaScale first
+   2. Get your team to upvote it
+   3. If business-critical, escalate to team leader
+   Timeline: Feature requests can take 1 month to 1 year if accepted for development.
+   DO NOT PROMISE features to clients without a YouTrack (YT) ticket AND PDM confirmation.
+
+TICKETING TOOL: Radar (admin.questionpro.com)
+DEVELOPMENT TRACKING: YouTrack (internal)
+PRODUCT IDEAS: IdeaScale

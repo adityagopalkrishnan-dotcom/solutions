@@ -1,0 +1,70 @@
+QuestionPro — Integrations Reference Guide
+==========================================
+Source: Internal QP Wiki (other-departments/customers/knowledgeinformation-center/integrations)
+
+GOOGLE SHEETS INTEGRATION
+--------------------------
+What it does: Export survey responses directly into Google Sheets in real-time. Automatically creates new sheets and maintains up-to-date records without manual entry.
+
+Setup Steps:
+1. Go to Survey → Integration → Google Sheets
+2. Click "Sign in with Google" and authorize the account
+3. Select an existing sheet or create a new one
+4. Set toggles as needed and click Create
+
+Important — Google Drive Scope Update:
+QuestionPro no longer supports the /drive scope (per Google policy). Now uses /drive.file scope (more secure — only accesses files created through the integration).
+After reconnecting: Create a new Google Sheet from within QuestionPro; existing sheets can no longer receive pushes.
+
+FAQs:
+- Can I connect multiple Google accounts? No — only 1 Google account per QP account.
+- Can multiple surveys connect to 1 sheet? Yes, but not recommended (interrupts simultaneous data flow).
+
+License availability: Essentials, Advanced, Team Edition, Research Edition
+
+
+QUALTRICS DATA IMPORT (QSF Migration Tool)
+-------------------------------------------
+What it does: Migrate surveys and responses from Qualtrics to QuestionPro using .qsf (survey) and .csv (response) files.
+
+How to export from Qualtrics:
+Survey → Tools → Import/Export → Export Survey → QSF file
+Responses → Data & Analysis → Export & Import → Export Data → CSV (use "choice text")
+
+How to import to QuestionPro:
+My Account → Integrations → Qualtrics Data Import → Upload QSF file
+Then: Import Data via CSV for responses
+
+Important warnings:
+- Do NOT edit the QSF file — it corrupts it
+- CSV file name must be 60 characters or less
+- Max CSV file size for response import: 20 MB
+
+Unsupported question types from Qualtrics:
+Highlight, Drill Down, Timing, Meta Info, Screen Capture, Side-by-Side Matrix, HeatMap, Hotspot, Card Sorting, Matrix Drop-down, Conjoint & MaxDiff
+
+Logic is NOT imported from QSF — must be re-applied manually in QuestionPro.
+
+License availability: Research Edition only
+
+
+API INTEGRATION
+---------------
+What it is: QuestionPro uses a REST API with HTTP authentication. All responses are in JSON format.
+
+How to generate API key:
+Login → Surveys → Integration → API → Click "Get API Key"
+Note: API key is account-specific and unique per account.
+
+API Environments by Data Center:
+(Use {{env}} variable in API endpoint URLs based on your data center)
+- US: us
+- EU: eu
+- AE: ae
+- CA: ca
+- AU: au
+- KSA: ksa
+
+Help file: "Getting started with QuestionPro API"
+
+License availability: Available on all plans (check specific endpoint docs for plan restrictions)

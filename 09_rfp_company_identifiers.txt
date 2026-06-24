@@ -1,0 +1,51 @@
+QuestionPro — RFP & Company Identifiers Reference
+===================================================
+Source: Internal QP Wiki (sales/rfp-hub)
+Owner: Sharon Nau
+⚠️ INTERNAL USE ONLY — DO NOT SHARE WITH CLIENTS
+
+US COMPANY IDENTIFIERS:
+- Tax ID (EIN): 45-3156696
+- DUNS Number: 127763352
+- FWA Number: FWA00024035
+- Ariba ID: AN01006634847
+- MS SSPA: 0002294768
+- NAICS Code: 541910 or 541511
+- SIC Code: 73710301
+- FinCEN ID: 2000-0199-5060
+- Texas Identification Number: 14531566967
+
+MAILING ADDRESS:
+9450 SW Gemini Dr #62790, Beaverton, OR 97008-7105, USA
+(Oregon mail address — all payments and official registrations)
+
+RFP PROCESS RULES:
+- Under $25K ACV: Use RFP Buddy + Security FAQ + public docs. No InfoSec involvement.
+- Over $25K ACV: SE can assist with complex questions after initial RFP review.
+- Security questions: See Security & Compliance wiki.
+
+IMPORTANT FINANCIAL DOCUMENTS AVAILABLE:
+- W9 (2026)
+- US Residency Certificate 2026 (English, Spanish, Portuguese versions)
+- No PE Certificate (for Indian clients)
+- Self-Declaration Form 10F (for Indian clients)
+- IRS Tax Compliance (no debt report)
+- Commercial Certificate of Coverage 2025–2026
+- Schedule of Insurance 2025–2026
+- Workers Compensation Certificates
+- NMSDC Minority-owned Business Certificate 2026
+
+PAST RFPs FOR REFERENCE:
+- Chick-Fil-A (2024)
+- Capital One (2023, CX)
+- AVID (2023, CX/RE/WF)
+- Philadelphia Gas Works (2023)
+- T-Mobile (requirements + RFP)
+- Google (full folder + follow-up)
+- Truist Bank (2023)
+- MENA: Abu Dhabi Islamic Bank, Al Ghurair Investment
+
+KEY CONTACTS:
+- RFP general questions: Sharon Nau
+- Tax/payment documents: Kristie L
+- Security questions (>$25K): InfoSec team via Radar ticket

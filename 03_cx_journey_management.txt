@@ -1,0 +1,44 @@
+QuestionPro CX — Customer Journey Management (CJM)
+====================================================
+Source: Internal QP Wiki (product/customer-experience-home/cx-product-page/journey-management)
+Stakeholder: Ken Peterson | Owner: Anmol Sahetya
+Last Updated: February 20, 2026
+
+WHAT IS IT?
+-----------
+Journey Management is the practice of designing, monitoring, and continuously improving customer journeys using real data, insights, and operational signals.
+
+Unlike traditional journey MAPPING (one-time visual diagrams), QuestionPro Journey Management treats journeys as LIVING, EVOLVING SYSTEMS that reflect how customers actually move through experiences.
+
+KEY POSITIONING:
+Journey Management = Journey Mapping + Real Data + Continuous Improvement + Operational Signals
+
+DEMO ACCOUNT:
+- URL: https://journeymanagement.questionpro.com/
+- Login: cxdemo@questionpro.com | Password: questionpro
+
+KEY DEMO WORKSPACES (use in demos):
+- Insurance: Track to Purchase, Member Journey, Billing Overview, Parcours Commercial
+- Grocery Retail: In Store Transaction, Online Merchandise
+- Airlines: High Level Flying Experience
+- Bank: Credit Card Application
+- Sport: High Level Journey, Online Merchandise
+- Auto: Purchase Journey, Book Car
+- Manufacturing: Basic Manual Order
+- Business Services: Accounting User Journey
+
+WORKSHOP RESOURCES:
+- Short Journey Management Workshop: 60–120 minutes, suitable for cross-company audiences
+- Full Scale Journey Management Training: Used as QuestionPro CJM Certification course (40-question quiz available)
+- Both workshops have downloadable/customizable presentations (do not edit master)
+
+SALES RESOURCES:
+- CJM One Pager (for printing)
+- CJM Intro Presentation (adapted from analyst presentation, Feb 2026)
+- CJM Workshop Presentation
+- Ready-To-Sell Document
+- Help files
+
+TEAM:
+- Gargi Ghamandi — Product Manager
+- Ani Badalyan — Project Manager

@@ -1,0 +1,55 @@
+QuestionPro BI — Product Reference
+=====================================
+Source: Internal QP Wiki (product/bi-formerly-xa)
+Stakeholder: Kartik Bhat
+
+WHAT IS IT?
+-----------
+QuestionPro BI is QuestionPro's data visualization platform. A BI tool developed natively by QuestionPro, designed to consume data from different QuestionPro products. Easy to use, yet extremely powerful.
+
+Key differentiator: Unlike third-party BI tools, QuestionPro BI is purpose-built to understand survey/CX/EX data structures out of the box — no complex ETL required.
+
+PRODUCTS SUPPORTED:
+Research | Advanced | Team Edition | Workforce (EX) surveys | CX
+
+QUICK LINKS (Internal):
+- Getting started video (< 15 min): Google Drive
+- Sharable demo dashboard: https://bi.questionpro.com/sd/3079aa13-8e7b-4223-9cd1-7dcba88fcb6f
+- Internal training video: Google Drive
+- Website: https://questionpro.com/bi/
+- Marketing blog: https://www.questionpro.com/blog/actionable-research-data-dashboards-questionpro-bi/
+
+SALES ASSETS:
+- Presentation deck on QuestionPro BI
+- One-pager
+- Case Study: Eintracht Frankfurt Soccer Club
+
+PRODUCT UPDATE LOG (recent releases):
+July 11 2025: Exclude option from Analysis in Matrix Stack Bar, Matrix Heatmap
+June 5 2025: BI Variables Multiselect
+May 2 2025: Response Viewer widget, Segment Bar widget
+April 17 2025: Filter AI
+April 3 2025: Map chart enhancement
+March 27 2025: Mean chart gauge
+March 10 2025: Matrix Heatmap widget enhancement, Set Minimum Response Count for Trend Widgets
+Feb 28 2025: Segment Trend widget enhancement (multi data source)
+Feb 21 2025: Support User Date Timezone
+Feb 13 2025: Bug fixes — NPS calculation, filter sharing, matrix question issues
+Jan 28 2025: Numeric Histogram widget
+Jan 14 2025: Funnel chart
+Jan 3 2025: BI Variables
+
+UPCOMING FEATURES:
+- User sharing
+- Cluster analysis
+- TextAI integration
+
+COMMON BUG FIXES (resolved):
+- NPS Scores calculated incorrectly with Rolling Averages
+- BI filter issue upon dashboard sharing
+- Numbers not matching in dashboard vs Excel exports
+- Mean percentage display issues
+- SPSS download empty
+- Interactive filters not displaying
+- Custom theme not applying on Map widget
+- Spider Chart lines outside circle
