@@ -147,6 +147,11 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
 .send-btn:disabled{background:var(--qp-border);cursor:not-allowed}
 .send-btn i{color:white;font-size:15px}
 .input-hint{font-size:11px;color:var(--qp-light);margin-top:5px}
+.situation-toggle-bar{display:flex;align-items:center;gap:8px;padding:6px 12px 0}
+.situation-btn{background:transparent;border:1px solid var(--qp-border);color:var(--qp-light);font-size:11px;padding:4px 10px;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all 0.15s}
+.situation-btn:hover{border-color:var(--qp-accent);color:var(--qp-accent)}
+.situation-btn.active{background:var(--qp-accent);border-color:var(--qp-accent);color:#fff}
+.situation-hint{font-size:11px;color:var(--qp-light);font-style:italic}
 
 /* ── REPOSITORY VIEW ── */
 .repo-view-inner{padding:20px 24px;flex:1}
@@ -397,6 +402,14 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
           <div class="repo-tag"          id="pill-cx"         onclick="pinProduct(this,'cx')">         <i class="ti ti-heart"></i> CX</div>
           <div class="repo-tag"          id="pill-workforce"  onclick="pinProduct(this,'workforce')">  <i class="ti ti-users"></i> Workforce</div>
           <div class="repo-tag"          id="pill-communities"onclick="pinProduct(this,'communities')"><i class="ti ti-world"></i> Communities</div>
+        </div>
+        <div class="situation-toggle-bar" id="situationToggleBar">
+          <button id="situationBtn" onclick="toggleSituationMode()" class="situation-btn">
+            <i class="ti ti-briefcase"></i> Problem mode
+          </button>
+          <span class="situation-hint" id="situationHint" style="display:none">
+            Describe your deal or challenge — QP will analyse capabilities, gaps and talking points
+          </span>
         </div>
         <div class="chat-input-box">
           <textarea id="chatInput" placeholder="Ask the community knowledge base anything…" rows="1"
@@ -1252,7 +1265,8 @@ function buildContext(question){
 
 async function sendChat(override){
   const inp=document.getElementById('chatInput');
-  const text=override||inp.value.trim();
+  const rawText=override||inp.value.trim();
+  const text=(!override&&situationMode&&!rawText.toUpperCase().startsWith('SITUATION:'))?'SITUATION: '+rawText:rawText;
   if(!text||isChatBusy)return;
   hideWelcome();
   if(!override){inp.value='';autoResize(inp)}
@@ -1397,7 +1411,31 @@ function showTyping(){
   area.appendChild(div);area.scrollTop=area.scrollHeight;return div;
 }
 function hideWelcome(){document.getElementById('aiWelcome')?.remove()}
-function clearChat(){ resetProductPills();chatHistory=[];const area=document.getElementById('chatArea');area.innerHTML='';area.insertAdjacentHTML('afterbegin',`<div class="ai-welcome" id="aiWelcome"><div class="ai-welcome-badge"><i class="ti ti-brain"></i></div><h2>The Insights World's Collective Brain</h2><p>Ask about survey methodology, benchmark studies, JS branching logic, data analysis approaches, CX programme design — anything insights.</p><div class="starter-chips"><div class="starter-chip" onclick="askStarter(this)">How should I structure a benchmark study?</div><div class="starter-chip" onclick="askStarter(this)">Best JS setups for complex branching logic?</div><div class="starter-chip" onclick="askStarter(this)">Creative ways to analyze open-ended responses?</div><div class="starter-chip" onclick="askStarter(this)">How do I design a VoC programme from scratch?</div></div></div>`)}
+let situationMode = false;
+
+function toggleSituationMode() {
+  situationMode = !situationMode;
+  const btn = document.getElementById('situationBtn');
+  const hint = document.getElementById('situationHint');
+  const input = document.getElementById('chatInput');
+  if (situationMode) {
+    btn.classList.add('active');
+    btn.innerHTML = '<i class="ti ti-briefcase"></i> Problem mode ON';
+    hint.style.display = 'inline';
+    input.placeholder = 'Describe your deal or challenge (company, competitor, requirements, RFP context)…';
+    input.rows = 3;
+    autoResize(input);
+  } else {
+    btn.classList.remove('active');
+    btn.innerHTML = '<i class="ti ti-briefcase"></i> Problem mode';
+    hint.style.display = 'none';
+    input.placeholder = 'Ask the community knowledge base anything…';
+    input.rows = 1;
+    autoResize(input);
+  }
+}
+
+function clearChat(){ resetProductPills(); if(situationMode){toggleSituationMode();}chatHistory=[];const area=document.getElementById('chatArea');area.innerHTML='';area.insertAdjacentHTML('afterbegin',`<div class="ai-welcome" id="aiWelcome"><div class="ai-welcome-badge"><i class="ti ti-brain"></i></div><h2>The Insights World's Collective Brain</h2><p>Ask about survey methodology, benchmark studies, JS branching logic, data analysis approaches, CX programme design — anything insights.</p><div class="starter-chips"><div class="starter-chip" onclick="askStarter(this)">How should I structure a benchmark study?</div><div class="starter-chip" onclick="askStarter(this)">Best JS setups for complex branching logic?</div><div class="starter-chip" onclick="askStarter(this)">Creative ways to analyze open-ended responses?</div><div class="starter-chip" onclick="askStarter(this)">How do I design a VoC programme from scratch?</div></div></div>`)}
 function askStarter(el){sendChat(el.textContent)}
 function handleChatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}document.getElementById('sendBtn').disabled=!e.target.value.trim()||isChatBusy}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';document.getElementById('sendBtn').disabled=!el.value.trim()||isChatBusy}
