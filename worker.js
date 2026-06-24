@@ -328,6 +328,12 @@ export default {
     }
     if (!question) return jres({error:'Missing question'}, 400);
 
+    // Detect SITUATION mode — prefix triggers problem-solving prompt behaviour
+    const isSituationMode = question.trimStart().toUpperCase().startsWith('SITUATION:');
+    // Use the full question for scoring (situation context helps retrieval)
+    // but label it clearly in the context header
+    const questionMode = isSituationMode ? 'problem-solving' : 'qa';
+
     const pinnedProduct  = body.pinned_product || null;
     const historyTurns   = (historyStr||'').split(/\[User\]/i).slice(-4).join(' ');
     const inferredProduct = pinnedProduct || inferProduct(question+' '+historyTurns);
@@ -375,6 +381,9 @@ export default {
       // Prepending a "seeking" statement helps the AI connect the question to the right
       // section of the retrieved content without having to infer the link itself.
       const contextHeader = [
+        isSituationMode
+          ? 'MODE: Problem-solving. Analyse the situation and provide capabilities, gaps, competitive positioning and talking points.'
+          : 'MODE: Q&A. Answer the question directly from the sources below.',
         'The user is asking about: ' + question,
         inferredProduct ? 'Product context: ' + inferredProduct : '',
         topRepo.length > 0 ? 'Most relevant sources found: ' + topRepo.slice(0,3).map(({e})=>e.title).join(', ') : '',
