@@ -364,19 +364,47 @@ export default {
         const prevTurnWasClarification = historyStr && historyStr.includes('Before I analyse this, I need');
 
         if (elementCount < 2 && !prevTurnWasClarification) {
-          const missing = [];
-          if (!hasCustomer) missing.push('What type of company or industry is this for?');
-          if (!hasRequirement) missing.push('What is the specific challenge or requirement the customer has?');
-          if (!hasUseCase) missing.push('What is the context — an RFP, a demo, a competitive displacement, or an objection you need to handle?');
+          // Let the AI generate smart clarifying questions based on what was actually typed
+          // rather than returning generic canned questions
+          const missingLabels = [];
+          if (!hasCustomer) missingLabels.push('who the customer or industry is');
+          if (!hasRequirement) missingLabels.push('what their specific requirement or pain point is');
+          if (!hasUseCase) missingLabels.push('what the sales context is (RFP, demo, objection, competitive displacement)');
 
-          const questions = missing.slice(0, 2);
-          const clarification = 'Before I analyse this, I need a couple of details:\n' + questions.map(q => '• ' + q).join('\n');
+          const clarifyPrompt = [
+            'MODE: Clarification needed. The sales situation is too vague to analyse.',
+            'The user typed: ' + question,
+            'Missing context: ' + missingLabels.join(', ') + '.',
+            'Ask exactly 2 targeted follow-up questions to get the missing detail.',
+            'Base the questions on what the user already wrote — make them specific, not generic.',
+            'Start with: "Before I analyse this, a couple of things would help:"',
+            'Then ask 2 bullet-point questions. Stop after the questions. Do not start analysing yet.',
+          ].join('\n');
 
-          return jres({
-            result: { documents: [{ output: [{ key: 'content', value: clarification }] }] },
+          // Send to AI Router with the clarify prompt as the question
+          const qpKey = env.QP_API_KEY || request.headers.get('api-key');
+          const clarifyInputs = [
+            ...inputs.filter(i => i.key !== 'CONTEXT' && i.key !== 'QUESTION'),
+            { key: 'QUESTION', value: clarifyPrompt },
+            { key: 'CONTEXT', value: 'No context needed — just ask the clarifying questions as instructed.' }
+          ];
+          const clarifyPayload = Object.assign({}, body, {
+            user_id: body.user_id || QP_USER_ID,
+            organization_id: body.organization_id || QP_ORG_ID,
+            input_data: { input: clarifyInputs }
+          });
+          delete clarifyPayload.question; delete clarifyPayload.historyStr; delete clarifyPayload.pinned_product;
+
+          const clarifyResp = await fetch(QP_ROUTER, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'api-key': qpKey },
+            body: JSON.stringify(clarifyPayload)
+          }).then(r => r.json());
+
+          return jres(Object.assign({}, clarifyResp, {
             _clarification_requested: true,
             _elements_found: elementCount
-          });
+          }));
         }
       }
     }
