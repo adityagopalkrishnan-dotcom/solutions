@@ -377,7 +377,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
         </div>
         <div class="ph-spacer"></div>
         <span class="pill" id="entry-count-badge">0 entries</span>
-        <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px" onclick="clearChat()"><i class="ti ti-refresh" style="font-size:12px"></i> New chat</button>
+        <button id="situationBtn" onclick="toggleSituationMode()" class="situation-btn" title="Problem mode: describe a deal for sales analysis" style="margin-right:6px"><i class="ti ti-briefcase"></i> Problem mode</button><button class="btn btn-secondary" style="padding:6px 12px;font-size:12px" onclick="clearChat()"><i class="ti ti-refresh" style="font-size:12px"></i> New chat</button>
       </div>
       <div class="chat-area" id="chatArea">
         <div class="ai-welcome" id="aiWelcome">
@@ -1395,10 +1395,12 @@ function appendMsg(role,content,refs=[],question=''){
     }
     const acts=document.createElement('div');
     acts.className='msg-actions';
-    acts.innerHTML=`<button class="msg-act-btn" onclick="saveNote(this,'${esc(question).replace(/'/g,"\\'")}','${esc(content).replace(/'/g,"\\'")}')"><i class="ti ti-bookmark"></i>Save note</button>
-      <button class="msg-act-btn" onclick="copyText(this,'${esc(content).replace(/'/g,"\\'")}')"><i class="ti ti-copy"></i>Copy</button>
-      <button class="msg-act-btn msg-helpful" onclick="markHelpful(this)"><i class="ti ti-thumb-up"></i>Helpful</button>
-      <button class="msg-act-btn msg-wrong" onclick="showCorrection(this)"><i class="ti ti-thumb-down"></i>Needs correction</button>`;
+    const msgId='msg_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+    window._msgStore=window._msgStore||{};
+    window._msgStore[msgId]={content,question};
+    acts.innerHTML=`<button class="msg-act-btn" data-msg-id="${msgId}" onclick="saveNoteById(this)"><i class="ti ti-bookmark"></i>Save note</button>
+      <button class="msg-act-btn" data-msg-id="${msgId}" onclick="copyById(this)"><i class="ti ti-copy"></i>Copy</button>
+      ;
     bubble.appendChild(acts);
   }
   div.innerHTML=av;div.appendChild(bubble);
@@ -1451,6 +1453,16 @@ function saveNote(btn,q,a){
   toast('Saved to notes ✓');
 }
 function deleteNote(i){notes.splice(i,1);save();renderNotes()}
+function copyById(btn){
+  const id=btn.getAttribute('data-msg-id');
+  const text=((window._msgStore||{})[id]||{}).content||'';
+  navigator.clipboard.writeText(text).then(()=>{btn.innerHTML='<i class="ti ti-check"></i>Copied';setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i>Copy'},1500)}).catch(()=>toast('Copy failed','error'));
+}
+function saveNoteById(btn){
+  const id=btn.getAttribute('data-msg-id');
+  const {content='',question=''}=((window._msgStore||{})[id])||{};
+  saveNote(btn,question,content);
+}
 function copyText(btn,text){
   navigator.clipboard.writeText(text).then(()=>{btn.innerHTML='<i class="ti ti-check"></i>Copied';setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i>Copy'},1500)})
 }
