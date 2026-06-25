@@ -1266,7 +1266,8 @@ function buildContext(question){
 async function sendChat(override){
   const inp=document.getElementById('chatInput');
   const rawText=override||inp.value.trim();
-  const text=(!override&&situationMode&&!rawText.toUpperCase().startsWith('SITUATION:'))?'SITUATION: '+rawText:rawText;
+  const isFirstMessage = (typeof chatHistory === 'undefined' || chatHistory.length === 0);
+  const text=(!override&&situationMode&&isFirstMessage&&!rawText.toUpperCase().startsWith('SITUATION:'))?'SITUATION: '+rawText:rawText;
   if(!text||isChatBusy)return;
   hideWelcome();
   if(!override){inp.value='';autoResize(inp)}
