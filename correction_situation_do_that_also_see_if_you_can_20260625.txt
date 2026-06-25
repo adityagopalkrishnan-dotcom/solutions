@@ -1,0 +1,14 @@
+CORRECTION SUBMITTED: 2026-06-25T10:10:27.960Z
+
+QUESTION: SITUATION: do that. Also, see if you can add card sorting
+
+WRONG ANSWER: For an FMCG beverage launch across 6 global markets, the best fit in the knowledge base is **Choice-Based Conjoint / Discrete Choice**.
+
+**Why it fits**
+The Choice Modelling entries describe conjoint as a way to translate preferences into quantitative measurements and simulate how consumers may react to product changes. That makes it the strongest option when you need to test beverage concepts built from multiple attributes and levels, then compare trade-offs across markets.
+
+**What QuestionPro 
+
+CORRECT ANSWER / MISSING CONTEXT:
+
+In a choice based research, it should always give me an option for conjoint, maxdiff and card sorting and propose a mix usage of some or all of them
