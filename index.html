@@ -403,14 +403,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
           <div class="repo-tag"          id="pill-workforce"  onclick="pinProduct(this,'workforce')">  <i class="ti ti-users"></i> Workforce</div>
           <div class="repo-tag"          id="pill-communities"onclick="pinProduct(this,'communities')"><i class="ti ti-world"></i> Communities</div>
         </div>
-        <div class="situation-toggle-bar" id="situationToggleBar">
-          <button id="situationBtn" onclick="toggleSituationMode()" class="situation-btn">
-            <i class="ti ti-briefcase"></i> Problem mode
-          </button>
-          <span class="situation-hint" id="situationHint" style="display:none">
-            Describe your deal or challenge — QP will analyse capabilities, gaps and talking points
-          </span>
-        </div>
+
         <div class="chat-input-box">
           <textarea id="chatInput" placeholder="Ask the community knowledge base anything…" rows="1"
             onkeydown="handleChatKey(event)" oninput="autoResize(this)"></textarea>
@@ -1419,19 +1412,16 @@ let situationMode = false;
 function toggleSituationMode() {
   situationMode = !situationMode;
   const btn = document.getElementById('situationBtn');
-  const hint = document.getElementById('situationHint');
   const input = document.getElementById('chatInput');
   if (situationMode) {
     btn.classList.add('active');
     btn.innerHTML = '<i class="ti ti-briefcase"></i> Problem mode ON';
-    hint.style.display = 'inline';
     input.placeholder = 'Describe your deal or challenge (company, competitor, requirements, RFP context)…';
     input.rows = 3;
     autoResize(input);
   } else {
     btn.classList.remove('active');
     btn.innerHTML = '<i class="ti ti-briefcase"></i> Problem mode';
-    hint.style.display = 'none';
     input.placeholder = 'Ask the community knowledge base anything…';
     input.rows = 1;
     autoResize(input);
