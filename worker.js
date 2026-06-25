@@ -361,7 +361,12 @@ export default {
 
         // CONVERSATION BYPASS: if previous turn was a clarification request,
         // the user is now answering it — proceed to full analysis
-        const prevTurnWasClarification = historyStr && historyStr.includes('Before I analyse this, I need');
+        // Check if previous assistant turn was a clarification request (either phrasing)
+        const prevTurnWasClarification = historyStr && (
+          historyStr.includes('Before I analyse this') ||
+          historyStr.includes('a couple of things would help') ||
+          historyStr.includes('couple of details')
+        );
 
         if (elementCount < 2 && !prevTurnWasClarification) {
           // Let the AI generate smart clarifying questions based on what was actually typed
