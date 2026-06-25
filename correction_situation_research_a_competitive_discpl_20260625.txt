@@ -1,0 +1,18 @@
+CORRECTION SUBMITTED: 2026-06-25T09:52:34.680Z
+
+QUESTION: SITUATION: Research
+a competitive discplacement
+
+WRONG ANSWER: CAPABILITIES:
+- Merge responses from multiple QuestionPro surveys into one master survey using **Merge Data 2.0**.
+- Get an **aggregated response view** after merging.
+- Benefit from **auto-mapping** of questions with similar structure during merge.
+- Build **BI dashboards based on one or more surveys**.
+- Create dashboards from scratch, add **multiple tabs**, use **different chart types**, and compare data.
+- In XA, create a dashboard with **+ New Dashboard**; in BI, the flow is **Login » Creat
+
+CORRECT ANSWER / MISSING CONTEXT:
+
+Survey Stacks is a data management feature that empowers users to seamlessly integrate data from multiple surveys into a single, cohesive dataset. This centralized repository of information facilitates streamlined reporting, in-depth analysis, and the generation of actionable insights. By merging data from various surveys, Survey Stacks eliminates the need for manual data consolidation and enables a holistic view of respondent feedback and behavior.
+
+This feature is particularly valuable for clients who conduct multiple surveys over time, across different departments, or for varying target audiences. With Survey Stacks, users can identify trends, compare results, and track changes in respondent sentiment over time. This comprehensive understanding of data can inform strategic decision-making, drive process improvements, and enhance overall organizational performance.
