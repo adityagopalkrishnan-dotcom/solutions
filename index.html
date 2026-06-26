@@ -129,8 +129,9 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
 .typing-ind span{width:5px;height:5px;border-radius:50%;background:var(--qp-light);animation:dot 1.2s ease-in-out infinite}
 .typing-ind span:nth-child(2){animation-delay:.2s}
 .typing-ind span:nth-child(3){animation-delay:.4s}
-.typing-status{font-size:11px;color:var(--qp-muted);margin-left:6px;animation:fadeStatus 0.4s ease}
-@keyframes fadeStatus{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.typing-wrap{display:flex;flex-direction:column;gap:4px;min-width:160px}
+.typing-status{font-size:11px;color:var(--qp-muted);white-space:nowrap;animation:fadeStatus 0.35s ease}
+@keyframes fadeStatus{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:translateY(0)}}
 .sources-used{margin-top:10px;padding-top:8px;border-top:1px solid var(--qp-border)}
 .sources-used-label{font-size:10px;font-weight:600;color:var(--qp-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
 .source-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--qp-muted);background:var(--qp-bg);border:1px solid var(--qp-border);border-radius:20px;padding:2px 8px;margin:2px 3px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
@@ -1421,7 +1422,7 @@ function appendMsg(role,content,refs=[],question='',sources=[]){
 function showTyping(){
   const area=document.getElementById('chatArea');
   const div=document.createElement('div');div.className='msg ai';
-  div.innerHTML=`<div class="msg-av"><i class="ti ti-sparkles" style="font-size:12px"></i></div><div class="msg-body"><div class="msg-bubble"><div class="typing-ind"><span></span><span></span><span></span><span class="typing-status" id="typingStatus">Searching knowledge base...</span></div></div></div>`;
+  div.innerHTML=`<div class="msg-av"><i class="ti ti-sparkles" style="font-size:12px"></i></div><div class="msg-body"><div class="msg-bubble"><div class="typing-wrap"><div class="typing-ind"><span></span><span></span><span></span></div><span class="typing-status" id="typingStatus">Searching knowledge base...</span></div></div></div>`;
   area.appendChild(div);area.scrollTop=area.scrollHeight;
   const msgs=['Searching knowledge base...','Reading documentation...','Scoring relevant sources...','Fetching top matches...','Composing answer...'];
   let i=0;
