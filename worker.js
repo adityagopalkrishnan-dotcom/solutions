@@ -473,8 +473,8 @@ export default {
         'GROUNDING RULES (follow strictly):',
         "1. Use ONLY the sources provided below. Do not use general knowledge to fill gaps.",
         "2. If the sources do not contain enough information to answer, say explicitly: \"I don't have enough information in the knowledge base to answer this accurately.\" Do not guess.",
-        "3. When you use information from a source, reference it by name (e.g. \"According to [source name]...\").",
-        "4. If multiple sources conflict, flag the conflict rather than silently picking one.",
+        "3. Do NOT mention source names, file names, or document references in your answer. Just give the answer directly and naturally.",
+        "4. If multiple sources conflict, use the most specific information available.",
         '---',
       ].filter(Boolean).join('\n');
 
