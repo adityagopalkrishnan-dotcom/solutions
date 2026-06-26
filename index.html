@@ -350,7 +350,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
   <span class="topbar-product">Insights Commons</span>
   <div class="topbar-spacer"></div>
   <div class="topbar-actions">
-    <button class="topbar-btn" onclick="showView('contribute')"><i class="ti ti-plus"></i> Contribute</button>
+    
     <button class="topbar-btn" onclick="showView('settings')"><i class="ti ti-settings"></i></button>
     <div class="topbar-avatar" title="Your profile">SC</div>
   </div>
@@ -364,9 +364,7 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
     <a class="nav-item active" onclick="showView('ai')" id="nav-ai"><i class="ti ti-sparkles"></i><span>QuestionPro AI</span></a>
     <a class="nav-item" onclick="showView('browse')" id="nav-browse"><i class="ti ti-database"></i><span>Repository</span></a>
     <a class="nav-item" onclick="showView('notes')" id="nav-notes"><i class="ti ti-notes"></i><span>Saved Notes</span></a>
-    <div class="nav-section-label" style="margin-top:8px">Contribute</div>
-    <a class="nav-item" onclick="showView('contribute')" id="nav-contribute"><i class="ti ti-pencil-plus"></i><span>Add Knowledge</span></a>
-    <a class="nav-item" onclick="showView('upload')" id="nav-upload"><i class="ti ti-upload"></i><span>Upload File</span></a>
+
     <div class="nav-bottom">
       <a class="nav-item" onclick="showView('settings')" id="nav-settings"><i class="ti ti-adjustments"></i><span>Settings</span></a>
     </div>
@@ -429,7 +427,8 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
         <div><div class="page-title">Community Repository</div><div class="page-sub">Browse, search, and vote on community knowledge</div></div>
         <div class="ph-spacer"></div>
         <span class="pill green" id="repo-count">0 entries</span>
-        <button class="btn btn-primary" style="padding:7px 14px;font-size:12px" onclick="showView('contribute')"><i class="ti ti-plus"></i> Contribute</button>
+        <button class="btn btn-secondary" style="padding:7px 14px;font-size:12px;margin-right:6px" onclick="showView('upload')"><i class="ti ti-upload"></i> Upload File</button>
+        <button class="btn btn-primary" style="padding:7px 14px;font-size:12px" onclick="showView('contribute')"><i class="ti ti-plus"></i> Add Knowledge</button>
       </div>
       <!-- Stats bar -->
       <div class="stats-bar" id="statsBar">
