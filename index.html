@@ -1288,6 +1288,7 @@ async function sendChat(override){
       : '';
 
     let aiResponse = '';
+    let workerSources = [];
 
     const proxyUrl = config.proxyUrl || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev/';
 
@@ -1315,6 +1316,7 @@ async function sendChat(override){
         })
       });
       const data = await res.json();
+      workerSources = data?._sources || [];
       // QP Router wraps the answer — unwrap all possible shapes
       // Extract response — matches QP Router's actual response shape
       // result.documents[0].output is an array of {key,value} — find key==='content'
@@ -1351,8 +1353,6 @@ async function sendChat(override){
       aiResponse = data.content?.[0]?.text || 'Sorry, something went wrong.';
     }
     removeTyping(typing);
-    // Extract _sources from Worker v3 response
-    const workerSources = data?._sources || [];
     // Parse structured response
     const refs=extractRefs(aiResponse,entries);
     appendMsg('assistant',aiResponse,refs,text,workerSources);
