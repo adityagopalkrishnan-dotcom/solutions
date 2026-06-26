@@ -1412,8 +1412,22 @@ function appendMsg(role,content,refs=[],question='',sources=[]){
     window._msgStore=window._msgStore||{};
     window._msgStore[msgId]={content,question};
     acts.innerHTML=`<button class="msg-act-btn" data-msg-id="${msgId}" onclick="saveNoteById(this)"><i class="ti ti-bookmark"></i>Save note</button>
-      <button class="msg-act-btn" data-msg-id="${msgId}" onclick="copyById(this)"><i class="ti ti-copy"></i>Copy</button>`;
+      <button class="msg-act-btn" data-msg-id="${msgId}" onclick="copyById(this)"><i class="ti ti-copy"></i>Copy</button>
+      <button class="msg-act-btn msg-helpful" data-msg-id="${msgId}" onclick="markHelpful(this)"><i class="ti ti-thumb-up"></i>Looks right</button>
+      <button class="msg-act-btn msg-wrong" data-msg-id="${msgId}" onclick="markWrong(this)"><i class="ti ti-thumb-down"></i>This is wrong</button>`;
+    // Correction panel (hidden by default, shown when "This is wrong" is clicked)
+    const corrPanel=document.createElement('div');
+    corrPanel.className='correction-panel';
+    corrPanel.dataset.msgId=msgId;
+    corrPanel.innerHTML=`<div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--qp-text)">What was wrong or missing?</div>
+      <textarea placeholder="Paste the correct answer, add context, or describe what the AI got wrong..."></textarea>
+      <div class="correction-actions">
+        <span class="correction-hint">This will be added to the knowledge base as a correction file.</span>
+        <button class="btn btn-secondary" style="font-size:12px;padding:4px 12px" onclick="this.closest('.correction-panel').classList.remove('open')">Cancel</button>
+        <button class="btn btn-primary" style="font-size:12px;padding:4px 12px" onclick="submitCorrection(this)">Submit correction</button>
+      </div>`;
     bubble.appendChild(acts);
+    bubble.appendChild(corrPanel);
   }
   div.innerHTML=av;div.appendChild(bubble);
   area.appendChild(div);area.scrollTop=area.scrollHeight;
@@ -1612,6 +1626,77 @@ async function copyById(button){
     setTimeout(()=>button.innerHTML=original,1200);
   }
   toast('Copied to clipboard');
+}
+
+function markHelpful(button){
+  const id=button?.dataset?.msgId;
+  button.classList.add('saved');
+  button.innerHTML='<i class="ti ti-check"></i>Marked helpful';
+  button.disabled=true;
+  // Disable the "wrong" button too
+  const acts=button.closest('.msg-actions');
+  const wrongBtn=acts?.querySelector('.msg-wrong');
+  if(wrongBtn){wrongBtn.disabled=true;wrongBtn.style.opacity='0.4';}
+  toast('Thanks for the feedback!');
+}
+
+function markWrong(button){
+  const id=button?.dataset?.msgId;
+  // Toggle the correction panel open
+  const bubble=button.closest('.msg-body');
+  const panel=bubble?.querySelector('.correction-panel');
+  if(panel){
+    panel.classList.toggle('open');
+    if(panel.classList.contains('open')){
+      panel.querySelector('textarea')?.focus();
+      button.innerHTML='<i class="ti ti-thumb-down"></i>Cancel correction';
+    } else {
+      button.innerHTML='<i class="ti ti-thumb-down"></i>This is wrong';
+    }
+  }
+}
+
+async function submitCorrection(button){
+  const panel=button.closest('.correction-panel');
+  const msgId=panel?.dataset?.msgId;
+  const item=window._msgStore?.[msgId];
+  const corrText=panel?.querySelector('textarea')?.value?.trim();
+  if(!corrText){toast('Please describe what was wrong.');return;}
+
+  button.disabled=true;
+  button.textContent='Submitting...';
+
+  const question=item?.question||'unknown question';
+  const timestamp=Date.now();
+  const slug=question.toLowerCase().replace(/[^a-z0-9]+/g,'_').slice(0,50);
+  const fname='correction_'+slug+'_'+timestamp+'.txt';
+  const body=[
+    'CORRECTION FILE',
+    'Original question: '+question,
+    'Submitted: '+new Date().toISOString(),
+    '---',
+    'CORRECT INFORMATION:',
+    corrText
+  ].join('\n');
+
+  try{
+    const result=await contributeToGitHub(fname,body,'');
+    if(result&&result.success){
+      panel.innerHTML='<div style="color:var(--qp-green);font-size:13px;padding:4px 0"><i class="ti ti-check"></i> Correction submitted — knowledge base will update in ~60 seconds. Thank you!</div>';
+      // Mark the wrong button as done
+      const acts=panel.closest('.msg-body')?.querySelector('.msg-actions');
+      const wrongBtn=acts?.querySelector('.msg-wrong');
+      if(wrongBtn){wrongBtn.disabled=true;wrongBtn.classList.add('saved');wrongBtn.innerHTML='<i class="ti ti-check"></i>Correction sent';}
+    } else {
+      panel.querySelector('button[onclick*=submitCorrection]').disabled=false;
+      panel.querySelector('button[onclick*=submitCorrection]').textContent='Submit correction';
+      toast('Could not submit — try again.');
+    }
+  }catch(e){
+    toast('Error submitting correction.');
+    button.disabled=false;
+    button.textContent='Submit correction';
+  }
 }
 
 function deleteNote(index){
