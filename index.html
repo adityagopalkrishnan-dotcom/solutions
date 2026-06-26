@@ -1911,8 +1911,7 @@ function showContributeToast(message){
 }
 
 async function contributeToGitHub(filename,content,category=''){
-  const endpoint=config.contributeEndpoint;
-  if(!endpoint) return {success:false,reason:'No contribution endpoint configured'};
+  const endpoint=config.contributeEndpoint || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev/contribute';
 
   const res=await fetch(endpoint,{
     method:'POST',
