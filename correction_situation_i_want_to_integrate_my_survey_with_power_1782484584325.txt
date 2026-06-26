@@ -1,0 +1,33 @@
+CORRECTION FILE
+Original question: SITUATION: I want to integrate my survey with PowerBI. how can I so that?
+Submitted: 2026-06-26T14:36:24.325Z
+---
+CORRECT INFORMATION:
+Solution
+QuestionPro TechOps team has developed a connector that can be used by the QuestionPro Enterprise users to pull their survey responses to their Power BI dashboard.
+**Note: QuestionPro TechOps team is also working on developing an app on the Microsoft Power BI platform which will help users to pull their survey responses to the Power BI platform with less effort.
+Steps to implement
+Add the custom connector to your Power BI application on your Desktop:
+Copy the QuestionPro connector from the following link and paste it into the following directory            Directory:  C:\Users\User\Documents\Power BI Desktop\custom connectors
+             Connector link: https://drive.google.com/drive/folders/1p0vDslA4bHLrIWlhFQSAlLRdliM36Xnk?usp=sharing
+Grant Permission to the connector:
+	To allow third-party connectors to work in Power BI we need to make some changes to the desktop
+ 	application.
+	Go to: File -> Option and Settings -> Options -> Security -> Enable any extension to load
+	Screenshot: https://www.screencast.com/t/GIbECkXZ
+Launch your Power BI desktop application
+Create a new file and click on Get data -> More and search for QuestionPro
+Screenshot: https://www.screencast.com/t/lhtK6xpc
+Enter your access id and API key from QuestionPro
+You can append the survey id to the following URL to get your access id.
+https://www.questionpro.com/a/power_bi?surveyID={{Survey_Id}}
+You can get your QuestionPro API key from the Integration tab in your account
+Access id Screenshot: https://www.screencast.com/t/X1kqcIUHTKOM
+API key Screenshot: https://www.screencast.com/t/zhLqL6EnhfD
+		      https://www.screencast.com/t/jcMlgpPDkm
+Pull data from QuestionPro
+              Click on Connect and pull data from QuestionPro and make some transformations and click on load. 
+             https://www.screencast.com/t/ZhCLsTRid
+Publishing workbook to Power BI service (www.powerbi.com)
+Once data is pulled from QuestionPro using a custom connector, the workbook can be published to the Power BI service platform and can be shared with user’s and groups
+https://www.screencast.com/t/YvRepNvKj1
