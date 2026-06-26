@@ -1,5 +1,5 @@
 /**
- * QP Insights Commons Worker — v2
+ * QP Insights Commons Worker — v3
  * Scoring engine: TF-IDF weighted, phrase-boosted, stopword-filtered
  * Secrets: QP_API_KEY, GITHUB_TOKEN (Cloudflare env vars)
  */
@@ -11,7 +11,7 @@ const SITEMAP_URL = GITHUB_RAW + "/help-sitemap.json";
 const QP_ROUTER   = "https://airouter-api.questionpro.com/v1/prompt-routes";
 const QP_USER_ID  = 4379318;
 const QP_ORG_ID   = 4285979;
-const TOP_REPO=5, TOP_HELP=3, MAX_REPO=12000, MAX_HELP=3000, CACHE_IDX=60, CACHE_HELP=1800;
+const TOP_REPO=10, TOP_HELP=5, MAX_REPO=20000, MAX_HELP=4000, CACHE_IDX=60, CACHE_HELP=1800;
 const ISOLATE_TTL = 300_000; // 5 min
 
 // ── Global isolate cache ───────────────────────────────────────────────────
@@ -118,6 +118,9 @@ function scoreRepo(entry, queryWords, idf, product) {
 
   // Plaintext (cookbook/RTS) boost
   if (isPlain && s > 0) s *= 1.5;
+
+  // Crowdsourced correction files get an extra 2x boost — they are the most curated content
+  if (isPlain && (entry.path||'').startsWith('correction_') && s > 0) s *= 2;
 
   // Product filter
   if (product && s > 0) {
@@ -467,7 +470,11 @@ export default {
         'The user is asking about: ' + question,
         inferredProduct ? 'Product context: ' + inferredProduct : '',
         topRepo.length > 0 ? 'Most relevant sources found: ' + topRepo.slice(0,3).map(({e})=>e.title).join(', ') : '',
-        'Use ONLY the following sources to answer. Do not supplement from general knowledge.',
+        'GROUNDING RULES (follow strictly):',
+        "1. Use ONLY the sources provided below. Do not use general knowledge to fill gaps.",
+        "2. If the sources do not contain enough information to answer, say explicitly: \"I don't have enough information in the knowledge base to answer this accurately.\" Do not guess.",
+        "3. When you use information from a source, reference it by name (e.g. \"According to [source name]...\").",
+        "4. If multiple sources conflict, flag the conflict rather than silently picking one.",
         '---',
       ].filter(Boolean).join('\n');
 
