@@ -1,0 +1,478 @@
+QUESTIONPRO COMMUNITY KNOWLEDGE BASE — COMMUNITIES
+Scraped from questionpro.com/help — 66 Q&As
+Last updated: June 2026
+========================================================================
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities System Email Templates
+────────────────────────────────────────────────────────────────────────
+
+Q1: Screen-reader-functionality
+Context: Is a Question Pro verification email screen-reader friendly? How can accessibility be achieved?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-system-email-templates/Screen-reader-functionality.html)
+Source: https://www.questionpro.com/help/communities/communities-system-email-templates/Screen-reader-functionality.html
+
+Q2: Member-Welcome
+Context: When is the member welcome email sent? Example: A member unsubscribes from email notifications. When they resubscribe to emails, they receive the verification email. Do they then also receive the member welcome email again?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-system-email-templates/Member-Welcome.html)
+Source: https://www.questionpro.com/help/communities/communities-system-email-templates/Member-Welcome.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Delete Community
+────────────────────────────────────────────────────────────────────────
+
+Q1: Data-after-deleting-a-community
+Context: Dear Team, can you please tell me what happens to the responses in the surveys? and to the data there after a community deletion? Also - what happens to transferred profile information (Survey Custom Variables) and all the personal data - would this data be anonymized? Or must collected survey data be deleted manually? Kindly let me know.
+A: (See full answer at https://www.questionpro.com/help/communities/delete-community/Data-after-deleting-a-community.html)
+Source: https://www.questionpro.com/help/communities/delete-community/Data-after-deleting-a-community.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Sample Balancing
+────────────────────────────────────────────────────────────────────────
+
+Q1: Does-this-also-works-as-quota
+Context: what happens when a combination for example male under 18 has already hit the 20 responses I need.
+A: (See full answer at https://www.questionpro.com/help/communities/sample-balancing/Does-this-also-works-as-quota.html)
+Source: https://www.questionpro.com/help/communities/sample-balancing/Does-this-also-works-as-quota.html
+
+Q2: If-I-send-from-this-tool-the-system-only-sends-the-survey-to-the-necessary-people-to-get-the-sample-or-sends-to-every-member-that-matches-with-one-of-the-combinations
+A: (See full answer at https://www.questionpro.com/help/communities/sample-balancing/If-I-send-from-this-tool-the-system-only-sends-the-survey-to-the-necessary-people-to-get-the-sample-or-sends-to-every-member-that-matches-with-one-of-the-combinations.html)
+Source: https://www.questionpro.com/help/communities/sample-balancing/If-I-send-from-this-tool-the-system-only-sends-the-survey-to-the-necessary-people-to-get-the-sample-or-sends-to-every-member-that-matches-with-one-of-the-combinations.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities Idea Board
+────────────────────────────────────────────────────────────────────────
+
+Q1: What-is-the-difference-between-settings-Idea-status-change-and-Idea-Activity-Email
+Context: What is the difference between these settings: “ Idea status change” and “Idea Activity Email”?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-idea-board/What-is-the-difference-between-settings-Idea-status-change-and-Idea-Activity-Email.html)
+Source: https://www.questionpro.com/help/communities/communities-idea-board/What-is-the-difference-between-settings-Idea-status-change-and-Idea-Activity-Email.html
+
+Q2: Idea-Board--Description
+Context: When I"m logged in as a community member and open the Idden module, I see a question mark with a description. Where can I enter the translations for the description if I"m running a multilingual community?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-idea-board/Idea-Board--Description.html)
+Source: https://www.questionpro.com/help/communities/communities-idea-board/Idea-Board--Description.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Password Protect
+────────────────────────────────────────────────────────────────────────
+
+Q1: Validity-of-the-verification-link
+Context: How long is the link valid?
+A: (See full answer at https://www.questionpro.com/help/communities/community-password-protect/Validity-of-the-verification-link.html)
+Source: https://www.questionpro.com/help/communities/community-password-protect/Validity-of-the-verification-link.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Poll
+────────────────────────────────────────────────────────────────────────
+
+Q1: Send-Push-Notification
+Context: Does "Push Notification" mean a System Notification will be sent (E-Mail), or a Portal Notification?
+A: (See full answer at https://www.questionpro.com/help/communities/community-poll/Send-Push-Notification.html)
+Source: https://www.questionpro.com/help/communities/community-poll/Send-Push-Notification.html
+
+Q2: Community-Questions
+Context: Community Questions or Ask A Question feature allows panel members to create a single-select survey or a poll within the community in-order to get responses from the panel members. https://www.questionpro.com/help/communities/community-questions-settings.html Can it be set up so that questions must first be approved by the administrator?
+A: (See full answer at https://www.questionpro.com/help/communities/community-poll/Community-Questions.html)
+Source: https://www.questionpro.com/help/communities/community-poll/Community-Questions.html
+
+Q3: How-can-I-delete-responses-to-quick-polls
+Context: How can I delete responses to quick polls? (similar as deleting survey responses in the survey response viewer)
+A: (See full answer at https://www.questionpro.com/help/communities/community-poll/How-can-I-delete-responses-to-quick-polls.html)
+Source: https://www.questionpro.com/help/communities/community-poll/How-can-I-delete-responses-to-quick-polls.html
+
+Q4: Separate-polls-for-each-language
+Context: Is this part of the article still valid: "What if my community is a multilingual community, so, do I need to create separate polls for each language? Yes, if your community is a multilingual community, you would be required to create separate polls for each of the languages." As there is the translation option?
+A: (See full answer at https://www.questionpro.com/help/communities/community-poll/Separate-polls-for-each-language.html)
+Source: https://www.questionpro.com/help/communities/community-poll/Separate-polls-for-each-language.html
+
+Q5: Sending-the-poll-invitation-email
+Context: When setting up a poll, “Send Push Notification” can be activated. This applies to a portal notification. Under Send > Templates > System Notifications > an email template can be edited (Poll Invitation Email). Is the poll invitation email always sent when a new poll is entered? Or can I deactivate the sending of an email?
+A: (See full answer at https://www.questionpro.com/help/communities/community-poll/Sending-the-poll-invitation-email.html)
+Source: https://www.questionpro.com/help/communities/community-poll/Sending-the-poll-invitation-email.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Import Members
+────────────────────────────────────────────────────────────────────────
+
+Q1: Update-Profile-Fields
+Context: Can I use the “Add Member” function to update the profile information of existing members?
+A: (See full answer at https://www.questionpro.com/help/communities/community-import-members/Update-Profile-Fields.html)
+Source: https://www.questionpro.com/help/communities/community-import-members/Update-Profile-Fields.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Customize Mobile Modules
+────────────────────────────────────────────────────────────────────────
+
+Q1: Mobile-logo-and-mobile-logo-large
+Context: Team, can you please tell me where in the App I can see the mobile logo and the mobile logo (large)?
+A: (See full answer at https://www.questionpro.com/help/communities/community-customize-mobile-modules/Mobile-logo-and-mobile-logo-large.html)
+Source: https://www.questionpro.com/help/communities/community-customize-mobile-modules/Mobile-logo-and-mobile-logo-large.html
+
+Q2: Mobile-creatives
+Context: Team, near mobile logo and mobile logo (large) I see dimensions: 60x40 and 180x60. Can you tell me in what units they are? If images exceed those (but got uploaded), does it (negatively) influence something?
+A: (See full answer at https://www.questionpro.com/help/communities/community-customize-mobile-modules/Mobile-creatives.html)
+Source: https://www.questionpro.com/help/communities/community-customize-mobile-modules/Mobile-creatives.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Portal Link And Recruitment Url
+────────────────────────────────────────────────────────────────────────
+
+Q1: Custom-domain-for-communities-URL
+Context: I want to customise the communities portal link to reflect our brand as the primary domain. My previous vendor did not require the SSL certificate as we used the HTTP url. Can we do the same here as well? If not will you initiate the CSR so we can get the cert to your IT team?
+A: (See full answer at https://www.questionpro.com/help/communities/portal-link-and-recruitment-url/Custom-domain-for-communities-URL.html)
+Source: https://www.questionpro.com/help/communities/portal-link-and-recruitment-url/Custom-domain-for-communities-URL.html
+
+Q2: Set-up-URL
+Context: Which characters are allowed when setting up a community URL?
+A: (See full answer at https://www.questionpro.com/help/communities/portal-link-and-recruitment-url/Set-up-URL.html)
+Source: https://www.questionpro.com/help/communities/portal-link-and-recruitment-url/Set-up-URL.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Default Survey List
+────────────────────────────────────────────────────────────────────────
+
+Q1: How-can-I-send-the-qualifying-survey-to-community-members-who-have-not-completed-it-yet
+Context: How can I send an invitation/reminder to the qualifying survey to community members who have not completed it yet? The survey has never been sent via email invitation so i cannot trigger a normal reminder.
+A: (See full answer at https://www.questionpro.com/help/communities/community-default-survey-list/How-can-I-send-the-qualifying-survey-to-community-members-who-have-not-completed-it-yet.html)
+Source: https://www.questionpro.com/help/communities/community-default-survey-list/How-can-I-send-the-qualifying-survey-to-community-members-who-have-not-completed-it-yet.html
+
+Q2: Annonumys-feedback-from-community-members
+Context: Team, is there a way to collect anonymous feedback from the community members? We thought about posting the default survey (with RAA) in the community, but perhaps you know a different possibility/workaround?
+A: (See full answer at https://www.questionpro.com/help/communities/community-default-survey-list/Annonumys-feedback-from-community-members.html)
+Source: https://www.questionpro.com/help/communities/community-default-survey-list/Annonumys-feedback-from-community-members.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Moderate Post
+────────────────────────────────────────────────────────────────────────
+
+Q1: Is-it-possible-for-the-administrator-to-comment-ideasanswer-to-comments-from-the-Idea-Moderate-section
+Context: Is it possible for the community administrator to comment ideas/answer to comments from the "Idea Moderate" section? Or is this possible only for a member that has been given the Moderator role?
+A: (See full answer at https://www.questionpro.com/help/communities/community-moderate-post/Is-it-possible-for-the-administrator-to-comment-ideasanswer-to-comments-from-the-Idea-Moderate-section.html)
+Source: https://www.questionpro.com/help/communities/community-moderate-post/Is-it-possible-for-the-administrator-to-comment-ideasanswer-to-comments-from-the-Idea-Moderate-section.html
+
+Q2: Staus-Rejected
+Context: What does the status “Rejected” mean? And can an idea be seen with this status?
+A: (See full answer at https://www.questionpro.com/help/communities/community-moderate-post/Staus-Rejected.html)
+Source: https://www.questionpro.com/help/communities/community-moderate-post/Staus-Rejected.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Bulk Update Member Status
+────────────────────────────────────────────────────────────────────────
+
+Q1: Status-BannedBlocked
+Context: What does the status mean and how can the member get this status?
+A: (See full answer at https://www.questionpro.com/help/communities/community-bulk-update-member-status/Status-BannedBlocked.html)
+Source: https://www.questionpro.com/help/communities/community-bulk-update-member-status/Status-BannedBlocked.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Tracking Signups
+────────────────────────────────────────────────────────────────────────
+
+Q1: What-is-the-Mobile-Tracker-link-used-for
+Context: What are the use cases for the Mobile Tracker link? What data do we get after using this Mobile Tracker link (in comparison to the normal static referral link)? - what is the difference?
+A: (See full answer at https://www.questionpro.com/help/communities/community-tracking-signups/What-is-the-Mobile-Tracker-link-used-for.html)
+Source: https://www.questionpro.com/help/communities/community-tracking-signups/What-is-the-Mobile-Tracker-link-used-for.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Link Question
+────────────────────────────────────────────────────────────────────────
+
+Q1: hidden-questions-vs-profile-fields
+Context: Could you please confirm that if a survey contains hidden questions mapped to specific profile fields , the system will automatically populate those questions with the existing profile data so that this information is included as a distinct data point in the raw data export ? A simple yes/no would be enough, thank you!
+A: (See full answer at https://www.questionpro.com/help/communities/community-link-question/hidden-questions-vs-profile-fields.html)
+Source: https://www.questionpro.com/help/communities/community-link-question/hidden-questions-vs-profile-fields.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Incentive Model
+────────────────────────────────────────────────────────────────────────
+
+Q1: Point-redemption-limit
+Context: Can a limit be set on the maximum number of redeemable points per day (for the entire community, Rewards, and/or members)?
+A: (See full answer at https://www.questionpro.com/help/communities/incentive-model/Point-redemption-limit.html)
+Source: https://www.questionpro.com/help/communities/incentive-model/Point-redemption-limit.html
+
+Q2: In-Community-is-it-possible-to-set-a-deadline-for-participants-to-redeem-their-reward-points
+Context: No, currently there is no built-in feature that allows you to set a specific deadline for participants to redeem their reward points.
+A: (See full answer at https://www.questionpro.com/help/communities/incentive-model/In-Community-is-it-possible-to-set-a-deadline-for-participants-to-redeem-their-reward-points.html)
+Source: https://www.questionpro.com/help/communities/incentive-model/In-Community-is-it-possible-to-set-a-deadline-for-participants-to-redeem-their-reward-points.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Live Discussion Session
+────────────────────────────────────────────────────────────────────────
+
+Q1: Video-Discussion--Video-Tool
+Context: Which video tool is used? Where is the data stored? Are separate accounts required to use the video tool?
+A: (See full answer at https://www.questionpro.com/help/communities/community-live-discussion-session/Video-Discussion--Video-Tool.html)
+Source: https://www.questionpro.com/help/communities/community-live-discussion-session/Video-Discussion--Video-Tool.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Live Discussions
+────────────────────────────────────────────────────────────────────────
+
+Q1: Is-video-conferencing-available
+Context: When will video conferencing be available ?
+A: (See full answer at https://www.questionpro.com/help/communities/community-live-discussions/Is-video-conferencing-available.html)
+Source: https://www.questionpro.com/help/communities/community-live-discussions/Is-video-conferencing-available.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Rewards
+────────────────────────────────────────────────────────────────────────
+
+Q1: Can-I-edit-the-rewards-after-it-is-created
+Context: Is it possible to change the points to redeem setting of a reward after it has been created?
+A: (See full answer at https://www.questionpro.com/help/communities/community-rewards/Can-I-edit-the-rewards-after-it-is-created.html)
+Source: https://www.questionpro.com/help/communities/community-rewards/Can-I-edit-the-rewards-after-it-is-created.html
+
+Q2: What-happens-when-I-delete-a-reward-which-has-active-inventory
+Context: I want to delete my paypal reward item but it has 1000 items in stock. What will happen to the items in stock when I delete the reward entirely?
+A: (See full answer at https://www.questionpro.com/help/communities/community-rewards/What-happens-when-I-delete-a-reward-which-has-active-inventory.html)
+Source: https://www.questionpro.com/help/communities/community-rewards/What-happens-when-I-delete-a-reward-which-has-active-inventory.html
+
+Q3: Can-I-edit-the-Item-Price-after-reward-is-created
+Context: Is it possible to change the "Item Price" from redeem setting of a reward after it has been created?
+A: (See full answer at https://www.questionpro.com/help/communities/community-rewards/Can-I-edit-the-Item-Price-after-reward-is-created.html)
+Source: https://www.questionpro.com/help/communities/community-rewards/Can-I-edit-the-Item-Price-after-reward-is-created.html
+
+Q4: Reward-image
+Context: What format (aspect ratio) may the image for a reward have? How large can the image file be?
+A: (See full answer at https://www.questionpro.com/help/communities/community-rewards/Reward-image.html)
+Source: https://www.questionpro.com/help/communities/community-rewards/Reward-image.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Create New Community
+────────────────────────────────────────────────────────────────────────
+
+Q1: Community-URL--What-is-allowed
+Context: Hello, which numbers, letters and characters are allowed for the Community URL?
+A: (See full answer at https://www.questionpro.com/help/communities/create-new-community/Community-URL--What-is-allowed.html)
+Source: https://www.questionpro.com/help/communities/create-new-community/Community-URL--What-is-allowed.html
+
+Q2: shut-down-community
+Context: I would like to end my community. What do I need to do to close a community?
+A: (See full answer at https://www.questionpro.com/help/communities/create-new-community/shut-down-community.html)
+Source: https://www.questionpro.com/help/communities/create-new-community/shut-down-community.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Manage Members
+────────────────────────────────────────────────────────────────────────
+
+Q1: Blocked-status--why
+Context: What does the ‘blocked’ status mean? Is it assigned automatically or manually?
+A: (See full answer at https://www.questionpro.com/help/communities/manage-members/Blocked-status--why.html)
+Source: https://www.questionpro.com/help/communities/manage-members/Blocked-status--why.html
+
+Q2: Members-status
+Context: When is a member set to inactive by the system?
+A: (See full answer at https://www.questionpro.com/help/communities/manage-members/Members-status.html)
+Source: https://www.questionpro.com/help/communities/manage-members/Members-status.html
+
+Q3: Process-without-maximum-response-time-and-inactivity-duration
+Context: What happens if I don"t set one or both of these? Which time periods apply in that case?
+A: (See full answer at https://www.questionpro.com/help/communities/manage-members/Process-without-maximum-response-time-and-inactivity-duration.html)
+Source: https://www.questionpro.com/help/communities/manage-members/Process-without-maximum-response-time-and-inactivity-duration.html
+
+Q4: Scheduler-triggering
+Context: After setup: When does the scheduler run?
+A: (See full answer at https://www.questionpro.com/help/communities/manage-members/Scheduler-triggering.html)
+Source: https://www.questionpro.com/help/communities/manage-members/Scheduler-triggering.html
+
+Q5: Unsubscribed
+Context: What does “Unsubscribed” mean? How does this role affect members?
+A: (See full answer at https://www.questionpro.com/help/communities/manage-members/Unsubscribed.html)
+Source: https://www.questionpro.com/help/communities/manage-members/Unsubscribed.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Profile Cross Tab
+────────────────────────────────────────────────────────────────────────
+
+Q1: Limit
+Context: Is there a limit to the number of profile variables that can be created in a crosstab?
+A: (See full answer at https://www.questionpro.com/help/communities/profile-cross-tab/Limit.html)
+Source: https://www.questionpro.com/help/communities/profile-cross-tab/Limit.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Broadcast Email
+────────────────────────────────────────────────────────────────────────
+
+Q1: limitation-of-the-image-size
+Context: Is there a limit for images (size, pixels)?
+A: (See full answer at https://www.questionpro.com/help/communities/community-broadcast-email/limitation-of-the-image-size.html)
+Source: https://www.questionpro.com/help/communities/community-broadcast-email/limitation-of-the-image-size.html
+
+Q2: Attaching-or-linking-a-pdf-document-in-the-broadcast-email
+Context: 1. Is there a way to attach a pdf document in the broadcast email? 2. Is it possible to link in the broadcast email a pdf that is stored in the “Documents” section in the Community?
+A: (See full answer at https://www.questionpro.com/help/communities/community-broadcast-email/Attaching-or-linking-a-pdf-document-in-the-broadcast-email.html)
+Source: https://www.questionpro.com/help/communities/community-broadcast-email/Attaching-or-linking-a-pdf-document-in-the-broadcast-email.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Global Unsubscribe
+────────────────────────────────────────────────────────────────────────
+
+Q1: One-of-my-members-has-unsubscribed-from-the-community-and-wants-to-subscribe-again-will-he-get-a-welcome-email-again-as-well-as-the-welcome-points-I-have-set-up
+A: (See full answer at https://www.questionpro.com/help/communities/community-global-unsubscribe/One-of-my-members-has-unsubscribed-from-the-community-and-wants-to-subscribe-again-will-he-get-a-welcome-email-again-as-well-as-the-welcome-points-I-have-set-up.html)
+Source: https://www.questionpro.com/help/communities/community-global-unsubscribe/One-of-my-members-has-unsubscribed-from-the-community-and-wants-to-subscribe-again-will-he-get-a-welcome-email-again-as-well-as-the-welcome-points-I-have-set-up.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Profile Analytics
+────────────────────────────────────────────────────────────────────────
+
+Q1: Showing-only-verified-members-in-the-profile-report
+Context: Is it possible to show only verified members in the profile report?
+A: (See full answer at https://www.questionpro.com/help/communities/community-profile-analytics/Showing-only-verified-members-in-the-profile-report.html)
+Source: https://www.questionpro.com/help/communities/community-profile-analytics/Showing-only-verified-members-in-the-profile-report.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities Invite Friends
+────────────────────────────────────────────────────────────────────────
+
+Q1: Activate-Invite-Friends
+Context: How can I activate this feature in my community?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-invite-friends/Activate-Invite-Friends.html)
+Source: https://www.questionpro.com/help/communities/communities-invite-friends/Activate-Invite-Friends.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities Landing Page Community
+────────────────────────────────────────────────────────────────────────
+
+Q1: Screen-reader-functionality
+Context: Is a Question Pro community landing page screen-reader friendly? If so, to which screen readers does this apply?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-landing-page-community/Screen-reader-functionality.html)
+Source: https://www.questionpro.com/help/communities/communities-landing-page-community/Screen-reader-functionality.html
+
+Q2: Requirements-for-the-image
+Context: What are the requirements for the image (size, aspect ratio, file size)?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-landing-page-community/Requirements-for-the-image.html)
+Source: https://www.questionpro.com/help/communities/communities-landing-page-community/Requirements-for-the-image.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Send Survey Invite Communities
+────────────────────────────────────────────────────────────────────────
+
+Q1: I-see-two-survey-links-in-the-email-notification-sent-when-survey-deployed-from-Community-platform
+Context: Every time I send a survey from the Community platform, I see two survey links in the email notification received on the member"s inbox. How can I limit to only 1 survey link?
+A: (See full answer at https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/I-see-two-survey-links-in-the-email-notification-sent-when-survey-deployed-from-Community-platform.html)
+Source: https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/I-see-two-survey-links-in-the-email-notification-sent-when-survey-deployed-from-Community-platform.html
+
+Q2: Questions-within-the-survey-invitation
+Context: Is it possible to ask questions and have them answered directly within the survey invitation? Can this be done using HTML to embed questions, for example? Or is there even a standard function for this?
+A: (See full answer at https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Questions-within-the-survey-invitation.html)
+Source: https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Questions-within-the-survey-invitation.html
+
+Q3: Replacement-variables-used-in-the-survey
+Context: Can the replacement variables also be used in the survey? Use case: I would like to use the first name in the Intro presentation text (the first name is not set up as profile information). Is it possible, and if so, where can I adjust that?
+A: (See full answer at https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Replacement-variables-used-in-the-survey.html)
+Source: https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Replacement-variables-used-in-the-survey.html
+
+Q4: Staggered-Selection-when-Sending-a-Survey-into-Communities
+Context: When I choose Staggered Selection when sending a survey into Communities, what is the default threshold for members to be emailed and time frequency by QuestionPro? Or can I change it? If yes, then where?
+A: (See full answer at https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Staggered-Selection-when-Sending-a-Survey-into-Communities.html)
+Source: https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Staggered-Selection-when-Sending-a-Survey-into-Communities.html
+
+Q5: Exporting-Survey-URLs-to-Invite-Community-Members
+Context: Is there a way to export member-specific survey URLs? For example, to send URLs from an external email system?
+A: (See full answer at https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Exporting-Survey-URLs-to-Invite-Community-Members.html)
+Source: https://www.questionpro.com/help/communities/Send-Survey-Invite-Communities/Exporting-Survey-URLs-to-Invite-Community-Members.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Sms Credit
+────────────────────────────────────────────────────────────────────────
+
+Q1: Can-I-change-the-from-number-for-the-SMS
+Context: Is it possible to use a custom from name or number while sending the SMS?
+A: (See full answer at https://www.questionpro.com/help/communities/sms-credit/Can-I-change-the-from-number-for-the-SMS.html)
+Source: https://www.questionpro.com/help/communities/sms-credit/Can-I-change-the-from-number-for-the-SMS.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Email Preferences
+────────────────────────────────────────────────────────────────────────
+
+Q1: What-is-Fulfillment-Email-used-for
+Context: What is Fulfillment Email used for? What is the difference between Fulfillment Email and Administrative notification Email?
+A: (See full answer at https://www.questionpro.com/help/communities/community-email-preferences/What-is-Fulfillment-Email-used-for.html)
+Source: https://www.questionpro.com/help/communities/community-email-preferences/What-is-Fulfillment-Email-used-for.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Export Data
+────────────────────────────────────────────────────────────────────────
+
+Q1: Consideration-of-surveys-in-columns-Surveys-Sent--Surveys-Completed
+Context: What types of surveys are included here? For example, are reminders or default surveys also included?
+A: (See full answer at https://www.questionpro.com/help/communities/community-export-data/Consideration-of-surveys-in-columns-Surveys-Sent--Surveys-Completed.html)
+Source: https://www.questionpro.com/help/communities/community-export-data/Consideration-of-surveys-in-columns-Surveys-Sent--Surveys-Completed.html
+
+Q2: Definition-of-Export-Column-Last-Activity-Time
+Context: What specific activities are included here? (Completing a survey, opening a survey, logging in, responding to a poll, commenting on a topic, etc.)
+A: (See full answer at https://www.questionpro.com/help/communities/community-export-data/Definition-of-Export-Column-Last-Activity-Time.html)
+Source: https://www.questionpro.com/help/communities/community-export-data/Definition-of-Export-Column-Last-Activity-Time.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities Google Analytics Integration
+────────────────────────────────────────────────────────────────────────
+
+Q1: What-is-tracked
+Context: What exactly is tracked when I use this function?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-google-analytics-integration/What-is-tracked.html)
+Source: https://www.questionpro.com/help/communities/communities-google-analytics-integration/What-is-tracked.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Members Profile
+────────────────────────────────────────────────────────────────────────
+
+Q1: How-many-profile-fields-can-be-created
+Context: Is there a limit to how many profile fields can be created?
+A: (See full answer at https://www.questionpro.com/help/communities/community-members-profile/How-many-profile-fields-can-be-created.html)
+Source: https://www.questionpro.com/help/communities/community-members-profile/How-many-profile-fields-can-be-created.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Add Moderator
+────────────────────────────────────────────────────────────────────────
+
+Q1: What-can-a-moderator-do
+Context: What is the purpose of making a user a moderator?
+A: (See full answer at https://www.questionpro.com/help/communities/community-add-moderator/What-can-a-moderator-do.html)
+Source: https://www.questionpro.com/help/communities/community-add-moderator/What-can-a-moderator-do.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Send Reminders
+────────────────────────────────────────────────────────────────────────
+
+Q1: Email-reminder-subject
+Context: In the window that opens, I can select a template, edit the email, and also edit the email subject. Is the subject automatically updated when the email is sent (e.g., “Subject Text” + “Reminder Invite”)? Or does the subject remain exactly as I entered it?
+A: (See full answer at https://www.questionpro.com/help/communities/community-send-reminders/Email-reminder-subject.html)
+Source: https://www.questionpro.com/help/communities/community-send-reminders/Email-reminder-subject.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Community Qualifying Survey
+────────────────────────────────────────────────────────────────────────
+
+Q1: Can-I-add-the-recruitment-question-anywhere-in-the-survey
+A: (See full answer at https://www.questionpro.com/help/communities/community-qualifying-survey/Can-I-add-the-recruitment-question-anywhere-in-the-survey.html)
+Source: https://www.questionpro.com/help/communities/community-qualifying-survey/Can-I-add-the-recruitment-question-anywhere-in-the-survey.html
+
+Q2: Best-Practice
+Context: What should I keep in mind when creating a qualifying survey? What is the best practice?
+A: (See full answer at https://www.questionpro.com/help/communities/community-qualifying-survey/Best-Practice.html)
+Source: https://www.questionpro.com/help/communities/community-qualifying-survey/Best-Practice.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Communities History
+────────────────────────────────────────────────────────────────────────
+
+Q1: Success-Count
+Context: Could you define the "Success Count" metric and explain the possible reasons for the situation when the count is 0 or the number is smaller than the "Initial Sent" total?
+A: (See full answer at https://www.questionpro.com/help/communities/communities-history/Success-Count.html)
+Source: https://www.questionpro.com/help/communities/communities-history/Success-Count.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Sms Pricing Table
+────────────────────────────────────────────────────────────────────────
+
+Q1: Is-there-any-set-up-cost-for-sms-gateway
+A: (See full answer at https://www.questionpro.com/help/communities/sms-pricing-table/Is-there-any-set-up-cost-for-sms-gateway.html)
+Source: https://www.questionpro.com/help/communities/sms-pricing-table/Is-there-any-set-up-cost-for-sms-gateway.html
+
+Q2: Can-I-use-my-own-short-code-to-send-the-sms-invites
+A: (See full answer at https://www.questionpro.com/help/communities/sms-pricing-table/Can-I-use-my-own-short-code-to-send-the-sms-invites.html)
+Source: https://www.questionpro.com/help/communities/sms-pricing-table/Can-I-use-my-own-short-code-to-send-the-sms-invites.html
+
