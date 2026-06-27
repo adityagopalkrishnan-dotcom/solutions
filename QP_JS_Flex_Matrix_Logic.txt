@@ -1,0 +1,443 @@
+QP JAVASCRIPT LOGIC — FLEX MATRIX ENGINE
+Derived from live console inspection: HPE PES 2026 Final Production (Survey ID: 13364444)
+Script block 224 (57,223 chars) — Satisfaction Feedback page
+Last updated: June 2026
+
+================================================================================
+WHAT THIS FILE COVERS
+================================================================================
+
+The Flex matrix is QP's most advanced question type. Rows are dynamically shown
+or hidden based on answers from earlier in the survey — no two respondents see
+the same matrix. This file covers:
+
+  1. What a Flex matrix is and its DOM structure
+  2. The $survey API — all confirmed methods
+  3. The full Flex matrix row-control engine (production-verified template)
+  4. Dropdown visibility inside Flex matrix rows
+  5. Question code → numeric ID variable map
+  6. DOM selectors cheatsheet
+  7. Mixing Flex matrix with API: write row selections back to CX contacts
+  8. Debugging console snippets
+
+================================================================================
+SECTION 1 — FLEX MATRIX DOM STRUCTURE
+================================================================================
+
+A Flex matrix renders as multiple grouped tables — one per category.
+Each group has a parent-table with one row per item the respondent selected.
+
+KEY DOM ELEMENTS:
+  .flex-matrix-question           Top-level wrapper class
+  .QCOMP                          Wrapper div for a specific matrix group (class = question code)
+  .flex-matrix-question .table-wrapper .parent-table
+                                  Outer table holding all matrix rows for one group
+  tbody tr[role='listitem']       Data rows (excludes header rows which have no role)
+  tbody tr:not([role])            Header rows (column labels: 0 1 2 ... 10)
+  .child-table.ratingScaleTable   Inner table per data row (contains radio inputs + text col)
+  .answer-container.flex-matrix-q Answer container wrapper
+  #QuestionSection_156183455      Section div for the QCOMP matrix
+  #V_QuestionSection_65           Validation wrapper (V_ prefix, sequential number)
+
+KEY VARIABLE TYPES:
+  MAIN_QS   — Array of question codes for the matrix groups (e.g. ['QCOMP','Q75B'])
+              Each is a .className wrapping one product-category matrix table.
+  DRIVER_QS — Array of question codes for the product-selection checkboxes
+              (e.g. ['Q19B','Q20B']). Their selected options determine which rows show.
+  OPTION_ROW_MAP
+            — Core mapping: { driverCode: { optionIndex: matrixRowNumber } }
+              When option N of driver question Q is checked → show row R in the matrix.
+
+================================================================================
+SECTION 2 — THE $survey API (all confirmed methods, live console inspection)
+================================================================================
+
+$survey.getSelectedOptionsIndex('Q20B')
+  → KEY METHOD for Flex matrix.
+  → Returns array of selected option indexes (1-based). e.g. [1, 3, 5]
+  → Returns [] if nothing selected.
+  → This is what the Flex matrix engine reads — NOT the DOM directly.
+
+$survey.getSelectedOptions('Q9')
+  → Returns array of selected option objects: [{id, text, value}]
+
+$survey.getSelectedOption('Q9')
+  → Returns first selected option object (single-select questions)
+
+$survey.getSelectedOptionIndex('Q9')
+  → Returns index of first selected option (single-select, 0-based)
+
+$survey.getSelectedCount('Q9')
+  → Returns count of checked options (multi-select)
+
+$survey.getQuestionByCode('QCOMP')
+  → Returns question object by its code (code set in builder, not auto-generated)
+
+$survey.showQuestion(qID)
+  → Shows a question by numeric ID. API-level equivalent of showSection().
+
+$survey.hideQuestion(qID)
+  → Hides a question by numeric ID.
+
+$survey.showOption(qID, optionID)
+  → Shows a specific answer option within a question.
+
+$survey.hideOption(qID, optionID)
+  → Hides a specific answer option.
+
+$survey.setOptionSelected(qID, optionID, bool)
+  → Programmatically selects or deselects an answer option.
+
+$survey.setText(qID, text)
+  → Dynamically updates question text/label.
+
+$survey.getText(qID)
+  → Gets current question text.
+
+$survey.updateCustomVariable(name, value)
+  → Sets a custom variable (defined in Survey Settings → Custom Variables).
+  → Can also use numeric index: $survey.updateCustomVariable(100, 'value')
+
+$survey.updateCustomVariableWithTransaction(name, value)
+  → Same but within a transaction (atomic update).
+
+$survey.getLanguageID()
+  → Returns current survey language ID.
+
+$survey.getCXTransaction()
+  → Returns CX transaction data (CX surveys only).
+
+$survey.populateQuestionInfo()
+  → Refreshes question display after programmatic changes.
+
+================================================================================
+SECTION 3 — FLEX MATRIX ENGINE: FULL PRODUCTION TEMPLATE
+================================================================================
+
+This is the complete pattern from script block 224 of the PES 2026 live survey.
+Place in Survey Settings → Custom JavaScript on the Flex matrix page.
+
+CRITICAL: The function name MUST be preExecuteJavaScriptLogic_[questionID]
+where questionID is the numeric ID of the first Flex matrix question on the page.
+QP calls this hook automatically before rendering.
+
+// ── TEMPLATE: Flex Matrix Row Control ─────────────────────────────────────────
+
+function preExecuteJavaScriptLogic_FIRST_MATRIX_QUESTION_ID() {
+  /*
+   * Flex Matrix Row Control — NO-FLASH + FAST
+   *
+   * MAIN_QS:   Question codes for the matrix groups (wrapper class = question code)
+   * DRIVER_QS: Question codes for the product-selection questions that drive rows
+   *
+   * HOW TO CONFIGURE:
+   * 1. Set MAIN_QS to the list of your matrix question codes
+   * 2. Set DRIVER_QS to the list of questions whose answers drive row visibility
+   * 3. Build OPTION_ROW_MAP: for each driver question, map which option index
+   *    should show which row number in the matrix (1-based)
+   * 4. Rename this function to preExecuteJavaScriptLogic_[your first matrix qID]
+   */
+  (function () {
+
+    // ── STEP 1: Hide all matrix groups immediately (prevents flash on page load)
+    $(".survey-question-wrapper").hide();
+
+    // ── STEP 2: Define your question codes ──────────────────────────────────────
+    const MAIN_QS   = ["QCOMP", "Q75B", "QCOMPEX", "QCOMPIM"];  // ← your matrix groups
+    const DRIVER_QS = ["Q19B",  "Q20B", "Q21B",    "Q21D"];      // ← your driver questions
+
+    // ── STEP 3: Build the row mapping ───────────────────────────────────────────
+    // Format: { driverQuestionCode: { optionIndex: matrixRowNumber } }
+    // optionIndex is 1-based. matrixRowNumber is 1-based row position in parent-table.
+    const OPTION_ROW_MAP = {
+      // Example from PES 2026 — replace with your own mapping:
+      Q20B: { 1:1,  2:2,  3:3,  4:4,  5:5,  6:6,  7:7,  8:8,  9:9,  10:10,
+              11:11, 12:12, 13:13, 14:14, 15:15, 16:16, 17:17, 18:18, 19:19, 20:20 },
+      Q21B: { 1:21, 2:22, 3:23 },
+      Q21D: { 1:24, 2:25, 3:26 },
+      Q19B: { 2:27, 4:28, 5:29, 7:30 },
+    };
+
+    // ── STEP 4: No-flash CSS helpers ────────────────────────────────────────────
+    function ensureHidden(mainQ) {
+      const id = '__hide_' + mainQ;
+      if (document.getElementById(id)) return;
+      const st = document.createElement('style');
+      st.id = id;
+      st.textContent = '.' + mainQ + '{display:none !important;}';
+      document.head.appendChild(st);
+    }
+    function ensureShown(mainQ) {
+      const st = document.getElementById('__hide_' + mainQ);
+      if (st) st.remove();
+      $('.' + mainQ).show();
+    }
+    MAIN_QS.forEach(ensureHidden);  // hide everything before DOM settles
+
+    // ── STEP 5: Read driver question selections via $survey API ─────────────────
+    function hasAnyAnswer(q) {
+      try {
+        const idx = $survey.getSelectedOptionsIndex(q);
+        return Array.isArray(idx) && idx.length > 0;
+      } catch(e) { return false; }
+    }
+
+    // ── STEP 6: Build the set of row numbers that should be visible ──────────────
+    function getKeepSet() {
+      const keep = new Set();
+      DRIVER_QS.forEach(q => {
+        let idxs = [];
+        try { idxs = [].concat($survey.getSelectedOptionsIndex(q)); } catch(e) {}
+        idxs.map(Number).forEach(n => {
+          const row = OPTION_ROW_MAP[q] && OPTION_ROW_MAP[q][n];
+          if (row) keep.add(row);
+        });
+      });
+      return keep;  // e.g. Set {1, 2, 27, 28}
+    }
+
+    // ── STEP 7: Find the parent-table for a matrix group ─────────────────────────
+    function findTable(mainQ) {
+      const el = document.querySelector('.' + mainQ);
+      if (!el) return null;
+      return el.querySelector('.flex-matrix-question .table-wrapper .parent-table');
+    }
+
+    // ── STEP 8: Get data rows only (role=listitem, not headers) ─────────────────
+    function getRows(table) {
+      let rows = table.querySelectorAll("tbody tr[role='listitem']");
+      if (!rows.length) rows = table.querySelectorAll('tbody tr');
+      return rows;
+    }
+
+    // ── STEP 9: Apply row visibility ─────────────────────────────────────────────
+    // This is the core function — runs on load and on every driver answer change.
+    function applyAll() {
+      // If no driver question is answered yet, hide everything
+      if (!DRIVER_QS.some(hasAnyAnswer)) {
+        MAIN_QS.forEach(q => $('.' + q).hide());
+        return;
+      }
+      const keep = getKeepSet();
+      MAIN_QS.forEach(mainQ => {
+        const table = findTable(mainQ);
+        if (!table) return;
+        const rows = getRows(table);
+        rows.forEach((tr, i) => {
+          // Rows are 1-indexed in OPTION_ROW_MAP
+          tr.style.display = keep.has(i + 1) ? '' : 'none';
+        });
+        ensureShown(mainQ);  // remove the CSS hide after applying row state
+      });
+    }
+
+    // ── STEP 10: Run immediately, then watch for changes ─────────────────────────
+    applyAll();
+    $(".survey-question-wrapper").show();
+
+    // MutationObserver: re-run if QP re-renders the DOM
+    const obs = new MutationObserver(() => requestAnimationFrame(applyAll));
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+
+    // Event listeners: re-run when driver answers change
+    let t;
+    function applySoon() { clearTimeout(t); t = setTimeout(applyAll, 10); }
+    DRIVER_QS.forEach(q => {
+      $(document).on('change', '.' + q + ' input, .' + q + ' select', applySoon);
+      $(document).on('click',  '.' + q + ' label, .'  + q + ' .option', applySoon);
+    });
+
+  })();
+}
+
+================================================================================
+SECTION 4 — DROPDOWN INSIDE FLEX MATRIX ROWS
+================================================================================
+
+Some matrix rows contain a Bootstrap Select dropdown instead of radio buttons.
+When available options in that dropdown depend on which row is showing, add this
+handler inside applyAll() after ensureShown(mainQ):
+
+  if (mainQ === 'QCOMPIM') { handleDropdown(mainQ); }
+
+// Template:
+function handleDropdown(mainClass) {
+  var main = document.querySelector('.' + mainClass);
+  if (!main) return;
+
+  var buttons = main.querySelectorAll('button.dropdown-toggle');
+  buttons.forEach(function(button, rowIndex) {
+    var rowNum  = rowIndex + 1;
+    var dataId  = button.getAttribute('data-id');
+    if (!dataId) return;
+
+    var selectEl = main.querySelector("select[name='" + dataId + "']");
+    var menu     = selectEl?.closest('.bootstrap-select')?.querySelector('ul.dropdown-menu');
+    if (!menu) return;
+
+    var options = menu.querySelectorAll('li');
+    options.forEach(li => li.style.display = '');  // reset all
+
+    // Apply row-specific option visibility:
+    // Row 23 gets options 20-44, all others get options 1-19
+    if (rowNum === 23) {
+      for (let i = 0; i < 20; i++) { if (options[i]) options[i].style.display = 'none'; }
+    } else {
+      for (let i = 20; i < options.length; i++) { if (options[i]) options[i].style.display = 'none'; }
+    }
+  });
+}
+
+================================================================================
+SECTION 5 — QUESTION CODE → ID MAP (PES 2026, from live inspection)
+================================================================================
+
+// These var declarations are auto-injected by QP at the bottom of the
+// custom JS block. You can use them instead of raw numeric IDs.
+
+// Screener questions
+var Q9   = 156183394;  // Relationship with HPE (radio)
+var Q10  = 156183395;  // Purchase channel (radio)
+var Q11  = 156183396;  // Last purchase timing (radio)
+var Q13  = 156183397;  // Role at company (Bootstrap Select dropdown)
+var Q347 = 156704025;  // HPE Networking sub-question (shown by Q17B checkbox)
+
+// Category selection page — main product checkboxes
+var Q16B = 156183412;  // HPE Compute checkbox
+var Q17B = 156183413;  // HPE Networking checkbox
+var Q18B = 156183414;  // GreenLake checkbox
+
+// Sub-product selection — DRIVER questions for Flex matrix
+var Q19B = 156183415;  // HPE Compute sub-products
+var Q20B = 156183416;  // HPE Aruba Networking sub-products
+var Q21B = 156183417;  // HPE Supercomputing sub-products
+var Q21D = 157640063;  // Additional sub-products
+
+// Flex matrix MAIN questions — Satisfaction rating (0-10 scale)
+var QCOMP   = 156183455;  // HPE Compute rows
+var QARUBN  = 156183478;  // HPE Aruba Networking rows
+var QGLM    = 156183530;  // GreenLake rows
+var QSTOR   = 156183586;  // Storage rows
+var QHCI    = 156183614;  // HCI rows
+var QSUPC   = 156183624;  // Supercomputing rows
+var QESIT   = 156183647;  // Enterprise Software rows
+var QSER    = 156183668;  // Services rows
+
+// Flex matrix — Experience (EX) and Importance (IM) variants
+var QCOMPEX = 156183893;  // Compute experience matrix
+var QCOMPIM = 156184715;  // Compute importance matrix (has dropdown cols)
+
+// Usage:
+$survey.getSelectedOptionsIndex('Q20B');
+showSection(document.getElementById('QuestionSection_' + QCOMP), 1);
+
+================================================================================
+SECTION 6 — DOM SELECTORS CHEATSHEET
+================================================================================
+
+.flex-matrix-question                       Top-level wrapper
+.flex-matrix-question .table-wrapper .parent-table
+                                            Outer table for one matrix group
+tbody tr[role='listitem']                   Data rows (excludes headers)
+tbody tr:not([role])                        Header rows only
+.child-table.ratingScaleTable              Inner table with rating inputs + text col
+.QCOMP                                      Wrapper div (class = question code)
+input[type=radio][name='u_156183456']      All radio inputs for one matrix row
+input[type=radio][name='u_156183456']:checked
+                                            Selected rating for that row
+textarea[name='t_[answerID]']              Open text comment in right column
+button.dropdown-toggle[data-id='u_[answerID]']
+                                            Bootstrap Select toggle for dropdown cols
+#QuestionSection_156183455                 Section div for QCOMP matrix
+#V_QuestionSection_65                      Validation wrapper (sequential number)
+
+================================================================================
+SECTION 7 — MIXING FLEX MATRIX WITH API: Write Ratings to CX Contacts
+================================================================================
+
+Use-case: After a respondent completes the Flex satisfaction matrix,
+read their ratings for each product and push them into QP CX contact
+custom fields so CX dashboards show per-product satisfaction scores.
+
+// Step 1: In postExecuteJavaScriptLogic() on the Flex matrix page,
+//         read each visible row's selected rating and store in custom vars.
+
+function postExecuteJavaScriptLogic() {
+  var ratings = {};
+  var table = document.querySelector('.QCOMP .parent-table');
+  if (!table) return;
+
+  var rows = table.querySelectorAll("tbody tr[role='listitem']");
+  rows.forEach(function(tr, i) {
+    if (tr.style.display === 'none') return;  // skip hidden rows
+
+    // Get the product label (first td text)
+    var label = tr.querySelector('td:first-child')?.textContent?.trim() || ('row_' + (i+1));
+
+    // Get selected rating (radio checked value)
+    var checked = tr.querySelector('input[type=radio]:checked');
+    var rating = checked ? parseInt(checked.value) : null;
+
+    if (rating !== null) {
+      ratings[label] = rating;
+      // Store in QP custom variable (index = 200 + row number)
+      $survey.updateCustomVariable(200 + i, label + ':' + rating);
+    }
+  });
+
+  console.log('Captured ratings:', ratings);
+}
+
+// Step 2: After survey completion, use QP Surveys API to read the response:
+//
+// GET /api/v2/surveys/{surveyID}/responses/{responseID}
+// → Read result.customVariables[200], [201], etc.
+//
+// Step 3: Use QP CX API to update the contact:
+//
+// PATCH /api/v2/cx/contacts/{contactID}
+// Body: { customFields: { "ProLiantDL145_Satisfaction": 8, ... } }
+//
+// Step 4: In QP CX dashboards, create widgets filtering on these custom fields.
+// This gives you live per-product NPS/CSAT split by product line from survey data.
+
+================================================================================
+SECTION 8 — DEBUGGING CONSOLE SNIPPETS
+================================================================================
+
+// Which rows are currently visible in the QCOMP matrix?
+var table = document.querySelector('.QCOMP .parent-table');
+Array.from(table.querySelectorAll("tbody tr[role='listitem']")).forEach((tr,i) => {
+  console.log('Row', i+1, tr.style.display === 'none' ? 'HIDDEN' : 'VISIBLE');
+});
+
+// What are driver questions returning from $survey API?
+['Q19B','Q20B','Q21B','Q21D'].forEach(q => {
+  console.log(q, $survey.getSelectedOptionsIndex(q));
+});
+// e.g. Q20B → [2, 5, 9] = options 2, 5, 9 checked = rows 2, 5, 9 visible
+
+// Manually show a specific row
+var table = document.querySelector('.QCOMP .parent-table');
+var rows  = table.querySelectorAll("tbody tr[role='listitem']");
+rows[2].style.display = '';      // show row 3 (0-indexed)
+rows[2].style.display = 'none';  // hide row 3
+
+// Re-trigger the Flex logic manually
+preExecuteJavaScriptLogic_156183455();
+
+// Get selected rating from a specific matrix row
+var checked = document.querySelector("input[name='u_156183456']:checked");
+console.log('Rating:', checked ? checked.value : 'not answered');
+
+// Find all question code aliases defined on this page
+var scripts = Array.from(document.querySelectorAll('script:not([src])'));
+var decls = [];
+scripts.forEach(s => {
+  var matches = s.textContent.matchAll(/var\s+(\w+)\s*=\s*(\d{8,})/g);
+  for (var m of matches) decls.push(m[1] + ' = ' + m[2]);
+});
+console.log(decls.join('\n'));
+
+// Check which $survey methods are available
+console.log(Object.keys($survey));
