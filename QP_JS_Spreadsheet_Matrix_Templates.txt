@@ -1,0 +1,652 @@
+QP JAVASCRIPT LOGIC — SPREADSHEET MATRIX ENGINE
+Derived from live survey inspection: HPE Distribution RFI (Survey ID: 13187649)
+Last updated: June 2026
+
+================================================================================
+WHAT THIS FILE COVERS
+================================================================================
+
+Spreadsheet matrix questions in QP support custom JavaScript that fires when
+respondents type into cells. This file documents 5 distinct patterns found in
+a real production survey, plus templates for mixing them with QP API calls.
+
+  Pattern 1 — YoY% Auto-Calculator (Q27, Q43)
+  Pattern 2 — Flex Row Trimmer + Submit Handler (Q46)
+  Pattern 3 — Budget Allocation 100% Cap Table (Q47)
+  Pattern 4 — Headcount % Sum Table with MutationObserver (Q65)
+  Pattern 5 — Simple Row Trimmer (Q49)
+  Bonus     — Character Limit Progress Meter
+  API Mix   — Combining matrix data with QP Surveys + CX APIs
+
+================================================================================
+HOW SPREADSHEET MATRIX JS WORKS
+================================================================================
+
+In the QP survey builder, you can add custom JavaScript to a spreadsheet matrix
+question via the question's "JavaScript" settings panel. This JS fires when the
+page loads and can also attach event listeners to matrix cells.
+
+The matrix DOM structure:
+  .QUESTION_CODE .matrix-spreadsheet-question .table-wrapper .parent-table
+    → The root table. Every script targets this.
+
+Cells are labelled with col_N classes (global sequential index across all rows):
+  - QP does NOT give cells meaningful class names by default.
+  - The first step in almost every pattern is to label them yourself.
+
+Input fields inside cells use the class: .form-input
+
+================================================================================
+PATTERN 1 — YoY% AUTO-CALCULATOR
+Source: Q27 (3 vendor columns) and Q43 (4 vendor columns), HPE Distribution RFI
+================================================================================
+
+PURPOSE:
+  Automatically calculates year-over-year percentage change between columns.
+  When a respondent enters a value in the "current year" column, the YoY%
+  column auto-fills. YoY% cells are locked readonly. Handles all edge cases
+  including zero-base years.
+
+HOW IT WORKS:
+  1. Label every td in table body with col_1, col_2, col_3... (global index)
+  2. bindPercentChange({input, base, output}) binds a listener between 3 columns
+  3. On change: read input col (current year) + base col (prior year) → calculate YoY%
+  4. Write result to output col (readonly)
+  5. Manual locked columns (e.g. Totals) pre-filled with '-'
+
+YoY% FORMULA LOGIC:
+  Standard:     ((currentYear - priorYear) / priorYear) * 100
+  0 → X:        X * 100              (e.g. 0 to 3 partners = 300%)
+  X → 0:        -priorYear * 100     (e.g. 3 to 0 = -300%)
+  0 → 0:        0
+  0 → negative: output cleared
+
+COLUMN STRUCTURE — Q27 (3 data columns: HIT, Aruba, Juniper):
+  Row 1 = 2024 actuals   (cols 1-7:  3 data + 3 YoY% + 1 locked total)
+  Row 2 = 2025 projected (cols 8-14: YoY vs row 1)
+  Row 3 = 2026 projected (cols 15-21: YoY vs row 2)
+  Row 4 = 2027 projected (cols 22-28: YoY vs row 3)
+
+  Mappings for Q27:
+    Row 2: { input: 8,  base: 1,  output: 9  }  // HIT
+            { input: 10, base: 3,  output: 11 }  // Aruba
+            { input: 12, base: 5,  output: 13 }  // Juniper
+    Row 3: { input: 15, base: 8,  output: 16 }
+            { input: 17, base: 10, output: 18 }
+            { input: 19, base: 12, output: 20 }
+    Row 4: { input: 22, base: 15, output: 23 }
+            { input: 24, base: 17, output: 25 }
+            { input: 26, base: 19, output: 27 }
+    Locked: [2, 4, 6] (Total columns — pre-filled with '-')
+
+COLUMN STRUCTURE — Q43 (4 data columns):
+    Row 2: { input: 9,  base: 1,  output: 10 }, { input: 11, base: 3,  output: 12 },
+            { input: 13, base: 5,  output: 14 }, { input: 15, base: 7,  output: 16 }
+    Row 3: { input: 17, base: 9,  output: 18 }, { input: 19, base: 11, output: 20 },
+            { input: 21, base: 13, output: 22 }, { input: 23, base: 15, output: 24 }
+    Row 4: { input: 25, base: 17, output: 26 }, { input: 27, base: 19, output: 28 },
+            { input: 29, base: 21, output: 30 }, { input: 31, base: 23, output: 32 }
+    Locked: [2, 4, 6, 8]
+
+// ── TEMPLATE: YoY% Auto-Calculator ────────────────────────────────────────────
+
+var $root = $('.QUESTION_CLASS .matrix-spreadsheet-question .table-wrapper .parent-table');
+(function () {
+
+  // 1. Label every td with col_N (global sequential index across all rows)
+  var e = 1;
+  $root.find('tbody tr').not('.error-tr').each(function () {
+    $(this).find('td').slice(1).each(function () {
+      $(this).addClass('col_' + e);
+      e++;
+    });
+  });
+
+  // 2. Parse helpers
+  function safeParse(val) {
+    if (val == null) return null;
+    var s = String(val).trim().replace(/,/g, '');
+    if (s === '') return null;
+    var n = parseFloat(s);
+    return Number.isFinite(n) ? n : null;
+  }
+  function setNumber($el, n, decimals) {
+    if (!Number.isFinite(n)) { $el.val(''); return; }
+    $el.val(typeof decimals === 'number' ? n.toFixed(decimals) : String(n));
+  }
+
+  // 3. YoY% binding — reads input and base cols, writes to output col
+  function bindPercentChange(map) {
+    var selInput  = '.col_' + map.input  + ' .form-input';
+    var selBase   = '.col_' + map.base   + ' .form-input';
+    var selOutput = '.col_' + map.output + ' .form-input';
+    function recalc() {
+      var vi = safeParse($root.find(selInput).val());
+      var vb = safeParse($root.find(selBase).val());
+      if (vi === null || vb === null) { $root.find(selOutput).val(''); return; }
+      var result;
+      if (vb === 0) {
+        if (vi > 0)       result = vi * 100;
+        else if (vi === 0) result = 0;
+        else { $root.find(selOutput).val(''); return; }
+      } else {
+        result = (vi === 0) ? (-vb * 100) : ((vi - vb) / vb) * 100;
+      }
+      setNumber($root.find(selOutput), result, 1);
+    }
+    $root.on('input change', selInput, recalc);
+    $root.on('input change', selBase,  recalc);
+    recalc();
+  }
+
+  // 4. ── CONFIGURE YOUR MAPPINGS HERE ──────────────────────────────────────
+  var MAPPINGS = [
+    // Row 2 (Year 2 vs Year 1)
+    { input: 8,  base: 1,  output: 9  },
+    { input: 10, base: 3,  output: 11 },
+    // Row 3 (Year 3 vs Year 2)
+    { input: 15, base: 8,  output: 16 },
+    { input: 17, base: 10, output: 18 },
+    // Add rows as needed...
+  ];
+  MAPPINGS.forEach(bindPercentChange);
+
+  // 5. ── CONFIGURE LOCKED COLUMNS HERE ─────────────────────────────────────
+  var LOCKED_COLS = [2, 4, 6];  // these get readonly + '-' pre-filled
+  var outputSelectors = MAPPINGS.map(m => '.col_' + m.output + ' .form-input')
+    .concat(LOCKED_COLS.map(c => '.col_' + c + ' .form-input')).join(',');
+  $root.find(outputSelectors).prop('readonly', true);
+  LOCKED_COLS.forEach(c => $root.find('.col_' + c + ' .form-input').val('-'));
+
+  // 6. Numeric-only input filter
+  $root.on('input', '.form-input', function () {
+    if (this.readOnly) return;
+    var val = $(this).val() || '';
+    var cleaned = val.replace(/[^0-9.]/g, '');
+    var parts = cleaned.split('.');
+    if (parts.length > 2) cleaned = parts[0] + '.' + parts.slice(1).join('');
+    if (cleaned !== val) $(this).val(cleaned);
+  });
+
+})();
+
+================================================================================
+PATTERN 2 — FLEX ROW TRIMMER + SUBMIT HANDLER
+Source: Q46, HPE Distribution RFI
+================================================================================
+
+PURPOSE:
+  Show only N rows in a Flex matrix based on a prior question's answer.
+  Validates each row has a dropdown selection and no blank inputs on submit.
+  Writes row data into custom variables before submitting.
+
+KEY POINTS:
+  - Reads TWO prior questions and ADDS their selected indexes: Q45 + Q56
+  - Removes rows beyond that count using .removeFields
+  - Intercepts Submit (type=submit → type=button) to run validation first
+  - On valid submit: writes col2+col3+col4 of each row into custom variables
+    starting at index 100, then calls auto_submit()
+
+// ── TEMPLATE: Flex Row Trimmer + Submit Handler ────────────────────────────────
+
+let qCode    = 'Q46';   // ← your Flex matrix question code
+let driverA  = 'Q45';   // ← first driving question
+let driverB  = 'Q56';   // ← second driving question (set null if not needed)
+
+let _A = parseInt($survey.getSelectedOptionIndex(driverA));
+let _B = driverB ? parseInt($survey.getSelectedOptionIndex(driverB)) : 0;
+let rowCount = _A + _B;
+
+// Assign classes and remove unused rows
+$(`.${qCode} .flex-matrix-question .parent-table > tbody > tr[role='listitem']`)
+  .each(function (index) {
+    $(this).addClass('row_' + (index + 1));
+    $(this).find('> td').each(function (e) { if (e !== 0) $(this).addClass('column_' + e); });
+    if ((index + 1) > rowCount) $(this).addClass('removeFields');
+  });
+$('.removeFields').remove();
+
+// Intercept Submit
+$('#SurveySubmitButtonElement').attr('type', 'button');
+$('#SurveySubmitButtonElement').on('click', function () {
+  let isValid = true;
+  let $errorSpan = $('#errorSpan_YOUR_QUESTION_SECTION_ID'); // ← set your error span
+  $errorSpan.addClass('hidden').text('');
+  $('[class^="row_"]').removeClass('error-row');
+
+  $('[class^="row_"]').each(function () {
+    let $row = $(this);
+    let dropdown = $row.find('select').val();
+    let emptyField = (!dropdown || dropdown === '-1' || dropdown === null);
+    $row.find('input[type="text"], input[type="email"], textarea').each(function () {
+      if ($.trim($(this).val()) === '') { emptyField = true; return false; }
+    });
+    if (emptyField) { isValid = false; $row.addClass('error-row'); }
+  });
+
+  if (!isValid) {
+    $errorSpan.removeClass('hidden').html('Please select one option from each menu.');
+    $('html,body').animate({ scrollTop: ($errorSpan.offset().top - 70) }, 600);
+    return false;
+  }
+
+  // Write row data into custom variables (index 100+)
+  let customIndex = 100;
+  $('[class^="row_"]').each(function () {
+    let $row = $(this);
+    let combined = [$row.find('.column_2 input').val(), $row.find('.column_3 input').val(),
+                    $row.find('.column_4 input').val()].filter(Boolean).join(', ');
+    $survey.updateCustomVariable(customIndex, combined);
+    customIndex++;
+  });
+
+  document.forms.runForm.onsubmit(); // Submit the form
+});
+
+================================================================================
+PATTERN 3 — BUDGET ALLOCATION 100% CAP TABLE
+Source: Q47, HPE Distribution RFI
+================================================================================
+
+PURPOSE:
+  A percentage allocation matrix where each row must sum to exactly 100.
+  Enforces this live: clamps individual inputs so they can't push a row past 100.
+  Auto-disables empty cells when a row hits 100. Blocks Submit if any row > 100.
+
+KEY POINTS:
+  - rowCount = roundUpTo10($survey.getSelectedOptionIndex('Q45'))
+    (e.g. 3 selections → show 10 rows; rounds up to nearest 10)
+  - Second-to-last td in each row becomes the sum column
+  - clampInputToRemaining(): caps current input to (100 - sum of other inputs)
+  - data-disabled-by-sum attribute: marks cells auto-disabled when row = 100
+  - Warns: "Total exceeds 100, please check again" on clamping
+  - Submit blocks if any visible row total > 100
+
+// ── TEMPLATE: Budget 100% Cap Table ───────────────────────────────────────────
+
+let qCode   = 'Q47';    // ← your question code
+let driverQ = 'Q45';    // ← driving question
+
+let Q_index = $survey.getSelectedOptionIndex(driverQ);
+function roundUpTo10(val) { return Math.ceil((parseInt(val,10)||0) / 10) * 10; }
+var limit = roundUpTo10(Q_index);
+const $table = $(`.${qCode} .matrix-spreadsheet-question .parent-table`);
+
+// Assign classes and remove unused rows
+$table.find('> tbody > tr[role="list"]').each(function (i) {
+  const $r = $(this);
+  $r.addClass('row_' + (i+1));
+  $r.find('> td').each(function (e) { if (e !== 0) $(this).addClass('column_' + e); });
+  if ((i+1) > Q_index) $r.addClass('removeFields');
+});
+$table.find('> tbody > tr[class="error-tr"]').each(function (i) {
+  $(this).addClass('err_' + (i+1));
+  if ((i+1) > Q_index) $(this).addClass('removeFields');
+});
+$table.find('> thead[role="rowgroup"]').each(function (i) {
+  $(this).addClass('header_' + ((i+1)*10));
+  if (((i+1)*10) > limit) $(this).addClass('removeFields');
+});
+$table.find('> thead.removeFields').hide();
+$table.find('> tbody > tr.removeFields').each(function () {
+  $(this).find('input,textarea,select').prop('readonly',true).prop('disabled',true);
+  $(this).addClass('hidden-row').hide();
+});
+
+// Set up sum column in each visible row
+$('#SurveySubmitButtonElement').attr('type', 'button');
+(function () {
+  $table.find('> tbody > tr[role="list"]').not('.hidden-row').each(function () {
+    const $row = $(this), $tds = $row.find('> td');
+    const $target = ($tds.length >= 2) ? $tds.eq($tds.length - 2) : $tds.last();
+    $target.addClass('sum-column');
+    let $inp = $target.find('input').first();
+    if ($inp.length) { $inp.prop('readonly',true).prop('disabled',true).addClass('sum-field'); }
+    else { $target.html('<input type="number" class="sum-field" readonly disabled />'); }
+    recalcRowSum($row);
+  });
+  $table.on('input change', '[class*="row_"] input[type="number"]:not(.sum-field)', function () {
+    if ($(this).closest('tr').hasClass('hidden-row')) return;
+    clampInputToRemaining($(this));
+    recalcRowSum($(this).closest('[class*="row_"]'));
+  });
+})();
+
+function clampInputToRemaining($inp) {
+  const $row = $inp.closest('[class*="row_"]');
+  let $others = $row.find('input[type="number"]').not('.sum-field').not($row.find('> td:last-child input'));
+  let othersTotal = 0;
+  $others.each(function () { if (this !== $inp[0]) { const n=parseFloat($(this).val()); if(!isNaN(n)) othersTotal+=n; } });
+  const remaining = 100 - othersTotal;
+  let v = parseFloat($(this).val()) || 0;
+  if (remaining < 0 || v > remaining) {
+    $inp.val(Math.max(0, remaining));
+    let $sc = $row.find('> td.sum-column');
+    let $w = $sc.find('.sum-warning-over-limit');
+    if (!$w.length) $w=$('<div class="sum-warning-over-limit" style="color:#d32f2f;font-size:12px;margin-top:4px;">Total exceeds 100, please check again</div>');
+    $sc.append($w.show());
+  }
+}
+
+function recalcRowSum($row) {
+  let total = 0;
+  $row.find('input[type="number"]').not('.sum-field').not($row.find('> td:last-child input'))
+    .each(function () { const n=parseFloat($.trim($(this).val())); if(!isNaN(n)) total+=n; });
+  $row.find('.sum-field').first().val(Math.round(total*100)/100);
+  const match = ($row.attr('class')||'').match(/row_(\d+)/);
+  const $errSpan = match ? $(`.error-tr.err_${match[1]} span.error`) : $();
+  if (total > 100) {
+    $errSpan.length ? $errSpan.removeClass('hidden').html('Row exceeds 100.') : null;
+  } else {
+    $errSpan.length ? $errSpan.addClass('hidden').text('') : null;
+    if (Math.abs(total-100) < 1e-9) {
+      $row.find('input[type="number"]').not('.sum-field').each(function () {
+        if ($.trim($(this).val()) === '') $(this).val(0).prop('disabled',true).attr('data-disabled-by-sum','1');
+      });
+    } else {
+      $row.find('[data-disabled-by-sum]').prop('disabled',false).removeAttr('data-disabled-by-sum');
+    }
+  }
+}
+
+$('#SurveySubmitButtonElement').on('click', function () {
+  let isValid = true;
+  $table.find('> tbody > tr[role="list"]').not('.hidden-row').each(function () {
+    const total = parseFloat($(this).find('.sum-field').val()) || 0;
+    if (total > 100) {
+      isValid = false;
+      const m = ($(this).attr('class')||'').match(/row_(\d+)/);
+      if (m) $(`.error-tr.err_${m[1]} span.error`).removeClass('hidden').html('Row exceeds 100.');
+    }
+  });
+  if (!isValid) return false;
+  document.forms.runForm.onsubmit();
+});
+
+================================================================================
+PATTERN 4 — HEADCOUNT % SUM TABLE WITH MUTATIONOBSERVER
+Source: Q65, HPE Distribution RFI
+================================================================================
+
+PURPOSE:
+  Sum column auto-calculated, excludes one column (people count).
+  Shows "Sum should be 100%" warning only AFTER the user starts typing.
+  MutationObserver makes it self-healing if QP re-renders the matrix.
+
+KEY DIFFERENCES FROM PATTERN 3:
+  - TARGET_COL = 7: the sum column is the 7th visible column (set to yours)
+  - PEOPLE_COL = 2: column 2 is excluded from the sum (it's a headcount, not %)
+  - userStartedTyping flag: prevents warnings from firing on empty page load
+  - MutationObserver: re-runs init() if QP re-renders the matrix DOM
+  - waitForMatrix(): polls for the table every 50ms (up to 10 seconds)
+
+// ── TEMPLATE: Headcount % Sum Table ───────────────────────────────────────────
+
+(() => {
+  const qCode      = 'Q65';  // ← your question code
+  const TARGET_COL = 7;      // ← 1-based index of the sum column
+  const CAP_AT     = 100;
+  const PEOPLE_COL = 2;      // ← column excluded from sum (0 to include all)
+  let userStartedTyping = false;
+
+  waitForMatrix(init);
+
+  function waitForMatrix(cb, tries = 0) {
+    const $t = $(`.${qCode} .matrix-spreadsheet-question .parent-table`);
+    if ($t.length && $t.find('> tbody > tr').length) return cb($t);
+    if (tries > 200) return;
+    setTimeout(() => waitForMatrix(cb, tries + 1), 50);
+  }
+
+  function init($table) {
+    const $rows = $table.find('> tbody > tr').filter(function () {
+      return !/error-tr/.test($(this).attr('class') || '');
+    });
+    if (!$rows.length) return;
+
+    $rows.each(function (idx) {
+      if (!/\brow_\d+\b/.test($(this).attr('class') || '')) $(this).addClass('row_' + (idx + 1));
+    });
+    $rows.each(function () { ensureSumInput($(this)); });
+
+    const editSel = `.${qCode} .matrix-spreadsheet-question .parent-table > tbody > tr input:not(.sum-field)`;
+
+    $(document).off(`input.numonly_${qCode}`).on(`input.numonly_${qCode}`, editSel, function () {
+      userStartedTyping = true;
+      let v = String($(this).val() || '').replace(/[^0-9.]/g, '');
+      const pts = v.split('.');
+      if (pts.length > 2) v = pts[0] + '.' + pts.slice(1).join('');
+      $(this).val(v);
+    });
+
+    $(document).off(`input.${qCode} change.${qCode}`).on(`input.${qCode} change.${qCode}`, editSel, function () {
+      userStartedTyping = true;
+      recalcRow($(this).closest('tr'));
+    });
+
+    $rows.each(function () { recalcRow($(this)); });
+
+    const node = $(`.${qCode} .matrix-spreadsheet-question`).get(0);
+    if (node) {
+      const obs = new MutationObserver(() => {
+        obs.disconnect();
+        init($(`.${qCode} .matrix-spreadsheet-question .parent-table`));
+      });
+      obs.observe(node, { childList: true, subtree: true });
+    }
+  }
+
+  function ensureSumInput($row) {
+    const $cells = $row.children('td:visible,th:visible');
+    if ($cells.length < TARGET_COL) return;
+    const $cell = $cells.eq(TARGET_COL - 1);
+    let $inp = $cell.find('input');
+    if (!$inp.length) { $cell.append('<input type="number" step="any" />'); $inp = $cell.find('input'); }
+    $inp.addClass('sum-field').prop('readonly', true).prop('disabled', true);
+  }
+
+  function num(val) { const n = parseFloat(String(val || '').trim()); return isNaN(n) ? 0 : n; }
+
+  function recalcRow($row) {
+    const $cells = $row.children('td:visible,th:visible');
+    if ($cells.length < TARGET_COL) return;
+    let total = 0;
+    for (let i = 1; i < TARGET_COL; i++) {
+      if (i === PEOPLE_COL) continue;
+      total += num($cells.eq(i-1).find('input,textarea').not('.sum-field').first().val());
+    }
+    $cells.eq(TARGET_COL-1).find('input.sum-field')
+      .val(Math.abs(total-Math.round(total))<1e-9 ? Math.round(total) : Math.round(total*100)/100);
+
+    // Pre-fill blanks when exactly at cap
+    if (Math.abs(total - CAP_AT) < 1e-9) {
+      for (let i = 1; i < TARGET_COL; i++) {
+        if (i === PEOPLE_COL) continue;
+        const $inp = $cells.eq(i-1).find('input,textarea').not('.sum-field').first();
+        if ($inp.length && String($inp.val()||'').trim()==='') $inp.val('0');
+      }
+    }
+
+    const $sumCell = $cells.eq(TARGET_COL-1);
+    let $warn = $sumCell.find('.sum-warning');
+    if (!$warn.length) { $warn=$('<div class="sum-warning" style="color:#c00;font-size:12px;margin-top:2px;"></div>'); $sumCell.append($warn); }
+    if (total > CAP_AT + 1e-9) { $warn.text('Total exceeds 100. Please adjust.'); return; }
+    if (userStartedTyping && total < CAP_AT - 1e-9) { $warn.text('Sum should be 100%'); return; }
+    $warn.remove();
+  }
+})();
+
+================================================================================
+PATTERN 5 — SIMPLE ROW TRIMMER
+Source: Q49, HPE Distribution RFI
+================================================================================
+
+PURPOSE:
+  Lightest pattern. Just removes excess rows and header groups from a matrix
+  based on a prior question's selected option index.
+
+// ── TEMPLATE: Simple Row Trimmer ──────────────────────────────────────────────
+
+let qCode   = 'Q49';  // ← your question code
+let driverQ = 'Q45';  // ← driving question
+
+let Q_index = $survey.getSelectedOptionIndex(driverQ);
+function roundUpTo10(val) { return Math.ceil((parseInt(val,10)||0) / 10) * 10; }
+var limit = roundUpTo10(Q_index);
+
+$(`.${qCode} .matrix-spreadsheet-question .parent-table > tbody > tr[role='list']`)
+  .each(function (i) {
+    $(this).addClass('row_' + (i+1));
+    $(this).find('> td').each(function (e) { if (e !== 0) $(this).addClass('column_' + e); });
+    if ((i+1) > Q_index) $(this).addClass('removeFields');
+  });
+
+$(`.${qCode} .matrix-spreadsheet-question .parent-table > tbody > tr[class='error-tr']`)
+  .each(function (i) {
+    $(this).addClass('err_' + (i+1));
+    if ((i+1) > Q_index) $(this).addClass('removeFields');
+  });
+
+$(`.${qCode} .matrix-spreadsheet-question .parent-table > thead[role='rowgroup']`)
+  .each(function (i) {
+    $(this).addClass('header_' + ((i+1)*10));
+    if (((i+1)*10) > limit) $(this).addClass('removeFields');
+  });
+
+$('.removeFields').remove();
+
+================================================================================
+BONUS — CHARACTER LIMIT PROGRESS METER
+Source: Q4c (textarea ID 821250965ID), HPE Distribution RFI
+================================================================================
+
+// HTML to add in the question's HTML editor:
+// <meter id="somemeterN" min="0" max="1" value="0" style="width:100%;"></meter>
+// <div id="charLimitMessageN" style="margin-top:5px;font-size:14px;color:#555;"></div>
+// Replace N with a unique number for each textarea.
+
+// ── TEMPLATE: Character Limit Meter ───────────────────────────────────────────
+
+document.getElementById('YOUR_TEXTAREA_ID').addEventListener('input', function () {
+  const textarea  = this;
+  const meter     = document.getElementById('somemeterN');    // ← match N
+  const msgEl     = document.getElementById('charLimitMessageN');
+  const charLimit = 2000;  // ← your character limit
+
+  let len = textarea.value.length;
+  if (len > charLimit) { textarea.value = textarea.value.substring(0, charLimit); len = charLimit; }
+
+  meter.value     = Math.min(len / charLimit, 1);
+  meter.className = len <= 80 ? 'green' : len <= 120 ? 'orange' : 'red';
+
+  if (len >= charLimit) {
+    msgEl.textContent = 'Character limit reached.';
+    msgEl.style.color = 'red';
+  } else {
+    msgEl.textContent = `Characters used: ${len}/${charLimit}`;
+    msgEl.style.color = '#555';
+  }
+});
+
+================================================================================
+API MIX 1 — YoY DATA + QP SURVEYS API: Read & Export Matrix Responses
+================================================================================
+
+Use-case: After a respondent completes the financial data matrix (Pattern 1),
+read their submitted numbers via the QP Surveys API and push them into a
+reporting dashboard or a CX contact record.
+
+// Step 1: After survey completion, call QP Surveys API to get the response:
+// GET https://api.questionpro.com/a/api/v2/surveys/{surveyID}/responses/{responseID}
+// Headers: api-key: YOUR_API_KEY
+//
+// The response JSON contains:
+// result.answers[questionID].answerData[rowIndex][colIndex].answerValue
+//
+// Step 2: Map column indexes back to your data:
+// col 1 = HPE HIT 2024, col 3 = HPE Aruba 2024, col 5 = Juniper 2024
+// col 8 = HPE HIT 2025, col 9 = HIT YoY%, col 10 = Aruba 2025, etc.
+
+// Step 3: Use QP CX API to update the distributor's contact record:
+// PATCH https://api.questionpro.com/a/api/v2/cx/{cxSurveyID}/contacts/{contactID}
+// Body: {
+//   customFields: {
+//     "HPE_HIT_2025": 1380,
+//     "HPE_HIT_YoY_2025": 11.3,
+//     "Aruba_2025": 980,
+//     "Juniper_2025": 390
+//   }
+// }
+//
+// Step 4: Build QP CX dashboard widgets filtering on these custom fields to
+// compare financial performance across distributors without leaving QP.
+
+================================================================================
+API MIX 2 — BUDGET TABLE + WORKFLOWS: Auto-Trigger Actions per Allocation
+================================================================================
+
+Use-case: When a distributor submits their budget allocation (Pattern 3),
+use QP Workflows to check if HPE-specific allocation exceeds a threshold
+and auto-trigger an alert to their Distribution Business Manager.
+
+// QP Workflows setup:
+// Trigger: Survey response submitted (surveyID = 13187649)
+// Condition: Check custom variable [row 1, HPE allocation] > 40%
+// Action: Send email notification to DBM via SMTP connector
+//         OR create a task in Salesforce via Salesforce connector
+
+// In your custom JS (Pattern 3 variation), write each row's total
+// into a custom variable for Workflows to read:
+
+$('#SurveySubmitButtonElement').on('click', function () {
+  // (run Pattern 3 validation first...)
+
+  // Write row totals to custom variables for Workflows
+  let idx = 50;
+  $table.find('> tbody > tr[role="list"]').not('.hidden-row').each(function () {
+    const total = parseFloat($(this).find('.sum-field').val()) || 0;
+    const rowLabel = $(this).find('> td:first-child').text().trim();
+    $survey.updateCustomVariable(idx, rowLabel + ':' + total + '%');
+    idx++;
+  });
+
+  document.forms.runForm.onsubmit();
+});
+
+// Workflows reads: custom_variable_50 = "HPE Direct:45%"
+// If value contains "HPE Direct" and numeric part > 40, trigger DBM alert.
+
+================================================================================
+API MIX 3 — COMBINING PATTERN 2 + PATTERN 1: Dynamic YoY from API-Prefilled Data
+================================================================================
+
+Use-case: Pre-populate the YoY matrix with actual prior-year data pulled from
+QP CX (where previous year's survey responses are stored as contact fields),
+then let the respondent only enter current-year values.
+
+// Step 1: Build the survey URL with prior year values in custom params:
+// /TakeSurvey?tt=TOKEN&prior_hit=1240&prior_aruba=890&prior_juniper=320
+
+// Step 2: In preExecuteJavaScriptLogic(), read params and pre-fill Year 1 cols:
+function preExecuteJavaScriptLogic() {
+  var params   = new URLSearchParams(window.location.search);
+  var priorHIT = params.get('prior_hit');
+  var priorAruba = params.get('prior_aruba');
+  var priorJuniper = params.get('prior_juniper');
+
+  // Wait for the matrix to render, then fill col 1, 3, 5 (Year 1 data cols)
+  setTimeout(function() {
+    var $root = $('.Q27 .matrix-spreadsheet-question .table-wrapper .parent-table');
+    if (priorHIT)    $root.find('.col_1 .form-input').val(priorHIT).trigger('change');
+    if (priorAruba)  $root.find('.col_3 .form-input').val(priorAruba).trigger('change');
+    if (priorJuniper)$root.find('.col_5 .form-input').val(priorJuniper).trigger('change');
+    // Pattern 1 YoY engine will auto-calculate as soon as respondent enters current year
+  }, 500);
+}
+
+// Step 3: Now the respondent only enters Year 2 (2025) data.
+// YoY% auto-fills via Pattern 1 using the pre-loaded Year 1 values.
+
+// Step 4: After submit, QP Workflows reads the response and updates the
+// CX contact's fields with Year 2 data, ready to be used as prior_year
+// in next year's survey URL.
