@@ -1,0 +1,110 @@
+QUESTIONPRO COMMUNITY KNOWLEDGE BASE — WORKFORCE
+Scraped from questionpro.com/help — 13 Q&As
+Last updated: June 2026
+========================================================================
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Add Employees Manually
+────────────────────────────────────────────────────────────────────────
+
+Q1: Can-I-delete-an-employee-who-left-the-organization
+Context: I would like to remove an employee who left the organization recently from the workforce roster.
+A: (See full answer at https://www.questionpro.com/help/workforce/add-employees-manually/Can-I-delete-an-employee-who-left-the-organization.html)
+Source: https://www.questionpro.com/help/workforce/add-employees-manually/Can-I-delete-an-employee-who-left-the-organization.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Workforce Ftp Sync
+────────────────────────────────────────────────────────────────────────
+
+Q1: QuestionPro-IP-range-used-for-FTP-Access
+Context: The FTP request is coming from a dynamic IP. Is there an IP range I can share with IT for whitelisting? Unless the IPs are whitelisted, we won’t be able to proceed further with the FTP Integration. Can the request be made from a Static IP instead of Dynamic IP?
+A: (See full answer at https://www.questionpro.com/help/workforce/workforce-ftp-sync/QuestionPro-IP-range-used-for-FTP-Access.html)
+Source: https://www.questionpro.com/help/workforce/workforce-ftp-sync/QuestionPro-IP-range-used-for-FTP-Access.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Workforce Employee Roster
+────────────────────────────────────────────────────────────────────────
+
+Q1: Changes-of-employee-information
+Context: What impact does changing employee information (e.g. location, department,...) in the roster have on the data collection if the survey is live but the respondent has already or not yet participated?
+A: (See full answer at https://www.questionpro.com/help/workforce/Workforce-Employee-Roster/Changes-of-employee-information.html)
+Source: https://www.questionpro.com/help/workforce/Workforce-Employee-Roster/Changes-of-employee-information.html
+
+Q2: Manager-information
+Context: Can the manager information be left blank (for example, during import, or if the employee who was listed as the manager for the employees has been deleted and the field is displayed as “empty”)? And what are the consequences of this?
+A: (See full answer at https://www.questionpro.com/help/workforce/Workforce-Employee-Roster/Manager-information.html)
+Source: https://www.questionpro.com/help/workforce/Workforce-Employee-Roster/Manager-information.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Collector Forms
+────────────────────────────────────────────────────────────────────────
+
+Q1: Change-language-for-the-landing-page
+Context: Hi team, how can I change the language for the landing page of the collectors form (meaning the page where the participants have to confirm their Email/ID).
+A: (See full answer at https://www.questionpro.com/help/workforce/collector-forms/Change-language-for-the-landing-page.html)
+Source: https://www.questionpro.com/help/workforce/collector-forms/Change-language-for-the-landing-page.html
+
+Q2: participation-rate-using-the-collectors-form
+Context: I assumed that the expected number of participants would be used to calculate the participation rate but this does not seem to be the case. How can we calculate a correct participation rate using the collectors form?
+A: (See full answer at https://www.questionpro.com/help/workforce/collector-forms/participation-rate-using-the-collectors-form.html)
+Source: https://www.questionpro.com/help/workforce/collector-forms/participation-rate-using-the-collectors-form.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: SSO SAML
+────────────────────────────────────────────────────────────────────────
+
+Q1: SSO-SETUP
+Context: Hi Team, we need to setup a SSO Integration FOR WORKFORCE, so that client can access the WF Dashboard via SSO. We already have a SSO configuration in place on core. Can we simply take the Issuer ID from there and are ready to go or what would be the process here?
+A: (See full answer at https://www.questionpro.com/help/workforce/SSO-SAML/SSO-SETUP.html)
+Source: https://www.questionpro.com/help/workforce/SSO-SAML/SSO-SETUP.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Export Data From Current Survey
+────────────────────────────────────────────────────────────────────────
+
+Q1: Output-File-Format--EXCEL--AHRQ-Excel
+Context: What does the output file format mean and what does it contain? EXCEL - AHRQ Excel
+A: (See full answer at https://www.questionpro.com/help/workforce/export-data-from-current-survey/Output-File-Format--EXCEL--AHRQ-Excel.html)
+Source: https://www.questionpro.com/help/workforce/export-data-from-current-survey/Output-File-Format--EXCEL--AHRQ-Excel.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Access Rules Permissions
+────────────────────────────────────────────────────────────────────────
+
+Q1: Employee-Unique-Field
+Context: I want to import Access Roles. I downloaded the Import Template. What is “Employee Unique Field”?
+A: (See full answer at https://www.questionpro.com/help/workforce/Access-rules-Permissions/Employee-Unique-Field.html)
+Source: https://www.questionpro.com/help/workforce/Access-rules-Permissions/Employee-Unique-Field.html
+
+Q2: Hierarchy-based-rule
+Context: Can the “Hierarchy-based rule” role be deactivated/hidden?
+A: (See full answer at https://www.questionpro.com/help/workforce/Access-rules-Permissions/Hierarchy-based-rule.html)
+Source: https://www.questionpro.com/help/workforce/Access-rules-Permissions/Hierarchy-based-rule.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Employee Custom Fields
+────────────────────────────────────────────────────────────────────────
+
+Q1: Use-Custom-Fields-for-Survey-Logic
+Context: How can I use Custom Fileds as System Variables for Survey-Logic?
+A: (See full answer at https://www.questionpro.com/help/workforce/Employee-custom-fields/Use-Custom-Fields-for-Survey-Logic.html)
+Source: https://www.questionpro.com/help/workforce/Employee-custom-fields/Use-Custom-Fields-for-Survey-Logic.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: Trend Analysis Widget
+────────────────────────────────────────────────────────────────────────
+
+Q1: Supported-question-types
+Context: Which question types are supported and can be displayed in a Time trend widget?
+A: (See full answer at https://www.questionpro.com/help/workforce/trend-analysis-widget/Supported-question-types.html)
+Source: https://www.questionpro.com/help/workforce/trend-analysis-widget/Supported-question-types.html
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: 360 Feedback Display Configurations
+────────────────────────────────────────────────────────────────────────
+
+Q1: can-we-assign-weights-to-the-different-categories-tributing-to-overall-score
+Context: I just wanted to know if there is a way we can assign different weights to the different categories on the 360 surveys. Let"s say I want Self to be 10% of the overall score, Direct Report 30%, and so on. In this way I could assign more importance to some categories. Is there a way to do that now?
+A: (See full answer at https://www.questionpro.com/help/workforce/360-feedback-display-configurations/can-we-assign-weights-to-the-different-categories-tributing-to-overall-score.html)
+Source: https://www.questionpro.com/help/workforce/360-feedback-display-configurations/can-we-assign-weights-to-the-different-categories-tributing-to-overall-score.html
+
