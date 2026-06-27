@@ -1,0 +1,30 @@
+QUESTIONPRO COMMUNITY KNOWLEDGE BASE — LIVEPOLLS
+Scraped from questionpro.com/help — 5 Q&As
+Last updated: June 2026
+========================================================================
+
+────────────────────────────────────────────────────────────────────────
+ARTICLE: How To Create A Livepoll
+────────────────────────────────────────────────────────────────────────
+
+Q1: Can-we-export-the-LivePoll-data-in-Excel-or-PDF-format
+A: (See full answer at https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Can-we-export-the-LivePoll-data-in-Excel-or-PDF-format.html)
+Source: https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Can-we-export-the-LivePoll-data-in-Excel-or-PDF-format.html
+
+Q2: How-many-live-polls-can-I-create-in-my-account
+A: (See full answer at https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/How-many-live-polls-can-I-create-in-my-account.html)
+Source: https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/How-many-live-polls-can-I-create-in-my-account.html
+
+Q3: How-can-I-delete-the-live-poll-responses
+A: (See full answer at https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/How-can-I-delete-the-live-poll-responses.html)
+Source: https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/How-can-I-delete-the-live-poll-responses.html
+
+Q4: Is-it-possible-for-me-to-create-a-copy-of-a-live-poll
+A: (See full answer at https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Is-it-possible-for-me-to-create-a-copy-of-a-live-poll.html)
+Source: https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Is-it-possible-for-me-to-create-a-copy-of-a-live-poll.html
+
+Q5: Limits
+Context: Are there any restrictions on participation? Is there a maximum number of participants?
+A: (See full answer at https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Limits.html)
+Source: https://www.questionpro.com/help/livepolls/how-to-create-a-livepoll/Limits.html
+
