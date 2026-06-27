@@ -1,0 +1,457 @@
+QP JAVASCRIPT LOGIC — STANDARD SHOW/HIDE ENGINE
+Derived from live console inspection: HPE PES 2026 Final Production (Survey ID: 13364444)
+Last updated: June 2026
+
+================================================================================
+WHAT THIS FILE COVERS
+================================================================================
+
+This file documents the standard QP show/hide question logic engine — the most
+commonly used JS pattern in QP surveys. It covers:
+
+  1. How QP generates and names show/hide functions
+  2. The runtime execution sequence
+  3. Single-condition, multi-OR, and AND condition templates
+  4. Change event binding pattern
+  5. Default page state (startBinding)
+  6. The preExecuteJavaScriptLogic / postExecuteJavaScriptLogic hooks
+  7. Ready-to-use templates for all common scenarios
+  8. How to read radio, checkbox, dropdown, and text answers
+  9. Combining with QP API calls to push/pull data dynamically
+ 10. Debugging console snippets
+
+================================================================================
+SECTION 1 — HOW QP GENERATES SHOW/HIDE FUNCTIONS
+================================================================================
+
+When you create a show/hide logic rule in the QP survey builder, QP automatically
+injects two types of functions into the survey page as inline <script> blocks:
+
+  source_[sourceQID]_[ruleID]_orderNum_[N]()
+    → Evaluates one condition. Returns true or false.
+    → One function per condition per rule.
+
+  criteriaUsedOn_[targetQID]()
+    → Called every time a source question changes.
+    → Calls all relevant source_ functions, combines them with AND/OR,
+      then calls showSection() or hideSection() on the target question's div.
+
+NAMING CONVENTION:
+  Source question ID  → the question whose answer is being checked
+  Target question ID  → the question being shown or hidden
+  Rule ID             → auto-generated numeric ID for the logic rule
+  Order number        → position of this condition within the rule
+
+QUESTION SECTION DIV:
+  Every question lives in: <div id="QuestionSection_[questionID]">
+  This is the element passed to showSection() / hideSection().
+
+INPUT NAMING:
+  Radio/checkbox answer IDs:  [answerID]ID   (e.g. 836960282ID)
+  Question input name:        u_[questionID] (e.g. u_156183394)
+  Open text input name:       t_[answerID]   (e.g. t_836960285)
+
+================================================================================
+SECTION 2 — CORE API FUNCTIONS (confirmed via live console inspection)
+================================================================================
+
+SHOW / HIDE:
+  showSection(el, animate)
+    → Shows a question section div.
+    → el = document.getElementById('QuestionSection_[qID]')
+    → animate: 1 = fade in, 0 = instant
+
+  hideSection(el, animate)
+    → Hides a question section div.
+
+  showDiv(id)     → Shows any div by ID string
+  hideDiv(id)     → Hides any div by ID string
+
+  startBinding(show[], hide[])
+    → Sets initial visibility state on page load.
+    → Called once inside $(document).ready()
+    → show[] = array of elements visible by default
+    → hide[] = array of elements hidden by default
+
+  submitFormIfAllAreHiddenQuestion()
+    → Auto-advances the page if all questions are hidden by logic.
+    → Called at bottom of each logic script block automatically.
+    → Can also be called manually from postExecuteJavaScriptLogic().
+
+VALIDATION:
+  qp_validateSurvey()    → Main validation. Returns true if page is valid.
+  validateEmail(value)   → true if valid email
+  validateField(el)      → Validates a single field, shows inline error
+  validateNumeric(el)    → Validates numeric input (min/max/decimal)
+  validateRemote(el)     → Server-side validation (duplicate check)
+
+NAVIGATION:
+  gotoLoc(url)           → Navigate survey to a URL (used in skip/branch logic)
+  qp_sectionDisplayScript.preventFormSubmitOnEnter()
+  qp_sectionDisplayScript.stopEnterSubmit(el)
+  qp_sectionDisplayScript.goBackToSurvey()
+  qp_sectionDisplayScript.initBootStrapDropDown(el)
+
+QUESTION UTILITIES:
+  getQuestionID(el)              → Numeric question ID from a DOM element
+  getAnswerInput(questionID)     → Input element(s) for a question
+  getQuestionWrapper(el)         → Wrapper div for any child element
+  getQuestionRows(questionID)    → All rows of a matrix question
+  isUnichoiceQuestion(el)        → true if single-select (radio)
+  isMatrixQuestion(el)           → true if matrix/grid type
+
+================================================================================
+SECTION 3 — QP_SECTIONS ARRAY (confirmed live)
+================================================================================
+
+qp_sections is a global array injected on every survey page.
+It contains metadata for every section on the current page.
+
+// Access it in console:
+console.table(qp_sections);
+
+// Each entry has:
+{
+  sectionID:       152858939,       // numeric section ID
+  type:            "question",      // "question" | "block" | etc.
+  firstQuestionID: 156183394,       // ID of first question in section
+  required:        true,            // is section required?
+  validationType:  "at-least",      // validation rule name
+  numberOfAnswersLimit: 1,          // min answers required
+  isMobileView:    false
+}
+
+================================================================================
+SECTION 4 — GENERATED CODE PATTERNS (actual code from PES 2026)
+================================================================================
+
+--- PATTERN A: Single Condition (Show B if A = "HPE Customer") ---
+
+function source_156183394_29021589_orderNum_1() {
+  var currentSelection = $("input[name='u_156183394']:checked").prop('id');
+  if (currentSelection == '836960282ID') { return true; }
+  return false;
+}
+
+function criteriaUsedOn_156183395() {
+  if (source_156183394_29021589_orderNum_1()) {
+    showSection(document.getElementById('QuestionSection_156183395'), 1);
+    return;
+  }
+  hideSection(document.getElementById('QuestionSection_156183395'), 1);
+}
+
+// Bound on page load:
+$(document).ready(function() {
+  $("input[name='u_156183394']").on('change', function() {
+    criteriaUsedOn_156183395();
+  });
+  // Re-trigger if answer already selected (e.g. Back button)
+  if ($("input[name='u_156183394']:checked").length) {
+    $("input[name='u_156183394']:checked").trigger('change');
+  }
+});
+
+
+--- PATTERN B: Multi-Condition OR ---
+// Show C if Q1 = ChannelPartner OR Q2 = Direct OR Q2 = Both OR Q1 = Other
+
+function criteriaUsedOn_156183396() {
+  if ((((( source_156183394_29021591_orderNum_1()    // Q1 = Channel Partner
+         || source_156183395_29021591_orderNum_2()   // Q2 = Directly from HPE
+         )|| source_156183395_29021591_orderNum_3()  // Q2 = Through channel partners
+         )|| source_156183395_29021591_orderNum_4()  // Q2 = Both
+         )|| source_156183394_29021591_orderNum_5()  // Q1 = Other
+         )) {
+    showSection(document.getElementById('QuestionSection_156183396'), 1);
+    return;
+  }
+  hideSection(document.getElementById('QuestionSection_156183396'), 1);
+}
+
+
+--- PATTERN C: AND + OR Combined ---
+// Show D if (Q3 = RecentlyOrWithinYear OR Q3 = MoreThan1Yr) AND Q1 = Customer
+
+function criteriaUsedOn_156183397() {
+  if (((( source_156183396_29021593_orderNum_1()     // Q3 = Recently (3 months)
+         || source_156183396_29021593_orderNum_2()   // Q3 = Within last year
+         )|| source_156183396_29021593_orderNum_3()  // Q3 = More than 1 year ago
+         ) && source_156183394_29021593_orderNum_4() // AND Q1 = HPE Customer
+         )) {
+    showSection(document.getElementById('QuestionSection_156183397'), 1);
+    return;
+  }
+  hideSection(document.getElementById('QuestionSection_156183397'), 1);
+}
+
+
+--- PATTERN D: Checkbox (Multi-Select) Condition ---
+// Note: checkboxes use .is(':checked') not :checked on name selector
+
+function source_QSOURCEID_RULEID_orderNum_1() {
+  if ($("#836960378ID").is(":checked")) { return true; }
+  return false;
+}
+
+
+--- PATTERN E: Default Page State ---
+// QP sets initial show/hide state on $(document).ready()
+
+$(document).ready(function() {
+  var show = [];  // questions visible by default (empty = all shown)
+  var hide = [
+    document.getElementById('QuestionSection_156183395'),
+    document.getElementById('QuestionSection_156183396'),
+    document.getElementById('QuestionSection_156183397'),
+    document.getElementById('QuestionSection_156183398'),
+  ];
+  startBinding(show, hide);
+});
+
+================================================================================
+SECTION 5 — CUSTOM LOGIC HOOKS
+================================================================================
+
+These two functions are injected as empty stubs on every QP survey page.
+Override them in Survey Settings → Custom JavaScript to add your own logic.
+
+--- preExecuteJavaScriptLogic() ---
+// Runs BEFORE QP evaluates its own show/hide rules.
+// Use for: pre-selecting answers from URL params, setting custom variables,
+//          injecting data before logic reads it.
+
+function preExecuteJavaScriptLogic() {
+  // Example: Pre-select a radio from a URL parameter
+  var params = new URLSearchParams(window.location.search);
+  var type = params.get('customerType');
+  if (type === 'customer') {
+    $("input[id='836960282ID']").prop('checked', true).trigger('change');
+  }
+}
+
+
+--- postExecuteJavaScriptLogic() ---
+// Runs AFTER QP has evaluated all show/hide rules.
+// Use for: checking final visible state, updating progress bars, analytics.
+
+function postExecuteJavaScriptLogic() {
+  // Example: Count visible questions and update a custom indicator
+  var visible = $('[id^=QuestionSection_]:visible').length;
+  console.log('Visible questions on this page: ' + visible);
+}
+
+================================================================================
+SECTION 6 — READING ANSWERS FROM THE DOM
+================================================================================
+
+// --- Read a radio (single-select) answer ---
+var selectedID = $("input[name='u_156183394']:checked").prop('id');
+// Returns: '836960282ID' or undefined if nothing selected
+
+// --- Read checkbox (multi-select) — all selected answers ---
+var checked = [];
+$("input[name='u_156183394']:checked").each(function() {
+  checked.push($(this).prop('id'));
+});
+// Returns: ['836960282ID', '836960285ID'] etc.
+
+// --- Check if a specific checkbox answer is selected ---
+var isSelected = $("#836960378ID").is(":checked");
+
+// --- Read open text ---
+var text = $("textarea[name='t_836960285']").val();
+// Note: open text uses 't_' prefix, not 'u_'
+
+// --- Read a Bootstrap Select dropdown ---
+var dropdownVal = $("select[name='u_156183397']").val();
+
+// --- Read via $survey API (more reliable for Flex matrix pages) ---
+var indexes = $survey.getSelectedOptionsIndex('Q20B');
+// Returns: [1, 3, 5] (1-based indexes of selected options)
+
+================================================================================
+SECTION 7 — SHOW/HIDE QUESTIONS PROGRAMMATICALLY
+================================================================================
+
+// Show a question by ID
+function showQuestion(questionID) {
+  var el = document.getElementById('QuestionSection_' + questionID);
+  if (el) showSection(el, 1);
+}
+
+// Hide a question by ID
+function hideQuestion(questionID) {
+  var el = document.getElementById('QuestionSection_' + questionID);
+  if (el) hideSection(el, 1);
+}
+
+// Show/hide multiple questions at once
+function showQuestions(ids) { ids.forEach(showQuestion); }
+function hideQuestions(ids) { ids.forEach(hideQuestion); }
+
+// Check if a question is currently visible
+function isQuestionVisible(questionID) {
+  var el = document.getElementById('QuestionSection_' + questionID);
+  return el ? $(el).is(':visible') : false;
+}
+
+================================================================================
+SECTION 8 — CUSTOM MULTI-QUESTION LOGIC TEMPLATE
+================================================================================
+
+// Template: Show C only if Q1 = 'Customer' AND Q2 has any answer
+
+function myCustomLogic() {
+  var q1 = $("input[name='u_QUESTION1_ID']:checked").prop('id');
+  var q2 = $("input[name='u_QUESTION2_ID']:checked").prop('id');
+
+  if (q1 === 'ANSWER_ID_FOR_CUSTOMER' && q2 !== undefined) {
+    showQuestion(TARGET_QUESTION_ID);
+  } else {
+    hideQuestion(TARGET_QUESTION_ID);
+  }
+}
+
+// Bind to both source questions
+$(document).ready(function() {
+  $("input[name='u_QUESTION1_ID'], input[name='u_QUESTION2_ID']")
+    .on('change', myCustomLogic);
+  myCustomLogic(); // run on load to set initial state
+});
+
+================================================================================
+SECTION 9 — URL PARAM PRE-FILL TEMPLATE
+================================================================================
+
+function preExecuteJavaScriptLogic() {
+  var params = new URLSearchParams(window.location.search);
+
+  // Pre-fill a text box from ?name=John
+  var name = params.get('name');
+  if (name) $("input[name='t_ANSWER_ID']").val(name);
+
+  // Pre-select a radio from ?type=customer
+  var type = params.get('type');
+  if (type === 'customer') {
+    $("input[id='ANSWER_ID_FOR_CUSTOMER']").prop('checked', true).trigger('change');
+  }
+
+  // Pre-select a checkbox
+  var feature = params.get('feature');
+  if (feature === 'networking') {
+    $("input[id='NETWORKING_ANSWER_ID']").prop('checked', true).trigger('change');
+  }
+}
+
+================================================================================
+SECTION 10 — MIXING WITH QP API: Push Survey Answers to CX Transaction
+================================================================================
+
+// Use-case: On survey submit, read answers and push them to a QP CX transaction
+// as custom variables — letting CX dashboards reflect survey data in real time.
+
+// Step 1: Read answers on the last page before submit
+function postExecuteJavaScriptLogic() {
+  var relationship = $("input[name='u_156183394']:checked").prop('id');
+  var role = $("select[name='u_156183397']").val();
+  var freeText = $("textarea[name='t_OPENTEXT_ID']").val() || '';
+
+  // Step 2: Update QP custom variables (these are stored with the response)
+  $survey.updateCustomVariable('respondentRelationship', relationship);
+  $survey.updateCustomVariable('respondentRole', role);
+  $survey.updateCustomVariable('openTextSummary', freeText.slice(0, 200));
+}
+
+// Step 3 (server-side or via QP Workflows): After survey completion,
+// use QP API to read the response and update a CX contact's custom field:
+//
+// POST /api/v2/surveys/{surveyID}/responses/{responseID}
+// Read: customVariables.respondentRelationship
+// Then PATCH /api/v2/cx/contacts/{contactID} with the value
+
+================================================================================
+SECTION 11 — MIXING WITH QP API: Show/Hide Based on CX Transaction Data
+================================================================================
+
+// Use-case: Pre-load a CX contact's data into the survey via URL params,
+// then use those values to show/hide questions dynamically.
+
+// URL format your CX workflow builds:
+// /TakeSurvey?tt=TOKEN&custom1=John&custom2=john@co.com&custom3=Acme&custom4=GOLD
+
+// In preExecuteJavaScriptLogic — read custom params and pre-select answers
+function preExecuteJavaScriptLogic() {
+  var params = new URLSearchParams(window.location.search);
+  var tier = params.get('custom4');  // e.g. 'GOLD' from CX contact record
+
+  // Show a premium question only for Gold-tier customers
+  if (tier === 'GOLD') {
+    showQuestion(PREMIUM_QUESTION_ID);
+  } else {
+    hideQuestion(PREMIUM_QUESTION_ID);
+  }
+}
+
+================================================================================
+SECTION 12 — DEBUGGING CONSOLE SNIPPETS
+================================================================================
+
+// Find all question IDs on the current page
+Array.from(document.querySelectorAll('input[type=radio]'))
+  .map(r => ({ qName: r.name, answerId: r.id, label: r.closest('label')?.textContent.trim().slice(0,40) }))
+  .forEach(r => console.log(r.qName, r.answerId, r.label));
+
+// Find all criteriaUsedOn_ functions registered on this page
+Object.keys(window).filter(k => k.startsWith('criteriaUsedOn_'));
+
+// Find all source_ condition functions
+Object.keys(window).filter(k => k.startsWith('source_'));
+
+// Manually trigger a logic function to test it
+criteriaUsedOn_156183395();
+
+// See what's currently visible / hidden
+$('[id^=QuestionSection_]').each(function() {
+  console.log(this.id, $(this).is(':visible') ? 'VISIBLE' : 'HIDDEN');
+});
+
+// Inspect qp_sections metadata
+console.table(qp_sections);
+
+// Read all QP-related globals on the page
+Object.keys(window).filter(k =>
+  /^(qp|QP|survey|Survey|gotoLoc|launch|validate|startBinding)/i.test(k)
+);
+
+================================================================================
+ID REFERENCE — PES 2026 SURVEY (confirmed live, Survey ID 13364444)
+================================================================================
+
+Q9  (u_156183394)  — Relationship with HPE
+  HPE Customer:             836960282ID
+  HPE Channel Partner:      836960283ID
+  Employee/Ex-Employee:     836960284ID
+  Other, Please Specify:    836960285ID
+
+Q10 (u_156183395)  — Purchase channel
+  Directly from HPE:        836960286ID
+  Through channel partners: 836960287ID
+  Both:                     836960288ID
+
+Q11 (u_156183396)  — Last purchase timing
+  Recently (3 months):      836960289ID
+  Within the last year:     836960290ID
+  More than 1 year ago:     836960291ID
+  Never purchased:          [separate ID]
+
+Q13 (u_156183397)  — Role at company (Bootstrap Select dropdown)
+
+Q17B (u_156183413) — HPE Networking checkbox
+  HPE Networking selected:  836960378ID  (triggers show/hide for sub-questions)
+
+KEY LOGIC MAP — Page 1:
+  Q10 (u_156183395) shown   IF Q9 = HPE Customer (836960282ID)
+  Q11 (u_156183396) shown   IF Q9 = Partner OR Q10 = Direct/Partners/Both OR Q9 = Other
+  Q12 (u_156183397) shown   IF Q11 = any purchase timeframe AND Q9 = Customer or Other
+  Q13 shown                 IF Q10 = Networking checkbox selected (836960378ID)
