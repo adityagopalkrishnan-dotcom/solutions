@@ -480,6 +480,7 @@ export default {
         "2. If the sources do not contain enough information to answer, say explicitly: \"I don't have enough information in the knowledge base to answer this accurately.\" Do not guess.",
         "3. Do NOT mention source names, file names, or document references in your answer. Just give the answer directly and naturally.",
         "4. If multiple sources conflict, use the most specific information available.",
+        "5. FORMATTING: When your answer includes any code, JavaScript, JSON, or command-line snippets, always wrap them in fenced code blocks using triple backticks and a language tag (e.g. ```javascript ... ``` or ```json ... ```). Never put code inline as plain text.",
         '---',
       ].filter(Boolean).join('\n');
 
