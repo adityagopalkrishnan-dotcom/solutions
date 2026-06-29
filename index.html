@@ -1874,7 +1874,64 @@ function esc(value){
     .replace(/'/g,'&#039;');
 }
 
+function autoFenceCode(text) {
+  // Detect runs of lines that look like code (but aren't already fenced)
+  // A "code run" = 3+ consecutive lines where most contain JS/code patterns
+  const lines = text.split('\n');
+  const result = [];
+  let codeBuffer = [];
+  let inCode = false;
+
+  const isCodeLine = (l) => {
+    const t = l.trim();
+    if (!t) return false;
+    return (
+      /^(var|let|const|function|if|for|while|return|async|await|fetch|document|window|\$|setTimeout|clearTimeout|addEventListener|getElementById|querySelector)\b/.test(t) ||
+      /[{};]$/.test(t) ||
+      /=>\s*[{(]/.test(t) ||
+      /^\s{2,}/.test(l) && t.length > 0 ||  // indented
+      /^\/[*/]/.test(t) ||   // JS comment
+      /^\*/.test(t) ||        // comment continuation
+      /\.then\(|\.catch\(|\.json\(|\.parse\(/.test(t)
+    );
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (isCodeLine(l)) {
+      if (!inCode) inCode = true;
+      codeBuffer.push(l);
+    } else {
+      if (inCode && codeBuffer.length >= 3) {
+        result.push('```javascript');
+        result.push(...codeBuffer);
+        result.push('```');
+      } else if (codeBuffer.length > 0) {
+        result.push(...codeBuffer);
+      }
+      codeBuffer = [];
+      inCode = false;
+      result.push(l);
+    }
+  }
+  // Flush remaining buffer
+  if (inCode && codeBuffer.length >= 3) {
+    result.push('```javascript');
+    result.push(...codeBuffer);
+    result.push('```');
+  } else {
+    result.push(...codeBuffer);
+  }
+  return result.join('\n');
+}
+
 function fmtMsg(value){
+  // Auto-fence code blocks that the model forgot to fence
+  // Only do this if the text doesn't already have fenced blocks
+  if (!value.includes('```')) {
+    value = autoFenceCode(value);
+  }
+
   // Handle fenced code blocks FIRST (before escaping anything)
   // Split on triple-backtick fences, preserving language hint
   const parts = value.split(/(```[\s\S]*?```)/g);
