@@ -89,20 +89,24 @@ function scoreRepo(entry, queryWords, idf, product) {
   const title   = tokenize(entry.title   || '');
   const kw      = tokenize(entry.kw      || '');
   const summ    = tokenize(entry.summary || '');
+  const body    = tokenize(entry.body    || '');
   const titleS  = (entry.title   || '').toLowerCase();
   const kwS     = (entry.kw      || '').toLowerCase();
   const summS   = (entry.summary || '').toLowerCase();
+  const bodyS   = (entry.body    || '').toLowerCase();
   const titleSet = new Set(title);
   const kwSet    = new Set(kw);
   const summSet  = new Set(summ);
+  const bodySet  = new Set(body);
   const isPlain  = entry.type === 'plaintext';
 
   let s = 0;
   for (const w of queryWords) {
     const w_idf = getIDF(idf, w);
-    if (titleSet.has(w)) s += 8  * w_idf;
-    if (kwSet.has(w))    s += 3  * w_idf;
+    if (titleSet.has(w)) s += 8   * w_idf;
+    if (kwSet.has(w))    s += 3   * w_idf;
     if (summSet.has(w))  s += 1.5 * w_idf;
+    if (bodySet.has(w))  s += 1.0 * w_idf;  // full-text: catches any word present in the file
   }
 
   // Phrase boost: consecutive query words found verbatim in fields
@@ -113,6 +117,7 @@ function scoreRepo(entry, queryWords, idf, product) {
       if (titleS.includes(phrase)) s += 20 * n;
       if (kwS.includes(phrase))    s += 10 * n;
       if (summS.includes(phrase))  s +=  5 * n;
+      if (bodyS.includes(phrase))  s +=  3 * n;  // phrase match in body
     }
   }
 
