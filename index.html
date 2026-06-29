@@ -331,6 +331,15 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
   .nav-item{justify-content:center;padding:10px}
   .entries-grid{grid-template-columns:1fr}
 }
+
+/* ── Fenced code blocks ─────────────────────────────── */
+.code-block{margin:10px 0;border-radius:8px;overflow:hidden;border:1px solid #2d3748;font-family:monospace}
+.code-block-header{display:flex;align-items:center;justify-content:space-between;background:#1a202c;padding:6px 12px}
+.code-lang{font-size:11px;color:#a0aec0;font-family:monospace;text-transform:lowercase}
+.code-copy-btn{background:none;border:1px solid #4a5568;border-radius:4px;color:#a0aec0;font-size:11px;padding:2px 8px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font);transition:all .12s}
+.code-copy-btn:hover{border-color:#a0aec0;color:white}
+.code-copy-btn i{font-size:11px}
+.code-pre{margin:0;padding:14px 16px;background:#1e2433;color:#e2e8f0;font-size:12.5px;line-height:1.7;overflow-x:auto;white-space:pre;tab-size:2}
 </style>
 </head>
 <body>
@@ -1866,16 +1875,48 @@ function esc(value){
 }
 
 function fmtMsg(value){
-  let html=esc(value);
-  html=html
-    .replace(/^###\s+(.+)$/gm,'<h4 style="margin:10px 0 4px;font-size:14px">$1</h4>')
-    .replace(/^##\s+(.+)$/gm,'<h3 style="margin:12px 0 5px;font-size:15px">$1</h3>')
-    .replace(/^#\s+(.+)$/gm,'<h2 style="margin:12px 0 6px;font-size:17px">$1</h2>')
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-    .replace(/`([^`]+)`/g,'<code style="background:var(--qp-surface);padding:1px 4px;border-radius:3px">$1</code>')
-    .replace(/^[-•]\s+(.+)$/gm,'<div style="padding-left:14px">• $1</div>')
-    .replace(/\n/g,'<br>');
+  // Handle fenced code blocks FIRST (before escaping anything)
+  // Split on triple-backtick fences, preserving language hint
+  const parts = value.split(/(```[\s\S]*?```)/g);
+  let html = parts.map((part, i) => {
+    if (i % 2 === 1) {
+      // This is a code block
+      const inner = part.replace(/^```[^\n]*\n?/, '').replace(/```$/, '');
+      const lang = part.match(/^```(\w+)/)?.[1] || '';
+      const id = 'cb_' + Math.random().toString(36).slice(2,8);
+      const escaped = esc(inner.replace(/\n$/, ''));
+      return `<div class="code-block"><div class="code-block-header"><span class="code-lang">${lang||'code'}</span><button class="code-copy-btn" onclick="copyCode('${id}')"><i class="ti ti-copy"></i>Copy</button></div><pre id="${id}" class="code-pre">${escaped}</pre></div>`;
+    }
+    // Normal text — apply markdown-lite formatting
+    let t = esc(part);
+    t = t
+      .replace(/^###\s+(.+)$/gm,'<h4 style="margin:10px 0 4px;font-size:14px">$1</h4>')
+      .replace(/^##\s+(.+)$/gm,'<h3 style="margin:12px 0 5px;font-size:15px">$1</h3>')
+      .replace(/^#\s+(.+)$/gm,'<h2 style="margin:12px 0 6px;font-size:17px">$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/`([^`]+)`/g,'<code style="background:var(--qp-surface);padding:1px 4px;border-radius:3px;font-family:monospace">$1</code>')
+      .replace(/^[-•]\s+(.+)$/gm,'<div style="padding-left:14px">• $1</div>')
+      .replace(/\n/g,'<br>');
+    return t;
+  }).join('');
   return html;
+}
+
+function copyCode(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const text = el.textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    // Find the button and flash it
+    const btn = el.closest('.code-block')?.querySelector('.code-copy-btn');
+    if(btn){ btn.innerHTML='<i class="ti ti-check"></i>Copied'; setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i>Copy';},1800); }
+  }).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    const btn=el.closest('.code-block')?.querySelector('.code-copy-btn');
+    if(btn){ btn.innerHTML='<i class="ti ti-check"></i>Copied'; setTimeout(()=>{btn.innerHTML='<i class="ti ti-copy"></i>Copy';},1800); }
+  });
 }
 
 function toast(message,type='ok'){
@@ -1917,3 +1958,4 @@ autoResize(document.getElementById('chatInput'));
 </script>
 </body>
 </html>
+
