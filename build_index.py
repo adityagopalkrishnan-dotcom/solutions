@@ -2,6 +2,11 @@
 build_index.py -- QP Insights Commons
 Indexes all .txt and .docx files from the REPO ROOT.
 Paths stored as raw filenames (no URL-encoding) so Worker can encode correctly.
+
+v4: Adds `body` field (first 3000 chars of cleaned file text) so the Worker
+    can score against actual file content, not just the top-30 keyword list.
+    This prevents files being missed when a query word exists in the body
+    but didn't make the keyword cutoff.
 """
 
 import json, os, re
@@ -19,7 +24,7 @@ STOPWORDS = {
 
 COOKBOOK_META = {
     "ai_router_technical":                 ("AI Router Technical Setup Guide",
-                                            "ai router webhook json custom variable survey prompt setup technical cookbook"),
+                                            "ai router webhook json custom variable survey prompt setup technical cookbook javascript js connect middleware integration api call code snippet"),
     "communities":                          ("Purpose Mindset and Communities Cookbook",
                                             "communities purpose mindset personal statement fortune teller ai router"),
     "conversational_survey":               ("Conversational Survey Cookbook",
@@ -35,9 +40,9 @@ COOKBOOK_META = {
     "sentiment_analysis_ready_to_sell":    ("Sentiment Analysis Ready to Sell",
                                             "sentiment analysis prep cook open-ended text pricing rts sell benefits"),
     "tv_guide_customisation":              ("Dynamic TV Guide Searchable List Cookbook",
-                                            "tv guide the menu dynamic list middleware searchable catalogue proxy trp research ireland"),
+                                            "tv guide the menu dynamic list middleware searchable catalogue proxy trp research ireland javascript js connect api integration custom code"),
     "tv_guide_ready_to_sell":              ("Dynamic TV Guide Ready to Sell",
-                                            "tv guide the menu dynamic list searchable catalogue pricing rts sell benefits"),
+                                            "tv guide the menu dynamic list searchable catalogue pricing rts sell benefits middleware"),
     "solution_intro":                      ("Solutions Cookbook Overview Quick Reference",
                                             "solutions overview pricing proof point sous chef prep cook fortune teller smoke alarm the menu"),
     "custom_canvas_dashboards":            ("Custom Canvas Dashboards Guide",
@@ -47,7 +52,7 @@ COOKBOOK_META = {
     "intercept_mobile_sdk___technical_doc":("Intercept Mobile SDK Technical Doc",
                                             "intercept mobile sdk ios android technical setup"),
     "questionpro___middleware_document":   ("QuestionPro Middleware Document",
-                                            "middleware proxy api integration custom"),
+                                            "middleware proxy api integration custom sms whatsapp etl pricing setup fee change request"),
     "questionpro____intercept____setup_guide":("Intercept Setup Guide",
                                             "intercept setup guide cx survey popup widget trigger data layer rule targeting datalayer"),
 }
@@ -55,15 +60,23 @@ COOKBOOK_META = {
 SKIP_FILES = {"build_index.py","index.json","index.html","worker.js",
               "README.md","help-sitemap.json","build_index_action.yml","KNOWLEDGE_README.md"}
 
+BODY_MAX = 3000  # chars of cleaned body stored in index for full-text scoring
+
 def normalise_key(fn):
     return re.sub(r'[^a-z0-9_]', '_', fn.lower().replace('.txt','').replace('.docx',''))
 
-def extract_keywords(text, n=30):
+def extract_keywords(text, n=40):
     text = re.sub(r'[^a-z0-9\s]',' ', text.lower())
     freq = {}
     for w in text.split():
         if len(w)>=2 and w not in STOPWORDS: freq[w]=freq.get(w,0)+1
     return ' '.join(w for w,_ in sorted(freq.items(),key=lambda x:-x[1])[:n])
+
+def clean_body(text):
+    """Return a cleaned, whitespace-normalised excerpt for full-text scoring."""
+    c = re.sub(r'[+|=\-]{2,}',' ', text)
+    c = re.sub(r'\s+', ' ', c).strip()
+    return c[:BODY_MAX]
 
 def read_docx(filename):
     """Extract text from a .docx file."""
@@ -74,7 +87,6 @@ def read_docx(filename):
         for para in doc.paragraphs:
             if para.text.strip():
                 parts.append(para.text.strip())
-        # Also grab table text
         for table in doc.tables:
             for row in table.rows:
                 for cell in row.cells:
@@ -82,7 +94,6 @@ def read_docx(filename):
                         parts.append(cell.text.strip())
         return '\n'.join(parts)
     except ImportError:
-        # python-docx not available, return empty
         print(f"  WARNING: python-docx not installed, skipping {filename}")
         return ''
     except Exception as e:
@@ -104,6 +115,7 @@ def index_plaintext(filename):
            else 'general')
     return [{"id":key,"title":title,"category":cat,"product":"CX Solutions",
              "kw":kw,"summary":clean[:300],
+             "body":clean_body(content),
              "path":filename,
              "type":"plaintext","size":len(content)}]
 
@@ -120,6 +132,7 @@ def index_docx(filename):
     cat = ('sales' if 'ready to sell' in fn_l else 'general')
     return [{"id":key,"title":title,"category":cat,"product":"CX Solutions",
              "kw":kw,"summary":clean[:300],
+             "body":clean_body(content),
              "path":filename,
              "type":"plaintext","size":len(content)}]
 
@@ -136,9 +149,11 @@ def index_json_articles(filename):
         steps = ' '.join(s.get('text','') if isinstance(s,dict) else str(s) for s in (art.get('steps') or []))
         kw = extract_keywords(f"{art.get('title','')} {summary} {headings} {steps} {content}")
         eid = re.sub(r'[^a-z0-9\-_]','-',f"{normalise_key(filename)}-{art_id}".lower())
+        body_text = clean_body(f"{art.get('title','')} {summary} {content}")
         entries.append({"id":eid,"title":art.get('title','Untitled'),
                         "category":'api' if 'API' in filename else 'help',
                         "product":product,"kw":kw,"summary":(summary or content)[:200],
+                        "body":body_text,
                         "path":filename,
                         "article_id":art_id,"url":art.get('url',''),
                         "type":"json_article","word_count":art.get('word_count',0)})
@@ -182,4 +197,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
