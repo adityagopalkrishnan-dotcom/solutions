@@ -1,0 +1,6 @@
+CORRECTION FILE
+Original question: I'm talking about the extraction logic and I want to add a new option to the extracted question
+Submitted: 2026-06-29T09:20:03.481Z
+---
+CORRECT INFORMATION:
+Even though the answer is kind of correct, QuestionPro dies allow the ability to add options, edit questions, edit existing options in an extracted question.
