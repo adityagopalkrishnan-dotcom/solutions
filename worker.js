@@ -320,6 +320,35 @@ async function handleContribute(body, env) {
 }
 
 // ── Main fetch handler ────────────────────────────────────────────────────
+// ── API doc proxy ─────────────────────────────────────────────────────────
+// Fetches QP API doc pages server-side (bypasses browser CORS restriction)
+// and returns cleaned .right-section content as JSON
+async function proxyApiPage(url) {
+  const ALLOWED = 'https://www.questionpro.com/api/';
+  if (!url.startsWith(ALLOWED)) return { error: 'URL not allowed' };
+  try {
+    const r = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml',
+        'Accept-Language': 'en-US,en;q=0.9',
+      },
+      cf: { cacheTtl: 3600, cacheEverything: true }
+    });
+    if (!r.ok) return { error: `HTTP ${r.status}` };
+    const html = await r.text();
+    // Extract .right-section content using regex (no DOM in Workers)
+    const rightMatch = html.match(/class="right-section"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>/);
+    let content = rightMatch ? rightMatch[1] : '';
+    // Strip remaining HTML tags
+    content = content.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
+    if (content.length < 50) return { error: 'No content extracted', htmlLen: html.length };
+    return { content: content.slice(0, 6000), url };
+  } catch(e) {
+    return { error: e.message };
+  }
+}
+
 export default {
   async fetch(request, env) {
     if (request.method === 'OPTIONS') return new Response(null, {headers:CORS});
