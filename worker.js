@@ -432,7 +432,7 @@ export default {
     const allWords = [...new Set([...questionWords, ...historyWords])];
 
     try {
-      const [repoIndex, helpSitemap] = await Promise.all([getRepoIndex(), getHelpSitemap()]);
+      const repoIndex = await getRepoIndex();
 
       // Build IDF from current index
       const idf = buildIDF(repoIndex);
@@ -441,29 +441,21 @@ export default {
         .map(e => ({e, s:scoreRepo(e, allWords, idf, inferredProduct)}))
         .filter(x => x.s > 0).sort((a,b) => b.s-a.s).slice(0, TOP_REPO);
 
-      const topHelp = helpSitemap
-        .map(e => ({e, s:scoreHelp(e, allWords, idf, inferredProduct)}))
-        .filter(x => x.s > 0).sort((a,b) => b.s-a.s).slice(0, TOP_HELP);
+      const repoTexts = await Promise.all(topRepo.map(async ({e}) => {
+        try {
+          const t = await fetchRepoEntry(e, allWords);
+          return t && t.length > 80 ? '=== '+(e.type==='plaintext'?'SOLUTION':'DOC')+': '+e.title+' ===\n'+t : null;
+        } catch { return null; }
+      }));
 
-      const [repoTexts, helpTexts] = await Promise.all([
-        Promise.all(topRepo.map(async ({e}) => {
-          try {
-            const t = await fetchRepoEntry(e, allWords);
-            return t && t.length > 80 ? '=== '+(e.type==='plaintext'?'SOLUTION':'DOC')+': '+e.title+' ===\n'+t : null;
-          } catch { return null; }
-        })),
-        Promise.all(topHelp.map(async ({e}) => {
-          try {
-            const r = await fetch(e.url, {headers:{'User-Agent':'QP-Insights-Commons/1.0'}, cf:{cacheTtl:CACHE_HELP,cacheEverything:true}});
-            if (!r.ok) return null;
-            const t = extractHelpPage(await r.text(), e.url);
-            return t && t.length > 80 ? '=== HELP: '+e.title+' ['+e.product+'] ===\n'+t : null;
-          } catch { return null; }
-        }))
-      ]);
+      // Help page content is fetched browser-side (bypasses Cloudflare bot protection)
+      // and passed in via clientHelpContext in the POST body
+      const clientHelpContext = body.clientHelpContext || '';
 
-      const rawContext = [...repoTexts.filter(Boolean), ...helpTexts.filter(Boolean)].join('\n\n')
-        || 'No relevant documentation found.';
+      const rawContext = [
+        ...repoTexts.filter(Boolean),
+        ...(clientHelpContext ? ['=== HELP (browser-fetched) ===\n' + clientHelpContext] : [])
+      ].join('\n\n') || 'No relevant documentation found.';
 
       // Bridge the gap between how the user asks and how the documents describe it.
       // Prepending a "seeking" statement helps the AI connect the question to the right
@@ -506,7 +498,7 @@ export default {
       return jres(Object.assign({}, rd, {
         _sources: [
           ...topRepo.map(({e,s})=>({title:e.title, type:e.type, score:Math.round(s)})),
-          ...topHelp.map(({e,s})=>({title:e.title, type:'help', score:Math.round(s), url:e.url}))
+          // help sources scored & fetched client-side
         ],
         _detected_product: inferredProduct,
       }));
