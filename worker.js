@@ -352,14 +352,15 @@ async function proxyApiPage(url) {
 export default {
   async fetch(request, env) {
     if (request.method === 'OPTIONS') return new Response(null, {headers:CORS});
-    const url = new URL(request.url);
 
-    if (url.pathname.endsWith('/proxy-api')) {
-      const targetUrl = new URL(request.url).searchParams.get('url');
+    // GET /proxy-api?url=... — fetch QP API doc page server-side (no CORS restriction on worker)
+    if (request.method === 'GET' && url.pathname.endsWith('/proxy-api')) {
+      const targetUrl = url.searchParams.get('url');
       if (!targetUrl) return new Response(JSON.stringify({error:'Missing url param'}),{status:400,headers:{...CORS,'Content-Type':'application/json'}});
       const result = await proxyApiPage(targetUrl);
       return new Response(JSON.stringify(result), {headers:{...CORS,'Content-Type':'application/json'}});
     }
+    const url = new URL(request.url);
 
     if (url.pathname.endsWith('/contribute')) {
       if (request.method !== 'POST') return jres({error:'Method not allowed'}, 405);
