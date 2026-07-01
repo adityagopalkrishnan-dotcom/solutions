@@ -150,10 +150,15 @@ def index_json_articles(filename):
         kw = extract_keywords(f"{art.get('title','')} {summary} {headings} {steps} {content}")
         eid = re.sub(r'[^a-z0-9\-_]','-',f"{normalise_key(filename)}-{art_id}".lower())
         body_text = clean_body(f"{art.get('title','')} {summary} {content}")
+        # Store full article content inline so worker never needs to fetch the giant source file
+        inline_content = '\n\n'.join(filter(None,[
+            art.get('title',''), summary, content
+        ]))[:6000]
         entries.append({"id":eid,"title":art.get('title','Untitled'),
                         "category":'api' if 'API' in filename else 'help',
                         "product":product,"kw":kw,"summary":(summary or content)[:200],
                         "body":body_text,
+                        "content":inline_content,
                         "path":filename,
                         "article_id":art_id,"url":art.get('url',''),
                         "type":"json_article","word_count":art.get('word_count',0)})
