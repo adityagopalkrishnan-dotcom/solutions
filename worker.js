@@ -230,10 +230,15 @@ function extractRelevantSection(text, queryWords, maxLen) {
 }
 
 async function fetchRepoEntry(e, queryWords) {
-  const raw = await getFile(e.path);
-  if (!raw) return null;
-  if (e.type === 'plaintext') return extractRelevantSection(raw, queryWords, MAX_REPO);
+  // json_article entries now carry inline content — no need to fetch the giant source file
   if (e.type === 'json_article') {
+    if (e.content && e.content.length > 50) {
+      const header = (e.url ? 'Source: ' + e.url + '\n\n' : '');
+      return (header + e.content).slice(0, MAX_REPO);
+    }
+    // Fallback: fetch source file (legacy entries without inline content)
+    const raw = await getFile(e.path);
+    if (!raw) return null;
     let data; try { data = JSON.parse(raw); } catch { return raw.slice(0, MAX_REPO); }
     const art = (data.articles||[]).find(a => a.id === e.article_id);
     if (!art) return null;
@@ -244,6 +249,9 @@ async function fetchRepoEntry(e, queryWords) {
     if (art.content) parts.push(art.content);
     return parts.join('\n\n').slice(0, MAX_REPO);
   }
+  const raw = await getFile(e.path);
+  if (!raw) return null;
+  if (e.type === 'plaintext') return extractRelevantSection(raw, queryWords, MAX_REPO);
   return raw.slice(0, MAX_REPO);
 }
 
