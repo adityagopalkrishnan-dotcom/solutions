@@ -1267,6 +1267,45 @@ function buildContext(question){
     .trim();
 }
 
+
+// ── Client-side help page fetcher ─────────────────────────────────────────
+// QP help pages block server-side scrapers (Cloudflare bot protection).
+// The browser has no such restriction, so we fetch and extract here.
+async function fetchHelpContext(query) {
+  try {
+    // Load help sitemap
+    const SITEMAP = 'https://raw.githubusercontent.com/adityagopalkrishnan-dotcom/solutions/main/help-sitemap.json';
+    const sitemap = await fetch(SITEMAP).then(r => r.json()).catch(() => []);
+    if (!sitemap.length) return '';
+
+    // Score each entry against the query (simple keyword match on title + slug)
+    const qWords = query.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w => w.length > 2);
+    const scored = sitemap.map(e => {
+      const haystack = ((e.title||'') + ' ' + (e.slug||'') + ' ' + (e.product||'')).toLowerCase();
+      const score = qWords.reduce((s, w) => s + (haystack.includes(w) ? 1 : 0), 0);
+      return { e, score };
+    }).filter(x => x.score > 0).sort((a,b) => b.score - a.score).slice(0, 3);
+
+    if (!scored.length) return '';
+
+    // Fetch each matched page and extract .tab-content
+    const texts = await Promise.all(scored.map(async ({ e }) => {
+      try {
+        const res = await fetch(e.url, { credentials: 'omit' });
+        if (!res.ok) return null;
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        doc.querySelectorAll('script,style,nav,header,footer,video,iframe').forEach(el => el.remove());
+        const main = doc.querySelector('.tab-content, article, .help-content, main, [role=main]');
+        const text = (main || doc.body).textContent.replace(/\s+/g,' ').trim();
+        return text.length > 100 ? `--- ${e.title} (${e.product}) ---\n${text.slice(0, 4000)}` : null;
+      } catch { return null; }
+    }));
+
+    return texts.filter(Boolean).join('\n\n');
+  } catch { return ''; }
+}
+
 async function sendChat(override){
   const inp=document.getElementById('chatInput');
   const rawText=override||inp.value.trim();
@@ -1282,6 +1321,9 @@ async function sendChat(override){
   const typing=showTyping();
   try{
     const knowledgeContext = buildContext(text);
+
+    // Fetch matching help pages browser-side (bypasses Cloudflare bot protection on server)
+    const clientHelpContext = await fetchHelpContext(text);
 
     // Build conversation history — last 3 full exchanges (6 turns), well-labelled
     const recentHistory = chatHistory.slice(-6);
@@ -1316,7 +1358,8 @@ async function sendChat(override){
               { key: 'CONTEXT',              value: knowledgeContext },
               { key: 'CONVERSATION_HISTORY', value: historyStr || '' }
             ]
-          }
+          },
+          clientHelpContext: clientHelpContext || ''
         })
       });
       const data = await res.json();
