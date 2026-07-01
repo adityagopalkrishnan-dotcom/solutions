@@ -1,0 +1,120 @@
+SLA Policies, Condition rules & SLA Status
+Source: https://www.questionpro.com/help/customer-experience/sla-policy.html
+Product: CX / Enhanced Closed Loop
+Category: Settings
+
+What are SLA Policies?
+
+SLA (Service Level Agreement) Policies allow Workspace Admins to define response and resolution targets for support tickets. Each policy contains Action SLA and Resolution SLA targets for every ticket priority, ensuring that tickets are handled within expected service timelines.
+
+SLA Policies work together with Business Hours and Holiday Calendar settings to calculate ticket deadlines accurately. Policies are automatically assigned to tickets using Condition rules or, if no rule matches, by the workspace's Default SLA Policy.
+
+Who can configure SLA Policies?
+
+Only Workspace Admins can manage SLA Policies and Condition rules.
+- Workspace Owner (System Administrator)
+- Shared users (Sub Accounts) with administrative access to the workspace
+
+Where can I configure SLA Policies?
+
+Navigate to: Closedloop → Workspace → Workspace Settings → SLA Policy
+
+What is the Default SLA Policy?
+
+Every workspace contains one Default SLA Policy that is automatically created by the system.
+- Only one Default SLA Policy exists per workspace.
+- The Default SLA Policy cannot be deleted.
+- The Default SLA Policy can be edited.
+- The Default SLA Policy does not support Condition rules.
+- The policy is applied automatically when no Condition rule matches a ticket.
+
+How do I create an SLA Policy?
+
+1. Navigate to Closedloop → Workspace → Workspace Settings → SLA Policy.
+2. Click Create Policy.
+3. Enter a unique Policy Name.
+4. Configure one or more Condition rules using the available ticket attributes.
+5. Configure the Action SLA and Resolution SLA for each ticket priority.
+6. Click Save to create the policy.
+
+How do Condition rules work?
+
+Condition rules determine which SLA Policy should be applied when a ticket is created.
+- Rules can evaluate Survey, Current Segment and Custom Variable fields.
+- You can configure up to five conditions within a policy.
+- Conditions can be combined using either AND or OR.
+- The system evaluates policies in the configured order and assigns the first matching policy.
+- If no rule matches, the Default SLA Policy is applied automatically.
+
+How do I configure SLA targets?
+
+Each SLA Policy contains separate Action SLA and Resolution SLA targets for every ticket priority:
+- Critical
+- High
+- Medium
+- Low
+
+Resolution SLA values must always be greater than the corresponding Action SLA values.
+
+How do I reorder SLA Policies?
+
+Non-default SLA Policies can be reordered to change the order in which Condition rules are evaluated.
+1. Open the SLA Policy page.
+2. Open the Reorder Policies dialog.
+3. Drag and drop policies into the required order.
+4. Save your changes.
+
+The Default SLA Policy always remains at the bottom of the list.
+
+Where can I view SLA information on a ticket?
+
+Open a ticket to view its SLA information. The SLA section on the Ticket Details page displays:
+- Action Due By
+- Resolution Due By
+- Current SLA Status if the SLA is breached
+
+What SLA statuses are available for filtering?
+
+Tickets can be filtered by SLA status:
+- On Track
+- Met
+- Breached
+
+Use the SLA Status filter on the Ticket List page to locate tickets based on these statuses.
+
+How do I update the Resolution Due By date?
+
+1. Open the required ticket.
+2. Locate the SLA section.
+3. Click the edit icon beside Resolution Due By.
+4. Select the required date and time.
+5. Save your changes.
+
+Only Workspace Admins can update the Resolution Due By value.
+
+Frequently Asked Questions
+
+Can I delete an SLA Policy?
+Yes. Tickets previously assigned to the policy continue to reference the historical policy configuration.
+
+Can I edit the Default SLA Policy?
+Yes. It can be edited but cannot be deleted.
+
+Can I have multiple Default SLA Policies?
+No. Each workspace supports only one Default SLA Policy.
+
+Can I manually assign an SLA Policy to a ticket?
+No. SLA Policies are assigned automatically using Condition rules or the Default SLA Policy.
+
+Can Support Agents view the applied SLA Policy?
+Yes. Support Agents can view SLA information on a ticket but cannot modify the policy.
+
+Best Practices
+
+- Create meaningful policy names that clearly identify their purpose.
+- Review Condition rules carefully to avoid overlapping conditions.
+- Configure the Default SLA Policy before creating additional policies.
+- Verify Action SLA and Resolution SLA values for every priority before saving.
+- Review policy order whenever new Condition rules are added.
+
+License: Available with Customer Experience license.
