@@ -541,13 +541,13 @@ export default {
       }).then(r=>r.json());
 
       // Extract the answer text from the AI Router's response format
-      // Router returns: { documents: [{ output: [{ key: 'content', value: '...' }] }] }
+      // Router returns: { result: { documents: [{ output: [{ key: 'content', value: '...' }] }] } }
       let answer = '';
       try {
-        const doc = rd?.documents?.[0];
+        const doc = (rd?.result?.documents || rd?.documents || [])[0];
         const outputs = doc?.output || [];
         const contentOutput = outputs.find(o => o.key === 'content');
-        answer = contentOutput?.value || rd?.answer || '';
+        answer = contentOutput?.value || rd?.answer || rd?.result?.answer || '';
       } catch(e) { answer = ''; }
 
       return jres({
