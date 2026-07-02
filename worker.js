@@ -540,13 +540,24 @@ export default {
         body:JSON.stringify(payload)
       }).then(r=>r.json());
 
-      return jres(Object.assign({}, rd, {
+      // Extract the answer text from the AI Router's response format
+      // Router returns: { documents: [{ output: [{ key: 'content', value: '...' }] }] }
+      let answer = '';
+      try {
+        const doc = rd?.documents?.[0];
+        const outputs = doc?.output || [];
+        const contentOutput = outputs.find(o => o.key === 'content');
+        answer = contentOutput?.value || rd?.answer || '';
+      } catch(e) { answer = ''; }
+
+      return jres({
+        answer,
+        result: JSON.stringify(rd),
         _sources: [
           ...topRepo.map(({e,s})=>({title:e.title, type:e.type, score:Math.round(s)})),
-          // help sources scored & fetched client-side
         ],
         _detected_product: inferredProduct,
-      }));
+      });
 
     } catch(err) { return jres({error:err.message}, 500); }
   }
