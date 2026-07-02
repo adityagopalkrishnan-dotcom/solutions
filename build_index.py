@@ -138,7 +138,7 @@ def index_docx(filename):
 
 def index_json_articles(filename):
     with open(filename,'r',encoding='utf-8') as f: data=json.load(f)
-    product = data.get('meta',{}).get('product','QuestionPro')
+    product = data.get('product',None) or data.get('meta',{}).get('product','QuestionPro')
     entries = []
     for art in data.get('articles',[]):
         art_id = art.get('id','')
@@ -147,7 +147,12 @@ def index_json_articles(filename):
         if art.get('word_count',0)<20 or len(content)<80: continue
         headings = ' '.join(h.get('text','') for h in (art.get('headings') or []))
         steps = ' '.join(s.get('text','') if isinstance(s,dict) else str(s) for s in (art.get('steps') or []))
-        kw = extract_keywords(f"{art.get('title','')} {summary} {headings} {steps} {content}")
+        # For API doc entries, build kw from title + URL slug + endpoint description (first 500 chars)
+        # NOT the full content — JSON schema boilerplate (type/string/required/object) dominates and
+        # swamps meaningful terms like the actual endpoint name, HTTP method, path segments
+        url_slug = re.sub(r'[^a-z0-9\s]',' ', art.get('url','').split('/')[-1].replace('.html','').replace('-',' '))
+        endpoint_snippet = content[:500]  # first 500 chars = endpoint path + description, before JSON schema
+        kw = extract_keywords(f"{art.get('title','')} {url_slug} {endpoint_snippet}")
         eid = re.sub(r'[^a-z0-9\-_]','-',f"{normalise_key(filename)}-{art_id}".lower())
         body_text = clean_body(f"{art.get('title','')} {summary} {content}")
         # Store full article content inline so worker never needs to fetch the giant source file
