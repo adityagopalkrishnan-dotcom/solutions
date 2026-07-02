@@ -2,32 +2,32 @@ name: Deploy Worker to Cloudflare
 
 on:
   push:
-      paths:
-            - 'worker.js'
-                branches:
-                      - main
-                        workflow_dispatch:
+    paths:
+      - worker.js
+    branches:
+      - main
+  workflow_dispatch:
 
-                        jobs:
-                          deploy:
-                              runs-on: ubuntu-latest
-                                  name: Deploy worker.js to Cloudflare Workers
-                                      steps:
-                                            - uses: actions/checkout@v4
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy worker.js to Cloudflare Workers
+    steps:
+      - uses: actions/checkout@v4
 
-                                                  - name: Deploy Worker
-                                                          run: |
-                                                                    RESULT=$(curl -s -X PUT \
-                                                                                "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/white-glitter-0ae4" \
-                                                                                            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-                                                                                                        -F 'metadata={"main_module":"worker.js","compatibility_date":"2024-01-01"};type=application/json' \
-                                                                                                                    -F "worker.js=@worker.js;type=application/javascript+module")
-                                                                                                                              echo "$RESULT" | python3 -c "
-                                                                                                                                        import json,sys
-                                                                                                                                                  d=json.load(sys.stdin)
-                                                                                                                                                            if d.get('success'):
-                                                                                                                                                                        print('Worker deployed successfully')
-                                                                                                                                                                                  else:
-                                                                                                                                                                                              print('Deploy failed:', d.get('errors'))
-                                                                                                                                                                                                          exit(1)
-                                                                                                                                                                                                                    "
+      - name: Deploy Worker
+        run: |
+          RESULT=$(curl -s -X PUT \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/workers/scripts/white-glitter-0ae4" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -F 'metadata={"main_module":"worker.js","compatibility_date":"2024-01-01"};type=application/json' \
+            -F "worker.js=@worker.js;type=application/javascript+module")
+          echo "$RESULT" | python3 -c "
+          import json,sys
+          d=json.load(sys.stdin)
+          if d.get('success'):
+              print('Worker deployed successfully')
+          else:
+              print('Deploy failed:', d.get('errors'))
+              sys.exit(1)
+          "
