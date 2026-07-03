@@ -1331,34 +1331,14 @@ async function generateMindMap(answerText, question, msgDiv) {
   // Ask Claude to extract structured diagram data from the answer
   let diagramData;
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const workerBase = (typeof config !== 'undefined' && config.proxyUrl) || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev';
+    const res = await fetch(workerBase + '/diagram', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 800,
-        system: `You extract diagram data from an AI answer. Return ONLY valid JSON, no markdown, no explanation.
-The JSON must have:
-{
-  "center": "short topic label (max 4 words)",
-  "nodes": [
-    { "id": "n1", "label": "short label (max 3 words)", "detail": "1-2 sentence explanation", "code": "optional code snippet or endpoint path" }
-  ],
-  "edges": [
-    { "from": "center", "to": "n1" }
-  ]
-}
-Rules:
-- 3-6 nodes only. Each label max 3 words. Detail is 1-2 sentences.
-- If there is a code snippet/endpoint in the answer, put it in the "code" field of the most relevant node.
-- edges "from" uses "center" or a node id, "to" is always a node id.
-- Return ONLY the JSON object. No backticks, no extra text.`,
-        messages: [{ role: 'user', content: `Question: ${question}\n\nAnswer:\n${answerText.slice(0,1200)}` }]
-      })
+      headers: { 'Content-Type': 'application/json', 'api-key': (typeof config !== 'undefined' && config.apiKey) || '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4' },
+      body: JSON.stringify({ text: answerText.slice(0,1200), question })
     });
-    const d = await res.json();
-    const raw = d.content?.[0]?.text?.trim() || '';
-    diagramData = JSON.parse(raw);
+    diagramData = await res.json();
+    if (diagramData.error) return;
   } catch(e) { return; }
 
   if (!diagramData?.nodes?.length) return;
