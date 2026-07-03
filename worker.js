@@ -353,6 +353,26 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (request.method === 'OPTIONS') return new Response(null, {headers:CORS});
+    if (url.pathname.endsWith('/diagram')) {
+      if (request.method !== 'POST') return jres({error:'POST only'},405);
+      try {
+        const b = await request.json();
+        if (!b.text) return jres({error:'Missing text'},400);
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method:'POST',
+          headers:{'Content-Type':'application/json','x-api-key':env.ANTHROPIC_API_KEY||'','anthropic-version':'2023-06-01'},
+          body:JSON.stringify({
+            model:'claude-haiku-4-5-20251001', max_tokens:600,
+            system:'Extract diagram from AI answer. Return ONLY JSON: {"center":"topic max 4 words","nodes":[{"id":"n1","label":"max 3 words","detail":"1-2 sentences","code":"optional"}],"edges":[{"from":"center","to":"n1"}]}. 3-6 nodes. Code = endpoint path if present.',
+            messages:[{role:'user',content:'Q: '+(b.question||'').slice(0,200)+'\n\nA:\n'+b.text.slice(0,1000)}]
+          })
+        });
+        const d = await r.json();
+        const raw = (d.content?.[0]?.text||'').trim().replace(/```[\s\S]*?```/g,'').replace(/```/g,'').trim();
+        return jres(JSON.parse(raw));
+      } catch(e) { return jres({error:e.message},500); }
+    }
+
 
     // GET /proxy-api?url=... — fetch QP API doc page server-side (no CORS restriction on worker)
     if (request.method === 'GET' && url.pathname.endsWith('/proxy-api')) {
