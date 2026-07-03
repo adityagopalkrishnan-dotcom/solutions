@@ -332,6 +332,22 @@ body{font-family:var(--font);font-size:14px;font-weight:400;color:var(--qp-text)
   .entries-grid{grid-template-columns:1fr}
 }
 
+
+/* ── Mind map diagram ──────────────────────────────────────────── */
+.mindmap-wrap{margin:10px 0 4px;padding:0;position:relative}
+.mindmap-canvas{width:100%;border-radius:10px;cursor:pointer;display:block}
+.mm-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9000;display:flex;align-items:center;justify-content:center;animation:mmFadeIn .15s ease}
+@keyframes mmFadeIn{from{opacity:0}to{opacity:1}}
+.mm-popup{background:var(--qp-surface);border:1px solid var(--qp-border);border-radius:12px;max-width:420px;width:90%;padding:20px 22px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.18);animation:mmSlideIn .15s ease}
+@keyframes mmSlideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mm-popup-title{font-weight:500;font-size:15px;margin:0 0 10px;color:var(--qp-text)}
+.mm-popup-body{font-size:13.5px;line-height:1.65;color:var(--qp-text-secondary);margin:0 0 14px}
+.mm-popup-code{background:#1e2433;color:#e2e8f0;font-family:monospace;font-size:12px;padding:10px 14px;border-radius:7px;margin:8px 0;overflow-x:auto;white-space:pre}
+.mm-popup-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--qp-text-secondary);font-size:18px;cursor:pointer;line-height:1;padding:2px 6px;border-radius:4px}
+.mm-popup-close:hover{background:var(--qp-surface-hover)}
+.mm-popup-ask{background:var(--qp-blue);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:13px;cursor:pointer;margin-top:4px;font-family:var(--font)}
+.mm-popup-ask:hover{opacity:.88}
+
 /* ── Fenced code blocks ─────────────────────────────── */
 .code-block{margin:10px 0;border-radius:8px;overflow:hidden;border:1px solid #2d3748;font-family:monospace}
 .code-block-header{display:flex;align-items:center;justify-content:space-between;background:#1a202c;padding:6px 12px}
@@ -1306,6 +1322,202 @@ async function fetchHelpContext(query) {
   } catch { return ''; }
 }
 
+
+// ── Mind map generator ─────────────────────────────────────────────────────
+async function generateMindMap(answerText, question, msgDiv) {
+  // Only generate if the answer is substantive
+  if (!answerText || answerText.length < 80 || answerText.includes("don't have enough")) return;
+
+  // Ask Claude to extract structured diagram data from the answer
+  let diagramData;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 800,
+        system: `You extract diagram data from an AI answer. Return ONLY valid JSON, no markdown, no explanation.
+The JSON must have:
+{
+  "center": "short topic label (max 4 words)",
+  "nodes": [
+    { "id": "n1", "label": "short label (max 3 words)", "detail": "1-2 sentence explanation", "code": "optional code snippet or endpoint path" }
+  ],
+  "edges": [
+    { "from": "center", "to": "n1" }
+  ]
+}
+Rules:
+- 3-6 nodes only. Each label max 3 words. Detail is 1-2 sentences.
+- If there is a code snippet/endpoint in the answer, put it in the "code" field of the most relevant node.
+- edges "from" uses "center" or a node id, "to" is always a node id.
+- Return ONLY the JSON object. No backticks, no extra text.`,
+        messages: [{ role: 'user', content: `Question: ${question}\n\nAnswer:\n${answerText.slice(0,1200)}` }]
+      })
+    });
+    const d = await res.json();
+    const raw = d.content?.[0]?.text?.trim() || '';
+    diagramData = JSON.parse(raw);
+  } catch(e) { return; }
+
+  if (!diagramData?.nodes?.length) return;
+
+  // Render the mind map below the bubble
+  const wrap = document.createElement('div');
+  wrap.className = 'mindmap-wrap';
+  const canvas = document.createElement('canvas');
+  canvas.className = 'mindmap-canvas';
+  const DPR = window.devicePixelRatio || 1;
+  const W = 560, H = 260;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  wrap.appendChild(canvas);
+
+  // Find the bubble inside msgDiv and append below it
+  const bubble = msgDiv?.querySelector('.msg-bubble') || msgDiv;
+  if (bubble) bubble.appendChild(wrap);
+
+  drawMindMap(canvas, diagramData, DPR, W, H);
+
+  // Click to show popup
+  canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * DPR;
+    const my = (e.clientY - rect.top) * DPR;
+    const hit = canvas._nodes?.find(n => {
+      const dx = mx - n.cx, dy = my - n.cy;
+      return dx*dx + dy*dy <= n.r*n.r;
+    }) || (canvas._centerNode && (() => {
+      const n = canvas._centerNode;
+      const dx = mx - n.cx, dy = my - n.cy;
+      return dx*dx + dy*dy <= n.r*n.r ? n : null;
+    })());
+    if (hit) showMmPopup(hit.data);
+  });
+}
+
+function drawMindMap(canvas, data, DPR, W, H) {
+  const ctx = canvas.getContext('2d');
+  ctx.scale(DPR, DPR);
+  ctx.clearRect(0, 0, W, H);
+
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    || document.body.classList.contains('dark')
+    || document.documentElement.getAttribute('data-theme') === 'dark';
+
+  const COLORS = {
+    bg: 'transparent',
+    centerFill: '#3B5BDB',
+    centerText: '#ffffff',
+    nodeFill: isDark ? '#1e2433' : '#f0f4ff',
+    nodeStroke: '#3B5BDB',
+    nodeText: isDark ? '#c8d3f5' : '#1e3a8a',
+    edge: isDark ? '#3B5BDB55' : '#3B5BDB33',
+    edgeHover: '#3B5BDB99'
+  };
+
+  const nodes = data.nodes || [];
+  const cx = W / 2, cy = H / 2;
+  const centerR = 44;
+  const nodeR = 36;
+  const orbitR = Math.min(W, H) * 0.36;
+
+  // Position nodes in a circle
+  const positioned = nodes.map((n, i) => {
+    const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+    return { ...n, cx: cx + Math.cos(angle) * orbitR, cy: cy + Math.sin(angle) * orbitR, r: nodeR * DPR };
+  });
+
+  const centerNode = { label: data.center, cx, cy, r: centerR * DPR, data: { label: data.center, detail: 'Central concept', code: '' } };
+  canvas._nodes = positioned.map(n => ({ ...n, r: nodeR * DPR }));
+  canvas._centerNode = centerNode;
+
+  // Draw edges first
+  ctx.lineWidth = 1.5;
+  positioned.forEach(n => {
+    ctx.beginPath();
+    ctx.strokeStyle = COLORS.edge;
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(n.cx, n.cy);
+    ctx.stroke();
+  });
+
+  // Draw satellite nodes
+  positioned.forEach(n => {
+    ctx.beginPath();
+    ctx.arc(n.cx, n.cy, nodeR, 0, Math.PI * 2);
+    ctx.fillStyle = COLORS.nodeFill;
+    ctx.fill();
+    ctx.strokeStyle = COLORS.nodeStroke;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = COLORS.nodeText;
+    ctx.font = '500 11px "Fira Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    // Wrap label text
+    const words = n.label.split(' ');
+    if (words.length <= 1) {
+      ctx.fillText(n.label, n.cx, n.cy);
+    } else {
+      const half = Math.ceil(words.length / 2);
+      ctx.fillText(words.slice(0, half).join(' '), n.cx, n.cy - 7);
+      ctx.fillText(words.slice(half).join(' '), n.cx, n.cy + 7);
+    }
+  });
+
+  // Draw center node
+  ctx.beginPath();
+  ctx.arc(cx, cy, centerR, 0, Math.PI * 2);
+  ctx.fillStyle = COLORS.centerFill;
+  ctx.fill();
+  ctx.font = '500 12px "Fira Sans", sans-serif';
+  ctx.fillStyle = COLORS.centerText;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const cWords = data.center.split(' ');
+  if (cWords.length <= 2) {
+    ctx.fillText(data.center, cx, cy);
+  } else {
+    const half = Math.ceil(cWords.length / 2);
+    ctx.fillText(cWords.slice(0, half).join(' '), cx, cy - 8);
+    ctx.fillText(cWords.slice(half).join(' '), cx, cy + 8);
+  }
+
+  // Hover cursor
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * DPR;
+    const my = (e.clientY - rect.top) * DPR;
+    const hit = canvas._nodes?.some(n => { const dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })
+      || (() => { if (!canvas._centerNode) return false; const n=canvas._centerNode,dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })();
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+  });
+}
+
+function showMmPopup(nodeData) {
+  if (!nodeData) return;
+  // Remove any existing popup
+  document.querySelector('.mm-popup-overlay')?.remove();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'mm-popup-overlay';
+  overlay.innerHTML = `
+    <div class="mm-popup">
+      <button class="mm-popup-close" onclick="this.closest('.mm-popup-overlay').remove()">×</button>
+      <div class="mm-popup-title">${esc(nodeData.label)}</div>
+      <div class="mm-popup-body">${esc(nodeData.detail || '')}</div>
+      ${nodeData.code ? `<div class="mm-popup-code">${esc(nodeData.code)}</div>` : ''}
+      <button class="mm-popup-ask" onclick="document.querySelector('.mm-popup-overlay').remove(); document.getElementById('chatInput').value=${JSON.stringify('Tell me more about: ' + nodeData.label)}; sendChat()">
+        Ask about this ↗
+      </button>
+    </div>`;
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
 async function sendChat(override){
   const inp=document.getElementById('chatInput');
   const rawText=override||inp.value.trim();
@@ -1402,8 +1614,9 @@ async function sendChat(override){
     removeTyping(typing);
     // Parse structured response
     const refs=extractRefs(aiResponse,entries);
-    appendMsg('assistant',aiResponse,refs,text,workerSources);
+    const aiMsgDiv = appendMsg('assistant',aiResponse,refs,text,workerSources);
     chatHistory.push({role:'assistant',content:aiResponse});
+    generateMindMap(aiResponse, text, aiMsgDiv);
   }catch(err){
     removeTyping(typing);
     appendMsg('assistant','Something went wrong connecting to the AI. Check your router configuration in Settings.');
