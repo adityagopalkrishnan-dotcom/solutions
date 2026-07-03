@@ -1559,6 +1559,97 @@ function renderMindmap(data, container) {
   });
 }
 
+
+function drawMindMap(canvas, data, DPR, W, H) {
+  const ctx = canvas.getContext('2d');
+  ctx.scale(DPR, DPR);
+  ctx.clearRect(0, 0, W, H);
+  const nodes = data.nodes || [];
+  const cx = W/2, cy = H/2;
+  const centerR = Math.min(52, W*0.09);
+  const nodeR   = Math.min(42, W*0.072);
+  const orbitR  = Math.min(W, H)*0.38;
+  const positioned = nodes.map((n,i) => {
+    const angle = (i/nodes.length)*Math.PI*2 - Math.PI/2;
+    return {...n, cx: cx+Math.cos(angle)*orbitR, cy: cy+Math.sin(angle)*orbitR, r: nodeR*DPR};
+  });
+  const ACCENTS = [
+    {fill:'#3B5BDB',stroke:'#5877f2',text:'#fff'},
+    {fill:'#0F6E56',stroke:'#1D9E75',text:'#fff'},
+    {fill:'#993C1D',stroke:'#D85A30',text:'#fff'},
+    {fill:'#534AB7',stroke:'#7F77DD',text:'#fff'},
+    {fill:'#854F0B',stroke:'#BA7517',text:'#fff'},
+    {fill:'#3B6D11',stroke:'#639922',text:'#fff'},
+  ];
+  const CENTER_COLOR = {fill:'#1a1e2e',stroke:'#3B5BDB',text:'#e8edff'};
+  canvas._nodes = positioned.map((n,i) => ({...n, data:n, accent:ACCENTS[i%ACCENTS.length]}));
+  canvas._centerNode = {label:data.center, cx, cy, r:centerR*DPR,
+    data:{label:data.center, detail:data.centerDetail||'Central concept of this answer', code:''}, accent:CENTER_COLOR};
+  positioned.forEach(n => {
+    const angle = Math.atan2(n.cy-cy, n.cx-cx);
+    ctx.beginPath(); ctx.strokeStyle='rgba(100,120,200,0.18)'; ctx.lineWidth=1.5;
+    ctx.moveTo(cx+Math.cos(angle)*centerR, cy+Math.sin(angle)*centerR);
+    ctx.lineTo(n.cx-Math.cos(angle)*nodeR, n.cy-Math.sin(angle)*nodeR); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx+Math.cos(angle)*centerR, cy+Math.sin(angle)*centerR, 2.5, 0, Math.PI*2);
+    ctx.fillStyle='rgba(100,120,200,0.35)'; ctx.fill();
+  });
+  positioned.forEach((n,i) => {
+    const accent = ACCENTS[i%ACCENTS.length];
+    ctx.shadowColor='rgba(0,0,0,0.15)'; ctx.shadowBlur=8; ctx.shadowOffsetY=2;
+    ctx.beginPath(); ctx.arc(n.cx, n.cy, nodeR, 0, Math.PI*2);
+    ctx.fillStyle=accent.fill; ctx.fill(); ctx.strokeStyle=accent.stroke; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.shadowColor='transparent'; ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+    if (n.code) { ctx.beginPath(); ctx.arc(n.cx+nodeR*0.62, n.cy-nodeR*0.62, 4, 0, Math.PI*2); ctx.fillStyle='#FAC775'; ctx.fill(); }
+    ctx.fillStyle=accent.text; ctx.textAlign='center'; ctx.textBaseline='middle';
+    const words=n.label.split(' '), maxW=nodeR*1.5, lines=[];
+    let cur='';
+    for (const w of words) {
+      const test=cur?cur+' '+w:w;
+      ctx.font=`500 ${Math.max(10,nodeR*0.28)}px "Fira Sans",sans-serif`;
+      if(ctx.measureText(test).width>maxW&&cur){lines.push(cur);cur=w;}else cur=test;
+    }
+    if(cur)lines.push(cur);
+    const lH=nodeR*0.33, sY=n.cy-(lines.length-1)*lH/2;
+    lines.forEach((l,li)=>{ ctx.font=`500 ${Math.max(10,nodeR*0.28)}px "Fira Sans",sans-serif`; ctx.fillText(l,n.cx,sY+li*lH); });
+  });
+  ctx.shadowColor='rgba(59,91,219,0.3)'; ctx.shadowBlur=16;
+  ctx.beginPath(); ctx.arc(cx,cy,centerR,0,Math.PI*2); ctx.fillStyle=CENTER_COLOR.fill; ctx.fill();
+  ctx.strokeStyle=CENTER_COLOR.stroke; ctx.lineWidth=2; ctx.stroke();
+  ctx.shadowBlur=0; ctx.shadowColor='transparent';
+  ctx.fillStyle=CENTER_COLOR.text; ctx.textAlign='center'; ctx.textBaseline='middle';
+  const cWords=data.center.split(' '), cLines=[]; let cCur='';
+  for(const w of cWords){
+    const test=cCur?cCur+' '+w:w;
+    ctx.font=`600 ${Math.max(11,centerR*0.26)}px "Fira Sans",sans-serif`;
+    if(ctx.measureText(test).width>centerR*1.55&&cCur){cLines.push(cCur);cCur=w;}else cCur=test;
+  }
+  if(cCur)cLines.push(cCur);
+  const cLH=centerR*0.32, cSY=cy-(cLines.length-1)*cLH/2;
+  cLines.forEach((l,li)=>{ ctx.font=`600 ${Math.max(11,centerR*0.26)}px "Fira Sans",sans-serif`; ctx.fillText(l,cx,cSY+li*cLH); });
+}
+
+function showMmPopup(nodeData) {
+  if (!nodeData) return;
+  document.querySelector('.mm-popup-overlay')?.remove();
+  const overlay = document.createElement('div');
+  overlay.className = 'mm-popup-overlay';
+  const codeBlock = nodeData.code ? `<div class="mm-popup-code">${esc(nodeData.code)}</div>` : '';
+  const label = esc(nodeData.label || '');
+  overlay.innerHTML = `
+    <div class="mm-popup" role="dialog">
+      <button class="mm-popup-close" onclick="this.closest('.mm-popup-overlay').remove()">×</button>
+      <div class="mm-popup-tag">Details</div>
+      <div class="mm-popup-title">${label}</div>
+      <div class="mm-popup-body">${esc(nodeData.detail || '')}</div>
+      ${codeBlock}
+      <div class="mm-popup-footer">
+        <button class="mm-popup-ask" onclick="(function(){document.querySelector('.mm-popup-overlay').remove();const i=document.getElementById('chatInput');if(i){i.value='Tell me more about: ${label.replace(/'/g,'\\\\&apos;')}';sendChat();}})()">Ask about this ↗</button>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
 async function sendChat(override){
   const inp=document.getElementById('chatInput');
   const rawText=override||inp.value.trim();
