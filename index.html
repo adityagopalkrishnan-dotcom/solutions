@@ -1682,6 +1682,7 @@ function appendMsg(role,content,refs=[],question='',sources=[]){
   }
   div.innerHTML=av;div.appendChild(bubble);
   area.appendChild(div);area.scrollTop=area.scrollHeight;
+  return div;
 }
 
 function showTyping(){
