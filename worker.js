@@ -358,18 +358,35 @@ export default {
       try {
         const b = await request.json();
         if (!b.text) return jres({error:'Missing text'},400);
-        const r = await fetch('https://api.anthropic.com/v1/messages', {
+        const qpKey = request.headers.get('api-key');
+        const diagramPrompt = `Extract diagram data from this AI answer. Return ONLY valid compact JSON, no markdown, no explanation:
+{"center":"topic max 4 words","nodes":[{"id":"n1","label":"max 3 words","detail":"1-2 sentences","code":"optional endpoint/snippet"}],"edges":[{"from":"center","to":"n1"}]}
+Rules: 3-6 nodes max. Labels strictly max 3 words. If answer has an endpoint path/URL, put it in code field of relevant node. Return ONLY the JSON object.
+
+Question: ${(b.question||'').slice(0,200)}
+
+Answer to extract from:
+${b.text.slice(0,800)}`;
+        const rd = await fetch(QP_ROUTER, {
           method:'POST',
-          headers:{'Content-Type':'application/json','x-api-key':env.ANTHROPIC_API_KEY||'','anthropic-version':'2023-06-01'},
+          headers:{'Content-Type':'application/json','api-key':qpKey||''},
           body:JSON.stringify({
-            model:'claude-haiku-4-5-20251001', max_tokens:600,
-            system:'Extract diagram from AI answer. Return ONLY JSON: {"center":"topic max 4 words","nodes":[{"id":"n1","label":"max 3 words","detail":"1-2 sentences","code":"optional"}],"edges":[{"from":"center","to":"n1"}]}. 3-6 nodes. Code = endpoint path if present.',
-            messages:[{role:'user',content:'Q: '+(b.question||'').slice(0,200)+'\n\nA:\n'+b.text.slice(0,1000)}]
+            user_id:QP_USER_ID, organization_id:QP_ORG_ID, data_center:'US',
+            prompt_version:2, use_case_name:'knowledge-base',
+            input_data:{input:[
+              {key:'QUESTION',value:diagramPrompt},
+              {key:'CONTEXT',value:'Return only the JSON object, nothing else.'},
+              {key:'CONVERSATION_HISTORY',value:''}
+            ]}
           })
-        });
-        const d = await r.json();
-        const raw = (d.content?.[0]?.text||'').trim().replace(/```[\s\S]*?```/g,'').replace(/```/g,'').trim();
-        return jres(JSON.parse(raw));
+        }).then(r=>r.json());
+        const doc = (rd?.result?.documents||rd?.documents||[])[0];
+        const raw = (doc?.output||[]).find(o=>o.key==='content')?.value||'';
+        const cleaned = raw.trim().replace(/^```[\w]*\n?/,'').replace(/```$/,'').trim();
+        const first = cleaned.indexOf('{');
+        const last = cleaned.lastIndexOf('}');
+        if (first<0||last<0) return jres({error:'No JSON in response',raw:raw.slice(0,100)},500);
+        return jres(JSON.parse(cleaned.slice(first,last+1)));
       } catch(e) { return jres({error:e.message},500); }
     }
 
