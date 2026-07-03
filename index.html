@@ -1373,30 +1373,34 @@ async function generateMindMap(answerText, question, msgDiv) {
 
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * scaleX;
-    const my = (e.clientY - rect.top) * scaleY;
+    // n.cx/cy are in CSS pixel space (ctx was scaled by DPR, so arc coords are CSS px)
+    // just use the raw offset from the canvas edge
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    // n.r was stored as nodeR * DPR, so convert to CSS px by dividing by DPR
+    const localDPR = Math.min(window.devicePixelRatio || 1, 2);
     let hit = (canvas._nodes || []).find(n => {
+      const r = n.r / localDPR;
       const dx = mx - n.cx, dy = my - n.cy;
-      return dx*dx + dy*dy <= n.r*n.r;
+      return dx*dx + dy*dy <= r*r;
     });
     if (!hit && canvas._centerNode) {
       const n = canvas._centerNode;
+      const r = n.r / localDPR;
       const dx = mx - n.cx, dy = my - n.cy;
-      if (dx*dx + dy*dy <= n.r*n.r) hit = n;
+      if (dx*dx + dy*dy <= r*r) hit = n;
     }
     if (hit) showMmPopup(hit.data);
   });
 
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * scaleX;
-    const my = (e.clientY - rect.top) * scaleY;
-    const hit = (canvas._nodes || []).some(n => { const dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })
-      || (() => { if (!canvas._centerNode) return false; const n=canvas._centerNode,dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const localDPR = Math.min(window.devicePixelRatio || 1, 2);
+    const inNode = n => { const r=n.r/localDPR, dx=mx-n.cx, dy=my-n.cy; return dx*dx+dy*dy<=r*r; };
+    const hit = (canvas._nodes || []).some(inNode)
+      || (canvas._centerNode && inNode(canvas._centerNode));
     canvas.style.cursor = hit ? 'pointer' : 'default';
   });
 }
