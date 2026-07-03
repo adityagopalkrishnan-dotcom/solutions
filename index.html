@@ -1363,16 +1363,19 @@ async function generateMindMap(answerText, question, msgDiv) {
   // Click to show popup
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * DPR;
-    const my = (e.clientY - rect.top) * DPR;
-    const hit = canvas._nodes?.find(n => {
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
+    let hit = canvas._nodes?.find(n => {
       const dx = mx - n.cx, dy = my - n.cy;
       return dx*dx + dy*dy <= n.r*n.r;
-    }) || (canvas._centerNode && (() => {
+    });
+    if (!hit && canvas._centerNode) {
       const n = canvas._centerNode;
       const dx = mx - n.cx, dy = my - n.cy;
-      return dx*dx + dy*dy <= n.r*n.r ? n : null;
-    })());
+      if (dx*dx + dy*dy <= n.r*n.r) hit = n;
+    }
     if (hit) showMmPopup(hit.data);
   });
 }
@@ -1469,8 +1472,10 @@ function drawMindMap(canvas, data, DPR, W, H) {
   // Hover cursor
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    const mx = (e.clientX - rect.left) * DPR;
-    const my = (e.clientY - rect.top) * DPR;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
     const hit = canvas._nodes?.some(n => { const dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })
       || (() => { if (!canvas._centerNode) return false; const n=canvas._centerNode,dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })();
     canvas.style.cursor = hit ? 'pointer' : 'default';
