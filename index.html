@@ -1323,51 +1323,59 @@ async function fetchHelpContext(query) {
 }
 
 
+
 // ── Mind map generator ─────────────────────────────────────────────────────
 async function generateMindMap(answerText, question, msgDiv) {
-  // Only generate if the answer is substantive
   if (!answerText || answerText.length < 80 || answerText.includes("don't have enough")) return;
 
-  // Ask Claude to extract structured diagram data from the answer
+  const workerBase = (typeof config !== 'undefined' && config.proxyUrl) || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev';
   let diagramData;
   try {
-    const workerBase = (typeof config !== 'undefined' && config.proxyUrl) || 'https://white-glitter-0ae4.aditya-gopalkrishnan.workers.dev';
     const res = await fetch(workerBase + '/diagram', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'api-key': (typeof config !== 'undefined' && config.apiKey) || '55e63ea5-e2a9-4c27-a5aa-d89b9da77db4' },
-      body: JSON.stringify({ text: answerText.slice(0,1200), question })
+      body: JSON.stringify({ text: answerText.slice(0, 1200), question })
     });
     diagramData = await res.json();
-    if (diagramData.error) return;
+    if (!diagramData?.nodes?.length || diagramData.error) return;
   } catch(e) { return; }
 
-  if (!diagramData?.nodes?.length) return;
-
-  // Render the mind map below the bubble
+  // Build the canvas mind map
   const wrap = document.createElement('div');
   wrap.className = 'mindmap-wrap';
+
+  // Hint text
+  const hint = document.createElement('div');
+  hint.className = 'mm-hint';
+  hint.textContent = 'Click any node for details';
+  wrap.appendChild(hint);
+
   const canvas = document.createElement('canvas');
   canvas.className = 'mindmap-canvas';
-  const DPR = window.devicePixelRatio || 1;
-  const W = 560, H = 260;
-  canvas.width = W * DPR; canvas.height = H * DPR;
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
   wrap.appendChild(canvas);
 
-  // Find the bubble inside msgDiv and append below it
   const bubble = msgDiv?.querySelector('.msg-bubble') || msgDiv;
   if (bubble) bubble.appendChild(wrap);
 
+  // Responsive sizing
+  const containerW = wrap.offsetWidth || 580;
+  const W = containerW;
+  const H = Math.max(320, Math.min(420, containerW * 0.6));
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+
   drawMindMap(canvas, diagramData, DPR, W, H);
 
-  // Click to show popup
   canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     const mx = (e.clientX - rect.left) * scaleX;
     const my = (e.clientY - rect.top) * scaleY;
-    let hit = canvas._nodes?.find(n => {
+    let hit = (canvas._nodes || []).find(n => {
       const dx = mx - n.cx, dy = my - n.cy;
       return dx*dx + dy*dy <= n.r*n.r;
     });
@@ -1378,6 +1386,17 @@ async function generateMindMap(answerText, question, msgDiv) {
     }
     if (hit) showMmPopup(hit.data);
   });
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const mx = (e.clientX - rect.left) * scaleX;
+    const my = (e.clientY - rect.top) * scaleY;
+    const hit = (canvas._nodes || []).some(n => { const dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })
+      || (() => { if (!canvas._centerNode) return false; const n=canvas._centerNode,dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })();
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+  });
 }
 
 function drawMindMap(canvas, data, DPR, W, H) {
@@ -1385,119 +1404,172 @@ function drawMindMap(canvas, data, DPR, W, H) {
   ctx.scale(DPR, DPR);
   ctx.clearRect(0, 0, W, H);
 
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    || document.body.classList.contains('dark')
-    || document.documentElement.getAttribute('data-theme') === 'dark';
-
-  const COLORS = {
-    bg: 'transparent',
-    centerFill: '#3B5BDB',
-    centerText: '#ffffff',
-    nodeFill: isDark ? '#1e2433' : '#f0f4ff',
-    nodeStroke: '#3B5BDB',
-    nodeText: isDark ? '#c8d3f5' : '#1e3a8a',
-    edge: isDark ? '#3B5BDB55' : '#3B5BDB33',
-    edgeHover: '#3B5BDB99'
-  };
-
   const nodes = data.nodes || [];
-  const cx = W / 2, cy = H / 2;
-  const centerR = 44;
-  const nodeR = 36;
-  const orbitR = Math.min(W, H) * 0.36;
+  const cx = W / 2;
+  const cy = H / 2;
 
-  // Position nodes in a circle
+  // Node sizes — center bigger, satellites uniform but generous
+  const centerR = Math.min(52, W * 0.09);
+  const nodeR   = Math.min(42, W * 0.072);
+  const orbitR  = Math.min(W, H) * 0.38;
+
+  // Spread nodes in a circle, starting from top
   const positioned = nodes.map((n, i) => {
     const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
     return { ...n, cx: cx + Math.cos(angle) * orbitR, cy: cy + Math.sin(angle) * orbitR, r: nodeR * DPR };
   });
 
-  const centerNode = { label: data.center, cx, cy, r: centerR * DPR, data: { label: data.center, detail: 'Central concept', code: '' } };
-  canvas._nodes = positioned.map(n => ({ ...n, r: nodeR * DPR }));
-  canvas._centerNode = centerNode;
+  // Color palette — each node gets a distinct accent
+  const ACCENTS = [
+    { fill: '#3B5BDB', stroke: '#5877f2', text: '#fff' },   // blue
+    { fill: '#0F6E56', stroke: '#1D9E75', text: '#fff' },   // teal
+    { fill: '#993C1D', stroke: '#D85A30', text: '#fff' },   // coral
+    { fill: '#534AB7', stroke: '#7F77DD', text: '#fff' },   // purple
+    { fill: '#854F0B', stroke: '#BA7517', text: '#fff' },   // amber
+    { fill: '#3B6D11', stroke: '#639922', text: '#fff' },   // green
+  ];
+  const CENTER_COLOR = { fill: '#1a1e2e', stroke: '#3B5BDB', text: '#e8edff' };
 
-  // Draw edges first
-  ctx.lineWidth = 1.5;
+  canvas._nodes = positioned.map((n, i) => ({
+    ...n, data: n, accent: ACCENTS[i % ACCENTS.length]
+  }));
+  canvas._centerNode = {
+    label: data.center, cx, cy, r: centerR * DPR,
+    data: { label: data.center, detail: data.centerDetail || 'Central concept of this answer', code: '' },
+    accent: CENTER_COLOR
+  };
+
+  // ── Draw edges ──
   positioned.forEach(n => {
     ctx.beginPath();
-    ctx.strokeStyle = COLORS.edge;
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(n.cx, n.cy);
+    ctx.strokeStyle = 'rgba(100,120,200,0.18)';
+    ctx.lineWidth = 1.5;
+    // Shorten line to node edge
+    const angle = Math.atan2(n.cy - cy, n.cx - cx);
+    const x1 = cx + Math.cos(angle) * centerR;
+    const y1 = cy + Math.sin(angle) * centerR;
+    const x2 = n.cx - Math.cos(angle) * nodeR;
+    const y2 = n.cy - Math.sin(angle) * nodeR;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
     ctx.stroke();
+
+    // Small dot on the edge of center
+    ctx.beginPath();
+    ctx.arc(x1, y1, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(100,120,200,0.35)';
+    ctx.fill();
   });
 
-  // Draw satellite nodes
-  positioned.forEach(n => {
+  // ── Draw satellite nodes ──
+  positioned.forEach((n, i) => {
+    const accent = ACCENTS[i % ACCENTS.length];
+    // Shadow
+    ctx.shadowColor = 'rgba(0,0,0,0.15)';
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetY = 2;
+
     ctx.beginPath();
     ctx.arc(n.cx, n.cy, nodeR, 0, Math.PI * 2);
-    ctx.fillStyle = COLORS.nodeFill;
+    ctx.fillStyle = accent.fill;
     ctx.fill();
-    ctx.strokeStyle = COLORS.nodeStroke;
+    ctx.strokeStyle = accent.stroke;
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    ctx.fillStyle = COLORS.nodeText;
-    ctx.font = '500 11px "Fira Sans", sans-serif';
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    // Label text — wrap to 2 lines
+    ctx.fillStyle = accent.text;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    // Wrap label text
     const words = n.label.split(' ');
-    if (words.length <= 1) {
-      ctx.fillText(n.label, n.cx, n.cy);
-    } else {
-      const half = Math.ceil(words.length / 2);
-      ctx.fillText(words.slice(0, half).join(' '), n.cx, n.cy - 7);
-      ctx.fillText(words.slice(half).join(' '), n.cx, n.cy + 7);
+    const maxW = nodeR * 1.5;
+    const lines = [];
+    let cur = '';
+    for (const w of words) {
+      const test = cur ? cur + ' ' + w : w;
+      ctx.font = `500 ${Math.max(10, nodeR * 0.28)}px "Fira Sans",sans-serif`;
+      if (ctx.measureText(test).width > maxW && cur) {
+        lines.push(cur);
+        cur = w;
+      } else { cur = test; }
+    }
+    if (cur) lines.push(cur);
+    const lineH = nodeR * 0.33;
+    const startY = n.cy - (lines.length - 1) * lineH / 2;
+    lines.forEach((line, li) => {
+      ctx.font = `500 ${Math.max(10, nodeR * 0.28)}px "Fira Sans",sans-serif`;
+      ctx.fillText(line, n.cx, startY + li * lineH);
+    });
+
+    // Dot indicator if has code
+    if (n.code) {
+      ctx.beginPath();
+      ctx.arc(n.cx + nodeR * 0.62, n.cy - nodeR * 0.62, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#FAC775';
+      ctx.fill();
     }
   });
 
-  // Draw center node
+  // ── Draw center node ──
+  ctx.shadowColor = 'rgba(59,91,219,0.3)';
+  ctx.shadowBlur = 16;
   ctx.beginPath();
   ctx.arc(cx, cy, centerR, 0, Math.PI * 2);
-  ctx.fillStyle = COLORS.centerFill;
+  ctx.fillStyle = CENTER_COLOR.fill;
   ctx.fill();
-  ctx.font = '500 12px "Fira Sans", sans-serif';
-  ctx.fillStyle = COLORS.centerText;
+  ctx.strokeStyle = CENTER_COLOR.stroke;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.shadowColor = 'transparent';
+
+  // Center label
+  ctx.fillStyle = CENTER_COLOR.text;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   const cWords = data.center.split(' ');
-  if (cWords.length <= 2) {
-    ctx.fillText(data.center, cx, cy);
-  } else {
-    const half = Math.ceil(cWords.length / 2);
-    ctx.fillText(cWords.slice(0, half).join(' '), cx, cy - 8);
-    ctx.fillText(cWords.slice(half).join(' '), cx, cy + 8);
+  const cLines = [];
+  let cCur = '';
+  const cMaxW = centerR * 1.55;
+  for (const w of cWords) {
+    const test = cCur ? cCur + ' ' + w : w;
+    ctx.font = `600 ${Math.max(11, centerR * 0.26)}px "Fira Sans",sans-serif`;
+    if (ctx.measureText(test).width > cMaxW && cCur) { cLines.push(cCur); cCur = w; }
+    else { cCur = test; }
   }
-
-  // Hover cursor
-  canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const mx = (e.clientX - rect.left) * scaleX;
-    const my = (e.clientY - rect.top) * scaleY;
-    const hit = canvas._nodes?.some(n => { const dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })
-      || (() => { if (!canvas._centerNode) return false; const n=canvas._centerNode,dx=mx-n.cx,dy=my-n.cy; return dx*dx+dy*dy<=n.r*n.r; })();
-    canvas.style.cursor = hit ? 'pointer' : 'default';
+  if (cCur) cLines.push(cCur);
+  const cLineH = centerR * 0.32;
+  const cStartY = cy - (cLines.length - 1) * cLineH / 2;
+  cLines.forEach((line, li) => {
+    ctx.font = `600 ${Math.max(11, centerR * 0.26)}px "Fira Sans",sans-serif`;
+    ctx.fillText(line, cx, cStartY + li * cLineH);
   });
 }
 
 function showMmPopup(nodeData) {
   if (!nodeData) return;
-  // Remove any existing popup
   document.querySelector('.mm-popup-overlay')?.remove();
 
   const overlay = document.createElement('div');
   overlay.className = 'mm-popup-overlay';
+  const codeBlock = nodeData.code
+    ? `<div class="mm-popup-code">${esc(nodeData.code)}</div>` : '';
   overlay.innerHTML = `
-    <div class="mm-popup">
-      <button class="mm-popup-close" onclick="this.closest('.mm-popup-overlay').remove()">×</button>
-      <div class="mm-popup-title">${esc(nodeData.label)}</div>
+    <div class="mm-popup" role="dialog" aria-modal="true">
+      <button class="mm-popup-close" aria-label="Close" onclick="this.closest('.mm-popup-overlay').remove()">×</button>
+      <div class="mm-popup-tag">Details</div>
+      <div class="mm-popup-title">${esc(nodeData.label || '')}</div>
       <div class="mm-popup-body">${esc(nodeData.detail || '')}</div>
-      ${nodeData.code ? `<div class="mm-popup-code">${esc(nodeData.code)}</div>` : ''}
-      <button class="mm-popup-ask" onclick="document.querySelector('.mm-popup-overlay').remove(); document.getElementById('chatInput').value=${JSON.stringify('Tell me more about: ' + nodeData.label)}; sendChat()">
-        Ask about this ↗
-      </button>
+      ${codeBlock}
+      <div class="mm-popup-footer">
+        <button class="mm-popup-ask" onclick="document.querySelector('.mm-popup-overlay').remove(); const inp=document.getElementById('chatInput'); if(inp){inp.value=${JSON.stringify('Tell me more about: ')}+${JSON.stringify('')}+document.querySelector('.mm-popup-title')?.textContent||''; sendChat();}">
+          Ask about this ↗
+        </button>
+      </div>
     </div>`;
   overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
   document.body.appendChild(overlay);
