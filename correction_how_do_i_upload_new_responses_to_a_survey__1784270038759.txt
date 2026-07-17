@@ -1,0 +1,6 @@
+CORRECTION FILE
+Original question: how do I upload new responses to a survey?
+Submitted: 2026-07-17T06:33:58.759Z
+---
+CORRECT INFORMATION:
+I have mentioned Surveys, so it has to be related to uploading data in the Survey, so basically it's related to importing data to a survey. Related help file - https://www.questionpro.com/help/import-external-data-into-existing-survey.html
